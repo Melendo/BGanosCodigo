@@ -10,10 +10,10 @@ public class FactoriaQueryImp extends FactoriaQuery {
 		switch (nombre){
 		
 			case "calcularLasTresFechasMasVendidasDeUnInvernadero": 
-				//return new calcularLasTresFechasMasVendidasDeUnInvernadero();
+				return new calcularLasTresFechasMasVendidasDeUnInvernadero();
 
 			case "ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero" : 
-				//return new ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero(); 
+				return new ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero(); 
 		}
 		
 		return null;
