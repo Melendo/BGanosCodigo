@@ -84,4 +84,10 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 		return null;
 		// end-user-code
 	}
+
+	@Override
+	public TSistemaDeRiego leerPorNombreUnico(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

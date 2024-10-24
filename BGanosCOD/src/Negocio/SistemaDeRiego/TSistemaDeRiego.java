@@ -11,6 +11,8 @@ public class TSistemaDeRiego {
 	private Integer cantidad_agua;
 	private Integer frecuencia;
 	private Boolean activo;
+	
+	private Integer idFabricante;
 
 	public Integer getId() {
 		return id;
@@ -59,5 +61,13 @@ public class TSistemaDeRiego {
 
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
+	}
+	
+	public Integer getIdFabricante() {
+		return idFabricante;
+	}
+
+	public void setIdFabricante(Integer idFabricante) {
+		this.idFabricante = idFabricante;
 	}
 }

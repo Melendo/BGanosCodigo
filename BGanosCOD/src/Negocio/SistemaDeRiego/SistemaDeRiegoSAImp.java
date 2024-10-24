@@ -5,30 +5,61 @@ package Negocio.SistemaDeRiego;
 
 import java.util.Set;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
+import Integracion.Fabricante.FabricanteDAO;
+import Integracion.FactoriaIntegracion.FactoriaIntegracion;
+import Integracion.SistemaDeRiego.SistemaDeRiegoDAO;
+import Integracion.Transaction.Transaccion;
+import Integracion.Transaction.TransaccionManager;
+import Negocio.Fabricante.TFabricante;
+
+
 public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
-	/** 
-	* (non-Javadoc)
-	* @see SistemaDeRiegoSA#altaSisRiego(TSistemaDeRiego sisRiego)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	public Integer altaSisRiego(TSistemaDeRiego sisRiego) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		//Comprobamos si en el alta han puesto campos nulos 
+				if(sisRiego.getNombre().isEmpty()|| sisRiego.getFrecuencia() == -1|| sisRiego.getCantidad_agua() == -1 || sisRiego.getPotenciaRiego() == -1|| sisRiego.getIdFabricante() == 0 ){
+					return -3; //Error casos vacios en alta
+				}
+				int exito = -1;
+				
+				try {
+					TransaccionManager transaccion = TransaccionManager.getInstance();
+					Transaccion t = transaccion.newTransaccion();
+					t.start();
+					FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+					FabricanteDAO daoFabricante = f.getFabricanteDAO();
+					TFabricante fabricante = daoFabricante.mostrarFabricantePorId(sisRiego.getIdFabricante()); 
+					
+					if(fabricante != null){
+						
+						if(fabricante.getActivo()){
+							SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
+							TSistemaDeRiego tSistRiego = daoSistRiego.leerPorNombreUnico(sisRiego.getNombre());
+							if(tSistRiego == null){ //No existe sist riego con mismo nombre
+								exito = daoSistRiego.altaSistemaDeRiego(sisRiego);
+								t.commit();
+							}else if(tSistRiego.getActivo() == false){ //Existe pero no activo
+								sisRiego.setId(tSistRiego.getId());
+								exito = daoSistRiego.modificarSistemaDeRiego(sisRiego); //Reactivar y actualizar
+								t.commit();
+							}else{ // Existe y activo
+								exito = -2; 
+							}
+						}else{
+							exito = -511; //Fabricante no activo
+						}
+						
+					}else{
+						exito = -404; //Fabricante no existe
+						t.rollback();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return exito;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see SistemaDeRiegoSA#bajaSisRiego(Integer id)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+	
 	public Integer bajaSisRiego(Integer id) {
 		// begin-user-code
 		// TODO Auto-generated method stub
@@ -36,11 +67,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see SistemaDeRiegoSA#modificarSisRiego(TSistemaDeRiego sisRiego)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+	
 	public Integer modificarSisRiego(TSistemaDeRiego sisRiego) {
 		// begin-user-code
 		// TODO Auto-generated method stub
@@ -48,11 +75,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see SistemaDeRiegoSA#mostrarSisRiego(Integer id)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+	
 	public TSistemaDeRiego mostrarSisRiego(Integer id) {
 		// begin-user-code
 		// TODO Auto-generated method stub
@@ -60,11 +83,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see SistemaDeRiegoSA#listarSisRiego()
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+	
 	public Set<TSistemaDeRiego> listarSisRiego() {
 		// begin-user-code
 		// TODO Auto-generated method stub
@@ -72,11 +91,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see SistemaDeRiegoSA#listarSisRiegoPorFabricante(Integer idFabricante)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+	
 	public Set<TSistemaDeRiego> listarSisRiegoPorFabricante(Integer idFabricante) {
 		// begin-user-code
 		// TODO Auto-generated method stub
