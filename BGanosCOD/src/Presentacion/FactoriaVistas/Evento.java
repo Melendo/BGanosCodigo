@@ -4,10 +4,10 @@ package Presentacion.FactoriaVistas;
 
 public class Evento {
     
-    // Vistas Principales
+    // Vistas Principales  								100 - 199
     public static final int VISTA_PRINCIPAL = 100;
     
-	//	Entrada
+	//	Entrada											200 - 299
 	    
 	//				Vistas Entrada
     public static final int ENTRADA_VISTA = 200;
@@ -21,7 +21,7 @@ public class Evento {
 	
 	
     
-    //				Fabricante
+    //				Fabricante							300 - 399
     
     //				Vistas Fabricante
 	public static final int FABRICANTE_VISTA = 300;
@@ -36,7 +36,7 @@ public class Evento {
 
     
     
-    //				Factura
+    //				Factura									400 - 499
     
     //				Vistas Factura
     public static final int FACTURA_VISTA = 400;
@@ -51,7 +51,7 @@ public class Evento {
 
     
 
-    //				Invernadero
+    //				Invernadero									500 - 599
     
     //				Vistas Invernadero
     public static final int INVERNADERO_VISTA = 500;
@@ -67,7 +67,7 @@ public class Evento {
     
     
     
-    //				Planta
+    //				Planta										600 - 699
     
     //				Vistas Planta
     public static final int PLANTA_VISTA = 600;
@@ -82,7 +82,7 @@ public class Evento {
     
     
 
-    //				Sistema de Riego
+    //				Sistema de Riego							700 - 799
     
     //				Vistas Sistema de Riego
     public static final int SISTEMA_RIEGO_VISTA = 700;
