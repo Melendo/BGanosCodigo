@@ -1,32 +1,25 @@
-/**
- * 
- */
 package Integracion.FactoriaQuery;
 
-/** 
- * <!-- begin-UML-doc -->
- * <!-- end-UML-doc -->
- * @author airam
- * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
- */
-public class FactoriaQuery {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+import Integracion.FactoriaQuery.FactoriaQueryImp;
+import Integracion.FactoriaQuery.Query;
+
+public abstract class FactoriaQuery {
+
 	private static FactoriaQuery instance;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	public static FactoriaQuery getInstance() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		
+		if(instance == null) instance = new FactoriaQueryImp();
+		
+		return instance;
 	}
+
+	public Query generateQuery(Integer id) {
+
+		return null;
+	}
+	
+	public abstract Query getNewQuery(String nombre);
+
 }
