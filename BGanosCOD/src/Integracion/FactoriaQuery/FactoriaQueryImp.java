@@ -1,13 +1,21 @@
-/**
- * 
- */
 package Integracion.FactoriaQuery;
 
-/** 
- * <!-- begin-UML-doc -->
- * <!-- end-UML-doc -->
- * @author airam
- * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
- */
+import Integracion.FactoriaQuery.calcularLasTresFechasMasVendidasDeUnInvernadero;
+import Integracion.FactoriaQuery.ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero;
+
 public class FactoriaQueryImp extends FactoriaQuery {
+	
+	public Query getNewQuery(String nombre) {
+		
+		switch (nombre){
+		
+			case "calcularLasTresFechasMasVendidasDeUnInvernadero": 
+				//return new calcularLasTresFechasMasVendidasDeUnInvernadero();
+
+			case "ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero" : 
+				//return new ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero(); 
+		}
+		
+		return null;
+	}
 }
