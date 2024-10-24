@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Controller.Command;
 
 import Presentacion.Controller.Command.CommandEntrada.CommandAltaEntrada;
@@ -14,6 +11,7 @@ import Presentacion.Controller.Command.CommandFabricante.CommandListarFabricante
 import Presentacion.Controller.Command.CommandFabricante.CommandListarFabricantes;
 import Presentacion.Controller.Command.CommandFabricante.CommandListarFabricantesExtrangeros;
 import Presentacion.Controller.Command.CommandFabricante.CommandListarFabricantesLocales;
+import Presentacion.Controller.Command.CommandFabricante.CommandListarInformacionFabricanteDeSistemaDeRiegoDeUnInvernadero;
 import Presentacion.Controller.Command.CommandFabricante.CommandModificarFabricante;
 import Presentacion.Controller.Command.CommandFabricante.CommandMostrarFabricantePorId;
 import Presentacion.Controller.Command.CommandFactura.AbrirFacturaCommand;
@@ -24,6 +22,7 @@ import Presentacion.Controller.Command.CommandFactura.ModificarFacturaCommand;
 import Presentacion.Controller.Command.CommandFactura.MostrarFacturaPorIDCommand;
 import Presentacion.Controller.Command.CommandInvernadero.CommandAltaInvernadero;
 import Presentacion.Controller.Command.CommandInvernadero.CommandBajaInvernadero;
+import Presentacion.Controller.Command.CommandInvernadero.CommandCalcularLas3FechasMasVendidasDeUnInvernadero;
 import Presentacion.Controller.Command.CommandInvernadero.CommandDesvincularSRInvernadero;
 import Presentacion.Controller.Command.CommandInvernadero.CommandListarInvernadero;
 import Presentacion.Controller.Command.CommandInvernadero.CommandListarInvernaderoPorSR;
@@ -64,6 +63,7 @@ public class CommandFactoryImp extends CommandFactory {
 		case Evento.DEVOLVER_FACTURA:
 		    return new DevolverFacturaCommand();
 
+		    
 		// Eventos de Entrada
 		case Evento.ALTA_ENTRADA:
 		    return new CommandAltaEntrada();
@@ -94,7 +94,10 @@ public class CommandFactoryImp extends CommandFactory {
 		    return new CommandListarFabricantesLocales();
 		case Evento.LISTAR_FABRICANTES_EXTRANGEROS:
 		    return new CommandListarFabricantesExtrangeros();
-
+		case Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO:
+			return new CommandListarInformacionFabricanteDeSistemaDeRiegoDeUnInvernadero();
+		  
+			
 		// Eventos de Invernadero
 		case Evento.ALTA_INVERNADERO:
 		    return new CommandAltaInvernadero();
@@ -112,8 +115,10 @@ public class CommandFactoryImp extends CommandFactory {
 		    return new CommandVincularSRInvernadero();
 		case Evento.DESVINCULAR_SISTEMA_RIEGO_DE_INVERNADERO:
 		    return new CommandDesvincularSRInvernadero();
+		case Evento.CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO:
+			return new CommandCalcularLas3FechasMasVendidasDeUnInvernadero();
 
-
+			
 		// Eventos de Planta
 		case Evento.ALTA_PLANTA:
 		    return new CommandAltaPlanta();
@@ -130,6 +135,7 @@ public class CommandFactoryImp extends CommandFactory {
 		case Evento.LISTAR_PLANTAS_DE_INVERNADERO:
 		    return new CommandListarPlantasPorInvernadero();
 
+		    
 		// Eventos de Sistema de Riego
 		case Evento.ALTA_SISTEMA_RIEGO:
 		    return new CommandAltaSistemaDeRiego();

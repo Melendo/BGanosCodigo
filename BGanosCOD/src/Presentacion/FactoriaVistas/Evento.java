@@ -39,6 +39,7 @@ public class Evento {
     public static final int LISTAR_FABRICANTES_POR_NOMBRE_VISTA = 306;
     public static final int LISTAR_FABRICANTES_LOCALES_VISTA = 307;
     public static final int LISTAR_FABRICANTES_EXTRANGEROS_VISTA = 308;
+    public static final int LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_VISTA = 309;
     
     // 				Funciones Fabricante				320 - 399
     public static final int ALTA_FABRICANTE = 320;
@@ -49,7 +50,7 @@ public class Evento {
     public static final int LISTAR_FABRICANTES_POR_NOMBRE = 325;
     public static final int LISTAR_FABRICANTES_LOCALES = 326;
     public static final int LISTAR_FABRICANTES_EXTRANGEROS = 327;
-
+    public static final int LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO = 328;
     
     
     //				Factura									400 - 499
@@ -86,6 +87,7 @@ public class Evento {
     public static final int LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO_VISTA = 506;
     public static final int VINCULAR_SISTEMA_RIEGO_INVERNADERO_VISTA = 507;
     public static final int DESVINCULAR_SISTEMA_RIEGO_INVERNADERO_VISTA = 508;
+    public static final int CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO_VISTA = 509;
     
     //				Funciones Invernadero						520 - 599
     public static final int ALTA_INVERNADERO = 520;
@@ -96,7 +98,7 @@ public class Evento {
     public static final int LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO = 525;
     public static final int VINCULAR_SISTEMA_RIEGO_A_INVERNADERO = 526;
     public static final int DESVINCULAR_SISTEMA_RIEGO_DE_INVERNADERO = 527;
-
+    public static final int CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO = 528;
     
     
     
