@@ -63,10 +63,6 @@ public class CommandFactoryImp extends CommandFactory {
 		    return new ListarFacturasCommand();
 		case Evento.DEVOLVER_FACTURA:
 		    return new DevolverFacturaCommand();
-		case Evento.AÑADIR_ENTRADAS_A_FACTURA:
-		    return new AñadirEntradasAFacturaCommand();
-		case Evento.QUITAR_ENTRADAS_DE_FACTURA:
-		    return new QuitarEntradasDeFacturaCommand();
 
 		// Eventos de Entrada
 		case Evento.ALTA_ENTRADA:
@@ -79,8 +75,7 @@ public class CommandFactoryImp extends CommandFactory {
 		    return new CommandMostrarEntrada();
 		case Evento.LISTAR_ENTRADAS:
 		    return new CommandListaEntrada();
-		case Evento.LISTAR_ENTRADAS_DE_INVERNADERO:
-		    return new CommandListarEntradasDeInvernaderoCommand();
+	
 
 		// Eventos de Fabricante
 		case Evento.ALTA_FABRICANTE:
@@ -117,8 +112,7 @@ public class CommandFactoryImp extends CommandFactory {
 		    return new CommandVincularSRInvernadero();
 		case Evento.DESVINCULAR_SISTEMA_RIEGO_DE_INVERNADERO:
 		    return new CommandDesvincularSRInvernadero();
-		case Evento.LISTAR_TRES_FECHAS_CON_MAS_ENTRADAS_VENDIDAS:
-		    return new CommandListarTresFechasConMasEntradasVendidasCommand();
+
 
 		// Eventos de Planta
 		case Evento.ALTA_PLANTA:

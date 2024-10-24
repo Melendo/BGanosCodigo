@@ -16,7 +16,6 @@ public class Evento {
 	public static final int MODIFICAR_ENTRADA_VISTA = 203;
 	public static final int MOSTRAR_ENTRADA_POR_ID_VISTA = 204;
 	public static final int LISTAR_ENTRADAS_VISTA = 205;
-	public static final int LISTAR_ENTRADAS_INVERNADERO_VISTA = 206;
 	
 	//				Funciones Entrada					220 - 299
 	public static final int ALTA_ENTRADA = 220;
@@ -24,7 +23,6 @@ public class Evento {
 	public static final int MODIFICAR_ENTRADA = 222;
 	public static final int MOSTRAR_ENTRADA_POR_ID = 223;
 	public static final int LISTAR_ENTRADAS = 224;
-	public static final int LISTAR_ENTRADAS_DE_INVERNADERO = 225;
 	
 	
 	
@@ -39,8 +37,8 @@ public class Evento {
     public static final int LISTAR_FABRICANTES_VISTA = 304;
     public static final int MOSTRAR_FABRICANTE_POR_ID_VISTA = 305;
     public static final int LISTAR_FABRICANTES_POR_NOMBRE_VISTA = 306;
-    public static final int LISTAR_FABRICANTES_POR_TIPO_VISTA = 307;
-    public static final int LISTAR_FABRICANTES_SISTEMAS_RIEGO_INVERNADERO_VISTA = 308;
+    public static final int LISTAR_FABRICANTES_LOCALES_VISTA = 307;
+    public static final int LISTAR_FABRICANTES_EXTRANGERO_VISTA = 308;
     
     // 				Funciones Fabricante				320 - 399
     public static final int ALTA_FABRICANTE = 320;
@@ -64,8 +62,6 @@ public class Evento {
     public static final int MOSTRAR_FACTURA_POR_ID_VISTA = 404;
     public static final int LISTAR_FACTURAS_VISTA = 405;
     public static final int DEVOLVER_FACTURA_VISTA = 406;
-    public static final int AÑADIR_ENTRADAS_FACTURA_VISTA = 407;
-    public static final int QUITAR_ENTRADAS_FACTURA_VISTA = 408;
     
     //				Funciones Factura						420 - 499
     public static final int ABRIR_FACTURA = 420;
@@ -74,8 +70,7 @@ public class Evento {
     public static final int MOSTRAR_FACTURA_POR_ID = 423;
     public static final int LISTAR_FACTURAS = 424;
     public static final int DEVOLVER_FACTURA = 425;
-    public static final int AÑADIR_ENTRADAS_A_FACTURA = 426;
-    public static final int QUITAR_ENTRADAS_DE_FACTURA = 427;
+
 
     
 
@@ -91,7 +86,6 @@ public class Evento {
     public static final int LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO_VISTA = 506;
     public static final int VINCULAR_SISTEMA_RIEGO_INVERNADERO_VISTA = 507;
     public static final int DESVINCULAR_SISTEMA_RIEGO_INVERNADERO_VISTA = 508;
-    public static final int LISTAR_TRES_FECHAS_MAS_ENTRADAS_INVERNADERO_VISTA = 509;
     
     //				Funciones Invernadero						520 - 599
     public static final int ALTA_INVERNADERO = 520;
@@ -102,7 +96,6 @@ public class Evento {
     public static final int LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO = 525;
     public static final int VINCULAR_SISTEMA_RIEGO_A_INVERNADERO = 526;
     public static final int DESVINCULAR_SISTEMA_RIEGO_DE_INVERNADERO = 527;
-    public static final int LISTAR_TRES_FECHAS_CON_MAS_ENTRADAS_VENDIDAS = 528;
 
     
     
