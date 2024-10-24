@@ -43,13 +43,11 @@ public class FactoriaVistasImp extends FactoriaVistas {
 //            case Evento.LISTAR_ENTRADAS_VISTA:
 //                vistaActual = new VistaListarEntradas((Set<TEntrada>) contexto.getDatos());
 //                return vistaActual;
-//            case Evento.LISTAR_ENTRADAS_INVERNADERO_VISTA:
-//                vistaActual = new VistaListarEntradaInvernadero((Set<TEntrada>) contexto.getDatos());
-//                return vistaActual;
+
 //                
                 
                 
-//
+
 //            //              Vistas Fabricante
 //            case Evento.FABRICANTE_VISTA:
 //                vistaActual = new VistaFabricante();
@@ -69,16 +67,16 @@ public class FactoriaVistasImp extends FactoriaVistas {
 //            case Evento.LISTAR_FABRICANTES_POR_NOMBRE_VISTA:
 //                vistaActual = new VistaListarFabricantesNombre((Set<TFabricante>) contexto.getDatos());
 //                return vistaActual;
-//            case Evento.LISTAR_FABRICANTES_POR_TIPO_VISTA:
+//            case Evento.LISTAR_FABRICANTES_LOCALES_VISTA:
 //                vistaActual = new VistaListarFabricantesTipo((Set<TFabricante>) contexto.getDatos());
 //                return vistaActual;
-//            case Evento.LISTAR_FABRICANTES_SISTEMAS_RIEGO_INVERNADERO_VISTA:
+//            case Evento.LISTAR_FABRICANTES_EXTRANGEROS_VISTA:
 //                vistaActual = new VistaListarFabricantesSistemaRiego((Set<TFabricante>) contexto.getDatos());
 //                return vistaActual;
 //            case Evento.LISTAR_FABRICANTES_VISTA:
 //                vistaActual = new VistaListarFabricantes((Set<TFabricante>) contexto.getDatos());
 //                return vistaActual;
-                
+//                
                 
                 
 
@@ -98,12 +96,6 @@ public class FactoriaVistasImp extends FactoriaVistas {
 //            case Evento.MODIFICAR_FACTURA_VISTA:
 //                vistaActual = new VistaModificarFactura();
 //                return vistaActual;
-//            case Evento.AÑADIR_ENTRADAS_FACTURA_VISTA:
-//                vistaActual = new VistaAnadirEntradaFactura();
-//                return vistaActual;
-//            case Evento.QUITAR_ENTRADAS_FACTURA_VISTA:
-//                vistaActual = new VistaQuitarEntradaFactura();
-//                return vistaActual;
 //            case Evento.MOSTRAR_FACTURA_POR_ID_VISTA:
 //                vistaActual = new VistaMostrarFactura();
 //                return vistaActual;
@@ -114,7 +106,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
                 
                 
                 
-            //              Vistas Invernadero
+//                          //Vistas Invernadero
 //            case Evento.INVERNADERO_VISTA:
 //                vistaActual = new VistaInvernadero();
 //                return vistaActual;
@@ -136,16 +128,13 @@ public class FactoriaVistasImp extends FactoriaVistas {
 //            case Evento.LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO_VISTA:
 //                vistaActual = new VistaListarInvernaderosPorRiego((Set<TInvernadero>) contexto.getDatos());
 //                return vistaActual;
-//            case Evento.LISTAR_TRES_FECHAS_MAS_ENTRADAS_INVERNADERO_VISTA:
-//                vistaActual = new VistaListarFechasInvernaderos((Set<TInvernadero>) contexto.getDatos());
-//                return vistaActual;
 //            case Evento.VINCULAR_SISTEMA_RIEGO_INVERNADERO_VISTA:
 //                vistaActual = new VistaVincularSistemaRiegoInvernadero();
 //                return vistaActual;
 //            case Evento.DESVINCULAR_SISTEMA_RIEGO_INVERNADERO_VISTA:
 //                vistaActual = new VistaVincularSistemaRiegoInvernadero();
 //                return vistaActual;
-                
+//                
                 
                 
 

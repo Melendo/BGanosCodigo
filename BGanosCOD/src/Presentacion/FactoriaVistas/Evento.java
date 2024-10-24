@@ -38,7 +38,7 @@ public class Evento {
     public static final int MOSTRAR_FABRICANTE_POR_ID_VISTA = 305;
     public static final int LISTAR_FABRICANTES_POR_NOMBRE_VISTA = 306;
     public static final int LISTAR_FABRICANTES_LOCALES_VISTA = 307;
-    public static final int LISTAR_FABRICANTES_EXTRANGERO_VISTA = 308;
+    public static final int LISTAR_FABRICANTES_EXTRANGEROS_VISTA = 308;
     
     // 				Funciones Fabricante				320 - 399
     public static final int ALTA_FABRICANTE = 320;
