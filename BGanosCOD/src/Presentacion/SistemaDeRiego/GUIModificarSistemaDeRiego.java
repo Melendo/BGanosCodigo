@@ -166,11 +166,7 @@ public class GUIModificarSistemaDeRiego extends JFrame implements IGUI {
         this.setVisible(true);
     }
 
-    /** 
-     * (non-Javadoc)
-     * @see IGUI#actualizar(Context context)
-     * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-     */
+ 
     @Override
     public void actualizar(Context context) {
         if (context.getEvento() == Evento.MODIFICAR_SISTEMA_DE_RIEGO_OK) {
