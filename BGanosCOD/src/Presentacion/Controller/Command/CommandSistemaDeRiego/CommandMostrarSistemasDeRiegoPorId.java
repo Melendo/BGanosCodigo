@@ -3,25 +3,21 @@
  */
 package Presentacion.Controller.Command.CommandSistemaDeRiego;
 
+import Negocio.FactoriaNegocio.FactoriaNegocio;
+import Negocio.SistemaDeRiego.TSistemaDeRiego;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
+
 public class CommandMostrarSistemasDeRiegoPorId implements Command {
-	/** 
-	* (non-Javadoc)
-	* @see Command#execute(Object datos)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+	
 	public Context execute(Object datos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		TSistemaDeRiego resultado = FactoriaNegocio.getInstance().getSistemaDeRiegoSA().mostrarSisRiego((Integer)datos);
+		if(resultado.getId() > -1){ 
+			return new Context(Evento.MOSTRAR_SISTEMA_DE_RIEGO_OK,resultado);
+		}else {
+			return new Context(Evento.MOSTRAR_SISTEMA_DE_RIEGO_KO,resultado);
+		}
 	}
 }

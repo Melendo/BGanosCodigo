@@ -162,7 +162,9 @@ public class Evento {
 	//					Listar de Fabricante
 	public static final int LISTAR_SISTEMA_DE_RIEGO_POR_FABRICANTE_OK = 758;
 	public static final int LISTAR_SISTEMA_DE_RIEGO_POR_FABRICANTE_KO = 759;
-	
+	//					Mostrar por Id
+	public static final int MOSTRAR_SISTEMA_DE_RIEGO_OK = 760;
+	public static final int MOSTRAR_SISTEMA_DE_RIEGO_KO = 761;
 
 	
 
