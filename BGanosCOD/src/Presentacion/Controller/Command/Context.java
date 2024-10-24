@@ -9,6 +9,11 @@ public class Context {
 	private Integer evento;
 	
 	private Object datos;
+	
+	public Context(Integer evento, Object datos){
+		this.evento = evento;
+		this.datos = datos;
+	}
 
 	public Integer getEvento() {
 		return evento;

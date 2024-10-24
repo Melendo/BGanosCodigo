@@ -19,7 +19,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
         {
             //              Vista Principal
 //            case Evento.VISTA_PRINCIPAL:
-//                vistaActual = new VistaPrincipal();
+//                vistaActual = new MainView();
 //                return vistaActual;
 
                 
