@@ -3,6 +3,13 @@ package Presentacion.FactoriaVistas;
 import Presentacion.MainView;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
+import Presentacion.Entrada.GUIAltaEntrada;
+import Presentacion.Entrada.GUIBajaEntrada;
+import Presentacion.Entrada.GUIEntrada;
+import Presentacion.Entrada.GUIListarEntradas;
+import Presentacion.Entrada.GUIModificarEntrada;
+import Presentacion.Entrada.GUIMostrarEntrada;
+
 import java.util.Set;
 
 import Negocio.Entrada.TEntrada;
@@ -25,27 +32,26 @@ public class FactoriaVistasImp extends FactoriaVistas {
 
                 
                 
-//            //              Vistas Entrada
-//            case Evento.ENTRADA_VISTA:
-//                vistaActual = new VistaEntrada();
-//                return vistaActual;
-//            case Evento.ALTA_ENTRADA_VISTA:
-//                vistaActual = new VistaAltaEntrada();
-//                return vistaActual;
-//            case Evento.BAJA_ENTRADA_VISTA:
-//                vistaActual = new VistaBajaEntrada();
-//                return vistaActual;
-//            case Evento.MODIFICAR_ENTRADA_VISTA:
-//                vistaActual = new VistaModificarEntrada();
-//                return vistaActual;
-//            case Evento.MOSTRAR_ENTRADA_POR_ID_VISTA:
-//                vistaActual = new VistaMostrarEntrada();
-//                return vistaActual;
-//            case Evento.LISTAR_ENTRADAS_VISTA:
-//                vistaActual = new VistaListarEntradas((Set<TEntrada>) contexto.getDatos());
-//                return vistaActual;
-
-//                
+            //              Vistas Entrada
+            case Evento.ENTRADA_VISTA:
+                vistaActual = new GUIEntrada();
+                return vistaActual;
+            case Evento.ALTA_ENTRADA_VISTA:
+                vistaActual = new GUIAltaEntrada();
+                return vistaActual;
+            case Evento.BAJA_ENTRADA_VISTA:
+                vistaActual = new GUIBajaEntrada();
+                return vistaActual;
+            case Evento.MODIFICAR_ENTRADA_VISTA:
+                vistaActual = new GUIModificarEntrada();
+                return vistaActual;
+            case Evento.MOSTRAR_ENTRADA_POR_ID_VISTA:
+                vistaActual = new GUIMostrarEntrada();
+                return vistaActual;
+            case Evento.LISTAR_ENTRADAS_VISTA:
+                vistaActual = new GUIListarEntradas((Set<TEntrada>) contexto.getDatos());
+                return vistaActual;
+             
                 
                 
 

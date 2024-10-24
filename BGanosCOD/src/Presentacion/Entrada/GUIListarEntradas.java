@@ -7,9 +7,14 @@ import javax.swing.JFrame;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 
+import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import Negocio.Entrada.TEntrada;
+
 import javax.swing.JLabel;
 
 /** 
@@ -43,6 +48,10 @@ public class GUIListarEntradas extends JFrame implements IGUI {
 	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	*/
 	private JLabel jLabel;
+
+	public GUIListarEntradas(Set<TEntrada> datos) {
+		// TODO Auto-generated constructor stub
+	}
 
 	/** 
 	* <!-- begin-UML-doc -->
