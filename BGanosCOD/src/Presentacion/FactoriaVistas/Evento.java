@@ -137,7 +137,7 @@ public class Evento {
     public static final int LISTAR_SISTEMAS_RIEGO_POR_FABRICANTE_VISTA = 706;
     public static final int LISTAR_SISTEMAS_RIEGO_VISTA = 707;
     
-    //				Funciones Sistema de Riego					720 - 799
+    //				Funciones Sistema de Riego					720 - 749
     public static final int ALTA_SISTEMA_RIEGO = 720;
     public static final int BAJA_SISTEMA_RIEGO = 721;
     public static final int MODIFICAR_SISTEMA_RIEGO = 722;
@@ -146,6 +146,11 @@ public class Evento {
     public static final int LISTAR_SISTEMAS_RIEGO_POR_FABRICANTE = 725;
     public static final int LISTAR_SISTEMAS_RIEGO = 726;
 
+	// 				OKs y KOs Sistema de Riego					750 - 799
+    //					Alta
+    public static final int ALTA_SISTEMA_DE_RIEGO_OK = 750;
+	public static final int ALTA_SISTEMA_DE_RIEGO_KO = 751;
+	//					Baja
 	
 
 	
