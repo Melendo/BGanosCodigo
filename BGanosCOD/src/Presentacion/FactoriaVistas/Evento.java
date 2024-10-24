@@ -49,8 +49,8 @@ public class Evento {
     public static final int LISTAR_FABRICANTES = 323;
     public static final int MOSTRAR_FABRICANTE_POR_ID = 324;
     public static final int LISTAR_FABRICANTES_POR_NOMBRE = 325;
-    public static final int LISTAR_FABRICANTES_POR_TIPO = 326;
-    public static final int LISTAR_FABRICANTES_SISTEMAS_RIEGO_INVERNADERO = 327;
+    public static final int LISTAR_FABRICANTES_LOCALES = 326;
+    public static final int LISTAR_FABRICANTES_EXTRANGEROS = 327;
 
     
     
