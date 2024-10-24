@@ -1,5 +1,6 @@
 package Presentacion.FactoriaVistas;
 
+import Presentacion.MainView;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import java.util.Set;
@@ -18,9 +19,9 @@ public class FactoriaVistasImp extends FactoriaVistas {
         switch(contexto.getEvento())
         {
             //              Vista Principal
-//            case Evento.VISTA_PRINCIPAL:
-//                vistaActual = new MainView();
-//                return vistaActual;
+            case Evento.VISTA_PRINCIPAL:
+                vistaActual = new MainView();
+                return vistaActual;
 
                 
                 
