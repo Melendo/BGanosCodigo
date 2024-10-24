@@ -5,6 +5,7 @@ import  Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Entrada.EntradaDAO;
 import Integracion.Fabricante.FabricanteDAO;
 import Integracion.Factura.FacturaDAO;
+import Integracion.Factura.LineaFacturaDAO;
 import Integracion.Planta.PlantaDAO;
 import Integracion.SistemaDeRiego.SistemaDeRiegoDAO;
 
@@ -32,6 +33,8 @@ public  abstract class FactoriaIntegracion {
 	public abstract FabricanteDAO getFabricanteDAO();
 	
 	public abstract PlantaDAO getPlantaDAO();
+	
+	public abstract LineaFacturaDAO getDAOLineaFactura();
 	
 	
 }

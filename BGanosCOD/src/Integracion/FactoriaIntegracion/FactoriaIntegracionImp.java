@@ -7,6 +7,8 @@ import Integracion.Fabricante.FabricanteDAO;
 import Integracion.Fabricante.FabricanteDAOImp;
 import Integracion.Factura.FacturaDAO;
 import Integracion.Factura.FacturaDAOImp;
+import Integracion.Factura.LineaFacturaDAO;
+import Integracion.Factura.LineaFacturaDAOImp;
 import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Invernadero.InvernaderoDAOImp;
 import Integracion.Planta.PlantaDAO;
@@ -40,5 +42,9 @@ public class FactoriaIntegracionImp extends FactoriaIntegracion {
 
 	public PlantaDAO getPlantaDAO() {
 		return new PlantaDAOImp();
+	}
+	
+	public LineaFacturaDAO getDAOLineaFactura() {
+		return new LineaFacturaDAOImp();
 	}
 }
