@@ -159,6 +159,9 @@ public class Evento {
 	//					Listar en Invernadero
 	public static final int LISTAR_SISTEMA_DE_RIEGO_DE_INVERNADERO_OK = 756;
 	public static final int LISTAR_SISTEMA_DE_RIEGO_DE_INVERNADERO_KO = 757;
+	//					Listar de Fabricante
+	public static final int LISTAR_SISTEMA_DE_RIEGO_POR_FABRICANTE_OK = 758;
+	public static final int LISTAR_SISTEMA_DE_RIEGO_POR_FABRICANTE_KO = 759;
 	
 
 	
