@@ -17,38 +17,38 @@ import Presentacion.FactoriaVistas.Evento;
 
 public class MainView extends JFrame implements IGUI {
 
-    // BOTONES
-    JButton buttonEntrada;
-    JButton buttonFabricante;
-    JButton buttonInvernadero;
-    JButton buttonFactura;
-    JButton buttonPlanta;
-    JButton buttonSistRiego;
-    JLabel label;
+    // Definición de los botones
+    private JButton buttonEntrada;
+    private JButton buttonFabricante;
+    private JButton buttonInvernadero;
+    private JButton buttonFactura;
+    private JButton buttonPlanta;
+    private JButton buttonSistRiego;
+    private JLabel label;
 
     public MainView() {
-        super("Animalia");
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        int ancho = 1000;
-        int alto = 650;
-        int x = (pantalla.width - ancho) / 2;
-        int y = (pantalla.height - alto) / 2;
-        this.setBounds(x, y, ancho, alto);
+        super("BGanos - Gestión de Módulos");
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int frameWidth = 1000;
+        int frameHeight = 650;
+        int posX = (screenSize.width - frameWidth) / 2;
+        int posY = (screenSize.height - frameHeight) / 2;
+        this.setBounds(posX, posY, frameWidth, frameHeight);
         this.setLayout(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        initGUI();
+        initializeComponents();
         this.setVisible(true);
     }
 
-    private void initGUI() {
-        label = ComponentsBuilder.createLabel("Selecciona el modulo sobre el cual quieres trabajar", 50, 30, 900, 50, Color.BLACK);
+    private void initializeComponents() {
+        label = ComponentsBuilder.createLabel("Selecciona un módulo para gestionar", 50, 40, 900, 50, Color.DARK_GRAY);
         this.add(label);
 
-        // ENTRADA
-        buttonEntrada = ComponentsBuilder.createButton("Entrada", 100, 120, 185, 100);
+        // Botón de Entrada
+        buttonEntrada = ComponentsBuilder.createButton("Entrada", 100, 120, 185, 90);
         buttonEntrada.addActionListener(new ActionListener() {
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 MainView.this.setVisible(false);
                 ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
@@ -56,10 +56,10 @@ public class MainView extends JFrame implements IGUI {
         });
         this.add(buttonEntrada);
 
-        // FABRICANTE
-        buttonFabricante = ComponentsBuilder.createButton("Fabricante", 407, 120, 185, 100);
+        // Botón de Fabricante
+        buttonFabricante = ComponentsBuilder.createButton("Fabricante", 407, 120, 185, 90);
         buttonFabricante.addActionListener(new ActionListener() {
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 MainView.this.setVisible(false);
                 ApplicationController.getInstance().manageRequest(new Context(Evento.FABRICANTE_VISTA, null));
@@ -67,10 +67,10 @@ public class MainView extends JFrame implements IGUI {
         });
         this.add(buttonFabricante);
 
-        // INVERNADERO
-        buttonInvernadero = ComponentsBuilder.createButton("Invernadero", 715, 120, 185, 100);
+        // Botón de Invernadero
+        buttonInvernadero = ComponentsBuilder.createButton("Invernadero", 715, 120, 185, 90);
         buttonInvernadero.addActionListener(new ActionListener() {
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 MainView.this.setVisible(false);
                 ApplicationController.getInstance().manageRequest(new Context(Evento.INVERNADERO_VISTA, null));
@@ -78,10 +78,10 @@ public class MainView extends JFrame implements IGUI {
         });
         this.add(buttonInvernadero);
 
-        // FACTURA
-        buttonFactura = ComponentsBuilder.createButton("Factura", 100, 290, 185, 100);
+        // Botón de Factura
+        buttonFactura = ComponentsBuilder.createButton("Factura", 100, 290, 185, 90);
         buttonFactura.addActionListener(new ActionListener() {
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 MainView.this.setVisible(false);
                 ApplicationController.getInstance().manageRequest(new Context(Evento.FACTURA_VISTA, null));
@@ -89,10 +89,10 @@ public class MainView extends JFrame implements IGUI {
         });
         this.add(buttonFactura);
 
-        // PLANTA
-        buttonPlanta = ComponentsBuilder.createButton("Planta", 407, 290, 185, 100);
+        // Botón de Planta
+        buttonPlanta = ComponentsBuilder.createButton("Planta", 407, 290, 185, 90);
         buttonPlanta.addActionListener(new ActionListener() {
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 MainView.this.setVisible(false);
                 ApplicationController.getInstance().manageRequest(new Context(Evento.PLANTA_VISTA, null));
@@ -100,10 +100,10 @@ public class MainView extends JFrame implements IGUI {
         });
         this.add(buttonPlanta);
 
-        // SISTEMA DE RIEGO
-        buttonSistRiego = ComponentsBuilder.createButton("Sistema de Riego", 715, 290, 185, 100);
+        // Botón de Sistema de Riego
+        buttonSistRiego = ComponentsBuilder.createButton("Sistema de Riego", 715, 290, 185, 90);
         buttonSistRiego.addActionListener(new ActionListener() {
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 MainView.this.setVisible(false);
                 ApplicationController.getInstance().manageRequest(new Context(Evento.SISTEMA_RIEGO_VISTA, null));
@@ -112,7 +112,8 @@ public class MainView extends JFrame implements IGUI {
         this.add(buttonSistRiego);
     }
 
+    @Override
     public void actualizar(Context res) {
-        // TODO Auto-generated method stub
+        // Implementar actualización si es necesario
     }
 }
