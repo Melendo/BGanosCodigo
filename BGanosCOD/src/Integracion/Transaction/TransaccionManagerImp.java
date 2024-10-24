@@ -1,20 +1,18 @@
-/**
- * 
- */
 package Integracion.Transaction;
 
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
 
 public class TransaccionManagerImp extends TransaccionManager {
 
-
 	private ConcurrentHashMap<Thread, Transaccion> transacciones;
+
+	public TransaccionManagerImp() {
+		transacciones = new ConcurrentHashMap<Thread, Transaccion>();
+	}
 
 	@Override
 	public Transaccion newTransaccion() throws Exception {
-		if(transacciones.get(Thread.currentThread()) == null){
+		if (transacciones.get(Thread.currentThread()) == null) {
 			Transaccion t = FactoriaTransaccion.getInstance().createTransaction();
 			transacciones.put(Thread.currentThread(), t);
 			return t;
@@ -24,18 +22,18 @@ public class TransaccionManagerImp extends TransaccionManager {
 	}
 
 	@Override
-	public Transaccion getTransaccion() throws Exception{
-		if(transacciones.get(Thread.currentThread()) != null){
+	public Transaccion getTransaccion() throws Exception {
+		if (transacciones.get(Thread.currentThread()) != null) {
 			return transacciones.get(Thread.currentThread());
 		}
 		throw new Exception();
 	}
 
 	@Override
-	public void deleteTransaccion() throws Exception{
-		if(transacciones.get(Thread.currentThread()) != null){
+	public void deleteTransaccion() throws Exception {
+		if (transacciones.get(Thread.currentThread()) != null) {
 			transacciones.remove(Thread.currentThread());
-		}
-		else throw new Exception();
+		} else
+			throw new Exception();
 	}
 }
