@@ -28,7 +28,8 @@ public interface EntradaSA {
 	* @return
 	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	*/
-	public Integer bajaEntrada(TEntrada entrada);
+	// TODO cambié el TEntrada de baja por Integer
+	public Integer bajaEntrada(Integer id);
 
 	/** 
 	* <!-- begin-UML-doc -->

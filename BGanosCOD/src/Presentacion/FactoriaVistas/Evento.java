@@ -17,14 +17,29 @@ public class Evento {
 	public static final int MOSTRAR_ENTRADA_POR_ID_VISTA = 204;
 	public static final int LISTAR_ENTRADAS_VISTA = 205;
 	
-	//				Funciones Entrada					220 - 299
+	//				Funciones Entrada					220 - 249
 	public static final int ALTA_ENTRADA = 220;
 	public static final int BAJA_ENTRADA = 221;
 	public static final int MODIFICAR_ENTRADA = 222;
 	public static final int MOSTRAR_ENTRADA_POR_ID = 223;
 	public static final int LISTAR_ENTRADAS = 224;
 	
-	
+	//				OKs y KOs Entrada					250 - 299
+	//					Alta
+	public static final int ALTA_ENTRADA_OK = 250;
+	public static final int ALTA_ENTRADA_KO = 251;
+	//					Baja
+	public static final int BAJA_ENTRADA_OK = 252;
+	public static final int BAJA_ENTRADA_KO = 253;
+	//					Modificar
+	public static final int MODIFICAR_ENTRADA_OK = 254;
+	public static final int MODIFICAR_ENTRADA_KO = 255;
+	//					Mostrar
+	public static final int MOSTRAR_ENTRADA_OK = 256;
+	public static final int MOSTRAR_ENTRADA_KO = 257;
+	//					Listar
+	public static final int LISTAR_ENTRADA_OK = 258;
+	public static final int LISTAR_ENTRADA_KO = 259;
 	
     
     //				Fabricante							300 - 399
