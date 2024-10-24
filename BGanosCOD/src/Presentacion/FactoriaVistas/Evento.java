@@ -9,7 +9,7 @@ public class Evento {
     
 	//	Entrada											200 - 299
 	    
-	//				Vistas Entrada						200 - 119
+	//				Vistas Entrada						200 - 219
     public static final int ENTRADA_VISTA = 200;
 	public static final int ALTA_ENTRADA_VISTA = 201;
 	public static final int BAJA_ENTRADA_VISTA = 202;
