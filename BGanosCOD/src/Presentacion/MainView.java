@@ -38,6 +38,7 @@ public class MainView extends JFrame implements IGUI {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initializeComponents();
+        this.getContentPane().setBackground(new Color(250, 250, 250)); // Fondo más claro
         this.setVisible(true);
     }
 
