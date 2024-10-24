@@ -153,6 +153,9 @@ public class Evento {
 	//					Baja
 	public static final int BAJA_SISTEMA_DE_RIEGO_OK = 752;
 	public static final int BAJA_SISTEMA_DE_RIEGO_KO = 753;
+	//					Modificar
+	public static final int MODIFICAR_SISTEMA_DE_RIEGO_OK = 754;
+	public static final int MODIFICAR_SISTEMA_DE_RIEGO_KO = 755;
 
 	
 
