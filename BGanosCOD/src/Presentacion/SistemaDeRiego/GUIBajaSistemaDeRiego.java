@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
+@SuppressWarnings("serial")
 public class GUIBajaSistemaDeRiego extends JFrame implements IGUI {
 	
 	private JTextField textId; // Campo para introducir el ID del sistema de riego
