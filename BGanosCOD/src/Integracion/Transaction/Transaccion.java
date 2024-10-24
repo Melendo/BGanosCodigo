@@ -6,11 +6,13 @@ package Integracion.Transaction;
 
 public interface Transaccion {
 	
-	public void start();
+	public void start() throws Exception;
 	
-	public void commit();
+	public void commit()throws Exception;
 
-	public void rollback();
+	public void rollback()throws Exception;
 
 	public Object getResource();
+	
+	public void cerrarConnection() throws Exception;
 }
