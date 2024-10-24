@@ -29,11 +29,10 @@ public class EntradaSAImp implements EntradaSA {
 	* @see EntradaSA#bajaEntrada(TEntrada entrada)
 	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	*/
-	public Integer bajaEntrada(TEntrada entrada) {
-		// begin-user-code
+	@Override
+	public Integer bajaEntrada(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
 	}
 
 	/** 
@@ -83,4 +82,6 @@ public class EntradaSAImp implements EntradaSA {
 		return null;
 		// end-user-code
 	}
+
+
 }
