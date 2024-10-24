@@ -8,8 +8,14 @@ import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 
 import javax.swing.JLabel;
+
+import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import Negocio.Invernadero.TInvernadero;
+
 import javax.swing.JPanel;
 
 /** 
@@ -43,6 +49,10 @@ public class GUIListarInvernaderoPorSR extends JFrame implements IGUI {
 	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	*/
 	private JPanel jPanel;
+
+	public GUIListarInvernaderoPorSR(Set<TInvernadero> datos) {
+		// TODO Auto-generated constructor stub
+	}
 
 	/** 
 	* <!-- begin-UML-doc -->

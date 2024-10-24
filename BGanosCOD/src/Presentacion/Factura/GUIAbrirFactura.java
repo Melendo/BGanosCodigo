@@ -10,6 +10,11 @@ import Presentacion.Controller.Command.Context;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import Negocio.Factura.TFactura;
+
+import java.util.Set;
+
 import javax.swing.JButton;
 
 /** 
@@ -43,6 +48,8 @@ public class GUIAbrirFactura extends JFrame implements IGUI {
 	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	*/
 	private JButton jButton;
+
+
 
 	/** 
 	* <!-- begin-UML-doc -->

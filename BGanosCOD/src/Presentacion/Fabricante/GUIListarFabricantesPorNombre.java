@@ -7,8 +7,13 @@ import javax.swing.JFrame;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 
+import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import Negocio.Fabricante.TFabricante;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
@@ -49,6 +54,10 @@ public class GUIListarFabricantesPorNombre extends JFrame implements IGUI {
 	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	*/
 	private JLabel jLabel;
+
+	public GUIListarFabricantesPorNombre(Set<TFabricante> datos) {
+		// TODO Auto-generated constructor stub
+	}
 
 	/** 
 	* <!-- begin-UML-doc -->

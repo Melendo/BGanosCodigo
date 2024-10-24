@@ -8,8 +8,14 @@ import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 
 import javax.swing.JLabel;
+
+import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import Negocio.Planta.TPlanta;
+
 import javax.swing.JPanel;
 
 /** 
@@ -43,6 +49,10 @@ public class GUIListarPlantasPorID extends JFrame implements IGUI {
 	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	*/
 	private JPanel jPanel;
+
+	public GUIListarPlantasPorID(Set<TPlanta> datos) {
+		// TODO Auto-generated constructor stub
+	}
 
 	/** 
 	* <!-- begin-UML-doc -->

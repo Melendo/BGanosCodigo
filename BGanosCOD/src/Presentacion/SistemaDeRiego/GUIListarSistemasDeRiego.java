@@ -8,7 +8,13 @@ import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 
 import javax.swing.JTextField;
+
+import Negocio.SistemaDeRiego.TSistemaDeRiego;
+
 import javax.swing.JLabel;
+
+import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -43,6 +49,10 @@ public class GUIListarSistemasDeRiego extends JFrame implements IGUI {
 	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	*/
 	private JPanel jPanel;
+
+	public GUIListarSistemasDeRiego(Set<TSistemaDeRiego> datos) {
+		// TODO Auto-generated constructor stub
+	}
 
 	/** 
 	* <!-- begin-UML-doc -->
