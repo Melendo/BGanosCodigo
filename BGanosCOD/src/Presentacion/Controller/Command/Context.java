@@ -21,6 +21,7 @@ public class Context {
 
 	public void setContext(Integer evento, Object datos) {
 		this.datos = datos;
+		this.evento = evento;
 	}
 
 	
