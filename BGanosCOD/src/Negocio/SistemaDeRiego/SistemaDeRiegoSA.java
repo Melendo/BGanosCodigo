@@ -64,4 +64,6 @@ public interface SistemaDeRiegoSA {
 	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	*/
 	public Set<TSistemaDeRiego> listarSisRiegoPorFabricante(Integer idFabricante);
+	
+	public Set<TSistemaDeRiego> listarSisRiegoDelInvernadero(Integer idInvernadero);
 }

@@ -156,7 +156,9 @@ public class Evento {
 	//					Modificar
 	public static final int MODIFICAR_SISTEMA_DE_RIEGO_OK = 754;
 	public static final int MODIFICAR_SISTEMA_DE_RIEGO_KO = 755;
-
+	//					Listar en Invernadero
+	public static final int LISTAR_SISTEMA_DE_RIEGO_DE_INVERNADERO_OK = 756;
+	public static final int LISTAR_SISTEMA_DE_RIEGO_DE_INVERNADERO_KO = 757;
 	
 
 	
