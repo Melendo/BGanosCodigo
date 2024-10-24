@@ -83,4 +83,10 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 		return null;
 		// end-user-code
 	}
+
+
+	public Set<TSistemaDeRiego> listarSisRiegoDelInvernadero(Integer idInvernadero) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
