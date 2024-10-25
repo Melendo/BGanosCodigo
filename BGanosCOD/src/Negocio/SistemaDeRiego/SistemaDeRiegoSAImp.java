@@ -199,10 +199,24 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 
 	
 	public Set<TSistemaDeRiego> listarSisRiegoPorFabricante(Integer idFabricante) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TSistemaDeRiego> listaSisRiego = new HashSet<>();
+
+	    try {
+	        TransaccionManager transaction = TransaccionManager.getInstance();
+	        Transaccion t = transaction.newTransaccion();
+	        t.start();
+	        
+	        FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+	        SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
+	        
+	        listaSisRiego = daoSistRiego.listarSistemaDeRiegoPorFabricante(idFabricante);	        
+	        t.commit(); 
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace(); 
+	    }
+	    
+	    return listaSisRiego;
 	}
 
 
