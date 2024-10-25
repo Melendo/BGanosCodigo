@@ -19,8 +19,9 @@ import java.awt.event.ActionListener;
 import java.util.Set;
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
+@SuppressWarnings("serial")
 public class GUIListarSistemasDeRiego extends JFrame implements IGUI {
-    private static final long serialVersionUID = 1L;
+  
 
     public GUIListarSistemasDeRiego(Set<TSistemaDeRiego> datos) {
         super("Mostrar todos los Sistemas de Riego");

@@ -238,7 +238,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
                     vistaActual = new GUIListarSistemaDeRiegoDelInvernadero((Set<TSistemaDeRiego>) contexto.getDatos()); 
                     return vistaActual;
                 case Evento.LISTAR_SISTEMAS_RIEGO_POR_FABRICANTE_VISTA:
-                    vistaActual = new GUIListarSistemaDeRiegoPorFabricante((Set<TSistemaDeRiego>) contexto.getDatos()); 
+                    vistaActual = new GUIListarSistemaDeRiegoPorFabricante(); 
                     return vistaActual;
 
             default:
