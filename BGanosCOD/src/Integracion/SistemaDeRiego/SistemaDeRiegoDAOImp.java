@@ -81,10 +81,34 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 
 	
 	public Integer modificarSistemaDeRiego(TSistemaDeRiego sistemaDeRiego) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+    	int exito = -1;
+    	
+        try {
+        	TransaccionManager tManager = TransaccionManager.getInstance();
+            Transaccion trans = tManager.getTransaccion();
+            Connection connection = (Connection) trans.getResource();
+            
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE sistema_de_riego SET nombre = ?, potencia_riego = ?, cantidad_agua = ?, frecuencia = ?, activo = ?, id_fabricante = ? WHERE id = ?"
+                );
+
+            	// Asignar parametos
+                statement.setString(1, sistemaDeRiego.getNombre());
+                statement.setInt(2, sistemaDeRiego.getPotenciaRiego());
+                statement.setInt(3, sistemaDeRiego.getCantidad_agua());
+                statement.setInt(4, sistemaDeRiego.getFrecuencia());
+                statement.setBoolean(5, sistemaDeRiego.getActivo());
+                statement.setInt(6, sistemaDeRiego.getIdFabricante());
+                statement.setInt(7, sistemaDeRiego.getId());
+
+                exito = statement.executeUpdate();
+
+                statement.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return (exito > 0) ? sistemaDeRiego.getId() : -1;
 	}
 
 	

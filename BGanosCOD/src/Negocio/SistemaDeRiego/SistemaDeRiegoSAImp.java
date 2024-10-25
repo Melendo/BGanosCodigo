@@ -41,6 +41,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 								t.commit();
 							}else if(tSistRiego.getActivo() == false){ //Existe pero no activo
 								sisRiego.setId(tSistRiego.getId());
+								sisRiego.setActivo(true);
 								exito = daoSistRiego.modificarSistemaDeRiego(sisRiego); //Reactivar y actualizar
 								t.commit();
 							}else{ // Existe y activo
