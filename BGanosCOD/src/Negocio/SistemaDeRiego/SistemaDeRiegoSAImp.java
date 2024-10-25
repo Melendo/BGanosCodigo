@@ -61,10 +61,38 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 
 	
 	public Integer bajaSisRiego(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		int exito = -1;
+
+	    try {
+	        // Inicializa la transacción
+	        TransaccionManager transaction = TransaccionManager.getInstance();
+	        Transaccion t = transaction.newTransaccion();
+	        t.start();
+
+	        FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+	        SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
+	        
+	        TSistemaDeRiego tSistRiego = daoSistRiego.mostrarSistemaDeRiegoPorID(id);
+
+	        //  sistema de riego existe
+	        if (tSistRiego != null) {
+	            //  sistema de riego  activo
+	            if (tSistRiego.getActivo()) {
+	                exito = daoSistRiego.bajaSistemaDeRiego(id);
+	                t.commit();
+	            } else {
+	                exito = -2; // Error: No activo
+	                t.rollback();
+	            }
+	        } else {
+	            exito = -404; // Error: No existe
+	            t.rollback();
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return exito;
 	}
 
 	
