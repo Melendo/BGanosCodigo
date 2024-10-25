@@ -58,7 +58,7 @@ public class GUIListarSistemaDeRiegoPorFabricante extends JFrame implements IGUI
         mainPanel.add(panelCentro);
 
         // Campo de entrada para el fabricante
-        JLabel labelFabricante = new JLabel("Ingrese el fabricante:");
+        JLabel labelFabricante = new JLabel("Ingrese el id del fabricante:");
         panelCentro.add(labelFabricante);
         
         fabricanteField = new JTextField();
