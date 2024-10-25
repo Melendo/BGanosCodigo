@@ -26,7 +26,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Connection connection = (Connection) trans.getResource();
 
             PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO sistema_de_riego (nombre, potencia_riego, cantidad_agua, frecuencia, activo, id_fabricante) VALUES (?, ?, ?, ?, ?, ?)",
+                "INSERT INTO sistema_de_riego (nombre, potencia_riego, cantidad_agua, frecuencia, activo, id_fabricante, id_invernadero) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 Statement.RETURN_GENERATED_KEYS
             );
 
@@ -37,6 +37,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             statement.setInt(4, sistemaDeRiego.getFrecuencia());
             statement.setBoolean(5, sistemaDeRiego.getActivo());
             statement.setInt(6, sistemaDeRiego.getIdFabricante());
+            statement.setInt(7, sistemaDeRiego.getIdInvernadero());
 
             statement.executeUpdate();
 
@@ -90,7 +91,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Connection connection = (Connection) trans.getResource();
             
             PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE sistema_de_riego SET nombre = ?, potencia_riego = ?, cantidad_agua = ?, frecuencia = ?, activo = ?, id_fabricante = ? WHERE id = ?"
+                    "UPDATE sistema_de_riego SET nombre = ?, potencia_riego = ?, cantidad_agua = ?, frecuencia = ?, activo = ?, id_fabricante = ?, id_invernadero = ? WHERE id = ?"
                 );
 
             	// Asignar parametos
@@ -100,7 +101,8 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
                 statement.setInt(4, sistemaDeRiego.getFrecuencia());
                 statement.setBoolean(5, sistemaDeRiego.getActivo());
                 statement.setInt(6, sistemaDeRiego.getIdFabricante());
-                statement.setInt(7, sistemaDeRiego.getId());
+                statement.setInt(7, sistemaDeRiego.getIdInvernadero());
+                statement.setInt(8, sistemaDeRiego.getId());
 
                 res = statement.executeUpdate();
 
@@ -137,6 +139,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 	            sistemaDeRiego.setFrecuencia(result.getInt("frecuencia"));
 	            sistemaDeRiego.setActivo(result.getBoolean("activo"));
 	            sistemaDeRiego.setIdFabricante(result.getInt("id_fabricante"));
+	            sistemaDeRiego.setIdInvernadero(result.getInt("id_invernadero"));
 	        }
 
 	        statement.close();
@@ -173,6 +176,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 	            sistemaDeRiego.setFrecuencia(result.getInt("frecuencia"));
 	            sistemaDeRiego.setActivo(result.getBoolean("activo"));
 	            sistemaDeRiego.setIdFabricante(result.getInt("id_fabricante"));
+	            sistemaDeRiego.setIdInvernadero(result.getInt("id_invernadero"));
 	            
 	            sistemasDeRiego.add(sistemaDeRiego);
 	        }
@@ -210,6 +214,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 	            sistemaDeRiego.setFrecuencia(result.getInt("frecuencia"));
 	            sistemaDeRiego.setActivo(result.getBoolean("activo"));
 	            sistemaDeRiego.setIdFabricante(result.getInt("id_fabricante"));
+	            sistemaDeRiego.setIdInvernadero(result.getInt("id_invernadero"));
 	            
 	            sistemasDeRiego.add(sistemaDeRiego);
 	        }
@@ -248,6 +253,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 	            sistemaDeRiego.setFrecuencia(result.getInt("frecuencia"));
 	            sistemaDeRiego.setActivo(result.getBoolean("activo"));
 	            sistemaDeRiego.setIdFabricante(result.getInt("id_fabricante"));
+	            sistemaDeRiego.setIdInvernadero(result.getInt("id_invernadero"));
 	        }
 
 	        statement.close();
@@ -284,6 +290,8 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 	            sistemaDeRiego.setFrecuencia(result.getInt("frecuencia"));
 	            sistemaDeRiego.setActivo(result.getBoolean("activo"));
 	            sistemaDeRiego.setIdFabricante(result.getInt("id_fabricante"));
+	            sistemaDeRiego.setIdInvernadero(result.getInt("id_invernadero"));
+	            
 	            sistemasDeRiego.add(sistemaDeRiego);
 	        }
 
