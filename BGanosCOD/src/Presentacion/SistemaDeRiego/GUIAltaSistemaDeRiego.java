@@ -119,6 +119,7 @@ public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
                     sistemaDeRiego.setCantidad_agua(cantidadAgua);
                     sistemaDeRiego.setFrecuencia(frecuencia);
                     sistemaDeRiego.setIdFabricante(idFabricante);
+                    sistemaDeRiego.setActivo(true);
 
                     ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_SISTEMA_RIEGO, sistemaDeRiego));
                 } catch (NumberFormatException ex) {
