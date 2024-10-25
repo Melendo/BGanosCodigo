@@ -97,10 +97,51 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 
 	
 	public Integer modificarSisRiego(TSistemaDeRiego sisRiego) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		 // Comprobamos campos nulos
+	    if (sisRiego.getNombre().isEmpty() || sisRiego.getFrecuencia() == -1 || 
+	        sisRiego.getCantidad_agua() == -1 || sisRiego.getPotenciaRiego() == -1 || 
+	        sisRiego.getIdFabricante() == 0 || sisRiego.getId() <= 0) { 
+	        return -3; // Error: casos vacíos 
+	    }
+
+	    int exito = -1;
+
+	    try {
+	       
+	        TransaccionManager transaccion = TransaccionManager.getInstance();
+	        Transaccion t = transaccion.newTransaccion();
+	        t.start();
+
+	        FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+	        FabricanteDAO daoFabricante = f.getFabricanteDAO();
+	        TFabricante fabricante = daoFabricante.mostrarFabricantePorId(sisRiego.getIdFabricante());
+
+	        if (fabricante != null) {
+	            if (fabricante.getActivo()) {
+	                SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
+	                TSistemaDeRiego tSistRiego = daoSistRiego.mostrarSistemaDeRiegoPorID(sisRiego.getId());
+
+	                if (tSistRiego != null) { // sistema de riego existe
+	                
+	                    exito = daoSistRiego.modificarSistemaDeRiego(sisRiego);
+	                    t.commit(); 
+	                } else {
+	                    exito = -404; // Error: sistema de riego no existe
+	                    t.rollback(); 
+	                }
+	            } else {
+	                exito = -511; // Error: fabricante no activo
+	                t.rollback(); 
+	            }
+	        } else {
+	            exito = -404; // Error: fabricante no existe
+	            t.rollback();
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return exito; // Retorna el código de éxito o error
 	}
 
 	
