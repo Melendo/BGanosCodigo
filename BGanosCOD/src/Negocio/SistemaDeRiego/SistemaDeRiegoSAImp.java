@@ -98,17 +98,17 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 
 	
 	public Integer modificarSisRiego(TSistemaDeRiego sisRiego) {
-		 // Comprobamos campos nulos
+		// Comprobamos campos nulos
 	    if (sisRiego.getNombre().isEmpty() || sisRiego.getFrecuencia() == -1 || 
 	        sisRiego.getCantidad_agua() == -1 || sisRiego.getPotenciaRiego() == -1 || 
 	        sisRiego.getIdFabricante() == 0 || sisRiego.getId() <= 0) { 
+	    	
 	        return -3; // Error: casos vacíos 
 	    }
-
+	    
 	    int exito = -1;
 
 	    try {
-	       
 	        TransaccionManager transaccion = TransaccionManager.getInstance();
 	        Transaccion t = transaccion.newTransaccion();
 	        t.start();
@@ -120,14 +120,15 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	        if (fabricante != null) {
 	            if (fabricante.getActivo()) {
 	                SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
-	                TSistemaDeRiego tSistRiego = daoSistRiego.mostrarSistemaDeRiegoPorID(sisRiego.getId());
+	                TSistemaDeRiego tSistRiegoExistente = daoSistRiego.leerPorNombreUnico(sisRiego.getNombre());
 
-	                if (tSistRiego != null) { // sistema de riego existe
-	                
+	                if (tSistRiegoExistente == null || 
+	                    (tSistRiegoExistente.getId().equals(sisRiego.getId()) && !tSistRiegoExistente.getActivo())) {
+	                    // Si no existe un sistema de riego con el mismo nombre o si el nombre pertenece a uno inactivo
 	                    exito = daoSistRiego.modificarSistemaDeRiego(sisRiego);
 	                    t.commit(); 
 	                } else {
-	                    exito = -404; // Error: sistema de riego no existe
+	                    exito = -2; // Error: Nombre  existe y activo
 	                    t.rollback(); 
 	                }
 	            } else {
@@ -141,7 +142,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	    
+
 	    return exito; 
 	}
 
