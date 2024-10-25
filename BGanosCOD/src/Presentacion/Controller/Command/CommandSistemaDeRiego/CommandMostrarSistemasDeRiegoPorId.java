@@ -14,7 +14,7 @@ public class CommandMostrarSistemasDeRiegoPorId implements Command {
 	
 	public Context execute(Object datos) {
 		TSistemaDeRiego resultado = FactoriaNegocio.getInstance().getSistemaDeRiegoSA().mostrarSisRiego((Integer)datos);
-		if(resultado.getId() > -1){ 
+		if(resultado.getIdFabricante() != null && resultado.getIdFabricante() > -1){ 
 			return new Context(Evento.MOSTRAR_SISTEMA_DE_RIEGO_OK,resultado);
 		}else {
 			return new Context(Evento.MOSTRAR_SISTEMA_DE_RIEGO_KO,resultado);

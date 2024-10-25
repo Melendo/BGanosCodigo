@@ -170,8 +170,8 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	
 	public TSistemaDeRiego mostrarSisRiego(Integer id) {
 		
-		  TSistemaDeRiego sisRiegoMostrar = null;
-		
+		  TSistemaDeRiego sisRiegoMostrar = new TSistemaDeRiego();
+		  
 	    try {
 	        TransaccionManager transaction = TransaccionManager.getInstance();
 	        Transaccion trans = transaction.newTransaccion();
@@ -185,7 +185,8 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	        if (sisRiegoMostrar != null) {
 	            trans.commit(); 
 	        } else {
-	            sisRiegoMostrar = null; //No encontrado
+	            sisRiegoMostrar = new TSistemaDeRiego();
+	            sisRiegoMostrar.setId(id);//No encontrado dejamos el id para sacar el mensaje de erro
 	            trans.rollback(); 
 	        }
 	    } catch (Exception e) {
