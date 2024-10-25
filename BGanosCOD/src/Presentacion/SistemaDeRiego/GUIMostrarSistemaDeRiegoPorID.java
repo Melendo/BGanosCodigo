@@ -19,6 +19,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import Negocio.SistemaDeRiego.TSistemaDeRiego;
+
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -107,10 +110,25 @@ public class GUIMostrarSistemaDeRiegoPorID extends JFrame implements IGUI {
 
     @Override
     public void actualizar(Context context) {
-    	if (context.getEvento() == Evento.MOSTRAR_SISTEMA_DE_RIEGO_OK) {
-            JOptionPane.showMessageDialog(this, "Sistema de riego mostrado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    	
+        if (context.getEvento() == Evento.MOSTRAR_SISTEMA_DE_RIEGO_OK) {
+            TSistemaDeRiego sistemaRiego = (TSistemaDeRiego) context.getDatos();
+            String texto = "ID: " + sistemaRiego.getId() +
+                           ", Nombre: " + sistemaRiego.getNombre() +
+                           ", Potencia de Riego: " + sistemaRiego.getPotenciaRiego() + 
+                           ", Cantidad de Agua: " + sistemaRiego.getCantidad_agua() + 
+                           ", Frecuencia: " + sistemaRiego.getFrecuencia() + 
+                           ", Activo: " + sistemaRiego.getActivo();
+            
+          
+            JOptionPane.showMessageDialog(this, texto, "Sistema de Riego", JOptionPane.INFORMATION_MESSAGE);
         } else if (context.getEvento() == Evento.MOSTRAR_SISTEMA_DE_RIEGO_KO) {
-            JOptionPane.showMessageDialog(this, "Error al mostrar el sistema de riego", "Error", JOptionPane.ERROR_MESSAGE);
+          
+            JOptionPane.showMessageDialog(this, "Error al mostrar el sistema de riego con ID: " + 
+                ((TSistemaDeRiego) context.getDatos()).getId(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
+        this.setVisible(false); 
+        ApplicationController.getInstance().manageRequest(new Context(Evento.SISTEMA_RIEGO_VISTA, null));
     }
 }
