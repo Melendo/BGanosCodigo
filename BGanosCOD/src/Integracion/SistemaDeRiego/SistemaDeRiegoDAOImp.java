@@ -25,29 +25,29 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Transaccion trans = tManager.getTransaccion();
             Connection connection = (Connection) trans.getResource();
 
-            PreparedStatement statement = connection.prepareStatement(
+            PreparedStatement ps = connection.prepareStatement(
                 "INSERT INTO sistema_de_riego (nombre, potencia_riego, cantidad_agua, frecuencia, activo, id_fabricante, id_invernadero) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 Statement.RETURN_GENERATED_KEYS
             );
 
             // Asignar parametos
-            statement.setString(1, sistemaDeRiego.getNombre());
-            statement.setInt(2, sistemaDeRiego.getPotenciaRiego());
-            statement.setInt(3, sistemaDeRiego.getCantidad_agua());
-            statement.setInt(4, sistemaDeRiego.getFrecuencia());
-            statement.setBoolean(5, sistemaDeRiego.getActivo());
-            statement.setInt(6, sistemaDeRiego.getIdFabricante());
-            statement.setInt(7, sistemaDeRiego.getIdInvernadero());
+            ps.setString(1, sistemaDeRiego.getNombre());
+            ps.setInt(2, sistemaDeRiego.getPotenciaRiego());
+            ps.setInt(3, sistemaDeRiego.getCantidad_agua());
+            ps.setInt(4, sistemaDeRiego.getFrecuencia());
+            ps.setBoolean(5, sistemaDeRiego.getActivo());
+            ps.setInt(6, sistemaDeRiego.getIdFabricante());
+            ps.setInt(7, sistemaDeRiego.getIdInvernadero());
 
-            statement.executeUpdate();
+            ps.executeUpdate();
 
-            ResultSet result = statement.getGeneratedKeys();
-            if (result.next()) {
-                res = result.getInt(1); // Obtener id generado
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                res = rs.getInt(1); // Obtener id generado
             }
 
-            result.close();
-            statement.close();
+            rs.close();
+            ps.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,15 +65,15 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Transaccion trans = tManager.getTransaccion();
             Connection connection = (Connection) trans.getResource();
 	        
-	        PreparedStatement statement = connection.prepareStatement(
+	        PreparedStatement ps = connection.prepareStatement(
 	            "UPDATE sistema_de_riego SET activo = false WHERE id = ?"
 	        );
 
 	        // Asignar id
-	        statement.setInt(1, id);
-	        res = statement.executeUpdate(); 
+	        ps.setInt(1, id);
+	        res = ps.executeUpdate(); 
 
-	        statement.close();
+	        ps.close();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
@@ -90,23 +90,23 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Transaccion trans = tManager.getTransaccion();
             Connection connection = (Connection) trans.getResource();
             
-            PreparedStatement statement = connection.prepareStatement(
+            PreparedStatement ps = connection.prepareStatement(
                     "UPDATE sistema_de_riego SET nombre = ?, potencia_riego = ?, cantidad_agua = ?, frecuencia = ?, activo = ?, id_fabricante = ?, id_invernadero = ? WHERE id = ?"
                 );
 
             	// Asignar parametos
-                statement.setString(1, sistemaDeRiego.getNombre());
-                statement.setInt(2, sistemaDeRiego.getPotenciaRiego());
-                statement.setInt(3, sistemaDeRiego.getCantidad_agua());
-                statement.setInt(4, sistemaDeRiego.getFrecuencia());
-                statement.setBoolean(5, sistemaDeRiego.getActivo());
-                statement.setInt(6, sistemaDeRiego.getIdFabricante());
-                statement.setInt(7, sistemaDeRiego.getIdInvernadero());
-                statement.setInt(8, sistemaDeRiego.getId());
+                ps.setString(1, sistemaDeRiego.getNombre());
+                ps.setInt(2, sistemaDeRiego.getPotenciaRiego());
+                ps.setInt(3, sistemaDeRiego.getCantidad_agua());
+                ps.setInt(4, sistemaDeRiego.getFrecuencia());
+                ps.setBoolean(5, sistemaDeRiego.getActivo());
+                ps.setInt(6, sistemaDeRiego.getIdFabricante());
+                ps.setInt(7, sistemaDeRiego.getIdInvernadero());
+                ps.setInt(8, sistemaDeRiego.getId());
 
-                res = statement.executeUpdate();
+                res = ps.executeUpdate();
 
-                statement.close();
+                ps.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -123,27 +123,27 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Transaccion trans = tManager.getTransaccion();
             Connection connection = (Connection) trans.getResource();
 	        
-	        PreparedStatement statement = connection.prepareStatement(
+	        PreparedStatement ps = connection.prepareStatement(
 	            "SELECT * FROM sistema_de_riego WHERE id = ? FOR UPDATE"
 	        );
-	        statement.setInt(1, id);
+	        ps.setInt(1, id);
 
-	        ResultSet result = statement.executeQuery();
+	        ResultSet rs = ps.executeQuery();
 	     // Asignar parametos de vuelta al tsistemaDeRiego
-	        if (result.next()) {
+	        if (rs.next()) {
 	            sistemaDeRiego = new TSistemaDeRiego();
-	            sistemaDeRiego.setId(result.getInt("id"));
-	            sistemaDeRiego.setNombre(result.getString("nombre"));
-	            sistemaDeRiego.setPotenciaRiego(result.getInt("potencia_riego"));
-	            sistemaDeRiego.setCantidad_agua(result.getInt("cantidad_agua"));
-	            sistemaDeRiego.setFrecuencia(result.getInt("frecuencia"));
-	            sistemaDeRiego.setActivo(result.getBoolean("activo"));
-	            sistemaDeRiego.setIdFabricante(result.getInt("id_fabricante"));
-	            sistemaDeRiego.setIdInvernadero(result.getInt("id_invernadero"));
+	            sistemaDeRiego.setId(rs.getInt("id"));
+	            sistemaDeRiego.setNombre(rs.getString("nombre"));
+	            sistemaDeRiego.setPotenciaRiego(rs.getInt("potencia_riego"));
+	            sistemaDeRiego.setCantidad_agua(rs.getInt("cantidad_agua"));
+	            sistemaDeRiego.setFrecuencia(rs.getInt("frecuencia"));
+	            sistemaDeRiego.setActivo(rs.getBoolean("activo"));
+	            sistemaDeRiego.setIdFabricante(rs.getInt("id_fabricante"));
+	            sistemaDeRiego.setIdInvernadero(rs.getInt("id_invernadero"));
 	        }
 
-	        statement.close();
-	        result.close();
+	        ps.close();
+	        rs.close();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
@@ -160,29 +160,29 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Transaccion trans = tManager.getTransaccion();
             Connection connection = (Connection) trans.getResource();
 	        
-	        PreparedStatement statement = connection.prepareStatement(
+	        PreparedStatement ps = connection.prepareStatement(
 	            "SELECT * FROM sistema_de_riego WHERE id_fabricante = ? FOR UPDATE"
 	        );
-	        statement.setInt(1, idFabricante);
+	        ps.setInt(1, idFabricante);
 	        
-	        ResultSet result = statement.executeQuery();
+	        ResultSet rs = ps.executeQuery();
 
-	        while (result.next()) {
+	        while (rs.next()) {
 	            TSistemaDeRiego sistemaDeRiego = new TSistemaDeRiego();
-	            sistemaDeRiego.setId(result.getInt("id"));
-	            sistemaDeRiego.setNombre(result.getString("nombre"));
-	            sistemaDeRiego.setPotenciaRiego(result.getInt("potencia_riego"));
-	            sistemaDeRiego.setCantidad_agua(result.getInt("cantidad_agua"));
-	            sistemaDeRiego.setFrecuencia(result.getInt("frecuencia"));
-	            sistemaDeRiego.setActivo(result.getBoolean("activo"));
-	            sistemaDeRiego.setIdFabricante(result.getInt("id_fabricante"));
-	            sistemaDeRiego.setIdInvernadero(result.getInt("id_invernadero"));
+	            sistemaDeRiego.setId(rs.getInt("id"));
+	            sistemaDeRiego.setNombre(rs.getString("nombre"));
+	            sistemaDeRiego.setPotenciaRiego(rs.getInt("potencia_riego"));
+	            sistemaDeRiego.setCantidad_agua(rs.getInt("cantidad_agua"));
+	            sistemaDeRiego.setFrecuencia(rs.getInt("frecuencia"));
+	            sistemaDeRiego.setActivo(rs.getBoolean("activo"));
+	            sistemaDeRiego.setIdFabricante(rs.getInt("id_fabricante"));
+	            sistemaDeRiego.setIdInvernadero(rs.getInt("id_invernadero"));
 	            
 	            sistemasDeRiego.add(sistemaDeRiego);
 	        }
 
-	        statement.close();
-	        result.close();
+	        ps.close();
+	        rs.close();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
@@ -199,28 +199,28 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Transaccion trans = tManager.getTransaccion();
             Connection connection = (Connection) trans.getResource();
 	        
-	        PreparedStatement statement = connection.prepareStatement(
+	        PreparedStatement ps = connection.prepareStatement(
 	        		"SELECT * FROM sistema_de_riego FOR UPDATE"
 	        );
 	        
-	        ResultSet result = statement.executeQuery();
+	        ResultSet rs = ps.executeQuery();
 
-	        while (result.next()) {
+	        while (rs.next()) {
 	            TSistemaDeRiego sistemaDeRiego = new TSistemaDeRiego();
-	            sistemaDeRiego.setId(result.getInt("id"));
-	            sistemaDeRiego.setNombre(result.getString("nombre"));
-	            sistemaDeRiego.setPotenciaRiego(result.getInt("potencia_riego"));
-	            sistemaDeRiego.setCantidad_agua(result.getInt("cantidad_agua"));
-	            sistemaDeRiego.setFrecuencia(result.getInt("frecuencia"));
-	            sistemaDeRiego.setActivo(result.getBoolean("activo"));
-	            sistemaDeRiego.setIdFabricante(result.getInt("id_fabricante"));
-	            sistemaDeRiego.setIdInvernadero(result.getInt("id_invernadero"));
+	            sistemaDeRiego.setId(rs.getInt("id"));
+	            sistemaDeRiego.setNombre(rs.getString("nombre"));
+	            sistemaDeRiego.setPotenciaRiego(rs.getInt("potencia_riego"));
+	            sistemaDeRiego.setCantidad_agua(rs.getInt("cantidad_agua"));
+	            sistemaDeRiego.setFrecuencia(rs.getInt("frecuencia"));
+	            sistemaDeRiego.setActivo(rs.getBoolean("activo"));
+	            sistemaDeRiego.setIdFabricante(rs.getInt("id_fabricante"));
+	            sistemaDeRiego.setIdInvernadero(rs.getInt("id_invernadero"));
 	            
 	            sistemasDeRiego.add(sistemaDeRiego);
 	        }
 
-	        statement.close();
-	        result.close();
+	        ps.close();
+	        rs.close();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
@@ -237,27 +237,27 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Transaccion trans = tManager.getTransaccion();
             Connection connection = (Connection) trans.getResource();
 	        
-	        PreparedStatement statement = connection.prepareStatement(
+	        PreparedStatement ps = connection.prepareStatement(
 	            "SELECT * FROM sistema_de_riego WHERE nombre = ? "
 	        );
-	        statement.setString(1, nombre);
+	        ps.setString(1, nombre);
 
-	        ResultSet result = statement.executeQuery();
+	        ResultSet rs = ps.executeQuery();
 
-	        if (result.next()) {
+	        if (rs.next()) {
 	            sistemaDeRiego = new TSistemaDeRiego();
-	            sistemaDeRiego.setId(result.getInt("id"));
-	            sistemaDeRiego.setNombre(result.getString("nombre"));
-	            sistemaDeRiego.setPotenciaRiego(result.getInt("potencia_riego"));
-	            sistemaDeRiego.setCantidad_agua(result.getInt("cantidad_agua"));
-	            sistemaDeRiego.setFrecuencia(result.getInt("frecuencia"));
-	            sistemaDeRiego.setActivo(result.getBoolean("activo"));
-	            sistemaDeRiego.setIdFabricante(result.getInt("id_fabricante"));
-	            sistemaDeRiego.setIdInvernadero(result.getInt("id_invernadero"));
+	            sistemaDeRiego.setId(rs.getInt("id"));
+	            sistemaDeRiego.setNombre(rs.getString("nombre"));
+	            sistemaDeRiego.setPotenciaRiego(rs.getInt("potencia_riego"));
+	            sistemaDeRiego.setCantidad_agua(rs.getInt("cantidad_agua"));
+	            sistemaDeRiego.setFrecuencia(rs.getInt("frecuencia"));
+	            sistemaDeRiego.setActivo(rs.getBoolean("activo"));
+	            sistemaDeRiego.setIdFabricante(rs.getInt("id_fabricante"));
+	            sistemaDeRiego.setIdInvernadero(rs.getInt("id_invernadero"));
 	        }
 
-	        statement.close();
-	        result.close();
+	        ps.close();
+	        rs.close();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
@@ -274,29 +274,29 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Transaccion trans = tManager.getTransaccion();
             Connection connection = (Connection) trans.getResource();
 	        
-	        PreparedStatement statement = connection.prepareStatement(
+	        PreparedStatement ps = connection.prepareStatement(
 	            "SELECT * FROM sistema_de_riego WHERE id_invernadero = ?"
 	        );
-	        statement.setInt(1, idInvernadero);
+	        ps.setInt(1, idInvernadero);
 
-	        ResultSet result = statement.executeQuery();
+	        ResultSet rs = ps.executeQuery();
 
-	        while (result.next()) {
+	        while (rs.next()) {
 	            TSistemaDeRiego sistemaDeRiego = new TSistemaDeRiego();
-	            sistemaDeRiego.setId(result.getInt("id"));
-	            sistemaDeRiego.setNombre(result.getString("nombre"));
-	            sistemaDeRiego.setPotenciaRiego(result.getInt("potencia_riego"));
-	            sistemaDeRiego.setCantidad_agua(result.getInt("cantidad_agua"));
-	            sistemaDeRiego.setFrecuencia(result.getInt("frecuencia"));
-	            sistemaDeRiego.setActivo(result.getBoolean("activo"));
-	            sistemaDeRiego.setIdFabricante(result.getInt("id_fabricante"));
-	            sistemaDeRiego.setIdInvernadero(result.getInt("id_invernadero"));
+	            sistemaDeRiego.setId(rs.getInt("id"));
+	            sistemaDeRiego.setNombre(rs.getString("nombre"));
+	            sistemaDeRiego.setPotenciaRiego(rs.getInt("potencia_riego"));
+	            sistemaDeRiego.setCantidad_agua(rs.getInt("cantidad_agua"));
+	            sistemaDeRiego.setFrecuencia(rs.getInt("frecuencia"));
+	            sistemaDeRiego.setActivo(rs.getBoolean("activo"));
+	            sistemaDeRiego.setIdFabricante(rs.getInt("id_fabricante"));
+	            sistemaDeRiego.setIdInvernadero(rs.getInt("id_invernadero"));
 	            
 	            sistemasDeRiego.add(sistemaDeRiego);
 	        }
 
-	        statement.close();
-	        result.close();
+	        ps.close();
+	        rs.close();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
