@@ -141,15 +141,35 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	        e.printStackTrace();
 	    }
 	    
-	    return exito; // Retorna el código de éxito o error
+	    return exito; 
 	}
 
 	
 	public TSistemaDeRiego mostrarSisRiego(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		
+		  TSistemaDeRiego sisRiegoMostrar = null;
+		
+	    try {
+	        TransaccionManager transaction = TransaccionManager.getInstance();
+	        Transaccion t = transaction.newTransaccion();
+	        t.start();
+	 
+	        FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+	        SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
+	        
+	         sisRiegoMostrar = daoSistRiego.mostrarSistemaDeRiegoPorID(id);
+	        
+	        if (sisRiegoMostrar != null) {
+	            t.commit(); 
+	        } else {
+	            sisRiegoMostrar = null; //No encontrado
+	            t.rollback(); 
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace(); 
+	    }
+	    
+	    return sisRiegoMostrar;
 	}
 
 	
