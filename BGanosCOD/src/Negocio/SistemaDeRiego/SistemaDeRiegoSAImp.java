@@ -87,7 +87,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	        SistemaDeRiegoDAO daoSistRiego = factoria.getSistemaDeRiegoDAO();
 	        
 	        TSistemaDeRiego tSistRiego = daoSistRiego.mostrarSistemaDeRiegoPorID(id);
-
+	        
 	        //  sistema de riego existe
 	        if (tSistRiego != null) {
 	            //  sistema de riego  activo
@@ -114,7 +114,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 		// Comprobamos campos nulos
 	    if (sisRiego.getNombre().isEmpty() || sisRiego.getFrecuencia() == -1 || 
 	        sisRiego.getCantidad_agua() == -1 || sisRiego.getPotenciaRiego() == -1 || 
-	        sisRiego.getIdFabricante() == 0 || sisRiego.getId() <= 0) { 
+	        		sisRiego.getIdInvernadero() == null ||sisRiego.getIdFabricante() == null || sisRiego.getId() <= 0) { 
 	    	
 	        return -3; // Error: casos vacíos 
 	    }
@@ -128,30 +128,38 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 
 	        FactoriaIntegracion factoria = FactoriaIntegracion.getInstance();
 	        FabricanteDAO daoFabricante = factoria.getFabricanteDAO();
+	        InvernaderoDAO daoInvernadero = factoria.getInvernaderoDAO();
 	        TFabricante fabricante = daoFabricante.mostrarFabricantePorId(sisRiego.getIdFabricante());
+	        TInvernadero invernadero = daoInvernadero.mostrarInvernaderoPorID(sisRiego.getIdInvernadero()); 
+	        
+	        if(invernadero != null){
+	        	if (fabricante != null) {
+		            if (fabricante.getActivo()) {
+		                SistemaDeRiegoDAO daoSistRiego = factoria.getSistemaDeRiegoDAO();
+		                TSistemaDeRiego tSistRiegoExistente = daoSistRiego.leerPorNombreUnico(sisRiego.getNombre());
 
-	        if (fabricante != null) {
-	            if (fabricante.getActivo()) {
-	                SistemaDeRiegoDAO daoSistRiego = factoria.getSistemaDeRiegoDAO();
-	                TSistemaDeRiego tSistRiegoExistente = daoSistRiego.leerPorNombreUnico(sisRiego.getNombre());
-
-	                if (tSistRiegoExistente == null || 
-	                    (tSistRiegoExistente.getId().equals(sisRiego.getId()) && !tSistRiegoExistente.getActivo())) {
-	                    // Si no existe un sistema de riego con el mismo nombre o si el nombre pertenece a uno inactivo
-	                    res = daoSistRiego.modificarSistemaDeRiego(sisRiego);
-	                    trans.commit(); 
-	                } else {
-	                    res = -2; // Error: Nombre  existe y activo
-	                    trans.rollback(); 
-	                }
-	            } else {
-	                res = -511; // Error: fabricante no activo
-	                trans.rollback(); 
-	            }
-	        } else {
-	            res = -404; // Error: fabricante no existe
+		                if (tSistRiegoExistente == null || 
+		                    (tSistRiegoExistente.getId().equals(sisRiego.getId()) && !tSistRiegoExistente.getActivo())) {
+		                    // Si no existe un sistema de riego con el mismo nombre o si el nombre pertenece a uno inactivo
+		                    res = daoSistRiego.modificarSistemaDeRiego(sisRiego);
+		                    trans.commit(); 
+		                } else {
+		                    res = -2; // Error: Nombre  existe y activo
+		                    trans.rollback(); 
+		                }
+		            } else {
+		                res = -511; // Error: fabricante no activo
+		                trans.rollback(); 
+		            }
+		        } else {
+		            res = -404; // Error: fabricante no existe
+		            trans.rollback();
+		        }
+	        }else {
+	            res = -403; // Error: Invernadero no existe
 	            trans.rollback();
 	        }
+	        
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
