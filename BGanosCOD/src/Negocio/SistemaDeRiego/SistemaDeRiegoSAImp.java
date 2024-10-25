@@ -8,71 +8,83 @@ import java.util.Set;
 
 import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
+import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.SistemaDeRiego.SistemaDeRiegoDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 import Negocio.Fabricante.TFabricante;
+import Negocio.Invernadero.TInvernadero;
 
 
 public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 
 	public Integer altaSisRiego(TSistemaDeRiego sisRiego) {
 		//Comprobamos si en el alta han puesto campos nulos 
-				if(sisRiego.getNombre().isEmpty()|| sisRiego.getFrecuencia() == -1|| sisRiego.getCantidad_agua() == -1 || sisRiego.getPotenciaRiego() == -1|| sisRiego.getIdFabricante() == 0 ){
+				if(sisRiego.getNombre().isEmpty()|| sisRiego.getFrecuencia() == -1|| sisRiego.getCantidad_agua() == -1 
+						|| sisRiego.getPotenciaRiego() == -1|| sisRiego.getIdFabricante() == null || sisRiego.getIdInvernadero() == null){
 					return -3; //Error casos vacios en alta
 				}
-				int exito = -1;
+				int res = -1;
 				
 				try {
-					TransaccionManager transaccion = TransaccionManager.getInstance();
-					Transaccion t = transaccion.newTransaccion();
-					t.start();
-					FactoriaIntegracion f = FactoriaIntegracion.getInstance();
-					FabricanteDAO daoFabricante = f.getFabricanteDAO();
+					TransaccionManager tManager = TransaccionManager.getInstance();
+					Transaccion trans = tManager.newTransaccion();
+					trans.start();
+					FactoriaIntegracion factoria = FactoriaIntegracion.getInstance();
+					FabricanteDAO daoFabricante = factoria.getFabricanteDAO();
+					InvernaderoDAO daoInvernadero = factoria.getInvernaderoDAO();
 					TFabricante fabricante = daoFabricante.mostrarFabricantePorId(sisRiego.getIdFabricante()); 
+					TInvernadero invernadero = daoInvernadero.mostrarInvernaderoPorID(sisRiego.getIdInvernadero()); 
 					
-					if(fabricante != null){
-						
-						if(fabricante.getActivo()){
-							SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
-							TSistemaDeRiego tSistRiego = daoSistRiego.leerPorNombreUnico(sisRiego.getNombre());
-							if(tSistRiego == null){ //No existe sist riego con mismo nombre
-								exito = daoSistRiego.altaSistemaDeRiego(sisRiego);
-								t.commit();
-							}else if(tSistRiego.getActivo() == false){ //Existe pero no activo
-								sisRiego.setId(tSistRiego.getId());
-								sisRiego.setActivo(true);
-								exito = daoSistRiego.modificarSistemaDeRiego(sisRiego); //Reactivar y actualizar
-								t.commit();
-							}else{ // Existe y activo
-								exito = -2; 
+					if(invernadero != null){
+						if(fabricante != null){
+							
+							if(fabricante.getActivo()){
+								SistemaDeRiegoDAO daoSistRiego = factoria.getSistemaDeRiegoDAO();
+								TSistemaDeRiego tSistRiego = daoSistRiego.leerPorNombreUnico(sisRiego.getNombre());
+								if(tSistRiego == null){ //No existe sist riego con mismo nombre
+									res = daoSistRiego.altaSistemaDeRiego(sisRiego);
+									trans.commit();
+								}else if(tSistRiego.getActivo() == false){ //Existe pero no activo
+									sisRiego.setId(tSistRiego.getId());
+									sisRiego.setActivo(true);
+									res = daoSistRiego.modificarSistemaDeRiego(sisRiego); //Reactivar y actualizar
+									trans.commit();
+								}else{ // Existe y activo
+									res = -2; 
+								}
+							}else{
+								res = -511; //Fabricante no activo
 							}
+							
 						}else{
-							exito = -511; //Fabricante no activo
+							res = -404; //Fabricante no existe
+							trans.rollback();
 						}
-						
-					}else{
-						exito = -404; //Fabricante no existe
-						t.rollback();
 					}
+					else{
+						res = -403; //Invernadero no existe
+						trans.rollback();
+					}
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				return exito;
+				return res;
 	}
 
 	
 	public Integer bajaSisRiego(Integer id) {
-		int exito = -1;
+		int res = -1;
 
 	    try {
 	        // Inicializa la transacción
 	        TransaccionManager transaction = TransaccionManager.getInstance();
-	        Transaccion t = transaction.newTransaccion();
-	        t.start();
+	        Transaccion trans = transaction.newTransaccion();
+	        trans.start();
 
-	        FactoriaIntegracion f = FactoriaIntegracion.getInstance();
-	        SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
+	        FactoriaIntegracion factoria = FactoriaIntegracion.getInstance();
+	        SistemaDeRiegoDAO daoSistRiego = factoria.getSistemaDeRiegoDAO();
 	        
 	        TSistemaDeRiego tSistRiego = daoSistRiego.mostrarSistemaDeRiegoPorID(id);
 
@@ -80,21 +92,21 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	        if (tSistRiego != null) {
 	            //  sistema de riego  activo
 	            if (tSistRiego.getActivo()) {
-	                exito = daoSistRiego.bajaSistemaDeRiego(id);
-	                t.commit();
+	                res = daoSistRiego.bajaSistemaDeRiego(id);
+	                trans.commit();
 	            } else {
-	                exito = -2; // Error: No activo
-	                t.rollback();
+	                res = -2; // Error: No activo
+	                trans.rollback();
 	            }
 	        } else {
-	            exito = -404; // Error: No existe
-	            t.rollback();
+	            res = -404; // Error: No existe
+	            trans.rollback();
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 
-	    return exito;
+	    return res;
 	}
 
 	
@@ -107,44 +119,44 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	        return -3; // Error: casos vacíos 
 	    }
 	    
-	    int exito = -1;
+	    int res = -1;
 
 	    try {
-	        TransaccionManager transaccion = TransaccionManager.getInstance();
-	        Transaccion t = transaccion.newTransaccion();
-	        t.start();
+	        TransaccionManager tManager = TransaccionManager.getInstance();
+	        Transaccion trans = tManager.newTransaccion();
+	        trans.start();
 
-	        FactoriaIntegracion f = FactoriaIntegracion.getInstance();
-	        FabricanteDAO daoFabricante = f.getFabricanteDAO();
+	        FactoriaIntegracion factoria = FactoriaIntegracion.getInstance();
+	        FabricanteDAO daoFabricante = factoria.getFabricanteDAO();
 	        TFabricante fabricante = daoFabricante.mostrarFabricantePorId(sisRiego.getIdFabricante());
 
 	        if (fabricante != null) {
 	            if (fabricante.getActivo()) {
-	                SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
+	                SistemaDeRiegoDAO daoSistRiego = factoria.getSistemaDeRiegoDAO();
 	                TSistemaDeRiego tSistRiegoExistente = daoSistRiego.leerPorNombreUnico(sisRiego.getNombre());
 
 	                if (tSistRiegoExistente == null || 
 	                    (tSistRiegoExistente.getId().equals(sisRiego.getId()) && !tSistRiegoExistente.getActivo())) {
 	                    // Si no existe un sistema de riego con el mismo nombre o si el nombre pertenece a uno inactivo
-	                    exito = daoSistRiego.modificarSistemaDeRiego(sisRiego);
-	                    t.commit(); 
+	                    res = daoSistRiego.modificarSistemaDeRiego(sisRiego);
+	                    trans.commit(); 
 	                } else {
-	                    exito = -2; // Error: Nombre  existe y activo
-	                    t.rollback(); 
+	                    res = -2; // Error: Nombre  existe y activo
+	                    trans.rollback(); 
 	                }
 	            } else {
-	                exito = -511; // Error: fabricante no activo
-	                t.rollback(); 
+	                res = -511; // Error: fabricante no activo
+	                trans.rollback(); 
 	            }
 	        } else {
-	            exito = -404; // Error: fabricante no existe
-	            t.rollback();
+	            res = -404; // Error: fabricante no existe
+	            trans.rollback();
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 
-	    return exito; 
+	    return res; 
 	}
 
 	
@@ -154,19 +166,19 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 		
 	    try {
 	        TransaccionManager transaction = TransaccionManager.getInstance();
-	        Transaccion t = transaction.newTransaccion();
-	        t.start();
+	        Transaccion trans = transaction.newTransaccion();
+	        trans.start();
 	 
-	        FactoriaIntegracion f = FactoriaIntegracion.getInstance();
-	        SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
+	        FactoriaIntegracion factoria = FactoriaIntegracion.getInstance();
+	        SistemaDeRiegoDAO daoSistRiego = factoria.getSistemaDeRiegoDAO();
 	        
 	         sisRiegoMostrar = daoSistRiego.mostrarSistemaDeRiegoPorID(id);
 	        
 	        if (sisRiegoMostrar != null) {
-	            t.commit(); 
+	            trans.commit(); 
 	        } else {
 	            sisRiegoMostrar = null; //No encontrado
-	            t.rollback(); 
+	            trans.rollback(); 
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace(); 
@@ -183,14 +195,14 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	    try {
 	   
 	        TransaccionManager transaction = TransaccionManager.getInstance();
-	        Transaccion t = transaction.newTransaccion();
-	        t.start();
+	        Transaccion trans = transaction.newTransaccion();
+	        trans.start();
 
-	        FactoriaIntegracion f = FactoriaIntegracion.getInstance();
-	        SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
+	        FactoriaIntegracion factoria = FactoriaIntegracion.getInstance();
+	        SistemaDeRiegoDAO daoSistRiego = factoria.getSistemaDeRiegoDAO();
 	        
 	        listaSisRiego = daoSistRiego.listarSistemaDeRiego();
-	        t.commit(); 
+	        trans.commit(); 
 	        	        
 	    } catch (Exception e) {
 	        e.printStackTrace(); 
@@ -206,14 +218,14 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 
 	    try {
 	        TransaccionManager transaction = TransaccionManager.getInstance();
-	        Transaccion t = transaction.newTransaccion();
-	        t.start();
+	        Transaccion trans = transaction.newTransaccion();
+	        trans.start();
 	        
-	        FactoriaIntegracion f = FactoriaIntegracion.getInstance();
-	        SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
+	        FactoriaIntegracion factoria = FactoriaIntegracion.getInstance();
+	        SistemaDeRiegoDAO daoSistRiego = factoria.getSistemaDeRiegoDAO();
 	        
 	        listaSisRiego = daoSistRiego.listarSistemaDeRiegoPorFabricante(idFabricante);	        
-	        t.commit(); 
+	        trans.commit(); 
 	        
 	    } catch (Exception e) {
 	        e.printStackTrace(); 
@@ -230,14 +242,14 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 		    try {
 		      
 		        TransaccionManager transaction = TransaccionManager.getInstance();
-		        Transaccion t = transaction.newTransaccion();
-		        t.start();
+		        Transaccion trans = transaction.newTransaccion();
+		        trans.start();
 
-		        FactoriaIntegracion f = FactoriaIntegracion.getInstance();
-		        SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
+		        FactoriaIntegracion factoria = FactoriaIntegracion.getInstance();
+		        SistemaDeRiegoDAO daoSistRiego = factoria.getSistemaDeRiegoDAO();
 		        	
 		        listaSisRiego = daoSistRiego.listarSistemaDeRiegoInvernadero(idInvernadero);		        
-		        t.commit(); 
+		        trans.commit(); 
 		        
 		    } catch (Exception e) {
 		        e.printStackTrace(); 

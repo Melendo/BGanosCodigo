@@ -13,6 +13,7 @@ public class TSistemaDeRiego {
 	private Boolean activo;
 	
 	private Integer idFabricante;
+	private Integer idInvernadero; 
 
 	public Integer getId() {
 		return id;
@@ -69,5 +70,13 @@ public class TSistemaDeRiego {
 
 	public void setIdFabricante(Integer idFabricante) {
 		this.idFabricante = idFabricante;
+	}
+
+	public Integer getIdInvernadero() {
+		return idInvernadero;
+	}
+
+	public void setIdInvernadero(Integer idInvernadero) {
+		this.idInvernadero = idInvernadero;
 	}
 }

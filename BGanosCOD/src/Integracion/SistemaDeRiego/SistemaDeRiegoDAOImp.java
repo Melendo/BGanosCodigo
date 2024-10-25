@@ -18,7 +18,7 @@ import Integracion.Transaction.TransaccionManager;
 public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 	
 	public Integer altaSistemaDeRiego(TSistemaDeRiego sistemaDeRiego) {
-		int exito = -1;
+		int res = -1;
 
         try {
             TransaccionManager tManager = TransaccionManager.getInstance();
@@ -42,7 +42,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 
             ResultSet result = statement.getGeneratedKeys();
             if (result.next()) {
-                exito = result.getInt(1); // Obtener id generado
+                res = result.getInt(1); // Obtener id generado
             }
 
             result.close();
@@ -51,13 +51,13 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             e.printStackTrace();
         }
 
-        return exito;
+        return res;
     }
 	
 
 	
 	public Integer bajaSistemaDeRiego(Integer id) {
-	    int exito = -1;
+	    int res = -1;
 
 	    try {
 	    	TransaccionManager tManager = TransaccionManager.getInstance();
@@ -70,19 +70,19 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 
 	        // Asignar id
 	        statement.setInt(1, id);
-	        exito = statement.executeUpdate(); 
+	        res = statement.executeUpdate(); 
 
 	        statement.close();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	    
-	    return (exito > 0) ? id : -1;
+	    return (res > 0) ? id : -1;
 	}
 
 	
 	public Integer modificarSistemaDeRiego(TSistemaDeRiego sistemaDeRiego) {
-    	int exito = -1;
+    	int res = -1;
     	
         try {
         	TransaccionManager tManager = TransaccionManager.getInstance();
@@ -102,14 +102,14 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
                 statement.setInt(6, sistemaDeRiego.getIdFabricante());
                 statement.setInt(7, sistemaDeRiego.getId());
 
-                exito = statement.executeUpdate();
+                res = statement.executeUpdate();
 
                 statement.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return (exito > 0) ? sistemaDeRiego.getId() : -1;
+            return (res > 0) ? sistemaDeRiego.getId() : -1;
 	}
 
 	
