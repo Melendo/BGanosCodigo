@@ -21,10 +21,10 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 
         try {
             TransaccionManager tManager = TransaccionManager.getInstance();
-            Transaccion t = tManager.getTransaccion();
-            Connection c = (Connection) t.getResource();
+            Transaccion trans = tManager.getTransaccion();
+            Connection connection = (Connection) trans.getResource();
 
-            PreparedStatement statement = c.prepareStatement(
+            PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO sistema_de_riego (nombre, potencia_riego, cantidad_agua, frecuencia, activo, id_fabricante) VALUES (?, ?, ?, ?, ?, ?)",
                 Statement.RETURN_GENERATED_KEYS
             );
@@ -56,10 +56,27 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 
 	
 	public Integer bajaSistemaDeRiego(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	    int exito = -1;
+
+	    try {
+	    	TransaccionManager tManager = TransaccionManager.getInstance();
+            Transaccion trans = tManager.getTransaccion();
+            Connection connection = (Connection) trans.getResource();
+	        
+	        PreparedStatement statement = connection.prepareStatement(
+	            "UPDATE sistema_de_riego SET activo = false WHERE id = ?"
+	        );
+
+	        // Asignar id
+	        statement.setInt(1, id);
+	        exito = statement.executeUpdate(); 
+
+	        statement.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return (exito > 0) ? id : -1;
 	}
 
 	
