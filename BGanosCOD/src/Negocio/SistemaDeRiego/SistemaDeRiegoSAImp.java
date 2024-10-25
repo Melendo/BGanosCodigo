@@ -199,6 +199,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 
 	
 	public Set<TSistemaDeRiego> listarSisRiegoPorFabricante(Integer idFabricante) {
+		
 		Set<TSistemaDeRiego> listaSisRiego = new HashSet<>();
 
 	    try {
@@ -221,7 +222,25 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 
 
 	public Set<TSistemaDeRiego> listarSisRiegoDelInvernadero(Integer idInvernadero) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		 Set<TSistemaDeRiego> listaSisRiego = new HashSet<>();
+
+		    try {
+		      
+		        TransaccionManager transaction = TransaccionManager.getInstance();
+		        Transaccion t = transaction.newTransaccion();
+		        t.start();
+
+		        FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+		        SistemaDeRiegoDAO daoSistRiego = f.getSistemaDeRiegoDAO();
+		        	
+		        listaSisRiego = daoSistRiego.listarSistemaDeRiegoInvernadero(idInvernadero);		        
+		        t.commit(); 
+		        
+		    } catch (Exception e) {
+		        e.printStackTrace(); 
+		    }
+		   
+		    return listaSisRiego;
 	}
 }

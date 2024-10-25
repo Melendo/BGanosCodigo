@@ -65,6 +65,8 @@ public interface SistemaDeRiegoDAO {
 	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	*/
 	public Set<TSistemaDeRiego> listarSistemaDeRiego();
+	
+	public Set<TSistemaDeRiego> listarSistemaDeRiegoInvernadero(Integer idInvernadero);
 
 	public TSistemaDeRiego leerPorNombreUnico(String nombre);
 }
