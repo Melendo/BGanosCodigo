@@ -110,7 +110,7 @@ public class GUISistemaDeRiego extends JFrame implements IGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GUISistemaDeRiego.this.setVisible(false);
-                ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_SISTEMAS_RIEGO, tSistemaRiego));
+                ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_SISTEMAS_RIEGO_VISTA, tSistemaRiego));
             }
         });
         buttonListarSistemasRiego.setVisible(true);

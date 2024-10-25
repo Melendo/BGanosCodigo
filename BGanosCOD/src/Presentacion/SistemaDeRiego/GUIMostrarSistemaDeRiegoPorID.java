@@ -80,7 +80,7 @@ public class GUIMostrarSistemaDeRiegoPorID extends JFrame implements IGUI {
                 try {
                     String idTexto = textId.getText();
                     Integer idSistema = Integer.parseInt(idTexto); // Convertir el texto a Integer
-                    
+                   
                     // Crear un contexto con el evento de mostrar y el ID del sistema
                     ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_SISTEMA_RIEGO_POR_ID, idSistema));
                 } catch (NumberFormatException ex) {
