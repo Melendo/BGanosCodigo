@@ -14,13 +14,15 @@ public class Evento {
 	public static final int MODIFICAR_ENTRADA_VISTA = 203;
 	public static final int MOSTRAR_ENTRADA_POR_ID_VISTA = 204;
 	public static final int LISTAR_ENTRADAS_VISTA = 205;
+	public static final int LISTAR_ENTRADAS_POR_INVERNADERO_VISTA = 206;
 	
 	//				Funciones Entrada					220 - 249
 	public static final int ALTA_ENTRADA = 220;
 	public static final int BAJA_ENTRADA = 221;
 	public static final int MODIFICAR_ENTRADA = 222;
-	public static final int MOSTRAR_ENTRADA_POR_ID = 223;
+	public static final int MOSTRAR_ENTRADA_POR_ID = 223; 
 	public static final int LISTAR_ENTRADAS = 224;
+	public static final int LISTAR_ENTRADAS_POR_INVERNADERO = 225;
 	
 	//				OKs y KOs Entrada					250 - 299
 	//					Alta
@@ -38,7 +40,9 @@ public class Evento {
 	//					Listar
 	public static final int LISTAR_ENTRADA_OK = 258;
 	public static final int LISTAR_ENTRADA_KO = 259;
-	
+	//			ListarEntradasPorInvernadero
+	public static final int LISTAR_ENTRADAS_POR_INVERNADERO_OK = 260;
+	public static final int LISTAR_ENTRADAS_POR_INVERNADERO_KO = 261;
     
 	
 	
@@ -201,7 +205,7 @@ public class Evento {
 	public static final int DESVINCULAR_SISTEMA_RIEGO_DE_INVERNADERO_OK = 564;
 	public static final int DESVINCULAR_SISTEMA_RIEGO_DE_INVERNADERO_KO = 565;
 	
-	//					Calcular las 3 fechas más vendidas de un invernadero
+	//					Calcular las 3 fechas mï¿½s vendidas de un invernadero
 	public static final int CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO_OK = 566;
 	public static final int CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO_KO = 567;
     
