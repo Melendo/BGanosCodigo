@@ -300,7 +300,7 @@ public class Evento {
 	//					Mostrar por Id
 	public static final int MOSTRAR_SISTEMA_DE_RIEGO_OK = 760;
 	public static final int MOSTRAR_SISTEMA_DE_RIEGO_KO = 761;
-
-	
-
+	//	Mostrar por Id
+	public static final int LISTAR_SISTEMA_DE_RIEGO_OK = 762;
+	public static final int LISTAR_SISTEMA_DE_RIEGO_KO = 763;
 }
