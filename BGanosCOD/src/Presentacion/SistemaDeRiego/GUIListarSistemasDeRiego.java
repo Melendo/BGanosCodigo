@@ -1,33 +1,28 @@
 package Presentacion.SistemaDeRiego;
 
-import javax.swing.JFrame;
+import javax.swing.*;
+import javax.swing.table.TableColumnModel;
+
+import Negocio.SistemaDeRiego.TSistemaDeRiego;
+import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import javax.swing.JTable;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
-import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
 @SuppressWarnings("serial")
 public class GUIListarSistemasDeRiego extends JFrame implements IGUI {
   
-
     public GUIListarSistemasDeRiego(Set<TSistemaDeRiego> datos) {
         super("Mostrar todos los Sistemas de Riego");
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        int ancho = 800;  // Aumento del ancho para ajustar más columnas
-        int alto = 400;   // Aumento de la altura para mejorar la visualización
+        int ancho = 800;  
+        int alto = 400;   
         int x = (pantalla.width - ancho) / 2;
         int y = (pantalla.height - alto) / 2;
         this.setBounds(x, y, ancho, alto);
@@ -45,25 +40,30 @@ public class GUIListarSistemasDeRiego extends JFrame implements IGUI {
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
         // Tabla de sistemas de riego
-        String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo" };
+        String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante", "Invernadero" };
         String[][] tablaDatos = new String[datos.size()][nombreColumnas.length];
 
         int i = 0;
-        for (TSistemaDeRiego sistema : datos) { //Aunque no deberian ser N/A nunca
+        for (TSistemaDeRiego sistema : datos) {
             tablaDatos[i][0] = sistema.getId().toString();
             tablaDatos[i][1] = sistema.getNombre();
-            tablaDatos[i][2] = sistema.getPotenciaRiego() != null ? sistema.getPotenciaRiego().toString() : "N/A";
-            tablaDatos[i][3] = sistema.getCantidad_agua() != null ? sistema.getCantidad_agua().toString() : "N/A";
-            tablaDatos[i][4] = sistema.getFrecuencia() != null ? sistema.getFrecuencia().toString() : "N/A";
-            tablaDatos[i][5] = sistema.getActivo() != null ? sistema.getActivo().toString() : "N/A";
+            tablaDatos[i][2] = sistema.getPotenciaRiego().toString();
+            tablaDatos[i][3] = sistema.getCantidad_agua().toString();
+            tablaDatos[i][4] = sistema.getFrecuencia().toString();
+            tablaDatos[i][5] = sistema.getActivo() ? "Sí" : "No";
+            tablaDatos[i][6] = sistema.getIdFabricante().toString();
+            tablaDatos[i][7] = sistema.getIdInvernadero().toString();
             i++;
         }
 
-        JTable tabla = new JTable(tablaDatos, nombreColumnas);
+        JTable tabla =  ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, tablaDatos); 
         JScrollPane scroll = new JScrollPane(tabla);
-        scroll.setPreferredSize(new Dimension(750, 250)); // Ajuste de tamaño del JScrollPane
+        scroll.setPreferredSize(new Dimension(750, 250)); 
         mainPanel.add(scroll);
         
+        // Ajustar el ancho de las columnas
+       
+
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
         // Panel de botones
@@ -84,6 +84,8 @@ public class GUIListarSistemasDeRiego extends JFrame implements IGUI {
         this.setResizable(true);
     }
 
+   
+
     @Override
     public void actualizar(Context context) {
         if (context.getEvento() == Evento.LISTAR_SISTEMA_DE_RIEGO_OK) {
@@ -92,4 +94,6 @@ public class GUIListarSistemasDeRiego extends JFrame implements IGUI {
             JOptionPane.showMessageDialog(this, "Error al tratar de listar los sistemas de riego", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+
 }

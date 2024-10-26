@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import Integracion.Transaction.Transaccion;
@@ -153,7 +154,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 
 	
 	public Set<TSistemaDeRiego> listarSistemaDeRiegoPorFabricante(Integer idFabricante) {
-		Set<TSistemaDeRiego> sistemasDeRiego = new HashSet<>();
+		Set<TSistemaDeRiego> sistemasDeRiego = new LinkedHashSet<>();
 
 	    try {
 	    	TransaccionManager tManager = TransaccionManager.getInstance();
@@ -192,7 +193,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 
 	
 	public Set<TSistemaDeRiego> listarSistemaDeRiego() {
-		Set<TSistemaDeRiego> sistemasDeRiego = new HashSet<>();
+		Set<TSistemaDeRiego> sistemasDeRiego = new LinkedHashSet<>();
 
 	    try {
 	    	TransaccionManager tManager = TransaccionManager.getInstance();
@@ -267,7 +268,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 
 	
 	public Set<TSistemaDeRiego> listarSistemaDeRiegoInvernadero(Integer idInvernadero) {
-		Set<TSistemaDeRiego> sistemasDeRiego = new HashSet<>();
+		Set<TSistemaDeRiego> sistemasDeRiego = new LinkedHashSet<>();
 
 	    try {
 	    	TransaccionManager tManager = TransaccionManager.getInstance();

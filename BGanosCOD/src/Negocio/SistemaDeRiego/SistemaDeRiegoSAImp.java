@@ -4,7 +4,9 @@
 package Negocio.SistemaDeRiego;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
@@ -199,7 +201,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	
 	public Set<TSistemaDeRiego> listarSisRiego() {
 		
-		Set<TSistemaDeRiego> listaSisRiego = new HashSet<>();
+		Set<TSistemaDeRiego> listaSisRiego = new LinkedHashSet<>();
 
 	    try {
 	   
@@ -223,7 +225,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	
 	public Set<TSistemaDeRiego> listarSisRiegoPorFabricante(Integer idFabricante) {
 		
-		Set<TSistemaDeRiego> listaSisRiego = new HashSet<>();
+		Set<TSistemaDeRiego> listaSisRiego = new LinkedHashSet<>();
 
 	    try {
 	        TransaccionManager transaction = TransaccionManager.getInstance();
@@ -246,7 +248,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 
 	public Set<TSistemaDeRiego> listarSisRiegoDelInvernadero(Integer idInvernadero) {
 		
-		 Set<TSistemaDeRiego> listaSisRiego = new HashSet<>();
+		 Set<TSistemaDeRiego> listaSisRiego = new LinkedHashSet<>();
 
 		    try {
 		      

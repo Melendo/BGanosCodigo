@@ -4,6 +4,8 @@
 package Presentacion.SistemaDeRiego;
 
 import javax.swing.JFrame;
+
+import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
@@ -77,11 +79,13 @@ public class GUIListarSistemaDeRiegoPorFabricante extends JFrame implements IGUI
 
         // Tabla para mostrar los sistemas de riego
         String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante", "Invernadero" };
-        tabla = new JTable(new String[0][nombreColumnas.length], nombreColumnas);
+        tabla = ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, null); 
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setPreferredSize(new Dimension(750, 250));
         mainPanel.add(scroll);
-
+        
+       
+        
         // Panel de botones
         JPanel panelBotones = new JPanel();
         botonCancelar = new JButton("Cancelar");
@@ -131,8 +135,10 @@ public class GUIListarSistemaDeRiegoPorFabricante extends JFrame implements IGUI
                     String.valueOf(sistema.getIdFabricante()),
                     String.valueOf(sistema.getIdInvernadero())
                 };
+              
             }
             tabla.setModel(new javax.swing.table.DefaultTableModel(datos, new String[] { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante", "Invernadero" }));
+            ComponentsBuilder.adjustColumnWidths(tabla);
         } else if (context.getEvento() == Evento.LISTAR_SISTEMA_DE_RIEGO_POR_FABRICANTE_KO) {
             JOptionPane.showMessageDialog(this, "Error al listar sistemas de riego.", "Error", JOptionPane.ERROR_MESSAGE);
         }
