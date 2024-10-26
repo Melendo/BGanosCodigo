@@ -76,7 +76,7 @@ public class GUIListarSistemaDeRiegoPorFabricante extends JFrame implements IGUI
         mainPanel.add(botonBuscar);
 
         // Tabla para mostrar los sistemas de riego
-        String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo" };
+        String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante", "Invernadero" };
         tabla = new JTable(new String[0][nombreColumnas.length], nombreColumnas);
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setPreferredSize(new Dimension(750, 250));
@@ -104,9 +104,13 @@ public class GUIListarSistemaDeRiegoPorFabricante extends JFrame implements IGUI
             JOptionPane.showMessageDialog(this, "Por favor, ingrese un fabricante.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
-       
-        ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_SISTEMAS_RIEGO_POR_FABRICANTE, fabricante));
+        
+        try {
+            int idFabricante = Integer.parseInt(fabricante); 
+            ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_SISTEMAS_RIEGO_POR_FABRICANTE, idFabricante));
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido para el ID del fabricante.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override
@@ -123,10 +127,12 @@ public class GUIListarSistemaDeRiegoPorFabricante extends JFrame implements IGUI
                     String.valueOf(sistema.getPotenciaRiego()),
                     String.valueOf(sistema.getCantidad_agua()),
                     String.valueOf(sistema.getFrecuencia()),
-                    sistema.getActivo() ? "Sí" : "No"
+                    sistema.getActivo() ? "Sí" : "No",
+                    String.valueOf(sistema.getIdFabricante()),
+                    String.valueOf(sistema.getIdInvernadero())
                 };
             }
-            tabla.setModel(new javax.swing.table.DefaultTableModel(datos, new String[] { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo" }));
+            tabla.setModel(new javax.swing.table.DefaultTableModel(datos, new String[] { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante", "Invernadero" }));
         } else if (context.getEvento() == Evento.LISTAR_SISTEMA_DE_RIEGO_POR_FABRICANTE_KO) {
             JOptionPane.showMessageDialog(this, "Error al listar sistemas de riego.", "Error", JOptionPane.ERROR_MESSAGE);
         }

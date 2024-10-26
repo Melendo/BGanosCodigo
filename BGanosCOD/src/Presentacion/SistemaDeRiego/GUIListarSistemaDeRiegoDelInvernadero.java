@@ -75,7 +75,7 @@ public class GUIListarSistemaDeRiegoDelInvernadero extends JFrame implements IGU
         mainPanel.add(botonBuscar);
 
         // Tabla para mostrar los sistemas de riego
-        String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo" };
+        String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante", "Invernadero" };
         tabla = new JTable(new String[0][nombreColumnas.length], nombreColumnas);
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setPreferredSize(new Dimension(750, 250));
@@ -104,7 +104,12 @@ public class GUIListarSistemaDeRiegoDelInvernadero extends JFrame implements IGU
             return;
         }
 
-        ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_SISTEMAS_RIEGO_DE_INVERNADERO, invernadero));
+        try {
+            int idInvernadero = Integer.parseInt(invernadero); 
+            ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_SISTEMAS_RIEGO_DE_INVERNADERO, idInvernadero));
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido para el ID del invernadero.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override
@@ -112,7 +117,7 @@ public class GUIListarSistemaDeRiegoDelInvernadero extends JFrame implements IGU
         if (context.getEvento() == Evento.LISTAR_SISTEMA_DE_RIEGO_DE_INVERNADERO_OK) {
             Set<TSistemaDeRiego> sistemas = (Set<TSistemaDeRiego>) context.getDatos();
             // Convertir Set a Array para el modelo de la tabla
-            String[][] datos = new String[sistemas.size()][6]; // 6 columnas
+            String[][] datos = new String[sistemas.size()][8]; // 6 columnas
             int i = 0;
             for (TSistemaDeRiego sistema : sistemas) {
                 datos[i++] = new String[]{
@@ -121,10 +126,13 @@ public class GUIListarSistemaDeRiegoDelInvernadero extends JFrame implements IGU
                     String.valueOf(sistema.getPotenciaRiego()),
                     String.valueOf(sistema.getCantidad_agua()),
                     String.valueOf(sistema.getFrecuencia()),
-                    sistema.getActivo() ? "Sí" : "No"
+                    sistema.getActivo() ? "Sí" : "No",
+                    String.valueOf(sistema.getIdFabricante()),
+                    String.valueOf(sistema.getIdInvernadero())
+                    	
                 };
             }
-            tabla.setModel(new javax.swing.table.DefaultTableModel(datos, new String[] { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo" }));
+            tabla.setModel(new javax.swing.table.DefaultTableModel(datos, new String[] { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante", "Invernadero" }));
         } else if (context.getEvento() == Evento.LISTAR_SISTEMA_DE_RIEGO_DE_INVERNADERO_KO) {
             JOptionPane.showMessageDialog(this, "Error al listar sistemas de riego del invernadero.", "Error", JOptionPane.ERROR_MESSAGE);
         }
