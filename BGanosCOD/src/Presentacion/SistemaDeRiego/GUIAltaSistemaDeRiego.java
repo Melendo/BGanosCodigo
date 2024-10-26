@@ -148,7 +148,24 @@ public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
         if (context.getEvento() == Evento.ALTA_SISTEMA_DE_RIEGO_OK) {
             JOptionPane.showMessageDialog(this, "Sistema de riego dado de alta correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } else if (context.getEvento() == Evento.ALTA_SISTEMA_DE_RIEGO_KO) {
-            JOptionPane.showMessageDialog(this, "Error al dar de alta el sistema de riego", "Error", JOptionPane.ERROR_MESSAGE);
+        	int resultado = (int) context.getDatos();
+            switch (resultado) {
+            case -3:
+                JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            case -2:
+                JOptionPane.showMessageDialog(this, "Error: Ya existe un sistema de riego con el mismo nombre y está activo.", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            case -511:
+                JOptionPane.showMessageDialog(this, "Error: El fabricante asociado no está activo.", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            case -404:
+                JOptionPane.showMessageDialog(this, "Error: El fabricante especificado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Error desconocido al modificar el sistema de riego.", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            }
         }
     }
 }

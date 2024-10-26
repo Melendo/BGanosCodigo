@@ -190,7 +190,7 @@ public class GUIModificarSistemaDeRiego extends JFrame implements IGUI {
             default:
                 JOptionPane.showMessageDialog(this, "Error desconocido al modificar el sistema de riego.", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
-        }
+            }
         }
     }
 }

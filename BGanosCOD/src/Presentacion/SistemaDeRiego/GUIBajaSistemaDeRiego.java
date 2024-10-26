@@ -109,9 +109,21 @@ public class GUIBajaSistemaDeRiego extends JFrame implements IGUI {
 	@Override
 	public void actualizar(Context context) {
 		 if (context.getEvento() == Evento.BAJA_SISTEMA_DE_RIEGO_OK) {
-	            JOptionPane.showMessageDialog(this, "Sistema de riego dado de baja correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+			 	int resultado = (int) context.getDatos();
+	            JOptionPane.showMessageDialog(this, "Sistema de riego" + resultado + " dado de baja correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 	        } else if (context.getEvento() == Evento.BAJA_SISTEMA_DE_RIEGO_KO) {
-	            JOptionPane.showMessageDialog(this, "Error al dar de baja el sistema de riego", "Error", JOptionPane.ERROR_MESSAGE);
+	        	int resultado = (int) context.getDatos();
+	            switch (resultado) {
+	            case -2:
+	                JOptionPane.showMessageDialog(this, "Error: El sistema de riego ya esta dado de baja.", "Error", JOptionPane.ERROR_MESSAGE);
+	                break;
+	            case -404:
+	                JOptionPane.showMessageDialog(this, "Error: El sistema de riego especificado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+	                break;
+	            default:
+	                JOptionPane.showMessageDialog(this, "Error desconocido al modificar el sistema de riego.", "Error", JOptionPane.ERROR_MESSAGE);
+	                break;
+	            }
 	        }
 	}
 }
