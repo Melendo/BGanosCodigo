@@ -26,7 +26,7 @@ import Negocio.SistemaDeRiego.TSistemaDeRiego;
 @SuppressWarnings("serial")
 public class GUIBajaSistemaDeRiego extends JFrame implements IGUI {
 	
-	private JTextField textId; // Campo para introducir el ID del sistema de riego
+	private JTextField textId; 
 	
 	 public GUIBajaSistemaDeRiego() {
 	        super("Baja Sistema de Riego");
@@ -42,15 +42,15 @@ public class GUIBajaSistemaDeRiego extends JFrame implements IGUI {
 	    }	   	 	
 
 	public void initGUI() {
-        // Panel principal con GridBagLayout para mayor control sobre la alineación y el centrado
+        // Panel principal 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 10, 10, 10); // Márgenes entre los componentes
+        gbc.insets = new Insets(10, 10, 10, 10); // Margenes entre componentes
         this.setContentPane(mainPanel);
 
-        // Título
-        gbc.gridwidth = 2; // Toma dos columnas para el título
+        // Titulo
+        gbc.gridwidth = 2; 
         JLabel msgIntro = new JLabel("Introduzca el ID del sistema de riego a dar de baja", JLabel.CENTER);
         mainPanel.add(msgIntro, gbc);
 
@@ -58,7 +58,7 @@ public class GUIBajaSistemaDeRiego extends JFrame implements IGUI {
         gbc.gridwidth = 1;
         gbc.gridy = 1;
 
-        // Campo para el ID del sistema de riego
+        // ID del sistema de riego
         JLabel labelId = new JLabel("ID:");
         gbc.gridx = 0; // Columna 0
         mainPanel.add(labelId, gbc);
@@ -70,20 +70,19 @@ public class GUIBajaSistemaDeRiego extends JFrame implements IGUI {
         JPanel panelBotones = new JPanel();
         gbc.gridx = 0;
         gbc.gridy = 6;
-        gbc.gridwidth = 2; // Los botones ocuparán dos columnas
-        gbc.anchor = GridBagConstraints.CENTER; // Centrar los botones
+        gbc.gridwidth = 2; 
+        gbc.anchor = GridBagConstraints.CENTER; 
         mainPanel.add(panelBotones, gbc);
 
-        // Botón de aceptar
+        // Boton Aceptar
         JButton botonAceptar = new JButton("Aceptar");
         botonAceptar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     String idTexto = textId.getText();
-                    Integer idSistema = Integer.parseInt(idTexto); // Convertir el texto a Integer
-                    
-                    // Crear un contexto con el evento de baja y el ID del sistema
+                    Integer idSistema = Integer.parseInt(idTexto); 
+                                
                     ApplicationController.getInstance().manageRequest(new Context(Evento.BAJA_SISTEMA_RIEGO, idSistema));
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(GUIBajaSistemaDeRiego.this, "Error en el formato del ID", "Error", JOptionPane.ERROR_MESSAGE);
@@ -92,7 +91,7 @@ public class GUIBajaSistemaDeRiego extends JFrame implements IGUI {
         });
         panelBotones.add(botonAceptar);
 
-        // Botón de cancelar
+        // Boton Cancelar
         JButton botonCancelar = new JButton("Cancelar");
         botonCancelar.addActionListener(new ActionListener() {
         	@Override

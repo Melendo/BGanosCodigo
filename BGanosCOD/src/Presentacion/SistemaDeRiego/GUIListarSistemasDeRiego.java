@@ -39,7 +39,7 @@ public class GUIListarSistemasDeRiego extends JFrame implements IGUI {
 
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Tabla de sistemas de riego
+        // Tabla 
         String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante"};
         String[][] tablaDatos = new String[datos.size()][nombreColumnas.length];
 
@@ -59,10 +59,7 @@ public class GUIListarSistemasDeRiego extends JFrame implements IGUI {
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setPreferredSize(new Dimension(750, 250)); 
         mainPanel.add(scroll);
-        
-        // Ajustar el ancho de las columnas
-       
-
+            
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
         // Panel de botones

@@ -51,25 +51,25 @@ public class GUIModificarSistemaDeRiego extends JFrame implements IGUI {
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 10, 10, 10); // Márgenes entre los componentes
+        gbc.insets = new Insets(10, 10, 10, 10); // Margenes entre componentes
         this.setContentPane(mainPanel);
 
-        // Título
-        gbc.gridwidth = 2; // Toma dos columnas para el título
+        // Titulo
+        gbc.gridwidth = 2; 
         JLabel msgIntro = new JLabel("Introduzca los nuevos datos del sistema de riego", JLabel.CENTER);
         mainPanel.add(msgIntro, gbc);
 
-        // Campo para el ID
+        // ID
         gbc.gridwidth = 1;
         gbc.gridy = 1;
         JLabel labelId = new JLabel("ID:");
-        gbc.gridx = 0; // Columna 0
+        gbc.gridx = 0; 
         mainPanel.add(labelId, gbc);
         textId = new JTextField(20);
-        gbc.gridx = 1; // Columna 1
+        gbc.gridx = 1;
         mainPanel.add(textId, gbc);
 
-        // Campo para el nombre
+        // Nombre
         gbc.gridy = 2;
         JLabel labelNombre = new JLabel("Nombre:");
         gbc.gridx = 0;
@@ -78,7 +78,7 @@ public class GUIModificarSistemaDeRiego extends JFrame implements IGUI {
         gbc.gridx = 1;
         mainPanel.add(textNombre, gbc);
 
-        // Campo para la potencia de riego
+        // Potencia de riego
         gbc.gridy = 3;
         JLabel labelPotencia = new JLabel("Potencia Riego:");
         gbc.gridx = 0;
@@ -87,7 +87,7 @@ public class GUIModificarSistemaDeRiego extends JFrame implements IGUI {
         gbc.gridx = 1;
         mainPanel.add(textPotenciaRiego, gbc);
 
-        // Campo para la cantidad de agua
+        // Cantidad de agua
         gbc.gridy = 4;
         JLabel labelCantidadAgua = new JLabel("Cantidad Agua:");
         gbc.gridx = 0;
@@ -96,7 +96,7 @@ public class GUIModificarSistemaDeRiego extends JFrame implements IGUI {
         gbc.gridx = 1;
         mainPanel.add(textCantidadAgua, gbc);
 
-        // Campo para la frecuencia
+        // Frecuencia
         gbc.gridy = 5;
         JLabel labelFrecuencia = new JLabel("Frecuencia:");
         gbc.gridx = 0;
@@ -105,7 +105,7 @@ public class GUIModificarSistemaDeRiego extends JFrame implements IGUI {
         gbc.gridx = 1;
         mainPanel.add(textFrecuencia, gbc);
 
-        // Campo para el ID del fabricante
+        // ID del fabricante
         gbc.gridy = 6;
         JLabel labelIdFabricante = new JLabel("ID Fabricante:");
         gbc.gridx = 0;
@@ -118,11 +118,11 @@ public class GUIModificarSistemaDeRiego extends JFrame implements IGUI {
         JPanel panelBotones = new JPanel();
         gbc.gridx = 0;
         gbc.gridy = 7;
-        gbc.gridwidth = 2; // Los botones ocuparán dos columnas
-        gbc.anchor = GridBagConstraints.CENTER; // Centrar los botones
+        gbc.gridwidth = 2; 
+        gbc.anchor = GridBagConstraints.CENTER; 
         mainPanel.add(panelBotones, gbc);
 
-        // Botón de aceptar
+        // Boton Aceptar
         JButton botonAceptar = new JButton("Aceptar");
         botonAceptar.addActionListener(new ActionListener() {
             @Override
@@ -135,9 +135,9 @@ public class GUIModificarSistemaDeRiego extends JFrame implements IGUI {
                     Integer frecuencia = Integer.parseInt(textFrecuencia.getText());
                     Integer idFabricante = Integer.parseInt(textIdFabricante.getText());
 
-                    // Crear y configurar el sistema de riego
+                    // Crear y configurar sistema de riego
                     TSistemaDeRiego sistemaDeRiego = new TSistemaDeRiego();
-                    sistemaDeRiego.setId(id); // Establecer el ID del sistema a modificar
+                    sistemaDeRiego.setId(id); 
                     sistemaDeRiego.setNombre(nombre);
                     sistemaDeRiego.setPotenciaRiego(potenciaRiego);
                     sistemaDeRiego.setCantidad_agua(cantidadAgua);
@@ -152,7 +152,7 @@ public class GUIModificarSistemaDeRiego extends JFrame implements IGUI {
         });
         panelBotones.add(botonAceptar);
 
-        // Botón de cancelar
+        // Boton Cancelar
         JButton botonCancelar = new JButton("Cancelar");
         botonCancelar.addActionListener(new ActionListener() {
             @Override

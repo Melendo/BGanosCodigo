@@ -33,15 +33,15 @@ public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
     }
 
     private void initGUI() {
-        // Panel principal con GridBagLayout para mayor control sobre la alineación y el centrado
+        // Panel principal 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 10, 10, 10); // Márgenes entre los componentes
+        gbc.insets = new Insets(10, 10, 10, 10); // Margenes entre componentes
         this.setContentPane(mainPanel);
 
-        // Título
-        gbc.gridwidth = 2; // Toma dos columnas para el título
+        // Titulo
+        gbc.gridwidth = 2; // Dos columnas para el título
         JLabel msgIntro = new JLabel("Introduzca los datos del sistema de riego", JLabel.CENTER);
         mainPanel.add(msgIntro, gbc);
 
@@ -49,15 +49,15 @@ public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
         gbc.gridwidth = 1;
         gbc.gridy = 1;
 
-        // Campo para el nombre del sistema de riego
+        // Nombre del sistema de riego
         JLabel labelNombre = new JLabel("Nombre:");
-        gbc.gridx = 0; // Columna 0
+        gbc.gridx = 0; 
         mainPanel.add(labelNombre, gbc);
         textNombre = new JTextField(20);
-        gbc.gridx = 1; // Columna 1
+        gbc.gridx = 1; 
         mainPanel.add(textNombre, gbc);
 
-        // Campo para la potencia de riego
+        // Potencia de riego
         JLabel labelPotenciaRiego = new JLabel("Potencia de Riego:");
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -66,7 +66,7 @@ public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
         gbc.gridx = 1;
         mainPanel.add(textPotenciaRiego, gbc);
 
-        // Campo para la cantidad de agua
+        // Cantidad de agua
         JLabel labelCantidadAgua = new JLabel("Cantidad de Agua:");
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -75,7 +75,7 @@ public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
         gbc.gridx = 1;
         mainPanel.add(textCantidadAgua, gbc);
 
-        // Campo para la frecuencia de riego
+        // Frecuencia de riego
         JLabel labelFrecuencia = new JLabel("Frecuencia:");
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -84,7 +84,7 @@ public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
         gbc.gridx = 1;
         mainPanel.add(textFrecuencia, gbc);
 
-        // Campo para el ID del fabricante
+        // ID del fabricante
         JLabel labelIdFabricante = new JLabel("ID del Fabricante:");
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -97,11 +97,11 @@ public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
         JPanel panelBotones = new JPanel();
         gbc.gridx = 0;
         gbc.gridy = 6;
-        gbc.gridwidth = 2; // Los botones ocuparán dos columnas
-        gbc.anchor = GridBagConstraints.CENTER; // Centrar los botones
+        gbc.gridwidth = 2; 
+        gbc.anchor = GridBagConstraints.CENTER; 
         mainPanel.add(panelBotones, gbc);
 
-        // Botón de aceptar
+        // Boton Aceptar
         JButton botonAceptar = new JButton("Aceptar");
         botonAceptar.addActionListener(new ActionListener() {
             @Override
@@ -129,7 +129,7 @@ public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
         });
         panelBotones.add(botonAceptar);
 
-        // Botón de cancelar
+        // Boton Cancelar
         JButton botonCancelar = new JButton("Cancelar");
         botonCancelar.addActionListener(new ActionListener() {
         	@Override

@@ -52,7 +52,7 @@ public class GUIListarSistemaDeRiegoDelInvernadero extends JFrame implements IGU
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         this.setContentPane(mainPanel);
 
-        // Crear un panel para centrar la etiqueta y el campo de texto
+        // Panel Central
         JPanel panelCentro = new JPanel();
         panelCentro.setLayout(new FlowLayout(FlowLayout.CENTER));
         mainPanel.add(panelCentro);
@@ -65,7 +65,7 @@ public class GUIListarSistemaDeRiegoDelInvernadero extends JFrame implements IGU
         invernaderoField.setPreferredSize(new Dimension(250, 30));
         panelCentro.add(invernaderoField);
 
-        // Botón para buscar
+        // Boton Buscar
         JButton botonBuscar = new JButton("Buscar");
         botonBuscar.addActionListener(new ActionListener() {
             @Override
@@ -75,7 +75,7 @@ public class GUIListarSistemaDeRiegoDelInvernadero extends JFrame implements IGU
         });
         panelCentro.add(botonBuscar);
 
-        // Tabla para mostrar los sistemas de riego
+        // Tabla 
         String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante"};
         tabla = ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, null); 
         JScrollPane scroll = new JScrollPane(tabla);
@@ -117,8 +117,8 @@ public class GUIListarSistemaDeRiegoDelInvernadero extends JFrame implements IGU
     public void actualizar(Context context) {
         if (context.getEvento() == Evento.LISTAR_SISTEMA_DE_RIEGO_DE_INVERNADERO_OK) {
             Set<TSistemaDeRiego> sistemas = (Set<TSistemaDeRiego>) context.getDatos();
-            // Convertir Set a Array para el modelo de la tabla
-            String[][] datos = new String[sistemas.size()][8]; // 6 columnas
+          
+            String[][] datos = new String[sistemas.size()][7];
             int i = 0;
             for (TSistemaDeRiego sistema : sistemas) {
                 datos[i++] = new String[]{
