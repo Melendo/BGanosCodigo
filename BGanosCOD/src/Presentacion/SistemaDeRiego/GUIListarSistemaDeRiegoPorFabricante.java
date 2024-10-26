@@ -75,7 +75,7 @@ public class GUIListarSistemaDeRiegoPorFabricante extends JFrame implements IGUI
                 buscarPorFabricante();
             }
         });
-        mainPanel.add(botonBuscar);
+        panelCentro.add(botonBuscar);
 
         // Tabla para mostrar los sistemas de riego
         String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante"};
