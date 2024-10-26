@@ -20,5 +20,7 @@ public interface FabricanteDAO {
 	public Set<TFabricante> listarFabricantesExtrangeros();
 
 	public Set<TFabricante> listarFabricantesLocales();
+	
+	public TFabricante leerPorCodFabricante(int codFabricante);
 
 }
