@@ -119,8 +119,7 @@ public class GUIMostrarSistemaDeRiegoPorID extends JFrame implements IGUI {
                            ", Cantidad de Agua: " + sistemaRiego.getCantidad_agua() + 
                            ", Frecuencia: " + sistemaRiego.getFrecuencia() + 
                            ", Activo: " + (sistemaRiego.getActivo() ? "Sí" : "No") +
-                           ", Fabricante: " + sistemaRiego.getIdFabricante() +
-                           ", Invernadero: " + sistemaRiego.getIdInvernadero()
+                           ", Fabricante: " + sistemaRiego.getIdFabricante()
                            ;
             
           

@@ -76,7 +76,7 @@ public class GUIListarSistemaDeRiegoDelInvernadero extends JFrame implements IGU
         mainPanel.add(botonBuscar);
 
         // Tabla para mostrar los sistemas de riego
-        String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante", "Invernadero" };
+        String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante"};
         tabla = ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, null); 
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setPreferredSize(new Dimension(750, 250));
@@ -129,11 +129,10 @@ public class GUIListarSistemaDeRiegoDelInvernadero extends JFrame implements IGU
                     String.valueOf(sistema.getFrecuencia()),
                     sistema.getActivo() ? "Sí" : "No",
                     String.valueOf(sistema.getIdFabricante()),
-                    String.valueOf(sistema.getIdInvernadero())
-                    	
+                             	
                 };
             }
-            tabla.setModel(new javax.swing.table.DefaultTableModel(datos, new String[] { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante", "Invernadero" }));
+            tabla.setModel(new javax.swing.table.DefaultTableModel(datos, new String[] { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante"}));
             ComponentsBuilder.adjustColumnWidths(tabla);
         } else if (context.getEvento() == Evento.LISTAR_SISTEMA_DE_RIEGO_DE_INVERNADERO_KO) {
             JOptionPane.showMessageDialog(this, "Error al listar sistemas de riego del invernadero.", "Error", JOptionPane.ERROR_MESSAGE);

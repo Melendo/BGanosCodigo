@@ -13,7 +13,6 @@ public class TSistemaDeRiego {
 	private Boolean activo;
 	
 	private Integer idFabricante;
-	private Integer idInvernadero; 
 	
     public TSistemaDeRiego() {
         this.id = -1; 
@@ -23,11 +22,10 @@ public class TSistemaDeRiego {
         this.frecuencia = 0;
         this.activo = false;
         this.idFabricante = -1; 
-        this.idInvernadero = -1; 
     }
     
     public TSistemaDeRiego(Integer id,String nombre, Integer potenciaRiego, Integer cantidad_agua
-    		, Integer frecuencia, Boolean activo, Integer idFabricante, Integer idInvernadero) {
+    		, Integer frecuencia, Boolean activo, Integer idFabricante) {
         this.id = id; 
         this.nombre = nombre;
         this.potenciaRiego = potenciaRiego;
@@ -35,7 +33,7 @@ public class TSistemaDeRiego {
         this.frecuencia = frecuencia;
         this.activo = activo;
         this.idFabricante = idFabricante; 
-        this.idInvernadero = idInvernadero; 
+      
     }
 
 	public Integer getId() {
@@ -95,11 +93,5 @@ public class TSistemaDeRiego {
 		this.idFabricante = idFabricante;
 	}
 
-	public Integer getIdInvernadero() {
-		return idInvernadero;
-	}
-
-	public void setIdInvernadero(Integer idInvernadero) {
-		this.idInvernadero = idInvernadero;
-	}
+	
 }

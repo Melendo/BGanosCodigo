@@ -3,19 +3,19 @@
  */
 package Negocio.SistemaDeRiego;
 
-import java.util.HashSet;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TreeSet;
+
 
 import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
-import Integracion.Invernadero.InvernaderoDAO;
+
 import Integracion.SistemaDeRiego.SistemaDeRiegoDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 import Negocio.Fabricante.TFabricante;
-import Negocio.Invernadero.TInvernadero;
+
 
 
 public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
@@ -23,7 +23,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	public Integer altaSisRiego(TSistemaDeRiego sisRiego) {
 		//Comprobamos si en el alta han puesto campos nulos 
 				if(sisRiego.getNombre().isEmpty()|| sisRiego.getFrecuencia() == -1|| sisRiego.getCantidad_agua() == -1 
-						|| sisRiego.getPotenciaRiego() == -1|| sisRiego.getIdFabricante() == null || sisRiego.getIdInvernadero() == null){
+						|| sisRiego.getPotenciaRiego() == -1|| sisRiego.getIdFabricante() == null){
 					return -3; //Error casos vacios en alta
 				}
 				int res = -1;
@@ -34,11 +34,8 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 					trans.start();
 					FactoriaIntegracion factoria = FactoriaIntegracion.getInstance();
 					FabricanteDAO daoFabricante = factoria.getFabricanteDAO();
-					InvernaderoDAO daoInvernadero = factoria.getInvernaderoDAO();
 					TFabricante fabricante = daoFabricante.mostrarFabricantePorId(sisRiego.getIdFabricante()); 
-					TInvernadero invernadero = daoInvernadero.mostrarInvernaderoPorID(sisRiego.getIdInvernadero()); 
-					
-					if(invernadero != null){
+									
 						if(fabricante != null){
 							
 							if(fabricante.getActivo()){
@@ -63,11 +60,6 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 							res = -404; //Fabricante no existe
 							trans.rollback();
 						}
-					}
-					else{
-						res = -403; //Invernadero no existe
-						trans.rollback();
-					}
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -86,8 +78,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	        trans.start();
 
 	        FactoriaIntegracion factoria = FactoriaIntegracion.getInstance();
-	        SistemaDeRiegoDAO daoSistRiego = factoria.getSistemaDeRiegoDAO();
-	        
+	        SistemaDeRiegoDAO daoSistRiego = factoria.getSistemaDeRiegoDAO();	        
 	        TSistemaDeRiego tSistRiego = daoSistRiego.mostrarSistemaDeRiegoPorID(id);
 	        
 	        //  sistema de riego existe
@@ -116,7 +107,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 		// Comprobamos campos nulos
 	    if (sisRiego.getNombre().isEmpty() || sisRiego.getFrecuencia() == -1 || 
 	        sisRiego.getCantidad_agua() == -1 || sisRiego.getPotenciaRiego() == -1 || 
-	        		sisRiego.getIdInvernadero() == null ||sisRiego.getIdFabricante() == null || sisRiego.getId() <= 0) { 
+	        		sisRiego.getIdFabricante() == null || sisRiego.getId() <= 0) { 
 	    	
 	        return -3; // Error: casos vacíos 
 	    }
@@ -130,11 +121,9 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 
 	        FactoriaIntegracion factoria = FactoriaIntegracion.getInstance();
 	        FabricanteDAO daoFabricante = factoria.getFabricanteDAO();
-	        InvernaderoDAO daoInvernadero = factoria.getInvernaderoDAO();
 	        TFabricante fabricante = daoFabricante.mostrarFabricantePorId(sisRiego.getIdFabricante());
-	        TInvernadero invernadero = daoInvernadero.mostrarInvernaderoPorID(sisRiego.getIdInvernadero()); 
 	        
-	        if(invernadero != null){
+	       
 	        	if (fabricante != null) {
 		            if (fabricante.getActivo()) {
 		                SistemaDeRiegoDAO daoSistRiego = factoria.getSistemaDeRiegoDAO();
@@ -156,12 +145,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 		        } else {
 		            res = -404; // Error: fabricante no existe
 		            trans.rollback();
-		        }
-	        }else {
-	            res = -403; // Error: Invernadero no existe
-	            trans.rollback();
-	        }
-	        
+		        }	      	        
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }

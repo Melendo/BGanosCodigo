@@ -40,7 +40,7 @@ public class GUIListarSistemasDeRiego extends JFrame implements IGUI {
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
         // Tabla de sistemas de riego
-        String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante", "Invernadero" };
+        String[] nombreColumnas = { "ID", "Nombre", "Potencia Riego", "Cantidad Agua", "Frecuencia", "Activo", "Fabricante"};
         String[][] tablaDatos = new String[datos.size()][nombreColumnas.length];
 
         int i = 0;
@@ -52,7 +52,6 @@ public class GUIListarSistemasDeRiego extends JFrame implements IGUI {
             tablaDatos[i][4] = sistema.getFrecuencia().toString();
             tablaDatos[i][5] = sistema.getActivo() ? "Sí" : "No";
             tablaDatos[i][6] = sistema.getIdFabricante().toString();
-            tablaDatos[i][7] = sistema.getIdInvernadero().toString();
             i++;
         }
 
