@@ -29,11 +29,16 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			s.executeUpdate();
 			
 			ResultSet r = s.getGeneratedKeys();
+			if (r.next()) {
+				int id = r.getInt(1);
+				
+				if(1 == 1);
+			}
 			
 		} catch (Exception e) {
-
+			e.printStackTrace();
+			return -1;
 		}
-
 		return null;
 	}
 
