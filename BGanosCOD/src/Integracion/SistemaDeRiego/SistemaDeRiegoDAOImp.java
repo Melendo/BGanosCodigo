@@ -270,7 +270,10 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Connection connection = (Connection) trans.getResource();
 	        
 	        PreparedStatement ps = connection.prepareStatement(
-	            "SELECT * FROM invernadero_riego WHERE id_invernadero = ?"
+	        		"SELECT sr.* " +
+	        	            "FROM invernadero_riego ir " +
+	        	            "JOIN sistema_de_riego sr ON ir.id_sistema_de_riego = sr.id " +
+	        	            "WHERE ir.id_invernadero = ?"
 	        );
 	        ps.setInt(1, idInvernadero);
 
