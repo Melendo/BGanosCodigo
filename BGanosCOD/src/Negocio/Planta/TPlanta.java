@@ -9,6 +9,16 @@ public class TPlanta {
 	private Integer tipo;
 	private Integer id_invernadero;
 	
+	TPlanta( String nombre,String nombre_cientifico, Integer tipo, Integer id_invernadero ){
+		this.nombre= nombre;
+		this.nombre_cientifico = nombre_cientifico;
+		this.tipo = tipo;
+		this.id_invernadero = id_invernadero;
+		this.activo = true;
+	}
+	
+	public TPlanta(){}
+	
 	public String get_nombre_cientifico() {
 		return nombre_cientifico;
 	}
@@ -58,7 +68,20 @@ public class TPlanta {
 	}
 	
 	public String toString() {
+		String tmp, estado = "Si";
+		if(!activo){estado = "No";}
+		
+		
+		tmp = "Informacion de la Planta: " + "\n" +
+		"Id: " + id + "\n" +
+		"Nombre: " + nombre + "\n" +
+		"Nombre cientifico: " + nombre_cientifico + "\n" +
+		"Tipo: " + tipo + "\n" +
+		"Id del Invernadero: " + id_invernadero +  "\n" +
+		"Activo: " + estado + "\n";
 
+		
+			return tmp;
 	}
 	
 }

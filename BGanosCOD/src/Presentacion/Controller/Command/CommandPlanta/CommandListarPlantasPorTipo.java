@@ -12,6 +12,8 @@ public class CommandListarPlantasPorTipo implements Command {
 
 	public Context execute(Object datos) {
 		Set<TPlanta> res = FactoriaNegocio.getInstance().getPlantaSA().listarPlantasPorTipo((String)datos);
+		
+		
 		if(res.size() == 1) {
 			TPlanta planta = res.iterator().next();
 			if(planta.get_id() <= 0) {

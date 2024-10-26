@@ -4,9 +4,9 @@ import java.util.Set;
 
 public interface PlantaSA {
 
-	public Integer altaPlanta(TPlanta planta);
+	public Integer altaPlanta(TPlanta planta) throws Exception;
 
-	public Integer bajaPlanta(Integer id);
+	public Integer bajaPlanta(Integer id) throws Exception;
 
 	public Integer modificarPlanta(TPlanta planta);
 
