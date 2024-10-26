@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 * @author airam
 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 */
-public class GUIListarPlantasPorID extends JFrame implements IGUI {
+public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 	/** 
 	* <!-- begin-UML-doc -->
 	* <!-- end-UML-doc -->
@@ -50,7 +50,7 @@ public class GUIListarPlantasPorID extends JFrame implements IGUI {
 	*/
 	private JPanel jPanel;
 
-	public GUIListarPlantasPorID(Set<TPlanta> datos) {
+	public GUIListarPlantasPorTipo(Set<TPlanta> datos) {
 		// TODO Auto-generated constructor stub
 	}
 

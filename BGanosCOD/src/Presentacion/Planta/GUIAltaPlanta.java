@@ -1,71 +1,97 @@
-/**
- * 
- */
 package Presentacion.Planta;
 
 import javax.swing.JFrame;
+
+import Presentacion.ComponentsBuilder.ComponentsBuilder;
+import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 
 import javax.swing.JLabel;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
 public class GUIAltaPlanta extends JFrame implements IGUI {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JButton jButton;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JPanel jPanel;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	public Void initGUI() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	public GUIAltaPlanta() {
+		super("Alta Planta");
+		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+		int ancho = 1000;
+		int alto = 525;
+		int x = (pantalla.width - ancho) / 2;
+		int y = (pantalla.height - alto) / 2;
+		this.setBounds(x, y, ancho, alto);
+		this.setLayout(null);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		initGUI();
 	}
-
-	/** 
-	* (non-Javadoc)
-	* @see IGUI#actualizar(Context context)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	
-	@Override
-	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
-		
+	public void initGUI() {
+		JPanel mainPanel = new JPanel();
+	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+	    this.setContentPane(mainPanel);
+
+	    mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+	    
+	    JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("Seleccione el tipo de planta que desea dar de alta", 1, 10, 80, 20, Color.BLACK);
+	    msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
+	    mainPanel.add(msgIntroIDCabecera);
+
+	    mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
+	    
+	    //PANEL DE TIPO DE LA PLANTA
+	    JPanel panelTPlanta = new JPanel();
+ 		mainPanel.add(panelTPlanta);
+
+ 		JLabel labelTPlanta = ComponentsBuilder.createLabel("Tipo del Empleado: ", 10, 100, 80, 20,Color.BLACK);
+ 		panelTPlanta.add(labelTPlanta);
+
+ 		JComboBox<String> tipoPlanta = new JComboBox<String>();
+ 		tipoPlanta.addItem("Frutal");
+ 		tipoPlanta.addItem("No Frutal");
+ 		tipoPlanta.setPreferredSize(new Dimension(250, 25));
+ 		tipoPlanta.add(tipoPlanta);
+
+ 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+ 		
+ 		//PANEL DE LOS BOTONES
+ 		JPanel panelBotones = new JPanel();
+ 		mainPanel.add(panelBotones);
+ 		
+ 		//BOTON DE ACEPTAR
+ 		JButton botonAceptar = new JButton("Aceptar");
+ 		botonAceptar.addActionListener(new ActionListener() {
+ 			
+ 			@Override
+ 			public void actionPerformed(ActionEvent e) {
+ 				GUIAltaPlanta.this.setVisible(false);
+ 				int tipo = -47548;
+ 				try {
+ 					if(tipoPlanta.getSelectedItem() == "Frutal") {
+ 						tipo = 0;
+ 						ApplicationController.getInstance().manageRequest(new Context(Evento.planta,null))
+ 					}else if (tipoPlanta.getSelectedItem() == "No Frutal") {
+ 						
+ 					}
+ 				} catch (Exception e1) {
+ 					//ApplicationController.getInstance().manageRequest(new Context(Evento.vista, -4));
+ 				}
+ 			}
+ 		});
 	}
+
+	@Override
+	public void actualizar(Context context) {}
 }
