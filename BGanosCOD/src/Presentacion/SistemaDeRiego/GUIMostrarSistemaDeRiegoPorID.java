@@ -118,17 +118,20 @@ public class GUIMostrarSistemaDeRiegoPorID extends JFrame implements IGUI {
                            ", Potencia de Riego: " + sistemaRiego.getPotenciaRiego() + 
                            ", Cantidad de Agua: " + sistemaRiego.getCantidad_agua() + 
                            ", Frecuencia: " + sistemaRiego.getFrecuencia() + 
-                           ", Activo: " + sistemaRiego.getActivo();
+                           ", Activo: " + (sistemaRiego.getActivo() ? "Sí" : "No") +
+                           ", Fabricante: " + sistemaRiego.getIdFabricante() +
+                           ", Invernadero: " + sistemaRiego.getIdInvernadero()
+                           ;
             
           
             JOptionPane.showMessageDialog(this, texto, "Sistema de Riego", JOptionPane.INFORMATION_MESSAGE);
         } else if (context.getEvento() == Evento.MOSTRAR_SISTEMA_DE_RIEGO_KO) {
           
-            JOptionPane.showMessageDialog(this, "Error al mostrar el sistema de riego con ID: " + 
+            JOptionPane.showMessageDialog(this, "No existe sistema de riego con ID: " + 
                 ((TSistemaDeRiego) context.getDatos()).getId(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         
         this.setVisible(false); 
-        ApplicationController.getInstance().manageRequest(new Context(Evento.SISTEMA_RIEGO_VISTA, null));
+        ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_SISTEMA_RIEGO_POR_ID_VISTA, null));
     }
 }
