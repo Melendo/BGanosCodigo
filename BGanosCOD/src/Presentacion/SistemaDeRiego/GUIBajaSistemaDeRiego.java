@@ -108,11 +108,12 @@ public class GUIBajaSistemaDeRiego extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
+		int resultado = (int) context.getDatos();
 		 if (context.getEvento() == Evento.BAJA_SISTEMA_DE_RIEGO_OK) {
-			 	int resultado = (int) context.getDatos();
+			 	
 	            JOptionPane.showMessageDialog(this, "Sistema de riego" + resultado + " dado de baja correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 	        } else if (context.getEvento() == Evento.BAJA_SISTEMA_DE_RIEGO_KO) {
-	        	int resultado = (int) context.getDatos();
+	        	
 	            switch (resultado) {
 	            case -2:
 	                JOptionPane.showMessageDialog(this, "Error: El sistema de riego ya esta dado de baja.", "Error", JOptionPane.ERROR_MESSAGE);
