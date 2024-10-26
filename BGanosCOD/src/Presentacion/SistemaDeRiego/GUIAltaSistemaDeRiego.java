@@ -146,7 +146,8 @@ public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
     @Override
     public void actualizar(Context context) {
         if (context.getEvento() == Evento.ALTA_SISTEMA_DE_RIEGO_OK) {
-            JOptionPane.showMessageDialog(this, "Sistema de riego dado de alta correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        	int resultado = (int) context.getDatos();
+            JOptionPane.showMessageDialog(this, "Sistema de riego dado de alta correctamente con id: " + resultado , "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } else if (context.getEvento() == Evento.ALTA_SISTEMA_DE_RIEGO_KO) {
         	int resultado = (int) context.getDatos();
             switch (resultado) {
