@@ -4,32 +4,50 @@
 package Integracion.Invernadero;
 
 import Negocio.Invernadero.TInvernadero;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Set;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
+import Integracion.Transaction.Transaccion;
+import Integracion.Transaction.TransaccionManager;
+
 public class InvernaderoDAOImp implements InvernaderoDAO {
-	/** 
-	* (non-Javadoc)
-	* @see InvernaderoDAO#altaInvernadero(TInvernadero invernadero)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	public Integer altaInvernadero(TInvernadero invernadero) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		int exito = -1;
+
+		try {
+			TransaccionManager tManager = TransaccionManager.getInstance();
+			Transaccion t = tManager.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			PreparedStatement statement = c.prepareStatement(
+					"INSERT INTO invernadero(nombre, sustrato, tipo_iluminacion, activo) VALUES (?, ?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
+
+			statement.setString(1, invernadero.getNombre());
+			statement.setString(2, invernadero.getSustrato());
+			statement.setString(3, invernadero.getTipo_iluminacion());
+			statement.setBoolean(4, true);
+
+			statement.executeUpdate();
+
+			ResultSet result = statement.getGeneratedKeys();
+			if (result.next()) {
+				exito = result.getInt(1);
+			}
+
+			statement.close();
+			result.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return exito;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see InvernaderoDAO#bajaInvernadero(Integer id)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Integer bajaInvernadero(Integer id) {
 		// begin-user-code
 		// TODO Auto-generated method stub
@@ -37,11 +55,6 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see InvernaderoDAO#mostrarInvernaderoPorID(Integer id)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public TInvernadero mostrarInvernaderoPorID(Integer id) {
 		// begin-user-code
 		// TODO Auto-generated method stub
@@ -49,11 +62,6 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see InvernaderoDAO#listarInvernadero()
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Set<TInvernadero> listarInvernadero() {
 		// begin-user-code
 		// TODO Auto-generated method stub
@@ -61,11 +69,6 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see InvernaderoDAO#listarInvernaderoPorSR(Integer id_sistema_de_riego)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Set<TInvernadero> listarInvernaderoPorSR(Integer id_sistema_de_riego) {
 		// begin-user-code
 		// TODO Auto-generated method stub
@@ -73,11 +76,6 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see InvernaderoDAO#modificarInvernadero(TInvernadero invernadero)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Integer modificarInvernadero(TInvernadero invernadero) {
 		// begin-user-code
 		// TODO Auto-generated method stub
