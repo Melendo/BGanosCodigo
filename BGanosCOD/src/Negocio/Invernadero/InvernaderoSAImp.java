@@ -5,7 +5,6 @@ package Negocio.Invernadero;
 
 import java.util.Collection;
 
-
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
 import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Transaction.Transaccion;
@@ -14,9 +13,9 @@ import Integracion.Transaction.TransaccionManager;
 public class InvernaderoSAImp implements InvernaderoSA {
 
 	public Integer altaInvernadero(TInvernadero invernadero) {
-		// Comprobamos si en el alta han puesto campos nulos
-		if (invernadero.getNombre().isEmpty() || invernadero.getSustrato().isEmpty() && invernadero.getTipo_iluminacion().isEmpty()) {
-			return -3; // Enviamos error de no se pueden dejar campos vacios en ALTA
+		if (invernadero.getNombre().isEmpty()
+				|| invernadero.getSustrato().isEmpty() && invernadero.getTipo_iluminacion().isEmpty()) {
+			return -3;
 		}
 		int exito = -1;
 		Transaccion t = null;
@@ -27,18 +26,18 @@ public class InvernaderoSAImp implements InvernaderoSA {
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 
 			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
-			TInvernadero nuevoInvernadero = daoInvernadero. mostrarInvernaderoPorNombre(invernadero.getNombre());
-			if (nuevoInvernadero == null) { // No existe un invernadero con el mismo nombre, por lo tanto damos de alta sin problema
+			TInvernadero nuevoInvernadero = daoInvernadero.mostrarInvernaderoPorNombre(invernadero.getNombre());
+			if (nuevoInvernadero == null) {
 				exito = daoInvernadero.altaInvernadero(invernadero);
 				t.commit();
-			} else if (!nuevoInvernadero.isActivo()) { // Comprobamos si ese invernadero que ya tiene el mismo nombre esta dado de baja
-				// Procedemos a reactivarlo y actualizar sus valores
+			} else if (!nuevoInvernadero.isActivo()) {
+
 				invernadero.setId(nuevoInvernadero.getId());
 				exito = daoInvernadero.modificarInvernadero(invernadero);
 				t.commit();
 			} else {
-				// Mostramos error
-				exito = -23; // Error de que ya existe un habitat con el mismo nombre y activo
+
+				exito = -23;
 				t.rollback();
 			}
 
@@ -84,10 +83,27 @@ public class InvernaderoSAImp implements InvernaderoSA {
 	}
 
 	public TInvernadero mostrarInvernaderoPorID(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		TInvernadero invernadero = new TInvernadero();
+		invernadero.setId(-1);
+
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			Transaccion t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
+			TInvernadero invernaderoExiste = daoInvernadero.mostrarInvernaderoPorID(id);
+			if (invernaderoExiste != null ) {
+				invernadero = invernaderoExiste;
+				t.commit();
+			} else{
+				t.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return invernadero;
 	}
 
 	public Integer vincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero) {
@@ -95,5 +111,30 @@ public class InvernaderoSAImp implements InvernaderoSA {
 		// TODO Auto-generated method stub
 		return null;
 		// end-user-code
+	}
+
+	@Override
+	public TInvernadero mostrarInvernaderoPorNombre(String nombre) {
+		TInvernadero invernadero = new TInvernadero();
+		invernadero.setId(-1);
+
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			Transaccion t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
+			TInvernadero invernaderoExiste = daoInvernadero.mostrarInvernaderoPorNombre(nombre);
+			if (invernaderoExiste != null ) {
+				invernadero = invernaderoExiste;
+				t.commit();
+			} else{
+				t.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return invernadero;
 	}
 }

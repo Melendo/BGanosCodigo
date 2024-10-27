@@ -11,15 +11,18 @@ public interface InvernaderoSA {
 
 	public Integer bajaInvernadero(Integer id);
 
-	public Integer desvincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero);
+	public Integer modificarInvernadero(TInvernadero invernadero);
+
+	public TInvernadero mostrarInvernaderoPorID(Integer id);
+
+	public TInvernadero mostrarInvernaderoPorNombre(String nombre);
 
 	public Collection<TInvernadero> listarInvernadero();
 
 	public Collection<TInvernadero> listarInvernaderoPorSR(Integer id_sistema_riegos);
 
-	public Integer modificarInvernadero(TInvernadero invernadero);
-
-	public TInvernadero mostrarInvernaderoPorID(Integer id);
-
 	public Integer vincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero);
+
+	public Integer desvincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero);
+
 }
