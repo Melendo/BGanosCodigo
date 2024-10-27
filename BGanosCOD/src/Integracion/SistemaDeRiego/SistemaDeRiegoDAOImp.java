@@ -27,7 +27,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Connection connection = (Connection) trans.getResource();
 
             PreparedStatement ps = connection.prepareStatement(
-                "INSERT INTO sistema_de_riego (nombre, potencia_riego, cantidad_agua, frecuencia, activo, id_fabricante) VALUES (?, ?, ?, ?, ?, ?)",
+                "INSERT INTO sistemas_riego (nombre, potencia_riego, cantidad_agua, frecuencia, activo, id_fabricante) VALUES (?, ?, ?, ?, ?, ?)",
                 Statement.RETURN_GENERATED_KEYS
             );
 
@@ -66,7 +66,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Connection connection = (Connection) trans.getResource();
 	        
 	        PreparedStatement ps = connection.prepareStatement(
-	            "UPDATE sistema_de_riego SET activo = false WHERE id = ?"
+	            "UPDATE sistemas_riego SET activo = false WHERE id = ?"
 	        );
 
 	        // Asignar id
@@ -91,7 +91,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Connection connection = (Connection) trans.getResource();
             
             PreparedStatement ps = connection.prepareStatement(
-                    "UPDATE sistema_de_riego SET nombre = ?, potencia_riego = ?, cantidad_agua = ?, frecuencia = ?, activo = ?, id_fabricante = ? WHERE id = ?"
+                    "UPDATE sistemas_riego SET nombre = ?, potencia_riego = ?, cantidad_agua = ?, frecuencia = ?, activo = ?, id_fabricante = ? WHERE id = ?"
                 );
 
             	// Asignar parametos
@@ -123,7 +123,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Connection connection = (Connection) trans.getResource();
 	        
 	        PreparedStatement ps = connection.prepareStatement(
-	            "SELECT * FROM sistema_de_riego WHERE id = ? FOR UPDATE"
+	            "SELECT * FROM sistemas_riego WHERE id = ? FOR UPDATE"
 	        );
 	        ps.setInt(1, id);
 
@@ -159,7 +159,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Connection connection = (Connection) trans.getResource();
 	        
 	        PreparedStatement ps = connection.prepareStatement(
-	            "SELECT * FROM sistema_de_riego WHERE id_fabricante = ? FOR UPDATE"
+	            "SELECT * FROM sistemas_riego WHERE id_fabricante = ? FOR UPDATE"
 	        );
 	        ps.setInt(1, idFabricante);
 	        
@@ -197,7 +197,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Connection connection = (Connection) trans.getResource();
 	        
 	        PreparedStatement ps = connection.prepareStatement(
-	        		"SELECT * FROM sistema_de_riego FOR UPDATE"
+	        		"SELECT * FROM sistemas_riego FOR UPDATE"
 	        );
 	        
 	        ResultSet rs = ps.executeQuery();
@@ -234,7 +234,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
             Connection connection = (Connection) trans.getResource();
 	        
 	        PreparedStatement ps = connection.prepareStatement(
-	            "SELECT * FROM sistema_de_riego WHERE nombre = ? "
+	            "SELECT * FROM sistemas_riego WHERE nombre = ? "
 	        );
 	        ps.setString(1, nombre);
 
@@ -271,8 +271,8 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 	        
 	        PreparedStatement ps = connection.prepareStatement(
 	        		"SELECT sr.* " +
-	        	            "FROM invernadero_riego ir " +
-	        	            "JOIN sistema_de_riego sr ON ir.id_sistema_de_riego = sr.id " +
+	        	            "FROM sistemas_riego_de_invernadero ir " +
+	        	            "JOIN sistemas_riego sr ON ir.id_sistema_riego = sr.id " +
 	        	            "WHERE ir.id_invernadero = ?"
 	        );
 	        ps.setInt(1, idInvernadero);
