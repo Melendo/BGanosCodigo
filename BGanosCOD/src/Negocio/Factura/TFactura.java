@@ -46,7 +46,7 @@ public class TFactura {
 	public Integer getid() {
 		// begin-user-code
 		// TODO Auto-generated method stub
-		return null;
+		return id;
 		// end-user-code
 	}
 
@@ -59,7 +59,7 @@ public class TFactura {
 	public void setid(Integer id) {
 		// begin-user-code
 		// TODO Auto-generated method stub
-
+		this.id = id;
 		// end-user-code
 	}
 
@@ -72,7 +72,7 @@ public class TFactura {
 	public Float getPrecioTotal() {
 		// begin-user-code
 		// TODO Auto-generated method stub
-		return null;
+		return precioTotal;
 		// end-user-code
 	}
 
@@ -85,7 +85,7 @@ public class TFactura {
 	public void setPrecioTotal(Float precioTotal) {
 		// begin-user-code
 		// TODO Auto-generated method stub
-
+		this.precioTotal = precioTotal;
 		// end-user-code
 	}
 
@@ -98,7 +98,7 @@ public class TFactura {
 	public Date getFechaCompra() {
 		// begin-user-code
 		// TODO Auto-generated method stub
-		return null;
+		return fechaCompra;
 		// end-user-code
 	}
 
@@ -111,7 +111,7 @@ public class TFactura {
 	public void setFechaCompra(Date fechaCompra) {
 		// begin-user-code
 		// TODO Auto-generated method stub
-
+		this.fechaCompra=fechaCompra;
 		// end-user-code
 	}
 
@@ -124,7 +124,7 @@ public class TFactura {
 	public boolean getActivo() {
 		// begin-user-code
 		// TODO Auto-generated method stub
-		return false;
+		return activo;
 		// end-user-code
 	}
 
@@ -137,7 +137,7 @@ public class TFactura {
 	public void setActivo(Boolean activo) {
 		// begin-user-code
 		// TODO Auto-generated method stub
-
+		this.activo = activo;
 		// end-user-code
 	}
 }
