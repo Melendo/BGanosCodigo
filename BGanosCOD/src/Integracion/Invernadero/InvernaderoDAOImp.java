@@ -82,4 +82,10 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 		return null;
 		// end-user-code
 	}
+
+	@Override
+	public TInvernadero mostrarInvernaderoPorNombre(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
