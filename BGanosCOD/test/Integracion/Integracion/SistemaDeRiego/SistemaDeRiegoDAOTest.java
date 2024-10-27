@@ -93,5 +93,24 @@ public class SistemaDeRiegoDAOTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void testBajaSistemaDeRiego() {
+		try {
+			Transaccion trans = crearTransaccion();
+			trans.start();
+			TSistemaDeRiego sistRiego = getTSistemaDeRiego();
+			Integer idSistemaDeRiego = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
+			Integer result = sistemaRiegoDAO.bajaSistemaDeRiego(idSistemaDeRiego);
+			if (result < 0) {
+				trans.rollback();
+				fail("Error: bajaSistemaDeRiego() debería retornar un número positivo");
+			}
+			trans.commit();
+		} catch (Exception e) {
+			fail("Excepción");
+			e.printStackTrace();
+		}
+	}
 
 }
