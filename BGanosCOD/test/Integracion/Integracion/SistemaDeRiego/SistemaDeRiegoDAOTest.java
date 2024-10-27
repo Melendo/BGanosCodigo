@@ -17,33 +17,34 @@ public class SistemaDeRiegoDAOTest {
 	
 	private static SistemaDeRiegoDAO sistemaRiegoDAO;
 	
-	private boolean equals(TSistemaDeRiego s1, TSistemaDeRiego s2){
-		return true;
-	}
-	
-	private TSistemaDeRiego getTSistemaDeRiego() {
+    // Comparar dos objetos TSistemaDeRiego
+    private boolean equals(TSistemaDeRiego s1, TSistemaDeRiego s2) {
+        if (s1 == null || s2 == null) {
+            return false;
+        }
+        return s1.getId().equals(s2.getId()) &&
+               s1.getNombre().equals(s2.getNombre()) &&
+               s1.getPotenciaRiego().equals(s2.getPotenciaRiego()) &&
+               s1.getCantidad_agua().equals(s2.getCantidad_agua()) &&
+               s1.getFrecuencia().equals(s2.getFrecuencia()) &&
+               s1.getActivo().equals(s2.getActivo()) &&
+               s1.getIdFabricante().equals(s2.getIdFabricante());
+    }
 
-		TSistemaDeRiego sistRiego = new TSistemaDeRiego();
-		
+    // Crear un sistema de riego con valores predeterminados
+    private TSistemaDeRiego getTSistemaDeRiego() {
+        return new TSistemaDeRiego(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
+    }
 
-		return sistRiego;
-	}
-	
-	private TSistemaDeRiego getTSistemaDeRiego(String nombreUnico) {
+    // Crear un sistema de riego utilizando un nombre único
+    private TSistemaDeRiego getTSistemaDeRiego(String nombreUnico) {
+        return new TSistemaDeRiego(getNumRandom(), nombreUnico, getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
+    }
 
-		TSistemaDeRiego sistRiego = new TSistemaDeRiego();
-		
-
-		return sistRiego;
-	}
-	
-	private TSistemaDeRiego getTSistemaDeRiego(Integer idFabricante) {
-
-		TSistemaDeRiego sistRiego = new TSistemaDeRiego();
-		
-
-		return sistRiego;
-	}
+    // Crear un sistema de riego utilizando el ID del fabricante
+    private TSistemaDeRiego getTSistemaDeRiego(Integer idFabricante) {
+        return new TSistemaDeRiego(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, idFabricante);
+    }
 
 	private String getNameRandom() {
 		String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -87,8 +88,9 @@ public class SistemaDeRiegoDAOTest {
 				trans.rollback();
 				fail("Error: altaSistemaDeRiego() debería retornar ID > 0");
 			}
-			trans.commit();
+			trans.commit(); 
 		} catch (Exception e) {
+			
 			fail("Excepción");
 			e.printStackTrace();
 		}
@@ -106,7 +108,7 @@ public class SistemaDeRiegoDAOTest {
 				trans.rollback();
 				fail("Error: bajaSistemaDeRiego() debería retornar un número positivo");
 			}
-			trans.commit();
+			trans.commit(); 
 		} catch (Exception e) {
 			fail("Excepción");
 			e.printStackTrace();
@@ -127,11 +129,44 @@ public class SistemaDeRiegoDAOTest {
 				fail("Error: mostrarSistemaDeRiegoPorID() sistRiego no coincide con el mostrado");
 			}
 
-			trans.commit();
+			trans.commit(); 
 		} catch (Exception e) {
 			fail("Excepción");
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void testModificarSistemaDeRiego() {
+	    try {
+	    	Transaccion trans = crearTransaccion();
+			trans.start();
+			TSistemaDeRiego sistRiego = getTSistemaDeRiego();
+			Integer idSistemaDeRiego = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
+			sistRiego.setId(idSistemaDeRiego);
+	        
+			sistRiego.setNombre(getNameRandom());
+			sistRiego.setActivo(false);
+
+	        Integer resultado = sistemaRiegoDAO.modificarSistemaDeRiego(sistRiego);
+
+	        if (resultado < 0) {
+	        	trans.rollback();
+	            fail("Error: modificarEspecie() debería un numero positivo");
+	        }
+
+	        TSistemaDeRiego sistRiegoMod = sistemaRiegoDAO.mostrarSistemaDeRiegoPorID(sistRiego.getId());
+	        if (!sistRiego.getNombre().equals(sistRiegoMod.getNombre())
+	                || !sistRiego.getActivo().equals(sistRiegoMod.getActivo())) {
+	        	trans.rollback();
+	            fail("Error: Los atributos de la especie no coinciden después de la modificación");
+	        }
+
+	        trans.commit();
+	    } catch (Exception e) {
+	        fail("Excepción");
+	        e.printStackTrace();
+	    }
 	}
 
 }
