@@ -9,7 +9,7 @@ public class TEntrada {
 
 	private Integer id;
 
-	private String fecha;
+	private Date fecha;
 
 	private Float precio;
 
@@ -22,7 +22,7 @@ public class TEntrada {
 	}
 
 	// TODO aclarar si fecha es de tipo string o date
-	public String getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
@@ -42,7 +42,7 @@ public class TEntrada {
 		this.id = id;
 	}
 
-	public void setFecha(String fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 

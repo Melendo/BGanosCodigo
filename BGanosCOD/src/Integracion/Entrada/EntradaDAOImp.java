@@ -6,9 +6,11 @@ package Integracion.Entrada;
 import Negocio.Entrada.TEntrada;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import Integracion.Transaction.Transaccion;
@@ -26,10 +28,12 @@ public class EntradaDAOImp implements EntradaDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement ps = c.prepareStatement(
-					"INSERT INTO entrada (fecha, precio, stock, activo) VALUES (?,?,?,?)",
+					"INSERT INTO entrada (fecha, precio, stock_entradas, activo) VALUES (?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
-			ps.setString(1, entrada.getFecha());
+			// TODO me obliga a poner este cast
+			// ps.setDate(1, entrada.getFecha());
+			ps.setDate(1, (Date) entrada.getFecha());
 			ps.setFloat(2, entrada.getPrecio());
 			ps.setInt(3, entrada.getStock());
 			ps.setBoolean(4, entrada.getActivo());
@@ -59,7 +63,7 @@ public class EntradaDAOImp implements EntradaDAO {
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 
-			PreparedStatement ps = c.prepareStatement("UPDATE entrada SET activo=false where idEntrada=?");
+			PreparedStatement ps = c.prepareStatement("UPDATE entrada SET activo=false where id=?");
 
 			ps.setInt(1, id);
 			ps.executeUpdate();
@@ -71,67 +75,131 @@ public class EntradaDAOImp implements EntradaDAO {
 		}
 	}
 
-	public Set<TEntrada> listarEntradas() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-		
-		//		try {
-		//		
-		//	} catch (Exception e) {
-		//		
-		//	}
-	}
-
 	public Integer modificarEntrada(TEntrada entrada) throws Exception {
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
-			
-			PreparedStatement ps = c.prepareStatement("UPDATE entrada SET fecha=?, precio=?, stock=?, activo=? WHERE idEntrada=?");
-			
-			ps.setString(1, entrada.getFecha());
+
+			PreparedStatement ps = c
+					.prepareStatement("UPDATE entrada SET fecha=?, precio=?, stock_entradas=?, activo=? WHERE id=?");
+
+			ps.setDate(1, (Date) entrada.getFecha());
 			ps.setFloat(2, entrada.getPrecio());
 			ps.setInt(3, entrada.getStock());
 			ps.setBoolean(4, entrada.getActivo());
 			ps.setInt(5, entrada.getId());
 			ps.executeUpdate();
 			ps.close();
-			
+
 			return entrada.getId();
-			
+
 		} catch (Exception e) {
 			throw new Exception("La conexión con la BBDD no se ha realizado correctamente");
 		}
 	}
 
 	public TEntrada mostrarEntrada(Integer id) {
-		
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-		
-		//		try {
-		//		
-		//	} catch (Exception e) {
-		//		
-		//	}
+		TEntrada entrada = null;
+
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.getTransaccion();
+			Connection c = (Connection) t.getResource();
+
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM entrada WHERE id=? FOR UPDATE");
+
+			ps.setInt(1, id);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				entrada = new TEntrada();
+				entrada.setId(rs.getInt("id"));
+				entrada.setFecha(rs.getDate("fecha"));
+				entrada.setPrecio(rs.getFloat("precio"));
+				entrada.setStock(rs.getInt("stock_entradas"));
+				entrada.setActivo(rs.getBoolean("activo"));
+			}
+			ps.close();
+			rs.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return entrada;
+	}
+
+	public Set<TEntrada> listarEntradas() {
+
+		Set<TEntrada> entradas = new LinkedHashSet<TEntrada>();
+
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.getTransaccion();
+			Connection c = (Connection) t.getResource();
+
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM entradas FOR UPDATE");
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				TEntrada entrada = new TEntrada();
+				entrada.setId(rs.getInt("id"));
+				entrada.setFecha(rs.getDate("fecha"));
+				entrada.setPrecio(rs.getFloat("precio"));
+				entrada.setStock(rs.getInt("stock_entradas"));
+				entrada.setActivo(rs.getBoolean("activo"));
+
+				entradas.add(entrada);
+			}
+
+			ps.close();
+			rs.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return entradas;
 	}
 
 	public Set<TEntrada> listarEntradasPorInvernadero(Integer idInvernadero) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+
+		Set<TEntrada> entradas = new LinkedHashSet<TEntrada>();
+
+		try {
+
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.getTransaccion();
+			Connection c = (Connection) t.getResource();
+
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM entrada WHERE id_invernadero=? FOR UPDATE");
+			ps.setInt(1, idInvernadero);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				TEntrada entrada = new TEntrada();
+				entrada.setId(rs.getInt("id"));
+				// falta el de invernadero
+				entrada.setFecha(rs.getDate("fecha"));
+				entrada.setPrecio(rs.getFloat("precio"));
+				entrada.setStock(rs.getInt("stock_entradas"));
+				entrada.setActivo(rs.getBoolean("activo"));
+
+				entradas.add(entrada);
+			}
+			
+			ps.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		//		try {
-		//		
-		//	} catch (Exception e) {
-		//		
-		//	}
+		return entradas;
 	}
 
 }
