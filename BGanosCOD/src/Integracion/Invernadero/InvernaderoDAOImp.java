@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Integracion.Invernadero;
 
 import Negocio.Invernadero.TInvernadero;
@@ -56,10 +53,33 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 	}
 
 	public TInvernadero mostrarInvernaderoPorID(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		TInvernadero invernadero = null;
+
+		try {
+			TransaccionManager tManager = TransaccionManager.getInstance();
+			Transaccion t = tManager.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			PreparedStatement statement = c.prepareStatement("SELECT * FROM invernadero WHERE id = ? FOR UPDATE");
+			statement.setInt(1, id);
+
+			ResultSet result = statement.executeQuery();
+
+			if (result.next()) {
+				invernadero = new TInvernadero();
+				invernadero.setId(result.getInt("id"));
+				invernadero.setNombre(result.getString("nombre"));
+				invernadero.setSustrato(result.getString("sustrato"));
+				invernadero.setTipo_iluminacion(result.getString("tipo_iluminacion"));
+				invernadero.setActivo(result.getBoolean("activo"));
+			}
+
+			statement.close();
+			result.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return invernadero;
 	}
 
 	public Set<TInvernadero> listarInvernadero() {
@@ -83,9 +103,34 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 		// end-user-code
 	}
 
-	@Override
+	
 	public TInvernadero mostrarInvernaderoPorNombre(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+		TInvernadero invernadero = null;
+
+		try {
+			TransaccionManager tManager = TransaccionManager.getInstance();
+			Transaccion t = tManager.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			PreparedStatement statement = c.prepareStatement("SELECT * FROM invernadero WHERE nombre like ? FOR UPDATE");
+			statement.setString(1, nombre);
+
+			ResultSet result = statement.executeQuery();
+
+			if (result.next()) {
+				invernadero = new TInvernadero();
+				invernadero.setId(result.getInt("id"));
+				invernadero.setNombre(result.getString("nombre"));
+				invernadero.setSustrato(result.getString("sustrato"));
+				invernadero.setTipo_iluminacion(result.getString("tipo_iluminacion"));
+				invernadero.setActivo(result.getBoolean("activo"));
+			}
+
+			statement.close();
+			result.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return invernadero;
 	}
 }
