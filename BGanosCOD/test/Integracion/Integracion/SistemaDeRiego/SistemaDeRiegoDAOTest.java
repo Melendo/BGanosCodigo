@@ -3,6 +3,7 @@ package Integracion.SistemaDeRiego;
 import static org.junit.Assert.*;
 
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.BeforeClass;
@@ -160,6 +161,44 @@ public class SistemaDeRiegoDAOTest {
 	                || !sistRiego.getActivo().equals(sistRiegoMod.getActivo())) {
 	        	trans.rollback();
 	            fail("Error: Los atributos de la especie no coinciden después de la modificación");
+	        }
+
+	        trans.commit();
+	    } catch (Exception e) {
+	        fail("Excepción");
+	        e.printStackTrace();
+	    }
+	}
+	
+	@Test
+	public void testListarSistemaDeRiego() {
+	    try {
+	    	Transaccion trans = crearTransaccion();
+			trans.start();
+
+			TSistemaDeRiego sistRiego = getTSistemaDeRiego();
+			TSistemaDeRiego sistRiego2 = getTSistemaDeRiego(); 
+
+	        Integer idSistemaDeRiego = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
+	        sistRiego.setId(idSistemaDeRiego);
+	        boolean encontrado = false;
+	        Integer idSistemaDeRiego2 = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego2);	        
+	        sistRiego.setId(idSistemaDeRiego2);
+	        boolean encontrado2 = false;
+	       	     
+	        Set<TSistemaDeRiego> sistemasRiego = sistemaRiegoDAO.listarSistemaDeRiego();
+	       
+	        for (TSistemaDeRiego sistR : sistemasRiego) {
+	            if (sistR.getId().equals(sistRiego.getId())) {
+	            	encontrado = true;
+	            } else if (sistR.getId().equals(sistRiego2.getId())) {
+	            	encontrado2 = true;
+	            }
+	        }
+
+	        if (!encontrado || !encontrado2) {
+	        	fail("Error: La lista de especies no contiene todas las especies creadas");
+	            trans.rollback();	            
 	        }
 
 	        trans.commit();
