@@ -47,7 +47,7 @@ public class TInvernadero {
 		this.tipo_iluminacion = tipo_iluminacion;
 	}
 
-	public Boolean getActivo() {
+	public Boolean isActivo() {
 		return activo;
 	}
 
