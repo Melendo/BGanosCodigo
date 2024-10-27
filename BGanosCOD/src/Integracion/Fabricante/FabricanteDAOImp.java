@@ -8,14 +8,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashSet;
 import java.util.Set;
 
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 
+@SuppressWarnings("resource")
 public class FabricanteDAOImp implements FabricanteDAO {
 
-	@SuppressWarnings("resource")
 	public Integer altaFabricante(TFabricante fabricante) {
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
@@ -30,43 +31,43 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			s.setString(3, fabricante.getTelefono());
 			s.setBoolean(4, fabricante.getActivo());
 			s.executeUpdate();
-			
+
 			ResultSet r = s.getGeneratedKeys();
 			if (r.next()) {
 				int id = r.getInt(1);
-				
-				if(fabricante instanceof TFabricanteLocal) {
-					s = c.prepareStatement("INSERT INTO fabricante_local(id_fabricante, impuesto, subvencion) Values(?,?,?)");
+
+				if (fabricante instanceof TFabricanteLocal) {
+					s = c.prepareStatement(
+							"INSERT INTO fabricante_local(id_fabricante, impuesto, subvencion) Values(?,?,?)");
 					s.setInt(1, id);
-					s.setInt(2, ((TFabricanteLocal)fabricante).getImpuesto());
-					s.setInt(3, ((TFabricanteLocal)fabricante).getSubvencion());
-					
-					if(s.executeUpdate() == 0) {
+					s.setInt(2, ((TFabricanteLocal) fabricante).getImpuesto());
+					s.setInt(3, ((TFabricanteLocal) fabricante).getSubvencion());
+
+					if (s.executeUpdate() == 0) {
 						s.close();
 						r.close();
 						return -1;
 					}
-				}
-				else if(fabricante instanceof TFabricanteExtranjero) {
-					s = c.prepareStatement("INSERT INTO fabricante_extranjero (id_fabricante, aranceles, pais_origen) Values(?,?,?)");
+				} else if (fabricante instanceof TFabricanteExtranjero) {
+					s = c.prepareStatement(
+							"INSERT INTO fabricante_extranjero (id_fabricante, aranceles, pais_origen) Values(?,?,?)");
 					s.setInt(1, id);
 					s.setInt(2, ((TFabricanteExtranjero) fabricante).getAranceles());
 					s.setString(2, ((TFabricanteExtranjero) fabricante).getPaisDeOrigen());
-					
-					if(s.executeUpdate() == 0) {
+
+					if (s.executeUpdate() == 0) {
 						s.close();
 						r.close();
 						return -1;
 					}
 				}
-				
+
 				s.close();
 				r.close();
 				return id;
-			}
-			else
+			} else
 				return -1;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
@@ -74,103 +75,278 @@ public class FabricanteDAOImp implements FabricanteDAO {
 	}
 
 	public Integer bajaFabricante(Integer idFabricante) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
+		try {
 
-	public TFabricante listarFabricantePorNombre(String nombre) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.getTransaccion();
+			Connection c = (Connection) t.getResource();
 
-	public Set<TFabricante> listarFabricantes() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
+			PreparedStatement statement = c.prepareStatement("UPDATE fabricante SET activo=false WHERE id=?");
+			statement.setInt(1, idFabricante);
 
-	public Set<TFabricante> listarFabricantesExtrangeros() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
-
-	public Set<TFabricante> listarFabricantesLocales() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+			statement.executeUpdate();
+			statement.close();
+			return idFabricante;
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 
 	public Integer modificarFabricante(TFabricante fabricante) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.getTransaccion();
+			Connection c = (Connection) t.getResource();
+
+			PreparedStatement s = c
+					.prepareStatement("UPDATE fabricante SET nombre=?, activo=?, cod_fabricante=? WHERE id=?");
+			s.setString(1, fabricante.getNombre());
+			s.setBoolean(2, fabricante.getActivo());
+			s.setString(3, fabricante.getCodFabricante());
+			s.setInt(4, fabricante.getId());
+
+			s.executeUpdate();
+
+			if (fabricante instanceof TFabricanteLocal) {
+				s = c.prepareStatement("UPDATE fabricante_local SET impuesto=?, subvencion=? WHERE id_fabricante=?");
+				s.setInt(1, ((TFabricanteLocal) fabricante).getImpuesto());
+				s.setInt(2, ((TFabricanteLocal) fabricante).getSubvencion());
+				s.setInt(3, fabricante.getId());
+			}
+
+			if (fabricante instanceof TFabricanteExtranjero) {
+				s = c.prepareStatement(
+						"UPDATE fabricante_extranjero SET aranceles=?, pais_origen=?, WHERE id_fabricante=?");
+				s.setInt(1, ((TFabricanteExtranjero) fabricante).getAranceles());
+				s.setString(2, ((TFabricanteExtranjero) fabricante).getPaisDeOrigen());
+				s.setInt(3, fabricante.getId());
+			}
+
+			s.executeUpdate();
+			s.close();
+
+			return fabricante.getId();
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+
+	public Set<TFabricante> listarFabricantes() {
+		Set<TFabricante> lFabricantes = new HashSet<>();
+
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.getTransaccion();
+			Connection c = (Connection) t.getResource();
+
+			PreparedStatement s = c.prepareStatement(
+					"SELECT * FROM fabricante AS e LEFT JOIN fabricante_local AS el ON e.id=el.id LEFT JOIN fabricante_extranjero AS ez ON e.id=ez.id FOR UPDATE");
+			ResultSet r = s.executeQuery();
+
+			while (r.next()) {
+
+				if (r.getInt("impuestos") > 0) {
+					TFabricanteLocal tLocal = new TFabricanteLocal();
+					tLocal.setActivo(r.getBoolean("activo"));
+					tLocal.setCodFabricante(r.getString("cod_fabricante"));
+					tLocal.setId(r.getInt("id"));
+					tLocal.setImpuesto(r.getInt("impuesto"));
+					tLocal.setNombre(r.getString("nombre"));
+					tLocal.setSubvencion(r.getInt("subvencion"));
+					tLocal.setTelefono(r.getString("telefono"));
+
+					lFabricantes.add(tLocal);
+				} else {
+					TFabricanteExtranjero tExtranjero = new TFabricanteExtranjero();
+					tExtranjero.setActivo(r.getBoolean("activo"));
+					tExtranjero.setAranceles(r.getInt("aranceles"));
+					tExtranjero.setCodFabricante(r.getString("cod_fabricante"));
+					tExtranjero.setId(r.getInt("id"));
+					tExtranjero.setNombre(r.getString("nombre"));
+					tExtranjero.setPaisDeOrigen(r.getString("pais_origen"));
+					tExtranjero.setTelefono(r.getString("telefono"));
+
+					lFabricantes.add(tExtranjero);
+				}
+			}
+
+			r.close();
+			s.close();
+			return lFabricantes;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public Set<TFabricante> listarFabricantesExtrangeros() {
+		Set<TFabricante> lFabricantes = new HashSet<>();
+
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.getTransaccion();
+			Connection c = (Connection) t.getResource();
+
+			PreparedStatement s = c.prepareStatement(
+					"SELECT * FROM fabricante AS e LEFT JOIN fabricante_extranjero AS ez ON e.id=ez.id_fabricante FOR UPDATE");
+			ResultSet r = s.executeQuery();
+
+			while (r.next()) {
+
+				TFabricanteLocal tLocal = new TFabricanteLocal();
+				tLocal.setActivo(r.getBoolean("activo"));
+				tLocal.setCodFabricante(r.getString("cod_fabricante"));
+				tLocal.setId(r.getInt("id"));
+				tLocal.setImpuesto(r.getInt("impuesto"));
+				tLocal.setNombre(r.getString("nombre"));
+				tLocal.setSubvencion(r.getInt("subvencion"));
+				tLocal.setTelefono(r.getString("telefono"));
+
+				lFabricantes.add(tLocal);
+			}
+
+			r.close();
+			s.close();
+			return lFabricantes;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public Set<TFabricante> listarFabricantesLocales() {
+		Set<TFabricante> lFabricantes = new HashSet<>();
+
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.getTransaccion();
+			Connection c = (Connection) t.getResource();
+
+			PreparedStatement s = c.prepareStatement(
+					"SELECT * FROM fabricante AS e LEFT JOIN fabricante_local AS ez ON e.id=ez.id_fabricante FOR UPDATE");
+			ResultSet r = s.executeQuery();
+
+			while (r.next()) {
+
+				TFabricanteExtranjero tExtranjero = new TFabricanteExtranjero();
+				tExtranjero.setActivo(r.getBoolean("activo"));
+				tExtranjero.setAranceles(r.getInt("aranceles"));
+				tExtranjero.setCodFabricante(r.getString("cod_fabricante"));
+				tExtranjero.setId(r.getInt("id"));
+				tExtranjero.setNombre(r.getString("nombre"));
+				tExtranjero.setPaisDeOrigen(r.getString("pais_origen"));
+				tExtranjero.setTelefono(r.getString("telefono"));
+
+				lFabricantes.add(tExtranjero);
+			}
+
+			r.close();
+			s.close();
+			return lFabricantes;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public TFabricante mostrarFabricantePorId(Integer idFabricante) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.getTransaccion();
+			Connection c = (Connection) t.getResource();
+
+			PreparedStatement s = c.prepareStatement(
+					"SELECT * FROM fabricante AS e JOIN fabricante_local AS el ON e.id=el.id_fabricante WHERE e.id=? FOR UPDATE");
+			s.setInt(1, idFabricante);
+			ResultSet r = s.executeQuery();
+			TFabricante tf = null;
+
+			if (r.next()) {
+				TFabricanteLocal tLocal = new TFabricanteLocal();
+				tLocal.setActivo(r.getBoolean("activo"));
+				tLocal.setCodFabricante(r.getString("cod_fabricante"));
+				tLocal.setId(r.getInt("id"));
+				tLocal.setImpuesto(r.getInt("impuesto"));
+				tLocal.setNombre(r.getString("nombre"));
+				tLocal.setSubvencion(r.getInt("subvencion"));
+				tLocal.setTelefono(r.getString("telefono"));
+
+				tf = tLocal;
+			} else {
+				s = c.prepareStatement(
+						"SELECT * FROM fabricante AS e JOIN fabricante_extranjero AS ez ON e.id=ez.id_fabricante WHERE e.id=? FOR UPDATE");
+				s.setInt(1, idFabricante);
+				r = s.executeQuery();
+				if (r.next()) {
+					TFabricanteExtranjero tExtranjero = new TFabricanteExtranjero();
+					tExtranjero.setActivo(r.getBoolean("activo"));
+					tExtranjero.setAranceles(r.getInt("aranceles"));
+					tExtranjero.setCodFabricante(r.getString("cod_fabricante"));
+					tExtranjero.setId(r.getInt("id"));
+					tExtranjero.setNombre(r.getString("nombre"));
+					tExtranjero.setPaisDeOrigen(r.getString("pais_origen"));
+					tExtranjero.setTelefono(r.getString("telefono"));
+
+					tf = tExtranjero;
+				}
+			}
+
+			r.close();
+			s.close();
+			return tf;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public TFabricante leerPorCodFabricante(String codFabricante) {
 		TFabricante tf = null;
-		
-		try {
-            TransaccionManager tm = TransaccionManager.getInstance();
-            Transaccion t = tm.getTransaccion();
-            Connection c = (Connection) t.getResource();
-            PreparedStatement s = c.prepareStatement(
-            		"SELECT * FROM fabricante AS e JOIN fabricante_local AS el ON e.id=el.id WHERE e.cod_fabricante=? FOR UPDATE");
-            s.setString(1, codFabricante);
-            ResultSet r = s.executeQuery();
 
-            if (r.next()) {
-            	TFabricanteLocal tfl = new TFabricanteLocal();
-            	tfl.setId(r.getInt("id"));
-            	tfl.setActivo(r.getBoolean("activo"));
-            	tfl.setCodFabricante(r.getString("cod_fabricante"));
-            	tfl.setNombre(r.getString("nombre"));
-            	tfl.setTelefono(r.getString("telefono"));
-            	tfl.setImpuesto(r.getInt("impuesto"));
-            	tfl.setSubvencion(r.getInt("subvencion"));
-            	
-            	tf = tfl;
-            }
-            else {
-            	s = c.prepareStatement("SELECT * FROM fabricante AS e JOIN fabricante_extranjero AS es ON e.id=es.id WHERE e.cod_fabricante=? FOR UPDATE");
-            	s.setString(1, codFabricante);
-            	r = s.executeQuery();
-            	
-            	if(r.next()) {
-            		TFabricanteExtranjero tfe = new TFabricanteExtranjero();
-                	tfe.setId(r.getInt("id"));
-                	tfe.setActivo(r.getBoolean("activo"));
-                	tfe.setCodFabricante(r.getString("cod_fabricante"));
-                	tfe.setNombre(r.getString("nombre"));
-                	tfe.setTelefono(r.getString("telefono"));
-                	tfe.setAranceles(r.getInt("aranceles"));
-                	tfe.setPaisDeOrigen(r.getString("pais_origen"));
-                	
-                	tf = tfe;
-            	}
-            }
-            
-            r.close();
-            s.close();
-            return tf;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			PreparedStatement s = c.prepareStatement(
+					"SELECT * FROM fabricante AS e JOIN fabricante_local AS el ON e.id=el.id WHERE e.cod_fabricante=? FOR UPDATE");
+			s.setString(1, codFabricante);
+			ResultSet r = s.executeQuery();
+
+			if (r.next()) {
+				TFabricanteLocal tfl = new TFabricanteLocal();
+				tfl.setId(r.getInt("id"));
+				tfl.setActivo(r.getBoolean("activo"));
+				tfl.setCodFabricante(r.getString("cod_fabricante"));
+				tfl.setNombre(r.getString("nombre"));
+				tfl.setTelefono(r.getString("telefono"));
+				tfl.setImpuesto(r.getInt("impuesto"));
+				tfl.setSubvencion(r.getInt("subvencion"));
+
+				tf = tfl;
+			} else {
+				s = c.prepareStatement(
+						"SELECT * FROM fabricante AS e JOIN fabricante_extranjero AS es ON e.id=es.id WHERE e.cod_fabricante=? FOR UPDATE");
+				s.setString(1, codFabricante);
+				r = s.executeQuery();
+
+				if (r.next()) {
+					TFabricanteExtranjero tfe = new TFabricanteExtranjero();
+					tfe.setId(r.getInt("id"));
+					tfe.setActivo(r.getBoolean("activo"));
+					tfe.setCodFabricante(r.getString("cod_fabricante"));
+					tfe.setNombre(r.getString("nombre"));
+					tfe.setTelefono(r.getString("telefono"));
+					tfe.setAranceles(r.getInt("aranceles"));
+					tfe.setPaisDeOrigen(r.getString("pais_origen"));
+
+					tf = tfe;
+				}
+			}
+
+			r.close();
+			s.close();
+			return tf;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
