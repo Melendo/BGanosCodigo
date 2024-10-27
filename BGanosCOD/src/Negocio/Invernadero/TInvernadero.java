@@ -15,6 +15,12 @@ public class TInvernadero {
 
 	private Boolean activo;
 
+	public TInvernadero(String nombre, String sustrato, String tipo_iluminacion) {
+		this.nombre = nombre;
+		this.sustrato = sustrato;
+		this.tipo_iluminacion = tipo_iluminacion;
+	}
+
 	public Integer getId() {
 		return id;
 	}
