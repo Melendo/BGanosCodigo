@@ -112,5 +112,26 @@ public class SistemaDeRiegoDAOTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void testMostrarSistemaDeRiego() {
+		try {
+			Transaccion trans = crearTransaccion();
+			trans.start();
+			TSistemaDeRiego sistRiego = getTSistemaDeRiego();
+			Integer idSistemaDeRiego = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
+			sistRiego.setId(idSistemaDeRiego);
+
+			if (!equals(sistRiego, sistemaRiegoDAO.mostrarSistemaDeRiegoPorID(sistRiego.getId()))) {
+				trans.rollback();
+				fail("Error: mostrarSistemaDeRiegoPorID() sistRiego no coincide con el mostrado");
+			}
+
+			trans.commit();
+		} catch (Exception e) {
+			fail("Excepción");
+			e.printStackTrace();
+		}
+	}
 
 }
