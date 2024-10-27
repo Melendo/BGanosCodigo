@@ -21,6 +21,10 @@ public class TInvernadero {
 		this.tipo_iluminacion = tipo_iluminacion;
 	}
 
+	public TInvernadero() {
+
+	}
+
 	public Integer getId() {
 		return id;
 	}
