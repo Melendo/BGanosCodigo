@@ -17,7 +17,7 @@ import Presentacion.FactoriaVistas.Evento;
 
 public class MainView extends JFrame implements IGUI {
 
-    // Definición de los botones
+    // Definiciï¿½n de los botones
     private JButton buttonEntrada;
     private JButton buttonFabricante;
     private JButton buttonInvernadero;
@@ -27,7 +27,7 @@ public class MainView extends JFrame implements IGUI {
     private JLabel label;
 
     public MainView() {
-        super("BGanos - Gestión de Módulos");
+        super("BGanos - GestiÃ³n de MÃ³dulos");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int frameWidth = 1000;
         int frameHeight = 650;
@@ -38,15 +38,15 @@ public class MainView extends JFrame implements IGUI {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initializeComponents();
-        this.getContentPane().setBackground(new Color(250, 250, 250)); // Fondo más claro
+        this.getContentPane().setBackground(new Color(250, 250, 250)); // Fondo mï¿½s claro
         this.setVisible(true);
     }
 
     private void initializeComponents() {
-        label = ComponentsBuilder.createLabel("Selecciona un módulo para gestionar", 50, 40, 900, 50, Color.DARK_GRAY);
+        label = ComponentsBuilder.createLabel("Selecciona un mÃ³dulo para gestionar", 50, 40, 900, 50, Color.DARK_GRAY);
         this.add(label);
 
-        // Botón de Entrada
+        // Botï¿½n de Entrada
         buttonEntrada = ComponentsBuilder.createButton("Entrada", 100, 120, 185, 90);
         buttonEntrada.addActionListener(new ActionListener() {
             @Override
@@ -57,7 +57,7 @@ public class MainView extends JFrame implements IGUI {
         });
         this.add(buttonEntrada);
 
-        // Botón de Fabricante
+        // Botï¿½n de Fabricante
         buttonFabricante = ComponentsBuilder.createButton("Fabricante", 407, 120, 185, 90);
         buttonFabricante.addActionListener(new ActionListener() {
             @Override
@@ -68,7 +68,7 @@ public class MainView extends JFrame implements IGUI {
         });
         this.add(buttonFabricante);
 
-        // Botón de Invernadero
+        // Botï¿½n de Invernadero
         buttonInvernadero = ComponentsBuilder.createButton("Invernadero", 715, 120, 185, 90);
         buttonInvernadero.addActionListener(new ActionListener() {
             @Override
@@ -79,7 +79,7 @@ public class MainView extends JFrame implements IGUI {
         });
         this.add(buttonInvernadero);
 
-        // Botón de Factura
+        // Botï¿½n de Factura
         buttonFactura = ComponentsBuilder.createButton("Factura", 100, 290, 185, 90);
         buttonFactura.addActionListener(new ActionListener() {
             @Override
@@ -90,7 +90,7 @@ public class MainView extends JFrame implements IGUI {
         });
         this.add(buttonFactura);
 
-        // Botón de Planta
+        // Botï¿½n de Planta
         buttonPlanta = ComponentsBuilder.createButton("Planta", 407, 290, 185, 90);
         buttonPlanta.addActionListener(new ActionListener() {
             @Override
@@ -101,7 +101,7 @@ public class MainView extends JFrame implements IGUI {
         });
         this.add(buttonPlanta);
 
-        // Botón de Sistema de Riego
+        // Botï¿½n de Sistema de Riego
         buttonSistRiego = ComponentsBuilder.createButton("Sistema de Riego", 715, 290, 185, 90);
         buttonSistRiego.addActionListener(new ActionListener() {
             @Override
@@ -115,6 +115,6 @@ public class MainView extends JFrame implements IGUI {
 
     @Override
     public void actualizar(Context res) {
-        // Implementar actualización si es necesario
+        // Implementar actualizaciï¿½n si es necesario
     }
 }

@@ -3,7 +3,6 @@ package Integracion.Fabricante;
 import Negocio.Fabricante.TFabricante;
 import Negocio.Fabricante.TFabricanteExtranjero;
 import Negocio.Fabricante.TFabricanteLocal;
-import Negocio.Habitat.THabitat;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,8 +12,6 @@ import java.util.Set;
 
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
-import Integracion.Transactions.Transaction;
-import Integracion.Transactions.TransactionManager;
 
 public class FabricanteDAOImp implements FabricanteDAO {
 
@@ -125,37 +122,55 @@ public class FabricanteDAOImp implements FabricanteDAO {
 		// end-user-code
 	}
 
-	@Override
-	public TFabricante leerPorCodFabricante(int codFabricante) {
-		TFabricante tf;
+	public TFabricante leerPorCodFabricante(String codFabricante) {
+		TFabricante tf = null;
 		
 		try {
             TransaccionManager tm = TransaccionManager.getInstance();
             Transaccion t = tm.getTransaccion();
             Connection c = (Connection) t.getResource();
             PreparedStatement s = c.prepareStatement(
-            		"SELECT * FROM Animal AS e JOIN fabricante_local AS el ON e.id=el.id WHERE e.id=? FOR UPDATE");
-            s.setInt(1, codFabricante);
-
+            		"SELECT * FROM fabricante AS e JOIN fabricante_local AS el ON e.id=el.id WHERE e.cod_fabricante=? FOR UPDATE");
+            s.setString(1, codFabricante);
             ResultSet r = s.executeQuery();
 
             if (r.next()) {
+            	TFabricanteLocal tfl = new TFabricanteLocal();
+            	tfl.setId(r.getInt("id"));
+            	tfl.setActivo(r.getBoolean("activo"));
+            	tfl.setCodFabricante(r.getString("cod_fabricante"));
+            	tfl.setNombre(r.getString("nombre"));
+            	tfl.setTelefono(r.getString("telefono"));
+            	tfl.setImpuesto(r.getInt("impuesto"));
+            	tfl.setSubvencion(r.getInt("subvencion"));
             	
-            	if()
-            	
-            	tf = new TFabricante();
-            	tf.setId(result.getInt("id"));
-            	tf.setNombre(result.getString("nombre"));
-            	tf.setTamano(result.getInt("tamano"));
-            	tf.setActivo(result.getBoolean("activo"));
+            	tf = tfl;
             }
-
-            statement.close();
-            result.close();
+            else {
+            	s = c.prepareStatement("SELECT * FROM fabricante AS e JOIN fabricante_extranjero AS es ON e.id=es.id WHERE e.cod_fabricante=? FOR UPDATE");
+            	s.setString(1, codFabricante);
+            	r = s.executeQuery();
+            	
+            	if(r.next()) {
+            		TFabricanteExtranjero tfe = new TFabricanteExtranjero();
+                	tfe.setId(r.getInt("id"));
+                	tfe.setActivo(r.getBoolean("activo"));
+                	tfe.setCodFabricante(r.getString("cod_fabricante"));
+                	tfe.setNombre(r.getString("nombre"));
+                	tfe.setTelefono(r.getString("telefono"));
+                	tfe.setAranceles(r.getInt("aranceles"));
+                	tfe.setPaisDeOrigen(r.getString("pais_origen"));
+                	
+                	tf = tfe;
+            	}
+            }
+            
+            r.close();
+            s.close();
+            return tf;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-
-        return habitat;
 	}
 }

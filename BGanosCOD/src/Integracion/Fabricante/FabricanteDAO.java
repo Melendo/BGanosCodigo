@@ -21,6 +21,6 @@ public interface FabricanteDAO {
 
 	public Set<TFabricante> listarFabricantesLocales();
 	
-	public TFabricante leerPorCodFabricante(int codFabricante);
+	public TFabricante leerPorCodFabricante(String codFabricante);
 
 }
