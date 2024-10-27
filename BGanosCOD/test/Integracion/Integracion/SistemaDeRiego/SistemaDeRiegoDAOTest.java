@@ -37,15 +37,7 @@ public class SistemaDeRiegoDAOTest {
         return new TSistemaDeRiego(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
     }
 
-    // Crear un sistema de riego utilizando un nombre único
-    private TSistemaDeRiego getTSistemaDeRiego(String nombreUnico) {
-        return new TSistemaDeRiego(getNumRandom(), nombreUnico, getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
-    }
 
-    // Crear un sistema de riego utilizando el ID del fabricante
-    private TSistemaDeRiego getTSistemaDeRiego(Integer idFabricante) {
-        return new TSistemaDeRiego(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, idFabricante);
-    }
 
 	private String getNameRandom() {
 		String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -183,7 +175,7 @@ public class SistemaDeRiegoDAOTest {
 	        sistRiego.setId(idSistemaDeRiego);
 	        boolean encontrado = false;
 	        Integer idSistemaDeRiego2 = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego2);	        
-	        sistRiego.setId(idSistemaDeRiego2);
+	        sistRiego2.setId(idSistemaDeRiego2);
 	        boolean encontrado2 = false;
 	       	     
 	        Set<TSistemaDeRiego> sistemasRiego = sistemaRiegoDAO.listarSistemaDeRiego();
@@ -196,6 +188,48 @@ public class SistemaDeRiegoDAOTest {
 	            }
 	        }
 
+	        if (!encontrado || !encontrado2) {
+	        	fail("Error: La lista de especies no contiene todas las especies creadas");
+	            trans.rollback();	            
+	        }
+
+	        trans.commit();
+	    } catch (Exception e) {
+	        fail("Excepción");
+	        e.printStackTrace();
+	    }
+	}
+	
+	@Test
+	public void testListarSistemaDeRiegoPorFabricante() {
+	    try {
+	    	Transaccion trans = crearTransaccion();
+	    	trans.start();
+
+	    	Integer idFabricante = getNumRandom();  //HACER ALTA FABRICANTE
+	    	
+	    	TSistemaDeRiego sistRiego = getTSistemaDeRiego();
+			TSistemaDeRiego sistRiego2 = getTSistemaDeRiego(); 
+
+	        Integer idSistemaDeRiego = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
+	        sistRiego.setId(idSistemaDeRiego);
+	        sistRiego.setIdFabricante(idFabricante);
+	        boolean encontrado = false;
+	        Integer idSistemaDeRiego2 = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego2);	        
+	        sistRiego2.setId(idSistemaDeRiego2);
+	        sistRiego2.setIdFabricante(idFabricante);
+	        boolean encontrado2 = false;
+
+	        Set<TSistemaDeRiego> sistRiegoFabricante = sistemaRiegoDAO.listarSistemaDeRiegoPorFabricante(idFabricante);
+
+	        for (TSistemaDeRiego sistR : sistRiegoFabricante) {
+	            if (sistR.getId().equals(sistRiego.getId())) {
+	            	encontrado = true;
+	            } else if (sistR.getId().equals(sistRiego2.getId())) {
+	            	encontrado2 = true;
+	            }
+	        }
+	        
 	        if (!encontrado || !encontrado2) {
 	        	fail("Error: La lista de especies no contiene todas las especies creadas");
 	            trans.rollback();	            
