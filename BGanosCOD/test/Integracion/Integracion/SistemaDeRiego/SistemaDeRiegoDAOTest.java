@@ -145,14 +145,14 @@ public class SistemaDeRiegoDAOTest {
 
 	        if (resultado < 0) {
 	        	trans.rollback();
-	            fail("Error: modificarEspecie() debería un numero positivo");
+	            fail("Error: modificarSistemaDeRiego() no devuelve numero postivo");
 	        }
 
 	        TSistemaDeRiego sistRiegoMod = sistemaRiegoDAO.mostrarSistemaDeRiegoPorID(sistRiego.getId());
 	        if (!sistRiego.getNombre().equals(sistRiegoMod.getNombre())
 	                || !sistRiego.getActivo().equals(sistRiegoMod.getActivo())) {
 	        	trans.rollback();
-	            fail("Error: Los atributos de la especie no coinciden después de la modificación");
+	            fail("Error: Los atributos del sistemadeRiego no coinciden");
 	        }
 
 	        trans.commit();
@@ -189,7 +189,7 @@ public class SistemaDeRiegoDAOTest {
 	        }
 
 	        if (!encontrado || !encontrado2) {
-	        	fail("Error: La lista de especies no contiene todas las especies creadas");
+	        	fail("Error: La lista no muestra todos los sistemas de riego");
 	            trans.rollback();	            
 	        }
 
@@ -231,9 +231,34 @@ public class SistemaDeRiegoDAOTest {
 	        }
 	        
 	        if (!encontrado || !encontrado2) {
-	        	fail("Error: La lista de especies no contiene todas las especies creadas");
+	        	fail("Error: La lista no muestra todos los sistemas de riego");
 	            trans.rollback();	            
 	        }
+
+	        trans.commit();
+	    } catch (Exception e) {
+	        fail("Excepción");
+	        e.printStackTrace();
+	    }
+	}
+	
+	@Test
+	public void testNombreUnico() {
+	    try {
+	    	Transaccion trans = crearTransaccion();
+	    	trans.start();
+
+	       
+	        TSistemaDeRiego sistRiego = getTSistemaDeRiego();
+	        String nombre = sistRiego.getNombre();
+
+	        Integer idEspecie = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
+	        sistRiego.setId(idEspecie);
+	        
+	        if (!equals(sistRiego, sistemaRiegoDAO.leerPorNombreUnico(nombre))) {
+				trans.rollback();
+				fail("Error: leerPorNombreUnico() sistRiego no coincide con el mostrado");
+			}
 
 	        trans.commit();
 	    } catch (Exception e) {
