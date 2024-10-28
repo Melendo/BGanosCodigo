@@ -6,6 +6,7 @@ package Presentacion.Planta;
 import javax.swing.JFrame;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
 import javax.swing.JLabel;
 
@@ -75,7 +76,19 @@ public class GUIListarPlantasPorInvernadero extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
+		switch(context.getEvento()) {
+		case Evento.LISTAR_PLANTAS_DE_INVERNADERO_KO:
+		
+			break;
+		case  Evento.LISTAR_PLANTAS_DE_INVERNADERO_OK:
+		
+			break;
+		default:
+			
+			break;
+		
+	}
+
 		
 	}
 }

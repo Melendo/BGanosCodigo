@@ -8,13 +8,13 @@ public interface PlantaSA {
 
 	public Integer bajaPlanta(Integer id) throws Exception;
 
-	public Integer modificarPlanta(TPlanta planta);
+	public Integer modificarPlanta(TPlanta planta) throws Exception;
 
 	public Set<TPlanta> listarPlanta();
 
-	public TPlanta mostrarPlantaPorId(Integer id);
+	public TPlanta mostrarPlantaPorId(Integer id) throws Exception;
 
-	public Set<TPlanta> listarPlantasPorTipo(String tipo);
+	public Set<TPlanta> listarPlantasPorTipo(String tipo) throws Exception;
 
 	public Set<TPlanta> listarPlantasPorInvernadero(Integer id_invernadero);
 }

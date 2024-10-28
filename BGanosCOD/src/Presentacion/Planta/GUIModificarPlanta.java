@@ -6,6 +6,7 @@ package Presentacion.Planta;
 import javax.swing.JFrame;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -70,7 +71,17 @@ public class GUIModificarPlanta extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
+		switch(context.getEvento()) {
+		case Evento.MODIFICAR_PLANTA_OK:
 		
+			break;
+		case  Evento.MODIFICAR_PLANTA_KO:
+		
+			break;
+		default:
+			
+			break;
+		
+	}
 	}
 }

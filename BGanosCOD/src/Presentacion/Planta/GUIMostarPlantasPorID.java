@@ -141,7 +141,16 @@ public class GUIMostarPlantasPorID extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
+		switch(context.getEvento()) {
+		case Evento.MOSTRAR_PLANTA_POR_ID_KO:
 		
+			break;
+		case  Evento.MOSTRAR_PLANTA_POR_ID_OK:
+		
+			break;
+		default:
+			
+			break;
+		}
 	}
 }

@@ -6,6 +6,7 @@ package Presentacion.Planta;
 import javax.swing.JFrame;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
 import javax.swing.JLabel;
 
@@ -25,33 +26,10 @@ import javax.swing.JPanel;
 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 */
 public class GUIListarPlantas extends JFrame implements IGUI {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JButton jButton;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JPanel jPanel;
 
-	public GUIListarPlantas(Set<TPlanta> datos) {
-		// TODO Auto-generated constructor stub
+
+	public GUIListarPlantas(Set<TPlanta> plantas) {
+		
 	}
 
 	/** 
@@ -60,23 +38,25 @@ public class GUIListarPlantas extends JFrame implements IGUI {
 	* @return
 	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	*/
-	public Void initGUI() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	public void initGUI() {
+
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see IGUI#actualizar(Context context)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	
+
 
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
+		switch(context.getEvento()) {
+		case Evento.LISTAR_PLANTAS_KO:
 		
+			break;
+		case  Evento.LISTAR_PLANTAS_OK:
+		
+			break;
+		default:
+			
+			break;
+		
+	}
 	}
 }

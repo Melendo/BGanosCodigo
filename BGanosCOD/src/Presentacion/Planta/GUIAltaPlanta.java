@@ -3,11 +3,13 @@ package Presentacion.Planta;
 import javax.swing.JFrame;
 
 
+
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
+import Presentacion.Controller.GUIMSG;
 
 import javax.swing.JLabel;
 
@@ -198,12 +200,29 @@ public class GUIAltaPlanta extends JFrame implements IGUI {
  						
  					}
  				} catch (Exception e1) {
- 					//ApplicationController.getInstance().manageRequest(new Context(Evento.vista, -4));
+ 					GUIMSG.showMessage("Datos con formato incorrecto", "ALTA PLANTA", true);
  				}
  			}
  		});
 	}
 
 	@Override
-	public void actualizar(Context context) {}
+	public void actualizar(Context context) {
+		
+		
+		switch(context.getEvento()) {
+		case Evento.ALTA_PLANTA_OK:
+			GUIMSG.showMessage("Planta dado de alta con ID: " + context.getDatos().toString(), "ALTA PLANTA", false);
+			break;
+		case  Evento.ALTA_PLANTA_KO:
+			GUIMSG.showMessage("No se pudo dar de alta a la planta", "ALTA PLANTA", true);
+			break;
+		default:
+			GUIMSG.showMessage("Error inesperado", "ALTA PLANTA", true);
+			break;
+		}
+		
+		
+		
+	}
 }

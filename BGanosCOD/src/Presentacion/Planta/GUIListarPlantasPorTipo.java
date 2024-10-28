@@ -105,7 +105,19 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
+		switch(context.getEvento()) {
+		case Evento.LISTAR_PLANTAS_POR_TIPO_KO:
+		
+			break;
+		case  Evento.LISTAR_PLANTAS_POR_TIPO_OK:
+		
+			break;
+		default:
+			
+			break;
 		
 	}
+	}
+		
+	
 }
