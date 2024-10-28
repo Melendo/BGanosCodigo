@@ -4,90 +4,300 @@
 package Integracion.SistemaDeRiego;
 
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
+import Integracion.Transaction.Transaccion;
+import Integracion.Transaction.TransaccionManager;
+
 public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
-	/** 
-	* (non-Javadoc)
-	* @see SistemaDeRiegoDAO#altaSistemaDeRiego(TSistemaDeRiego sistemaDeRiego)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+	
 	public Integer altaSistemaDeRiego(TSistemaDeRiego sistemaDeRiego) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
+		int res = -1;
 
-	/** 
-	* (non-Javadoc)
-	* @see SistemaDeRiegoDAO#bajaSistemaDeRiego(Integer id)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+        try {
+            TransaccionManager tManager = TransaccionManager.getInstance();
+            Transaccion trans = tManager.getTransaccion();
+            Connection connection = (Connection) trans.getResource();
+
+            PreparedStatement ps = connection.prepareStatement(
+                "INSERT INTO sistemas_riego (nombre, potencia_riego, cantidad_agua, frecuencia, activo, id_fabricante) VALUES (?, ?, ?, ?, ?, ?)",
+                Statement.RETURN_GENERATED_KEYS
+            );
+
+            // Asignar parametos
+            ps.setString(1, sistemaDeRiego.getNombre());
+            ps.setInt(2, sistemaDeRiego.getPotenciaRiego());
+            ps.setInt(3, sistemaDeRiego.getCantidad_agua());
+            ps.setInt(4, sistemaDeRiego.getFrecuencia());
+            ps.setBoolean(5, sistemaDeRiego.getActivo());
+            ps.setInt(6, sistemaDeRiego.getIdFabricante());
+
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                res = rs.getInt(1); // Obtener id generado
+            }
+
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+	
+
+	
 	public Integer bajaSistemaDeRiego(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	    int res = -1;
+
+	    try {
+	    	TransaccionManager tManager = TransaccionManager.getInstance();
+            Transaccion trans = tManager.getTransaccion();
+            Connection connection = (Connection) trans.getResource();
+	        
+	        PreparedStatement ps = connection.prepareStatement(
+	            "UPDATE sistemas_riego SET activo = false WHERE id = ?"
+	        );
+
+	        // Asignar id
+	        ps.setInt(1, id);
+	        res = ps.executeUpdate(); 
+
+	        ps.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return (res > 0) ? id : -1;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see SistemaDeRiegoDAO#modificarSistemaDeRiego(TSistemaDeRiego sistemaDeRiego)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+	
 	public Integer modificarSistemaDeRiego(TSistemaDeRiego sistemaDeRiego) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+    	int res = -1;
+    	
+        try {
+        	TransaccionManager tManager = TransaccionManager.getInstance();
+            Transaccion trans = tManager.getTransaccion();
+            Connection connection = (Connection) trans.getResource();
+            
+            PreparedStatement ps = connection.prepareStatement(
+                    "UPDATE sistemas_riego SET nombre = ?, potencia_riego = ?, cantidad_agua = ?, frecuencia = ?, activo = ?, id_fabricante = ? WHERE id = ?"
+                );
+
+            	// Asignar parametos
+                ps.setString(1, sistemaDeRiego.getNombre());
+                ps.setInt(2, sistemaDeRiego.getPotenciaRiego());
+                ps.setInt(3, sistemaDeRiego.getCantidad_agua());
+                ps.setInt(4, sistemaDeRiego.getFrecuencia());
+                ps.setBoolean(5, sistemaDeRiego.getActivo());
+                ps.setInt(6, sistemaDeRiego.getIdFabricante());           
+                ps.setInt(7, sistemaDeRiego.getId());
+
+                res = ps.executeUpdate();
+
+                ps.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return (res > 0) ? sistemaDeRiego.getId() : -1;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see SistemaDeRiegoDAO#mostrarSistemaDeRiegoPorID(Integer id)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+	
 	public TSistemaDeRiego mostrarSistemaDeRiegoPorID(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		TSistemaDeRiego sistemaDeRiego = null;
+
+	    try {
+	    	TransaccionManager tManager = TransaccionManager.getInstance();
+            Transaccion trans = tManager.getTransaccion();
+            Connection connection = (Connection) trans.getResource();
+	        
+	        PreparedStatement ps = connection.prepareStatement(
+	            "SELECT * FROM sistemas_riego WHERE id = ? FOR UPDATE"
+	        );
+	        ps.setInt(1, id);
+
+	        ResultSet rs = ps.executeQuery();
+	     // Asignar parametos de vuelta al tsistemaDeRiego
+	        if (rs.next()) {
+	            sistemaDeRiego = new TSistemaDeRiego();
+	            sistemaDeRiego.setId(rs.getInt("id"));
+	            sistemaDeRiego.setNombre(rs.getString("nombre"));
+	            sistemaDeRiego.setPotenciaRiego(rs.getInt("potencia_riego"));
+	            sistemaDeRiego.setCantidad_agua(rs.getInt("cantidad_agua"));
+	            sistemaDeRiego.setFrecuencia(rs.getInt("frecuencia"));
+	            sistemaDeRiego.setActivo(rs.getBoolean("activo"));
+	            sistemaDeRiego.setIdFabricante(rs.getInt("id_fabricante"));	          
+	        }
+
+	        ps.close();
+	        rs.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return sistemaDeRiego;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see SistemaDeRiegoDAO#listarSistemaDeRiegoPorFabricante(Integer idFabricante)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+	
 	public Set<TSistemaDeRiego> listarSistemaDeRiegoPorFabricante(Integer idFabricante) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TSistemaDeRiego> sistemasDeRiego = new LinkedHashSet<>();
+
+	    try {
+	    	TransaccionManager tManager = TransaccionManager.getInstance();
+            Transaccion trans = tManager.getTransaccion();
+            Connection connection = (Connection) trans.getResource();
+	        
+	        PreparedStatement ps = connection.prepareStatement(
+	            "SELECT * FROM sistemas_riego WHERE id_fabricante = ? FOR UPDATE"
+	        );
+	        ps.setInt(1, idFabricante);
+	        
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            TSistemaDeRiego sistemaDeRiego = new TSistemaDeRiego();
+	            sistemaDeRiego.setId(rs.getInt("id"));
+	            sistemaDeRiego.setNombre(rs.getString("nombre"));
+	            sistemaDeRiego.setPotenciaRiego(rs.getInt("potencia_riego"));
+	            sistemaDeRiego.setCantidad_agua(rs.getInt("cantidad_agua"));
+	            sistemaDeRiego.setFrecuencia(rs.getInt("frecuencia"));
+	            sistemaDeRiego.setActivo(rs.getBoolean("activo"));
+	            sistemaDeRiego.setIdFabricante(rs.getInt("id_fabricante"));	           
+	            
+	            sistemasDeRiego.add(sistemaDeRiego);
+	        }
+
+	        ps.close();
+	        rs.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return sistemasDeRiego;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see SistemaDeRiegoDAO#listarSistemaDeRiego()
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+	
 	public Set<TSistemaDeRiego> listarSistemaDeRiego() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TSistemaDeRiego> sistemasDeRiego = new LinkedHashSet<>();
+
+	    try {
+	    	TransaccionManager tManager = TransaccionManager.getInstance();
+            Transaccion trans = tManager.getTransaccion();
+            Connection connection = (Connection) trans.getResource();
+	        
+	        PreparedStatement ps = connection.prepareStatement(
+	        		"SELECT * FROM sistemas_riego FOR UPDATE"
+	        );
+	        
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            TSistemaDeRiego sistemaDeRiego = new TSistemaDeRiego();
+	            sistemaDeRiego.setId(rs.getInt("id"));
+	            sistemaDeRiego.setNombre(rs.getString("nombre"));
+	            sistemaDeRiego.setPotenciaRiego(rs.getInt("potencia_riego"));
+	            sistemaDeRiego.setCantidad_agua(rs.getInt("cantidad_agua"));
+	            sistemaDeRiego.setFrecuencia(rs.getInt("frecuencia"));
+	            sistemaDeRiego.setActivo(rs.getBoolean("activo"));
+	            sistemaDeRiego.setIdFabricante(rs.getInt("id_fabricante"));
+	            
+	            sistemasDeRiego.add(sistemaDeRiego);
+	        }
+
+	        ps.close();
+	        rs.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return sistemasDeRiego;
 	}
 
-	@Override
+	
 	public TSistemaDeRiego leerPorNombreUnico(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+		TSistemaDeRiego sistemaDeRiego = null;
+
+	    try {
+	    	TransaccionManager tManager = TransaccionManager.getInstance();
+            Transaccion trans = tManager.getTransaccion();
+            Connection connection = (Connection) trans.getResource();
+	        
+	        PreparedStatement ps = connection.prepareStatement(
+	            "SELECT * FROM sistemas_riego WHERE nombre = ? "
+	        );
+	        ps.setString(1, nombre);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            sistemaDeRiego = new TSistemaDeRiego();
+	            sistemaDeRiego.setId(rs.getInt("id"));
+	            sistemaDeRiego.setNombre(rs.getString("nombre"));
+	            sistemaDeRiego.setPotenciaRiego(rs.getInt("potencia_riego"));
+	            sistemaDeRiego.setCantidad_agua(rs.getInt("cantidad_agua"));
+	            sistemaDeRiego.setFrecuencia(rs.getInt("frecuencia"));
+	            sistemaDeRiego.setActivo(rs.getBoolean("activo"));
+	            sistemaDeRiego.setIdFabricante(rs.getInt("id_fabricante"));	         
+	        }
+
+	        ps.close();
+	        rs.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return sistemaDeRiego;
+	}
+
+	
+	public Set<TSistemaDeRiego> listarSistemaDeRiegoInvernadero(Integer idInvernadero) {
+		Set<TSistemaDeRiego> sistemasDeRiego = new LinkedHashSet<>();
+
+	    try {
+	    	TransaccionManager tManager = TransaccionManager.getInstance();
+            Transaccion trans = tManager.getTransaccion();
+            Connection connection = (Connection) trans.getResource();
+	        
+	        PreparedStatement ps = connection.prepareStatement(
+	        		"SELECT sr.* " +
+	        	            "FROM sistemas_riego_de_invernadero ir " +
+	        	            "JOIN sistemas_riego sr ON ir.id_sistema_riego = sr.id " +
+	        	            "WHERE ir.id_invernadero = ?"
+	        );
+	        ps.setInt(1, idInvernadero);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            TSistemaDeRiego sistemaDeRiego = new TSistemaDeRiego();
+	            sistemaDeRiego.setId(rs.getInt("id"));
+	            sistemaDeRiego.setNombre(rs.getString("nombre"));
+	            sistemaDeRiego.setPotenciaRiego(rs.getInt("potencia_riego"));
+	            sistemaDeRiego.setCantidad_agua(rs.getInt("cantidad_agua"));
+	            sistemaDeRiego.setFrecuencia(rs.getInt("frecuencia"));
+	            sistemaDeRiego.setActivo(rs.getBoolean("activo"));
+	            sistemaDeRiego.setIdFabricante(rs.getInt("id_fabricante"));
+	            
+	            sistemasDeRiego.add(sistemaDeRiego);
+	        }
+
+	        ps.close();
+	        rs.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return sistemasDeRiego;
 	}
 }

@@ -1,6 +1,7 @@
 package Presentacion.ComponentsBuilder;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import javax.swing.BorderFactory;
@@ -11,10 +12,40 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 public class ComponentsBuilder {
     
     private static final Font DEFAULT_FONT = new Font("Roboto", Font.PLAIN, 14);  // Fuente moderna
+    
+    
+
+	public static void ajustarAnchoColumnas(JTable tabla) {
+    	TableColumnModel modeloColumnas = tabla.getColumnModel();
+        for (int i = 0; i < tabla.getColumnCount(); i++) {
+            int ancho = 0;
+
+            // Inicializar anchoEncabezado antes de usarlo
+            int anchoEncabezado = tabla.getTableHeader().getDefaultRenderer()
+                .getTableCellRendererComponent(tabla, tabla.getColumnName(i), false, false, -1, i)
+                .getPreferredSize().width;
+
+            // Actualizar ancho para incluir el encabezado
+            ancho = Math.max(ancho, anchoEncabezado);
+
+            // Calcular el ancho de cada celda en la columna
+            for (int j = 0; j < tabla.getRowCount(); j++) {
+                int anchoCelda = tabla.getCellRenderer(j, i)
+                    .getTableCellRendererComponent(tabla, tabla.getValueAt(j, i), false, false, j, i)
+                    .getPreferredSize().width;
+                ancho = Math.max(ancho, anchoCelda);
+            }
+
+            modeloColumnas.getColumn(i).setPreferredWidth(ancho + 10); // Añadir un margen extra
+        }
+        tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    }
 
     public static JButton createButton(String text, int x, int y, int width, int height) {
         JButton button = new JButton(text);
@@ -58,34 +89,49 @@ public class ComponentsBuilder {
         return label;
     }
 
-    public static JTable createTable(int filas, int columnas, String[] columns) {
-        JTable table = new JTable();
-        table.setModel(new DefaultTableModel() {
+
+    public static JTable createTable(int filas, int columnas, String[] columns, String[][] datos) {
+    	DefaultTableModel model = new DefaultTableModel(datos, columns) {
             private static final long serialVersionUID = 1L;
 
+            @Override
             public boolean isCellEditable(int row, int col) {
                 return false;
             }
 
+            @Override
             public String getColumnName(int index) {
                 return columns[index];
             }
+        };
 
-            public int getColumnCount() {
-                return columnas;
-            }
+        JTable table = new JTable(model);
 
-            public int getRowCount() {
-                return filas;
-            }
-        });
         table.setFont(DEFAULT_FONT);
-        table.setBackground(new Color(245, 245, 245));  // Fondo gris claro
-        table.setGridColor(new Color(220, 220, 220));   // Color de las líneas de la cuadrícula
+        table.setBackground(new Color(245, 245, 245));
+        table.setGridColor(new Color(220, 220, 220));
         table.setShowGrid(true);
-        table.setRowHeight(25);  // Altura de fila para una mejor legibilidad
+        table.setRowHeight(25);
+        table.setSelectionBackground(new Color(173, 216, 230));
+        table.setSelectionForeground(Color.BLACK);
+
+        adjustColumnWidths(table);
+
         return table;
     }
+    
+    public static void adjustColumnWidths(JTable table) {
+        for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
+            int width = 0;
+            for (int rowIndex = 0; rowIndex < table.getRowCount(); rowIndex++) {
+                TableCellRenderer renderer = table.getCellRenderer(rowIndex, columnIndex);
+                Component comp = table.prepareRenderer(renderer, rowIndex, columnIndex);
+                width = Math.max(width, comp.getPreferredSize().width);
+            }
+            table.getColumnModel().getColumn(columnIndex).setPreferredWidth(width + 10);
+        }
+    }
+
     
     private static Border createRoundedBorder() {
         return BorderFactory.createCompoundBorder(

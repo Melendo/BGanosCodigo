@@ -14,7 +14,7 @@ import Presentacion.FactoriaVistas.Evento;
 public class CommandMostrarSistemaDeRiegoPorFabricante implements Command {
 	
 	public Context execute(Object datos) {
-		Set<TSistemaDeRiego> resultado = FactoriaNegocio.getInstance().getSistemaDeRiegoSA().listarSisRiegoDelInvernadero((Integer)datos);
+		Set<TSistemaDeRiego> resultado = FactoriaNegocio.getInstance().getSistemaDeRiegoSA().listarSisRiegoPorFabricante((Integer)datos);
 		if(resultado.size() == 1){
 			TSistemaDeRiego sistRiego = resultado.iterator().next();
 			if (sistRiego.getId() <= 0)
