@@ -5,53 +5,112 @@ package Negocio.Entrada;
 
 import java.util.Set;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
+import Integracion.Entrada.EntradaDAO;
+import Integracion.FactoriaIntegracion.FactoriaIntegracion;
+import Integracion.Invernadero.InvernaderoDAO;
+import Integracion.Transaction.Transaccion;
+import Integracion.Transaction.TransaccionManager;
+import Negocio.Invernadero.TInvernadero;
+
 public class EntradaSAImp implements EntradaSA {
-	/** 
-	* (non-Javadoc)
-	* @see EntradaSA#altaEntrada(TEntrada entrada)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	public Integer altaEntrada(TEntrada entrada) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		// comprobaciones del formato de los datos
+
+		// comprobamos si en el alta hay campis vacíos
+		if (entrada.getIdInvernadero() == 0 || entrada.getFecha().equals(null) || entrada.getPrecio() == 0
+				|| entrada.getStock() == 0) {
+			return -3; // enviamos error de que no se pueden dejar campos vacíos en el alta
+		}
+
+		int exito = -1;
+
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+			InvernaderoDAO invernaderoDAO = f.getInvernaderoDAO();
+			TInvernadero invernadero = invernaderoDAO.mostrarInvernaderoPorID(entrada.getIdInvernadero());
+
+			if (invernadero != null) {
+
+				if (invernadero.getActivo()) {
+					EntradaDAO entradaDao = f.getEntradaDAO();
+					TEntrada entradaUnica = entradaDao.mostrarEntrada(entrada.getId());
+
+					if (entradaUnica == null) {
+						exito = entradaDao.altaEntrada(entrada);
+						t.commit();
+
+					} else if (!entradaUnica.getActivo()) { // si es falso, se reactiva
+						entrada.setId(entradaUnica.getId());
+						exito = entradaDao.modificarEntrada(entrada);
+						t.commit();
+
+					} else {
+						exito = -50; // Error: ya existe el pase
+					}
+
+				} else {
+					exito = -21; // Error: el id de invernadero no está activo
+				}
+
+			}
+
+			else {
+				exito = -20; // Error: el id de invernadero no existe
+				t.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exito;
+
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see EntradaSA#bajaEntrada(TEntrada entrada)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	@Override
 	public Integer bajaEntrada(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		int exito = -1;
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+			EntradaDAO entradaDao = f.getEntradaDAO();
+			TEntrada entrada = entradaDao.mostrarEntrada(id); // para comprobar que existe un pase con ese id
+			
+			if(entrada != null) {
+				
+				if(entrada.getActivo()) {
+					exito = entradaDao.bajaEntrada(id);
+					t.commit();
+				
+				} else {
+					exito = -52; // Error: el id es de un pase ya inactivo
+					t.rollback();
+				}
+			
+			} else {
+				exito = -51; // Error: id de un pase que no existe
+				t.rollback();
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exito;
 	}
-
-	/** 
-	* (non-Javadoc)
-	* @see EntradaSA#listarEntrada()
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	public Set<TEntrada> listarEntrada() {
+	
+	public TEntrada mostrarEntrada(Integer id) {
 		// begin-user-code
 		// TODO Auto-generated method stub
 		return null;
 		// end-user-code
 	}
-
-	/** 
-	* (non-Javadoc)
-	* @see EntradaSA#modificarEntrada(TEntrada entrada)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+	
 	public Integer modificarEntrada(TEntrada entrada) {
 		// begin-user-code
 		// TODO Auto-generated method stub
@@ -59,29 +118,18 @@ public class EntradaSAImp implements EntradaSA {
 		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see EntradaSA#mostrarEntrada(Integer id)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	public TEntrada mostrarEntrada(Integer id) {
+	public Set<TEntrada> listarEntrada() {
 		// begin-user-code
 		// TODO Auto-generated method stub
 		return null;
 		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see EntradaSA#listarEntradasPorInvernadero(Integer idInvernadero)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Set<TEntrada> listarEntradasPorInvernadero(Integer idInvernadero) {
 		// begin-user-code
 		// TODO Auto-generated method stub
 		return null;
 		// end-user-code
 	}
-
 
 }
