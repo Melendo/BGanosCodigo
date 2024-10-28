@@ -13,8 +13,6 @@ public interface FabricanteDAO {
 
 	public TFabricante mostrarFabricantePorId(Integer idFabricante);
 
-	public TFabricante listarFabricantePorNombre(String nombre);
-
 	public Set<TFabricante> listarFabricantes();
 
 	public Set<TFabricante> listarFabricantesExtrangeros();
