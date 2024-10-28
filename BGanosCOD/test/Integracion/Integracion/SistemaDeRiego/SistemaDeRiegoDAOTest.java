@@ -9,6 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
@@ -17,6 +18,7 @@ import Negocio.SistemaDeRiego.TSistemaDeRiego;
 public class SistemaDeRiegoDAOTest {
 	
 	private static SistemaDeRiegoDAO sistemaRiegoDAO;
+	private static FabricanteDAO fabricanteDAO;
 	
     // Comparar dos objetos TSistemaDeRiego
     private boolean equals(TSistemaDeRiego s1, TSistemaDeRiego s2) {
@@ -68,6 +70,7 @@ public class SistemaDeRiegoDAOTest {
 	@BeforeClass
 	public static void beforeClass() {
 		sistemaRiegoDAO = FactoriaIntegracion.getInstance().getSistemaDeRiegoDAO();
+		fabricanteDAO =	FactoriaIntegracion.getInstance().getFabricanteDAO();
 	}
 
 	@Test
