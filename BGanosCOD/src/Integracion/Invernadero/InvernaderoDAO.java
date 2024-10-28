@@ -19,6 +19,7 @@ public interface InvernaderoDAO {
 	//
 	public TInvernadero mostrarInvernaderoPorNombre(String nombre);
 
+	//
 	public Set<TInvernadero> listarInvernadero();
 
 	public Set<TInvernadero> listarInvernaderoPorSR(Integer id_sistema_de_riego);
