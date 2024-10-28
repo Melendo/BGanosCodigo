@@ -38,7 +38,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 
 				if (fabricante instanceof TFabricanteLocal) {
 					s = c.prepareStatement(
-							"INSERT INTO fabricante_local(id_fabricante, impuesto, subvencion) Values(?,?,?)");
+							"INSERT INTO fabricante_local(id_fabricante, impuestos, subvenciones) Values(?,?,?)");
 					s.setInt(1, id);
 					s.setInt(2, ((TFabricanteLocal) fabricante).getImpuesto());
 					s.setInt(3, ((TFabricanteLocal) fabricante).getSubvencion());
@@ -109,7 +109,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			s.executeUpdate();
 
 			if (fabricante instanceof TFabricanteLocal) {
-				s = c.prepareStatement("UPDATE fabricante_local SET impuesto=?, subvencion=? WHERE id_fabricante=?");
+				s = c.prepareStatement("UPDATE fabricante_local SET impuestos=?, subvenciones=? WHERE id_fabricante=?");
 				s.setInt(1, ((TFabricanteLocal) fabricante).getImpuesto());
 				s.setInt(2, ((TFabricanteLocal) fabricante).getSubvencion());
 				s.setInt(3, fabricante.getId());
@@ -151,9 +151,9 @@ public class FabricanteDAOImp implements FabricanteDAO {
 					tLocal.setActivo(r.getBoolean("activo"));
 					tLocal.setCodFabricante(r.getString("cod_fabricante"));
 					tLocal.setId(r.getInt("id"));
-					tLocal.setImpuesto(r.getInt("impuesto"));
+					tLocal.setImpuesto(r.getInt("impuestos"));
 					tLocal.setNombre(r.getString("nombre"));
-					tLocal.setSubvencion(r.getInt("subvencion"));
+					tLocal.setSubvencion(r.getInt("subvenciones"));
 					tLocal.setTelefono(r.getString("telefono"));
 
 					lFabricantes.add(tLocal);
@@ -197,9 +197,9 @@ public class FabricanteDAOImp implements FabricanteDAO {
 				tLocal.setActivo(r.getBoolean("activo"));
 				tLocal.setCodFabricante(r.getString("cod_fabricante"));
 				tLocal.setId(r.getInt("id"));
-				tLocal.setImpuesto(r.getInt("impuesto"));
+				tLocal.setImpuesto(r.getInt("impuestos"));
 				tLocal.setNombre(r.getString("nombre"));
-				tLocal.setSubvencion(r.getInt("subvencion"));
+				tLocal.setSubvencion(r.getInt("subvenciones"));
 				tLocal.setTelefono(r.getString("telefono"));
 
 				lFabricantes.add(tLocal);
@@ -264,9 +264,9 @@ public class FabricanteDAOImp implements FabricanteDAO {
 				tLocal.setActivo(r.getBoolean("activo"));
 				tLocal.setCodFabricante(r.getString("cod_fabricante"));
 				tLocal.setId(r.getInt("id"));
-				tLocal.setImpuesto(r.getInt("impuesto"));
+				tLocal.setImpuesto(r.getInt("impuestos"));
 				tLocal.setNombre(r.getString("nombre"));
-				tLocal.setSubvencion(r.getInt("subvencion"));
+				tLocal.setSubvencion(r.getInt("subvenciones"));
 				tLocal.setTelefono(r.getString("telefono"));
 
 				tf = tLocal;
@@ -317,8 +317,8 @@ public class FabricanteDAOImp implements FabricanteDAO {
 				tfl.setCodFabricante(r.getString("cod_fabricante"));
 				tfl.setNombre(r.getString("nombre"));
 				tfl.setTelefono(r.getString("telefono"));
-				tfl.setImpuesto(r.getInt("impuesto"));
-				tfl.setSubvencion(r.getInt("subvencion"));
+				tfl.setImpuesto(r.getInt("impuestos"));
+				tfl.setSubvencion(r.getInt("subvenciones"));
 
 				tf = tfl;
 			} else {

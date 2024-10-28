@@ -2,95 +2,214 @@ package Presentacion.Fabricante;
 
 import javax.swing.JFrame;
 
-import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JLabel;
+import javax.swing.JTextField;
 
+import Negocio.Fabricante.TFabricante;
+import Negocio.Fabricante.TFabricanteExtranjero;
+import Negocio.Fabricante.TFabricanteLocal;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+@SuppressWarnings("serial")
 public class GUIAltaFabricante extends JFrame implements IGUI {
 
-	private JButton bLocal;
-	private JButton bExtranjero;
-	private JPanel mainPanel;
-	private JLabel cabecera;
+	private JTextField textNombre;
+	private JTextField textCodFabricante;
+	private JTextField textTelefono;
+	private JTextField textImpuestos;
+	private JTextField textSubvenciones;
+	private JTextField textPaisOrigen;
+	private JTextField textAranceles;
+	private Boolean tLocal;
 
 	public GUIAltaFabricante() {
 		super("Alta Fabricante");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-		int ancho = 1000;
-		int alto = 525;
+		int ancho = 600;
+		int alto = 440;
 		int x = (pantalla.width - ancho) / 2;
 		int y = (pantalla.height - alto) / 2;
 		this.setBounds(x, y, ancho, alto);
-		this.setLayout(null);
-		mainPanel = new JPanel();
 		this.setResizable(false);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initGUI();
-		this.setVisible(true);
 	}
 
 	public void initGUI() {
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
+		// Panel principal
+		JPanel mainPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(10, 10, 10, 10); // Margenes entre componentes
 		this.setContentPane(mainPanel);
 
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+		// Titulo
+		gbc.gridwidth = 2; // Dos columnas para el t�tulo
+		JLabel msgIntro = new JLabel("Introduzca los datos del fabricante", JLabel.CENTER);
+		mainPanel.add(msgIntro, gbc);
 
-		cabecera = ComponentsBuilder.createLabel("Seleccione si el fabricante es local o extranjero", 1, 10, 80,
-				20, Color.BLACK);
-		cabecera.setAlignmentX(CENTER_ALIGNMENT);
-		mainPanel.add(cabecera);
+		// Resetear para los campos
+		gbc.gridwidth = 1;
+		gbc.gridy = 1;
 
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 180)));
+		// Nombre del fabricante
+		JLabel labelNombre = new JLabel("Nombre:");
+		gbc.gridx = 0;
+		mainPanel.add(labelNombre, gbc);
+		textNombre = new JTextField(20);
+		gbc.gridx = 1;
+		mainPanel.add(textNombre, gbc);
 
-		// BOTONES ACEPTAR CANCELAR
-		JPanel panelBotones = new JPanel();
-		panelBotones.setAlignmentX(CENTER_ALIGNMENT);
-		mainPanel.add(panelBotones);
+		// Código de fabricante
+		JLabel labelPotenciaRiego = new JLabel("Código de Fabricante:");
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		mainPanel.add(labelPotenciaRiego, gbc);
+		textCodFabricante = new JTextField(20);
+		gbc.gridx = 1;
+		mainPanel.add(textCodFabricante, gbc);
 
-		bLocal = ComponentsBuilder.createButton("Local", 100, 100, 185, 100);
+		// Teléfono
+		JLabel labelCantidadAgua = new JLabel("Teléfono:");
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		mainPanel.add(labelCantidadAgua, gbc);
+		textTelefono = new JTextField(20);
+		gbc.gridx = 1;
+		mainPanel.add(textTelefono, gbc);
 
-		bLocal.addActionListener(e -> actualizar(new Context(Evento.ALTA_FABRICANTE, null)));
-		
-		bExtranjero = ComponentsBuilder.createButton("Extranjero", 100, 100, 185, 100);
-		
-		bExtranjero.addActionListener(e -> actualizar(new Context(Evento.ALTA_FABRICANTE, null)));
-		
-		panelBotones.add(bLocal);
-		panelBotones.add(bExtranjero);
-		
-		JButton botonCancelar = ComponentsBuilder.createButton("Cancelar", 100, 100, 185, 100);
-		botonCancelar.setBounds(200, 50, 100, 100);
-		botonCancelar.addActionListener(new ActionListener() {
+		// Panel de botones local/extranjero
+		JPanel localExtranjero = new JPanel();
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.CENTER;
+		mainPanel.add(localExtranjero, gbc);
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				GUIAltaFabricante.this.setVisible(false);
-				ApplicationController.getInstance().manageRequest(new Context(Evento.FABRICANTE_VISTA, null));
-			}
+		// Local
+		JPanel local = new JPanel(new GridLayout(2, 2, 0, 18));
+		local.setVisible(false);
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+		gbc.gridheight = 2;
+		gbc.anchor = GridBagConstraints.CENTER;
+		mainPanel.add(local, gbc);
+
+		// Impuestos
+		JLabel labelImpuestos = new JLabel("Impuestos:");
+		local.add(labelImpuestos);
+		textImpuestos = new JTextField(20);
+		local.add(textImpuestos);
+
+		// Subvenciones
+		JLabel labelSubvenciones = new JLabel("Subvenciones:");
+		local.add(labelSubvenciones, gbc);
+		textSubvenciones = new JTextField(20);
+		local.add(textSubvenciones, gbc);
+
+		// Extranjero
+		JPanel extranjero = new JPanel(new GridLayout(2, 2, 0, 18));
+		extranjero.setVisible(false);
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+		gbc.gridheight = 2;
+		gbc.anchor = GridBagConstraints.CENTER;
+		mainPanel.add(extranjero, gbc);
+
+		// Pais de Origen
+		JLabel labelOrigen = new JLabel("Pais de Origen:");
+		extranjero.add(labelOrigen, gbc);
+		textPaisOrigen = new JTextField(20);
+		extranjero.add(textPaisOrigen, gbc);
+
+		// Aranceles
+		JLabel labelAranceles = new JLabel("Aranceles:");
+		extranjero.add(labelAranceles, gbc);
+		textAranceles = new JTextField(20);
+		extranjero.add(textAranceles, gbc);
+
+		// Boton local
+		JButton bLocal = new JButton("Local");
+		bLocal.addActionListener(a -> {
+			tLocal = true;
+			local.setVisible(true);
+			extranjero.setVisible(false);
 		});
-		panelBotones.add(botonCancelar);
-		botonCancelar.setAlignmentX(RIGHT_ALIGNMENT);
-		botonCancelar.setAlignmentY(BOTTOM_ALIGNMENT);
+		localExtranjero.add(bLocal);
 
-		this.setVisible(true);
-		this.setResizable(true);
-		
-		
+		// Boton extranjero
+		JButton bExtranjero = new JButton("Extranjero");
+		bExtranjero.addActionListener(a -> {
+			tLocal = false;
+			local.setVisible(false);
+			extranjero.setVisible(true);
+		});
+		localExtranjero.add(bExtranjero);
+
+		// Panel de botones aceptar/cancelar
+		JPanel okCancel = new JPanel();
+		gbc.gridx = 0;
+		gbc.gridy = 8;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.CENTER;
+		mainPanel.add(okCancel, gbc);
+
+		// Boton Aceptar
+		JButton botonAceptar = new JButton("Aceptar");
+		botonAceptar.addActionListener(a -> {
+			try {
+				TFabricante fabricante;
+				if (tLocal) {
+					fabricante = new TFabricanteLocal();
+					((TFabricanteLocal) fabricante).setImpuesto(Integer.parseInt(textImpuestos.getText()));
+					((TFabricanteLocal) fabricante).setSubvencion(Integer.parseInt(textSubvenciones.getText()));
+
+				} else {
+					fabricante = new TFabricanteExtranjero();
+					((TFabricanteExtranjero) fabricante).setAranceles(Integer.parseInt(textAranceles.getText()));
+					((TFabricanteExtranjero) fabricante).setPaisDeOrigen(textPaisOrigen.getText());
+				}
+				fabricante.setActivo(true);
+				fabricante.setCodFabricante(textCodFabricante.getText());
+				fabricante.setNombre(textNombre.getText());
+				fabricante.setTelefono(textTelefono.getText());
+				ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_FABRICANTE, fabricante));
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(GUIAltaFabricante.this, "Error en el formato de los datos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+
+		});
+		okCancel.add(botonAceptar);
+
+		// Boton Cancelar
+		JButton botonCancelar = new JButton("Cancelar");
+		botonCancelar.addActionListener(a -> {
+			GUIAltaFabricante.this.setVisible(false);
+			ApplicationController.getInstance().manageRequest(new Context(Evento.FABRICANTE_VISTA, null));
+		});
+		okCancel.add(botonCancelar);
+
+		setVisible(true);
+
 	}
+
 	@Override
 	public void actualizar(Context context) {
 		// TODO Auto-generated method stub

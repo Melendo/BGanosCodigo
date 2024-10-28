@@ -69,13 +69,6 @@ public class FabricanteSAImp implements FabricanteSA {
 		// end-user-code
 	}
 
-	public Set<TFabricante> listarFabricantePorNombre(String nombre) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
-
 	public Set<TFabricante> listarFabricantesLocales() {
 		// begin-user-code
 		// TODO Auto-generated method stub
