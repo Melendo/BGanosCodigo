@@ -16,5 +16,5 @@ public interface PlantaSA {
 
 	public Set<TPlanta> listarPlantasPorTipo(String tipo) throws Exception;
 
-	public Set<TPlanta> listarPlantasPorInvernadero(Integer id_invernadero);
+	public Set<TPlanta> listarPlantasPorInvernadero(Integer id_invernadero) throws Exception;
 }

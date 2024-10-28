@@ -4,9 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
+import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Planta.PlantaDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
+import Negocio.Invernadero.TInvernadero;
 
 public class PlantaSAImp implements PlantaSA {
 
@@ -90,6 +92,7 @@ public class PlantaSAImp implements PlantaSA {
 		else{
 			
 		int resp = daoP.modificarPlanta(planta);
+		trans.commit();
 		return resp;
 		}
 		return -1;
@@ -115,6 +118,7 @@ public class PlantaSAImp implements PlantaSA {
 			return new TPlanta();
 		}
 		else{
+			trans.commit();
 			return tmp;
 		}
 	}
@@ -144,10 +148,30 @@ public class PlantaSAImp implements PlantaSA {
 
 	}
 
-	public Set<TPlanta> listarPlantasPorInvernadero(Integer id_invernadero) {
+	public Set<TPlanta> listarPlantasPorInvernadero(Integer id_invernadero) throws Exception {
 		
+		TransaccionManager manager = TransaccionManager.getInstance();
+		Transaccion trans = manager.newTransaccion();
+		FactoriaIntegracion integracion = FactoriaIntegracion.getInstance();
+		PlantaDAO daoP = integracion.getPlantaDAO();
+		InvernaderoDAO daoI = integracion.getInvernaderoDAO();
 		
+		trans.start();
 		
-		return null;
+		TInvernadero inv = daoI.mostrarInvernaderoPorID(id_invernadero);
+		
+		if(inv == null || !inv.isActivo()){
+			
+			trans.rollback();
+			return new HashSet<>() ;
+			
+		}
+		else{
+			Set<TPlanta> tmp = daoP.MostrarPorInvernadero(id_invernadero);
+			trans.commit();
+			return tmp;
+			
+		}
+		
 	}
 }
