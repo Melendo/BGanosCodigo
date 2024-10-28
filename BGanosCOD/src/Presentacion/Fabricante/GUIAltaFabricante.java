@@ -212,7 +212,25 @@ public class GUIAltaFabricante extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
+		int resultado = (int) context.getDatos();
+
+		if (context.getEvento() == Evento.ALTA_SISTEMA_DE_RIEGO_OK)
+
+			JOptionPane.showMessageDialog(this, "Fabricante dado de alta correctamente con id: " + resultado, "Éxito",
+					JOptionPane.INFORMATION_MESSAGE);
+		else if (context.getEvento() == Evento.ALTA_SISTEMA_DE_RIEGO_KO)
+			switch (resultado) {
+			case -2:
+				JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			case -3:
+				JOptionPane.showMessageDialog(this, "Ya existe un fabricante con el mismo codigo y está activo.", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			default:
+				JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta el fabricante.", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			}
 
 	}
+
 }
