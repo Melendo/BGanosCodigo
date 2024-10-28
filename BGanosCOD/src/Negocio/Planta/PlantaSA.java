@@ -10,7 +10,7 @@ public interface PlantaSA {
 
 	public Integer modificarPlanta(TPlanta planta) throws Exception;
 
-	public Set<TPlanta> listarPlanta();
+	public Set<TPlanta> listarPlanta() throws Exception;
 
 	public TPlanta mostrarPlantaPorId(Integer id) throws Exception;
 

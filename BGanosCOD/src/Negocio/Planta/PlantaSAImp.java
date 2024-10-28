@@ -98,8 +98,25 @@ public class PlantaSAImp implements PlantaSA {
 		return -1;
 	}
 
-	public Set<TPlanta> listarPlanta() {
-		return null;
+	public Set<TPlanta> listarPlanta() throws Exception {
+		TransaccionManager manager = TransaccionManager.getInstance();
+		Transaccion trans = manager.newTransaccion();
+		FactoriaIntegracion integracion = FactoriaIntegracion.getInstance();
+		PlantaDAO daoP = integracion.getPlantaDAO();
+		
+		trans.start();
+		
+		Set<TPlanta> tmp = daoP.listarPlantas();
+		
+		if(tmp == null){
+			trans.rollback();
+			return new HashSet<>();
+		}
+		else{
+			trans.commit();
+			return tmp;
+		}
+		
 	}
 
 	public TPlanta mostrarPlantaPorId(Integer id) throws Exception {

@@ -1,5 +1,6 @@
 package Presentacion.Controller.Command.CommandPlanta;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import Negocio.FactoriaNegocio.FactoriaNegocio;
@@ -11,7 +12,15 @@ import Presentacion.FactoriaVistas.Evento;
 public class CommandListarPlanta implements Command {
 
 	public Context execute(Object datos) {
-		Set<TPlanta> res = FactoriaNegocio.getInstance().getPlantaSA().listarPlanta();
-		return new Context(Evento.LISTAR_PLANTAS_VISTA, datos);
+		Set<TPlanta> res = new HashSet<>();
+		try {
+			 res = FactoriaNegocio.getInstance().getPlantaSA().listarPlanta();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return new Context(Evento.LISTAR_PLANTAS_VISTA, res);
 	}
 }
