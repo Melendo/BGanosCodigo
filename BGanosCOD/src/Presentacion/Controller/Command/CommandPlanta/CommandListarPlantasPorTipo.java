@@ -1,27 +1,28 @@
-/**
- * 
- */
 package Presentacion.Controller.Command.CommandPlanta;
 
+import java.util.Set;
+
+import Negocio.FactoriaNegocio.FactoriaNegocio;
+import Negocio.Planta.TPlanta;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
 public class CommandListarPlantasPorTipo implements Command {
-	/** 
-	* (non-Javadoc)
-	* @see Command#execute(Object datos)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	public Context execute(Object datos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TPlanta> res = FactoriaNegocio.getInstance().getPlantaSA().listarPlantasPorTipo((String)datos);
+		
+		
+		if(res.size() == 1) {
+			TPlanta planta = res.iterator().next();
+			if(planta.get_id() <= 0) {
+				return new Context(Evento.LISTAR_PLANTAS_POR_TIPO_KO,planta);
+			}else {
+				return new Context(Evento.LISTAR_PLANTAS_POR_TIPO_OK, res);
+			}
+		}else {
+			return new Context(Evento.LISTAR_PLANTAS_POR_TIPO_OK, res);
+		}
 	}
 }
