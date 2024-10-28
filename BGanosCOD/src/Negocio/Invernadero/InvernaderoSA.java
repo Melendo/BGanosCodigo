@@ -21,6 +21,7 @@ public interface InvernaderoSA {
 	//
 	public TInvernadero mostrarInvernaderoPorNombre(String nombre);
 
+	//
 	public Collection<TInvernadero> listarInvernadero();
 
 	public Collection<TInvernadero> listarInvernaderoPorSR(Integer id_sistema_riegos);

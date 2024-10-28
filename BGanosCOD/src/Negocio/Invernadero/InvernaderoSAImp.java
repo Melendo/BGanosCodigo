@@ -4,6 +4,8 @@
 package Negocio.Invernadero;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
 import Integracion.Invernadero.InvernaderoDAO;
@@ -62,17 +64,27 @@ public class InvernaderoSAImp implements InvernaderoSA {
 	}
 
 	public Collection<TInvernadero> listarInvernadero() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TInvernadero> invernaderos = new HashSet<>();
+		Transaccion t = null;
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+
+			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
+			invernaderos = daoInvernadero.listarInvernadero();
+
+			t.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return invernaderos;
 	}
 
 	public Collection<TInvernadero> listarInvernaderoPorSR(Integer id_sistema_riegos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
 	}
 
 	public Integer modificarInvernadero(TInvernadero invernadero) {
