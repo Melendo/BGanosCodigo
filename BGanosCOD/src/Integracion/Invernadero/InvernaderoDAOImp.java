@@ -97,13 +97,37 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 	}
 
 	public Integer modificarInvernadero(TInvernadero invernadero) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		int exito = -1;
+
+		try {
+			TransaccionManager tManager = TransaccionManager.getInstance();
+			Transaccion t = tManager.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			PreparedStatement statement = c.prepareStatement(
+					"UPDATE invernadero SET nombre = ?, sustrato = ?, tipo_iluminacion = ? where id = ?",
+					Statement.RETURN_GENERATED_KEYS);
+
+			statement.setString(1, invernadero.getNombre());
+			statement.setString(2, invernadero.getSustrato());
+			statement.setString(3, invernadero.getTipo_iluminacion());
+			statement.setInt(4, invernadero.getId());
+
+			statement.executeUpdate();
+
+			ResultSet result = statement.getGeneratedKeys();
+			if (result.next()) {
+				exito = result.getInt(1);
+			}
+
+			statement.close();
+			result.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return exito;
 	}
 
-	
 	public TInvernadero mostrarInvernaderoPorNombre(String nombre) {
 		TInvernadero invernadero = null;
 
@@ -111,7 +135,8 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			TransaccionManager tManager = TransaccionManager.getInstance();
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
-			PreparedStatement statement = c.prepareStatement("SELECT * FROM invernadero WHERE nombre like ? FOR UPDATE");
+			PreparedStatement statement = c
+					.prepareStatement("SELECT * FROM invernadero WHERE nombre like ? FOR UPDATE");
 			statement.setString(1, nombre);
 
 			ResultSet result = statement.executeQuery();
