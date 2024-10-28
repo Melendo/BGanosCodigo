@@ -8,6 +8,8 @@ import java.util.Date;
 public class TEntrada {
 
 	private Integer id;
+	
+	private Integer idInvernadero;
 
 	private Date fecha;
 
@@ -20,8 +22,11 @@ public class TEntrada {
 	public Integer getId() {
 		return id;
 	}
+	
+	public Integer getIdInvernadero() {
+		return idInvernadero;
+	}
 
-	// TODO aclarar si fecha es de tipo string o date
 	public Date getFecha() {
 		return fecha;
 	}
@@ -40,6 +45,10 @@ public class TEntrada {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public void setIdInvernadero(Integer idInvernadero) {
+		this.idInvernadero = idInvernadero;
 	}
 
 	public void setFecha(Date fecha) {

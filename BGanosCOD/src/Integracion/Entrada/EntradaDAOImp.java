@@ -28,15 +28,14 @@ public class EntradaDAOImp implements EntradaDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement ps = c.prepareStatement(
-					"INSERT INTO entrada (fecha, precio, stock_entradas, activo) VALUES (?,?,?,?)",
+					"INSERT INTO entrada (id_invernadero, fecha, precio, stock_entradas, activo) VALUES (?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
-			// TODO me obliga a poner este cast
-			// ps.setDate(1, entrada.getFecha());
-			ps.setDate(1, (Date) entrada.getFecha());
-			ps.setFloat(2, entrada.getPrecio());
-			ps.setInt(3, entrada.getStock());
-			ps.setBoolean(4, entrada.getActivo());
+			ps.setInt(1, entrada.getIdInvernadero());
+			ps.setDate(2, (Date) entrada.getFecha());
+			ps.setFloat(3, entrada.getPrecio());
+			ps.setInt(4, entrada.getStock());
+			ps.setBoolean(5, entrada.getActivo());
 			ps.executeUpdate();
 
 			ResultSet rs = ps.getGeneratedKeys();
@@ -82,13 +81,14 @@ public class EntradaDAOImp implements EntradaDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement ps = c
-					.prepareStatement("UPDATE entrada SET fecha=?, precio=?, stock_entradas=?, activo=? WHERE id=?");
+					.prepareStatement("UPDATE entrada SET id_invernadero=?, fecha=?, precio=?, stock_entradas=?, activo=? WHERE id=?");
 
-			ps.setDate(1, (Date) entrada.getFecha());
-			ps.setFloat(2, entrada.getPrecio());
-			ps.setInt(3, entrada.getStock());
-			ps.setBoolean(4, entrada.getActivo());
-			ps.setInt(5, entrada.getId());
+			ps.setInt(1, entrada.getIdInvernadero());
+			ps.setDate(2, (Date) entrada.getFecha());
+			ps.setFloat(3, entrada.getPrecio());
+			ps.setInt(4, entrada.getStock());
+			ps.setBoolean(5, entrada.getActivo());
+			ps.setInt(6, entrada.getId());
 			ps.executeUpdate();
 			ps.close();
 
@@ -116,6 +116,7 @@ public class EntradaDAOImp implements EntradaDAO {
 			if (rs.next()) {
 				entrada = new TEntrada();
 				entrada.setId(rs.getInt("id"));
+				entrada.setIdInvernadero(rs.getInt("id_invernadero"));
 				entrada.setFecha(rs.getDate("fecha"));
 				entrada.setPrecio(rs.getFloat("precio"));
 				entrada.setStock(rs.getInt("stock_entradas"));
@@ -147,6 +148,7 @@ public class EntradaDAOImp implements EntradaDAO {
 			while (rs.next()) {
 				TEntrada entrada = new TEntrada();
 				entrada.setId(rs.getInt("id"));
+				entrada.setIdInvernadero(rs.getInt("id_invernadero"));
 				entrada.setFecha(rs.getDate("fecha"));
 				entrada.setPrecio(rs.getFloat("precio"));
 				entrada.setStock(rs.getInt("stock_entradas"));
@@ -183,7 +185,7 @@ public class EntradaDAOImp implements EntradaDAO {
 			while(rs.next()) {
 				TEntrada entrada = new TEntrada();
 				entrada.setId(rs.getInt("id"));
-				// falta el de invernadero
+				entrada.setIdInvernadero(rs.getInt("id_invernadero"));
 				entrada.setFecha(rs.getDate("fecha"));
 				entrada.setPrecio(rs.getFloat("precio"));
 				entrada.setStock(rs.getInt("stock_entradas"));
