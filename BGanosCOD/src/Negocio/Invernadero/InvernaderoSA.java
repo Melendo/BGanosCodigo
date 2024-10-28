@@ -7,14 +7,18 @@ import java.util.Collection;
 
 public interface InvernaderoSA {
 
+	//
 	public Integer altaInvernadero(TInvernadero invernadero);
 
 	public Integer bajaInvernadero(Integer id);
 
+	//
 	public Integer modificarInvernadero(TInvernadero invernadero);
 
+	//
 	public TInvernadero mostrarInvernaderoPorID(Integer id);
 
+	//
 	public TInvernadero mostrarInvernaderoPorNombre(String nombre);
 
 	public Collection<TInvernadero> listarInvernadero();

@@ -76,10 +76,43 @@ public class InvernaderoSAImp implements InvernaderoSA {
 	}
 
 	public Integer modificarInvernadero(TInvernadero invernadero) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		if (invernadero.getId() == 0 || invernadero.getNombre().isEmpty() || invernadero.getSustrato().isEmpty()
+				|| invernadero.getTipo_iluminacion().isEmpty()) {
+			return -3;
+		}
+		int exito = -1;
+		Transaccion t = null;
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+
+			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
+			TInvernadero nuevoInvernadero = daoInvernadero.mostrarInvernaderoPorID(invernadero.getId());
+			if (nuevoInvernadero != null) {
+				if (nuevoInvernadero.isActivo()) {
+					if (daoInvernadero.mostrarInvernaderoPorNombre(invernadero.getNombre()) != null) {
+						exito = daoInvernadero.modificarInvernadero(invernadero);
+						t.commit();
+					} else {
+						exito = -25;
+						t.rollback();
+					}
+				} else {
+					exito = -24;
+					t.rollback();
+				}
+			} else {
+
+				exito = -23;
+				t.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exito;
 	}
 
 	public TInvernadero mostrarInvernaderoPorID(Integer id) {
@@ -93,10 +126,10 @@ public class InvernaderoSAImp implements InvernaderoSA {
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
 			TInvernadero invernaderoExiste = daoInvernadero.mostrarInvernaderoPorID(id);
-			if (invernaderoExiste != null ) {
+			if (invernaderoExiste != null) {
 				invernadero = invernaderoExiste;
 				t.commit();
-			} else{
+			} else {
 				t.rollback();
 			}
 
@@ -125,10 +158,10 @@ public class InvernaderoSAImp implements InvernaderoSA {
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
 			TInvernadero invernaderoExiste = daoInvernadero.mostrarInvernaderoPorNombre(nombre);
-			if (invernaderoExiste != null ) {
+			if (invernaderoExiste != null) {
 				invernadero = invernaderoExiste;
 				t.commit();
-			} else{
+			} else {
 				t.rollback();
 			}
 
