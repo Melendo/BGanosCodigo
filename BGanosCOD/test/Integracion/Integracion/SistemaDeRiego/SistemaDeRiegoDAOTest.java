@@ -243,6 +243,46 @@ public class SistemaDeRiegoDAOTest {
 	}
 	
 	@Test
+	public void testListarSistemaDeRiegoEnInvernaderos() {
+	    try {
+	    	Transaccion trans = crearTransaccion();
+	    	trans.start();	    	
+	    	
+	    	TSistemaDeRiego sistRiego = getTSistemaDeRiego();
+			TSistemaDeRiego sistRiego2 = getTSistemaDeRiego(); 
+
+	        Integer idSistemaDeRiego = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
+	        sistRiego.setId(idSistemaDeRiego);	     
+	        boolean encontrado = false;
+	        Integer idSistemaDeRiego2 = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego2);	        
+	        sistRiego2.setId(idSistemaDeRiego2);	        
+	        boolean encontrado2 = false;
+	        
+	        Integer idInvernadero = getNumRandom();  //meter a la tabla la relacionrealmente
+
+	        Set<TSistemaDeRiego> sistRiegoInvernadero = sistemaRiegoDAO.listarSistemaDeRiegoInvernadero(idInvernadero);
+
+	        for (TSistemaDeRiego sistR : sistRiegoInvernadero) {
+	            if (sistR.getId().equals(sistRiego.getId())) {
+	            	encontrado = true;
+	            } else if (sistR.getId().equals(sistRiego2.getId())) {
+	            	encontrado2 = true;
+	            }
+	        }
+	        
+	        if (!encontrado || !encontrado2) {
+	        	fail("Error: La lista no muestra todos los sistemas de riego");
+	            trans.rollback();	            
+	        }
+
+	        trans.commit();
+	    } catch (Exception e) {
+	        fail("Excepción");
+	        e.printStackTrace();
+	    }
+	}
+	
+	@Test
 	public void testNombreUnico() {
 	    try {
 	    	Transaccion trans = crearTransaccion();
