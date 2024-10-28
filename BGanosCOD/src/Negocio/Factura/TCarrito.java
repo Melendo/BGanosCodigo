@@ -30,10 +30,14 @@ public class TCarrito {
 	* <!-- end-UML-doc -->
 	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	*/
-	public void getLineasFactura() {
+	public Set<TLineaFactura> getLineasFactura() {
 		// begin-user-code
 		// TODO Auto-generated method stub
-
+		return tLineaFactura;
 		// end-user-code
+	}
+	
+	public TFactura getFactura() {
+		return tFactura;
 	}
 }
