@@ -79,18 +79,18 @@ public class PlantaSAImp implements PlantaSA {
 	}
 
 	public Set<TPlanta> listarPlanta() {
-
+		return null;
 	}
 
 	public TPlanta mostrarPlantaPorId(Integer id) {
-
+		return null;
 	}
 
 	public Set<TPlanta> listarPlantasPorTipo(String tipo) {
-
+		return null;
 	}
 
 	public Set<TPlanta> listarPlantasPorInvernadero(Integer id_invernadero) {
-
+		return null;
 	}
 }
