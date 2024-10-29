@@ -74,10 +74,30 @@ public class SistemaDeRiegoSATest {
 			tSistemaRiego.setIdFabricante(idFabricante);
 			int idSistemaRiego = sistRiegoSA.altaSisRiego(tSistemaRiego);
 			if(idSistemaRiego<0){
-				fail("Error: altaEspecie() debería retornar ID > 0");
+				fail("Error: altaSisRiego() debería retornar ID > 0");
 			}
 		} catch (Exception e) {
-			fail("Excepci�n");
+			fail("Excepcion");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void altaSistemaDeRiegoFabricanteNOActivo() {
+		
+		try {
+			TFabricante fabricante = getTFabricante();
+			int idFabricante = fabricanteSA.altaFabricante(fabricante);
+			fabricante.setActivo(false);
+			TSistemaDeRiego tSistemaRiego = getTSistemaDeRiego();
+			tSistemaRiego.setIdFabricante(idFabricante);
+			int idSistemaRiego = sistRiegoSA.altaSisRiego(tSistemaRiego);
+			if(idSistemaRiego>0){
+				fail("Error: altaSisRiego() debería retornar ID < 0 ya que fabricante inactivo");
+			}
+		} catch (Exception e) {
+			fail("Excepcion");
 			e.printStackTrace();
 		}
 		
