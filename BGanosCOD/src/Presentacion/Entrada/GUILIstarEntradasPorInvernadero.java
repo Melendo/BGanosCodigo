@@ -8,8 +8,14 @@ import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 
 import javax.swing.JLabel;
+
+import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import Negocio.Entrada.TEntrada;
+
 import javax.swing.JPanel;
 
 /** 
@@ -56,6 +62,12 @@ public class GUILIstarEntradasPorInvernadero extends JFrame implements IGUI {
 		// end-user-code
 	}
 
+	
+	// TODO, esta constructora no estaba
+	public GUILIstarEntradasPorInvernadero(Set<TEntrada> datos) {
+		
+	}
+	
 	/** 
 	* (non-Javadoc)
 	* @see IGUI#actualizar(Context context)

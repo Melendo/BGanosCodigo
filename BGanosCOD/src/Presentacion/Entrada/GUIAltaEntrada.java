@@ -4,68 +4,175 @@
 package Presentacion.Entrada;
 
 import javax.swing.JFrame;
+
+import Presentacion.ComponentsBuilder.ComponentsBuilder;
+import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
+import Negocio.Entrada.TEntrada;
+
 public class GUIAltaEntrada extends JFrame implements IGUI {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	private JButton jButton;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	private JPanel jPanel;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	public void initGUI() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
+	public GUIAltaEntrada() {
+		super("Alta entrada");
+		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+		int ancho = 1000;
+		int alto = 525;
+		int x = (pantalla.width - ancho) / 2;
+		int y = (pantalla.height - alto) / 2;
+		this.setBounds(x, y, ancho, alto);
+		this.setLayout(null);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		initGUI();
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see IGUI#actualizar(Context context)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	
+	public void initGUI() {
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		this.setContentPane(mainPanel);
+
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+		JLabel msgIntroIDCabecera = ComponentsBuilder
+				.createLabel("Introduzca los datos de la Entrada que desea dar de alta", 1, 10, 80, 20, Color.BLACK);
+		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
+		mainPanel.add(msgIntroIDCabecera);
+
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
+
+		// Campo para introducir la fecha de la entrada
+		JLabel labelFecha = new JLabel("Fecha (AAAA-MM-DD): ");
+		labelFecha.setAlignmentX(CENTER_ALIGNMENT);
+		mainPanel.add(labelFecha);
+
+		JTextField textFecha = new JTextField(20);
+		textFecha.setMaximumSize(textFecha.getPreferredSize());
+		textFecha.setMaximumSize(textFecha.getPreferredSize());
+		mainPanel.add(textFecha);
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+		// Campo para introducir el precio de la entrada
+		JLabel labelPrecio = new JLabel("Precio: ");
+		labelPrecio.setAlignmentX(CENTER_ALIGNMENT);
+		mainPanel.add(labelPrecio);
+
+		JTextField textPrecio = new JTextField(20);
+		textPrecio.setMaximumSize(textFecha.getPreferredSize());
+		mainPanel.add(textPrecio);
+
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+		// Campo para introducir el stock de las entradas
+		JLabel labelStock = new JLabel("Cantidad disponible: ");
+		labelStock.setAlignmentX(CENTER_ALIGNMENT);
+		mainPanel.add(labelStock);
+
+		JTextField textStock = new JTextField(20);
+		textStock.setMaximumSize(textStock.getPreferredSize());
+		mainPanel.add(textStock);
+
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+		// Campo para introducir el id del invernadero asociado
+		JLabel labelIdInvernadero = new JLabel("ID del invernadero: ");
+		labelIdInvernadero.setAlignmentX(CENTER_ALIGNMENT);
+		mainPanel.add(labelIdInvernadero);
+
+		JTextField textIdInvernadero = new JTextField(20);
+		textIdInvernadero.setMaximumSize(textIdInvernadero.getPreferredSize());
+		mainPanel.add(textIdInvernadero);
+
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+		// Panel para los botones
+		JPanel panelBotones = new JPanel();
+		mainPanel.add(panelBotones);
+
+		// BOTON ACEPTAR (GUARDAR LOS DATOS DEL ALTA)
+		JButton botonAceptar = new JButton("Aceptar");
+		botonAceptar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				GUIAltaEntrada.this.setVisible(false);
+
+				try {
+					// fecha, precio, stock, id_invernadero
+					Date fecha = Date.valueOf(textFecha.getText());
+					Float precio = Float.parseFloat(textPrecio.getText());
+					Integer stock = Integer.parseInt(textStock.getText());
+					Integer idInvernadero = Integer.parseInt(textIdInvernadero.getText());
+
+					ApplicationController.getInstance()
+							.manageRequest(new Context(Evento.ALTA_ENTRADA,
+									new TEntrada(fecha != null ? fecha : null, precio != null ? precio : 0,
+											!textStock.getText().isEmpty() ? stock : 0,
+											!textIdInvernadero.getText().isEmpty() ? idInvernadero : 0)));
+
+				} catch (Exception ex) {
+				}
+
+			}
+
+		});
+
+		panelBotones.add(botonAceptar);
+		
+		// BOTON CANCELAR
+	    JButton botonCancelar = new JButton("Cancelar");
+	    botonCancelar.addActionListener(new ActionListener() {
+
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	        	GUIAltaEntrada.this.setVisible(false);
+	        	ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
+	        }
+	    });
+	    panelBotones.add(botonCancelar);
+
+	    this.setVisible(true);
+	    this.setResizable(true);
+
+	}
 
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
 		
+		if(context.getEvento() == Evento.ALTA_ENTRADA_OK) {
+			
+			
+			
+		} else if(context.getEvento() == Evento.ALTA_ENTRADA_KO) {
+			
+			
+		}
+
+		dispose();
 	}
 }
