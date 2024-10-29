@@ -35,7 +35,7 @@ public class EntradaSAImp implements EntradaSA {
 
 			if (invernadero != null) {
 
-				if (invernadero.getActivo()) {
+				if (invernadero.isActivo()) {
 					EntradaDAO entradaDao = f.getEntradaDAO();
 					TEntrada entradaUnica = entradaDao.mostrarEntrada(entrada.getId());
 

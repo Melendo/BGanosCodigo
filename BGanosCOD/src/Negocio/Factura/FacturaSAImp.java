@@ -48,7 +48,7 @@ public class FacturaSAImp implements FacturaSA {
 							if(lineaFact.getCantidad() <= entrada.getStock())
 							{
 								entrada.setStock(entrada.getStock() - lineaFact.getCantidad());
-								daoPase.modificarEntrada(entrada.getStock());
+								daoPase.modificarEntrada(entrada);
 								//Calculamos el precio de la linea Factura y actualizamos en la linea Factura
 								float precio_lineaF = lineaFact.getCantidad() * entrada.getPrecio();
 								lineaFact.setPrecio(precio_lineaF);
@@ -253,7 +253,7 @@ public class FacturaSAImp implements FacturaSA {
 							if(!entrada.getActivo())
 								entrada.setActivo(true);
 							entrada.setStock(entrada.getStock() + tlineaFactura.getCantidad());
-							r = daoPase.modificarEntrada(entrada.getStock());
+							r = daoPase.modificarEntrada(entrada);
 							if(r < 0)
 							{
 								t.rollback();
