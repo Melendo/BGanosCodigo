@@ -107,15 +107,34 @@ public class FabricanteSAImp implements FabricanteSA {
 			FabricanteDAO fd = fi.getFabricanteDAO();
 			TFabricante tfa = fd.mostrarFabricantePorId(fabricante.getId());
 
-			if (tfa != null) { // existe por lo que lo modificamos
-				ret = fd.modificarFabricante(fabricante);
-				t.commit();
-			} else { // no existe
+			if (tfa == null) { // no existe
 				ret = -3;
 				t.rollback();
+			} else if (tfa instanceof TFabricanteExtranjero && fabricante instanceof TFabricanteLocal) { // el de la BD
+																											// es local
+																											// y
+																											// intentamos
+																											// que se
+																											// extranjero
+				ret = -4;
+				t.rollback();
+			} else if (fabricante instanceof TFabricanteExtranjero && tfa instanceof TFabricanteLocal) { // el de la BD
+																											// es
+																											// extranjero
+																											// y
+																											// intentamos
+																											// que se
+																											// local
+				ret = -5;
+				t.rollback();
+			} else { // lo modificamos
+				ret = fd.modificarFabricante(fabricante);
+				t.commit();
 			}
 
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 		}
 
@@ -124,10 +143,29 @@ public class FabricanteSAImp implements FabricanteSA {
 	}
 
 	public TFabricante mostrarFabricantePorId(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		TFabricante tf = null;
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+
+			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+			FabricanteDAO fd = fi.getFabricanteDAO();
+
+			tf = fd.mostrarFabricantePorId(id);
+
+			if (tf != null) {
+				t.commit();
+			} else {
+				tf = new TFabricante();
+				tf.setId(id);// No encontrado dejamos el id para sacar el mensaje de erro
+				t.rollback();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return tf;
 	}
 
 	public Set<TFabricante> listarFabricantes() {

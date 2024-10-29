@@ -106,11 +106,11 @@ public class GUIBajaFabricante extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		int resultado = (int) context.getDatos();
 
-		if (context.getEvento() == Evento.BAJA_SISTEMA_DE_RIEGO_OK)
+		if (context.getEvento() == Evento.BAJA_FABRICANTE_OK)
 
 			JOptionPane.showMessageDialog(this, "Fabricante dado de baja correctamente con id: " + resultado, "Éxito",
 					JOptionPane.INFORMATION_MESSAGE);
-		else if (context.getEvento() == Evento.BAJA_SISTEMA_DE_RIEGO_KO)
+		else if (context.getEvento() == Evento.BAJA_FABRICANTE_KO)
 			switch (resultado) {
 			case -2:
 				JOptionPane.showMessageDialog(this, "El fabricante ya esta dado de baja.", "Error",

@@ -214,20 +214,23 @@ public class GUIAltaFabricante extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		int resultado = (int) context.getDatos();
 
-		if (context.getEvento() == Evento.ALTA_SISTEMA_DE_RIEGO_OK)
+		if (context.getEvento() == Evento.ALTA_FABRICANTE_OK)
 
 			JOptionPane.showMessageDialog(this, "Fabricante dado de alta correctamente con id: " + resultado, "Éxito",
 					JOptionPane.INFORMATION_MESSAGE);
-		else if (context.getEvento() == Evento.ALTA_SISTEMA_DE_RIEGO_KO)
+		else if (context.getEvento() == Evento.ALTA_FABRICANTE_KO)
 			switch (resultado) {
 			case -2:
-				JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error",
+						JOptionPane.ERROR_MESSAGE);
 				break;
 			case -3:
-				JOptionPane.showMessageDialog(this, "Ya existe un fabricante con el mismo codigo y está activo.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Ya existe un fabricante con el mismo codigo y está activo.",
+						"Error", JOptionPane.ERROR_MESSAGE);
 				break;
 			default:
-				JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta el fabricante.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta el fabricante.", "Error",
+						JOptionPane.ERROR_MESSAGE);
 				break;
 			}
 
