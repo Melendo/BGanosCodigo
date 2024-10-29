@@ -10,6 +10,7 @@ public interface InvernaderoSA {
 	//
 	public Integer altaInvernadero(TInvernadero invernadero);
 
+	//
 	public Integer bajaInvernadero(Integer id);
 
 	//
