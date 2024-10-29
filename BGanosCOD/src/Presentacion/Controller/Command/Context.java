@@ -14,6 +14,9 @@ public class Context {
 		this.evento = evento;
 		this.datos = datos;
 	}
+	public Context(Integer evento) {
+		this.evento = evento;
+	}
 
 	public Integer getEvento() {
 		return evento;

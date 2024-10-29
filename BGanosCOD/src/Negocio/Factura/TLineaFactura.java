@@ -44,7 +44,7 @@ public class TLineaFactura {
 	public Integer getidFactura() {
 		// begin-user-code
 		// TODO Auto-generated method stub
-		return null;
+		return idFactura;
 		// end-user-code
 	}
 
@@ -57,7 +57,7 @@ public class TLineaFactura {
 	public void setidFactura(Integer id) {
 		// begin-user-code
 		// TODO Auto-generated method stub
-
+		idFactura = id;
 		// end-user-code
 	}
 
@@ -70,7 +70,7 @@ public class TLineaFactura {
 	public Integer getidEntrada() {
 		// begin-user-code
 		// TODO Auto-generated method stub
-		return null;
+		return idEntrada;
 		// end-user-code
 	}
 
@@ -83,7 +83,7 @@ public class TLineaFactura {
 	public void setidEntrada(Integer id) {
 		// begin-user-code
 		// TODO Auto-generated method stub
-
+		idEntrada = id;
 		// end-user-code
 	}
 
@@ -96,7 +96,7 @@ public class TLineaFactura {
 	public Integer getCantidad() {
 		// begin-user-code
 		// TODO Auto-generated method stub
-		return null;
+		return cantidad;
 		// end-user-code
 	}
 
@@ -109,7 +109,7 @@ public class TLineaFactura {
 	public void setCantidad(Integer cantidad) {
 		// begin-user-code
 		// TODO Auto-generated method stub
-
+		this.cantidad = cantidad;
 		// end-user-code
 	}
 
@@ -122,7 +122,7 @@ public class TLineaFactura {
 	public float getPrecio() {
 		// begin-user-code
 		// TODO Auto-generated method stub
-		return 0;
+		return precio;
 		// end-user-code
 	}
 
@@ -135,7 +135,7 @@ public class TLineaFactura {
 	public void setPrecio(Float precio) {
 		// begin-user-code
 		// TODO Auto-generated method stub
-
+		this.precio = precio;
 		// end-user-code
 	}
 }

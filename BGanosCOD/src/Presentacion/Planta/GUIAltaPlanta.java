@@ -1,71 +1,209 @@
-/**
- * 
- */
 package Presentacion.Planta;
 
 import javax.swing.JFrame;
+
+
+import Presentacion.ComponentsBuilder.ComponentsBuilder;
+import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
 import javax.swing.JLabel;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
+
+import Negocio.Planta.TPlanta;
+import Negocio.Planta.TPlantaFrutal;
+import Negocio.Planta.TPlantaNoFrutal;
+
 import javax.swing.JPanel;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
 public class GUIAltaPlanta extends JFrame implements IGUI {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JButton jButton;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JPanel jPanel;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	public Void initGUI() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public GUIAltaPlanta() {
+		super("Alta Planta");
+		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+		int ancho = 1000;
+		int alto = 525;
+		int x = (pantalla.width - ancho) / 2;
+		int y = (pantalla.height - alto) / 2;
+		this.setBounds(x, y, ancho, alto);
+		this.setLayout(null);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		initGUI();
 	}
-
-	/** 
-	* (non-Javadoc)
-	* @see IGUI#actualizar(Context context)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	
-	@Override
-	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
-		
+	public void initGUI() {
+		JPanel mainPanel = new JPanel();
+	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+	    this.setContentPane(mainPanel);
+	    this.setVisible(true);
+	    mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+	    
+	    JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("Seleccione el tipo de planta que desea dar de alta", 1, 10, 80, 20, Color.BLACK);
+	    msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
+	    mainPanel.add(msgIntroIDCabecera);
+
+	    mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
+	    
+	    //PANEL DE TIPO DE LA PLANTA
+	    JPanel paneltipo = new JPanel();
+	    JPanel panelnombre = new JPanel();
+	    JPanel panelnombreCientifico = new JPanel();
+	    JPanel panelinvernadero = new JPanel();
+	    
+	    JPanel panelnombreFruta = new JPanel();
+	    JPanel panelmaduracion = new JPanel();
+	    JPanel panelhoja = new JPanel();
+	    
+
+
+ 		mainPanel.add(paneltipo);
+ 		mainPanel.add(panelnombre);
+ 		mainPanel.add(panelnombreCientifico);
+ 		mainPanel.add(panelinvernadero);
+ 		
+	    
+	    mainPanel.add(panelnombreFruta);
+ 		mainPanel.add(panelmaduracion);
+ 		mainPanel.add(panelhoja);
+
+ 		JLabel labelTPlanta = ComponentsBuilder.createLabel("Tipo de planta: ", 10, 100, 80, 20,Color.BLACK);
+ 		paneltipo.add(labelTPlanta);
+
+ 		JComboBox<String> tipoPlanta = new JComboBox<String>();
+ 		tipoPlanta.addItem("Frutal");
+ 		tipoPlanta.addItem("No Frutal");
+ 		tipoPlanta.setPreferredSize(new Dimension(250, 25));
+ 		paneltipo.add(tipoPlanta);
+ 		
+ 		
+ 		JLabel labelnombre = ComponentsBuilder.createLabel("Nombre: ", 10, 100, 80, 20,Color.BLACK);
+ 		panelnombre.add(labelnombre);
+ 		JTextField textNombre = new JTextField(25);
+ 		panelnombre.add(textNombre);
+ 	
+ 		JLabel labelnombrecientifico = ComponentsBuilder.createLabel("Nombre Cientifico ", 10, 100, 80, 20,Color.BLACK);
+ 		panelnombreCientifico.add(labelnombrecientifico);
+ 		JTextField textNombreCientifico = new JTextField(25);
+ 		panelnombreCientifico.add(textNombreCientifico);
+ 		
+ 		
+ 		JLabel labelinvernadero = ComponentsBuilder.createLabel("Id del invernadero ", 10, 100, 80, 20,Color.BLACK);
+ 		panelinvernadero.add(labelinvernadero);
+ 		JTextField textinvernadero = new JTextField(25);
+ 		panelinvernadero.add(textinvernadero);
+ 		
+ 		
+ 		JLabel labelnombreFruta = ComponentsBuilder.createLabel("Nombre de la fruta ", 10, 100, 80, 20,Color.BLACK);
+ 		panelnombreFruta.add(labelnombreFruta);
+ 		JTextField textnombreFruta = new JTextField(25);
+ 		panelnombreFruta.add(textnombreFruta);
+ 		
+ 		
+ 		JLabel labelmaduracion = ComponentsBuilder.createLabel("Maduracion ", 10, 100, 80, 20,Color.BLACK);
+ 		panelmaduracion.add(labelmaduracion);
+ 		JTextField textmaduracion = new JTextField(25);
+ 		panelmaduracion.add(textmaduracion);
+ 		
+ 		JLabel labelhoja = ComponentsBuilder.createLabel("hoja de la planta ", 10, 100, 80, 20,Color.BLACK);
+ 		panelhoja.add(labelhoja);
+ 		JTextField texthoja = new JTextField(25);
+ 		panelhoja.add(texthoja);
+ 		
+ 		texthoja.setEnabled(false);
+ 		
+ 		tipoPlanta.addItemListener(new ItemListener(){
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED){
+					String selected = (String) tipoPlanta.getSelectedItem();
+                    if (selected.equals("Frutal")) {
+                    	texthoja.setText("");
+                    	texthoja.setEnabled(false);
+                    	textmaduracion.setEnabled(true);
+                    	textnombreFruta.setEnabled(true);
+                    } 
+                    else {
+
+                    	textmaduracion.setEnabled(false);
+                    	textnombreFruta.setEnabled(false);
+                    	texthoja.setEnabled(true);
+                    }
+					
+					
+				}
+				
+			}
+        });
+ 		
+
+ 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+ 		
+ 		//PANEL DE LOS BOTONES
+ 		JPanel panelBotones = new JPanel();
+ 		mainPanel.add(panelBotones);
+ 		
+ 		//BOTON DE ACEPTAR
+ 		JButton botonAceptar = new JButton("Aceptar");
+ 		
+ 		panelBotones.add(botonAceptar);
+ 		botonAceptar.addActionListener(new ActionListener() {
+ 			
+ 			@Override
+ 			public void actionPerformed(ActionEvent e) {
+ 				GUIAltaPlanta.this.setVisible(false);
+ 				int tipo = 1;
+ 				try {
+ 					
+ 					String nombre = textNombre.getText();
+ 					String nombreCientifico = textNombreCientifico.getText();
+ 					int idInvernadero = Integer.parseInt(textinvernadero.getText());
+ 					
+ 					
+ 					if(tipoPlanta.getSelectedItem() == "Frutal") {
+ 						String fruta = textnombreFruta.getText();
+ 						String mad = textmaduracion.getText();
+ 						tipo = 0;
+ 						
+ 						TPlantaFrutal frutal = new TPlantaFrutal(nombre, nombreCientifico,tipo, idInvernadero, fruta, mad);
+ 						
+ 						ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PLANTA,frutal));
+ 					}else if (tipoPlanta.getSelectedItem() == "No Frutal") {
+ 						String hoja = texthoja.getText();
+ 						
+ 						TPlantaNoFrutal NOfrutal = new TPlantaNoFrutal(nombre, nombreCientifico,tipo, idInvernadero, hoja);
+ 						
+ 						ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PLANTA,NOfrutal));
+ 						
+ 					}
+ 				} catch (Exception e1) {
+ 					//ApplicationController.getInstance().manageRequest(new Context(Evento.vista, -4));
+ 				}
+ 			}
+ 		});
 	}
+
+	@Override
+	public void actualizar(Context context) {}
 }

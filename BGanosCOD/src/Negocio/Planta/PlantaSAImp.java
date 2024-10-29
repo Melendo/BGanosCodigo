@@ -1,98 +1,96 @@
-/**
- * 
- */
 package Negocio.Planta;
 
-import java.util.Collection;
+import java.util.Set;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
+import Integracion.FactoriaIntegracion.FactoriaIntegracion;
+import Integracion.Planta.PlantaDAO;
+import Integracion.Transaction.Transaccion;
+import Integracion.Transaction.TransaccionManager;
+
 public class PlantaSAImp implements PlantaSA {
-	/** 
-	* (non-Javadoc)
-	* @see PlantaSA#altaPlanta(TPlanta planta)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	public Integer altaPlanta(TPlanta planta) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+
+	public Integer altaPlanta(TPlanta planta) throws Exception {
+		
+		TransaccionManager manager = TransaccionManager.getInstance();
+		Transaccion trans = manager.newTransaccion();
+		FactoriaIntegracion integracion = FactoriaIntegracion.getInstance();
+		PlantaDAO daoP = integracion.getPlantaDAO();
+		
+		trans.start();
+		
+
+		int resp = daoP.altaPlanta(planta);
+			
+		if(resp > 0){
+			trans.commit();
+		}
+		else{trans.rollback();}
+
+		
+		return resp;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see PlantaSA#bajaPlanta(Integer id)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	public Integer bajaPlanta(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	public Integer bajaPlanta(Integer id) throws Exception {
+		TransaccionManager manager = TransaccionManager.getInstance();
+		Transaccion trans = manager.newTransaccion();
+		FactoriaIntegracion integracion = FactoriaIntegracion.getInstance();
+		PlantaDAO daoP = integracion.getPlantaDAO();
+		
+		trans.start();
+		
+		TPlanta tmp = daoP.mostrarPorId(id);
+		
+	
+		if(tmp != null ){
+			
+			if(tmp.getActivo()){
+				int resp = daoP.bajaPlanta(id);
+				
+				if(resp > 0){
+					trans.commit();
+					return resp;
+				}
+				else{ 
+					trans.rollback();
+				}
+				
+	
+			}
+			else{
+				trans.rollback();
+			}
+			
+			
+		}
+		else{
+			trans.rollback();
+		}
+		
+		
+		
+		
+		return -1;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see PlantaSA#modificarPlanta(TPlanta planta)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Integer modificarPlanta(TPlanta planta) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+
+		
+		return -1;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see PlantaSA#listarPlanta()
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	public Collection listarPlanta() {
-		// begin-user-code
-		// TODO Auto-generated method stub
+	public Set<TPlanta> listarPlanta() {
 		return null;
-		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see PlantaSA#mostrarPlantaPorId(Integer id)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public TPlanta mostrarPlantaPorId(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see PlantaSA#listarPlantasPorTipo(String tipo)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	public Collection listarPlantasPorTipo(String tipo) {
-		// begin-user-code
-		// TODO Auto-generated method stub
+	public Set<TPlanta> listarPlantasPorTipo(String tipo) {
 		return null;
-		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see PlantaSA#listarPlantasPorInvernadero(Integer id_invernadero)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	public Collection listarPlantasPorInvernadero(Integer id_invernadero) {
-		// begin-user-code
-		// TODO Auto-generated method stub
+	public Set<TPlanta> listarPlantasPorInvernadero(Integer id_invernadero) {
 		return null;
-		// end-user-code
 	}
 }

@@ -1,27 +1,19 @@
-/**
- * 
- */
 package Presentacion.Controller.Command.CommandPlanta;
 
+import Negocio.FactoriaNegocio.FactoriaNegocio;
+import Negocio.Planta.*;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
 public class CommandMostarPlantaPorId implements Command {
-	/** 
-	* (non-Javadoc)
-	* @see Command#execute(Object datos)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	public Context execute(Object datos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		TPlanta res = FactoriaNegocio.getInstance().getPlantaSA().mostrarPlantaPorId((int)datos);
+		if(res.get_id() > -1) {
+			return new Context(Evento.MOSTRAR_PLANTA_POR_ID_OK, res);
+		}else {
+			return new Context(Evento.MOSTRAR_PLANTA_POR_ID_KO, res);
+		}
 	}
 }

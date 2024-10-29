@@ -37,7 +37,7 @@ import Presentacion.Invernadero.GUIVincularSRInvernadero;
 import Presentacion.Planta.GUIAltaPlanta;
 import Presentacion.Planta.GUIBajaPlanta;
 import Presentacion.Planta.GUIListarPlantas;
-import Presentacion.Planta.GUIListarPlantasPorID;
+import Presentacion.Planta.GUIListarPlantasPorTipo;
 import Presentacion.Planta.GUIListarPlantasPorInvernadero;
 import Presentacion.Planta.GUIModificarPlanta;
 import Presentacion.Planta.GUIMostarPlantasPorID;
@@ -209,7 +209,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
                     vistaActual = new GUIListarPlantas((Set<TPlanta>) contexto.getDatos()); 
                     return vistaActual;
                 case Evento.LISTAR_PLANTAS_POR_TIPO_VISTA:
-                    vistaActual = new GUIListarPlantasPorID((Set<TPlanta>) contexto.getDatos()); 
+                    vistaActual = new GUIListarPlantasPorTipo((Set<TPlanta>) contexto.getDatos()); 
                     return vistaActual;
                 case Evento.LISTAR_PLANTAS_INVERNADERO_VISTA:
                     vistaActual = new GUIListarPlantasPorInvernadero((Set<TPlanta>) contexto.getDatos());
@@ -238,10 +238,10 @@ public class FactoriaVistasImp extends FactoriaVistas {
                     vistaActual = new GUIListarSistemasDeRiego((Set<TSistemaDeRiego>) contexto.getDatos()); 
                     return vistaActual;
                 case Evento.LISTAR_SISTEMAS_RIEGO_INVERNADERO_VISTA:
-                    vistaActual = new GUIListarSistemaDeRiegoDelInvernadero((Set<TSistemaDeRiego>) contexto.getDatos()); 
+                    vistaActual = new GUIListarSistemaDeRiegoDelInvernadero(); 
                     return vistaActual;
-                case Evento.LISTAR_SISTEMAS_RIEGO_POR_FABRICANTE:
-                    vistaActual = new GUIListarSistemaDeRiegoPorFabricante((Set<TSistemaDeRiego>) contexto.getDatos()); 
+                case Evento.LISTAR_SISTEMAS_RIEGO_POR_FABRICANTE_VISTA:
+                    vistaActual = new GUIListarSistemaDeRiegoPorFabricante(); 
                     return vistaActual;
 
             default:
