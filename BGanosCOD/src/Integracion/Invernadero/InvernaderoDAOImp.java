@@ -47,10 +47,25 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 	}
 
 	public Integer bajaInvernadero(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		int exito = -1;
+
+		try {
+			TransaccionManager tManager = TransaccionManager.getInstance();
+			Transaccion t = tManager.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			PreparedStatement statement = c.prepareStatement("UPDATE  invernadero SET activo = false WHERE id = ?",
+					Statement.RETURN_GENERATED_KEYS);
+
+			statement.setInt(1, id);
+
+			exito = statement.executeUpdate();
+
+			statement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return exito;
 	}
 
 	public TInvernadero mostrarInvernaderoPorID(Integer id) {
@@ -94,15 +109,14 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			ResultSet result = statement.executeQuery();
 
 			while (result.next()) {
-            	TInvernadero invernadero = new TInvernadero();
-            	invernadero.setId(result.getInt("id"));
-            	invernadero.setNombre(result.getString("nombre"));
-            	invernadero.setSustrato(result.getString("sustrato"));
-            	invernadero.setTipo_iluminacion(result.getString("tipo_iluminacion"));
-            	invernadero.setActivo(result.getBoolean("activo"));
-            	invernaderos.add(invernadero);
-            }
-
+				TInvernadero invernadero = new TInvernadero();
+				invernadero.setId(result.getInt("id"));
+				invernadero.setNombre(result.getString("nombre"));
+				invernadero.setSustrato(result.getString("sustrato"));
+				invernadero.setTipo_iluminacion(result.getString("tipo_iluminacion"));
+				invernadero.setActivo(result.getBoolean("activo"));
+				invernaderos.add(invernadero);
+			}
 
 			statement.close();
 			result.close();
