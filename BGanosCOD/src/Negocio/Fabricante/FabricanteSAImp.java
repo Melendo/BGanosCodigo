@@ -5,10 +5,8 @@ import java.util.Set;
 
 import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
-import Integracion.SistemaDeRiego.SistemaDeRiegoDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
-import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
 public class FabricanteSAImp implements FabricanteSA {
 	
@@ -194,16 +192,47 @@ public class FabricanteSAImp implements FabricanteSA {
 	}
 
 	public Set<TFabricante> listarFabricantesLocales() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		
+		Set<TFabricante> listaFab = new LinkedHashSet<>();
+
+	    try {
+	   
+	        TransaccionManager tm = TransaccionManager.getInstance();
+	        Transaccion t = tm.newTransaccion();
+	        t.start();
+
+	        FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+	        FabricanteDAO fd = fi.getFabricanteDAO();
+	        
+	        listaFab = fd.listarFabricantesLocales();
+	        t.commit(); 
+	        	        
+	    } catch (Exception e) {
+	        e.printStackTrace(); 
+	    }
+	    
+	    return listaFab;
 	}
 
 	public Set<TFabricante> listarFabricantesExtranjeros() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TFabricante> listaFab = new LinkedHashSet<>();
+
+	    try {
+	   
+	        TransaccionManager tm = TransaccionManager.getInstance();
+	        Transaccion t = tm.newTransaccion();
+	        t.start();
+
+	        FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+	        FabricanteDAO fd = fi.getFabricanteDAO();
+	        
+	        listaFab = fd.listarFabricantesExtrangeros();
+	        t.commit(); 
+	        	        
+	    } catch (Exception e) {
+	        e.printStackTrace(); 
+	    }
+	    
+	    return listaFab;
 	}
 }
