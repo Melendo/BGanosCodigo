@@ -140,7 +140,7 @@ public class GUISistemaDeRiego extends JFrame implements IGUI {
         buttonListarSistemasRiegoEnInvernadero.setVisible(true);
         this.add(buttonListarSistemasRiegoEnInvernadero);
 
-        // BOTÓN DE VOLVER
+        // BOTON DE VOLVER
         backButton = ComponentsBuilder.createBackButton();
         backButton.addActionListener(new ActionListener() {
             @Override

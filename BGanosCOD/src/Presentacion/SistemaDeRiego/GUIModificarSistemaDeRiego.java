@@ -171,7 +171,7 @@ public class GUIModificarSistemaDeRiego extends JFrame implements IGUI {
     public void actualizar(Context context) {
     	int resultado = (int) context.getDatos();
         if (context.getEvento() == Evento.MODIFICAR_SISTEMA_DE_RIEGO_OK) {       	
-            JOptionPane.showMessageDialog(this, "Sistema" + resultado + "de riego modificado correctamente", "…xito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistema" + resultado + "de riego modificado correctamente", "√âxito", JOptionPane.INFORMATION_MESSAGE);
         
         } else if (context.getEvento() == Evento.MODIFICAR_SISTEMA_DE_RIEGO_KO) {
            
@@ -180,10 +180,10 @@ public class GUIModificarSistemaDeRiego extends JFrame implements IGUI {
                 JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             case -2:
-                JOptionPane.showMessageDialog(this, "Error: Ya existe un sistema de riego con el mismo nombre y est· activo.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error: Ya existe un sistema de riego con el mismo nombre y est√° activo.", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             case -511:
-                JOptionPane.showMessageDialog(this, "Error: El fabricante asociado no est· activo.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error: El fabricante asociado no est√° activo.", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             case -404:
                 JOptionPane.showMessageDialog(this, "Error: El fabricante especificado no existe.", "Error", JOptionPane.ERROR_MESSAGE);

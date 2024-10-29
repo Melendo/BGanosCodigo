@@ -41,7 +41,7 @@ public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
         this.setContentPane(mainPanel);
 
         // Titulo
-        gbc.gridwidth = 2; // Dos columnas para el tÌtulo
+        gbc.gridwidth = 2; // Dos columnas para el titulo
         JLabel msgIntro = new JLabel("Introduzca los datos del sistema de riego", JLabel.CENTER);
         mainPanel.add(msgIntro, gbc);
 
@@ -148,7 +148,7 @@ public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
     	int resultado = (int) context.getDatos();
         if (context.getEvento() == Evento.ALTA_SISTEMA_DE_RIEGO_OK) {
         	
-            JOptionPane.showMessageDialog(this, "Sistema de riego dado de alta correctamente con id: " + resultado , "…xito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistema de riego dado de alta correctamente con id: " + resultado , "√âxito", JOptionPane.INFORMATION_MESSAGE);
         } else if (context.getEvento() == Evento.ALTA_SISTEMA_DE_RIEGO_KO) {
         	
             switch (resultado) {
@@ -156,10 +156,10 @@ public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
                 JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             case -2:
-                JOptionPane.showMessageDialog(this, "Error: Ya existe un sistema de riego con el mismo nombre y est· activo.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error: Ya existe un sistema de riego con el mismo nombre y est√° activo.", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             case -511:
-                JOptionPane.showMessageDialog(this, "Error: El fabricante asociado no est· activo.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error: El fabricante asociado no est√° activo.", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             case -404:
                 JOptionPane.showMessageDialog(this, "Error: El fabricante especificado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
