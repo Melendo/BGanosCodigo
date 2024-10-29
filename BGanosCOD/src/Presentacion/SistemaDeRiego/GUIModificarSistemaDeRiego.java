@@ -171,7 +171,7 @@ public class GUIModificarSistemaDeRiego extends JFrame implements IGUI {
     public void actualizar(Context context) {
     	int resultado = (int) context.getDatos();
         if (context.getEvento() == Evento.MODIFICAR_SISTEMA_DE_RIEGO_OK) {       	
-            JOptionPane.showMessageDialog(this, "Sistema" + resultado + "de riego modificado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistema de riego " + resultado + " modificado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         
         } else if (context.getEvento() == Evento.MODIFICAR_SISTEMA_DE_RIEGO_KO) {
            
