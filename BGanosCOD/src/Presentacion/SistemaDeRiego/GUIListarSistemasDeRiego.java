@@ -50,7 +50,7 @@ public class GUIListarSistemasDeRiego extends JFrame implements IGUI {
             tablaDatos[i][2] = sistema.getPotenciaRiego().toString();
             tablaDatos[i][3] = sistema.getCantidad_agua().toString();
             tablaDatos[i][4] = sistema.getFrecuencia().toString();
-            tablaDatos[i][5] = sistema.getActivo() ? "Sí" : "No";
+            tablaDatos[i][5] = sistema.getActivo() ? "Si" : "No";
             tablaDatos[i][6] = sistema.getIdFabricante().toString();
             i++;
         }
@@ -85,7 +85,7 @@ public class GUIListarSistemasDeRiego extends JFrame implements IGUI {
     @Override
     public void actualizar(Context context) {
         if (context.getEvento() == Evento.LISTAR_SISTEMA_DE_RIEGO_OK) {
-            JOptionPane.showMessageDialog(this, "Sistemas de riego listados correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistemas de riego listados correctamente", "Ã‰xito", JOptionPane.INFORMATION_MESSAGE);
         } else if (context.getEvento() == Evento.LISTAR_SISTEMA_DE_RIEGO_KO) {
             JOptionPane.showMessageDialog(this, "Error al tratar de listar los sistemas de riego", "Error", JOptionPane.ERROR_MESSAGE);
         }
