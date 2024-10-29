@@ -11,6 +11,9 @@ import Integracion.FactoriaIntegracion.FactoriaIntegracion;
 import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
+import Negocio.Entrada.TEntrada;
+import Negocio.Planta.TPlanta;
+import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
 public class InvernaderoSAImp implements InvernaderoSA {
 
@@ -50,10 +53,38 @@ public class InvernaderoSAImp implements InvernaderoSA {
 	}
 
 	public Integer bajaInvernadero(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+
+		int exito = -1;
+		Transaccion t = null;
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+
+			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
+			TInvernadero invernadero = daoInvernadero.mostrarInvernaderoPorID(id);
+			if (invernadero != null && invernadero.isActivo()) {
+				Set<TEntrada> entradasActivas = f.getEntradaDAO().listarEntradasPorInvernadero(id);
+				Set<TSistemaDeRiego> sisRiegoActivos = f.getSistemaDeRiegoDAO().listarSistemaDeRiegoInvernadero(id);
+				Set<TPlanta> plantasActivas = f.getPlantaDAO().MostrarPorInvernadero(id);
+				if (entradasActivas.size() != 0 && sisRiegoActivos.size() != 0 && plantasActivas.size() != 0) {
+					exito = daoInvernadero.bajaInvernadero(id);
+					t.commit();
+				} else {
+					exito = -24; // invernadero no puede darse de baja si tiene plantas, entradas o sistemas de
+									// riego activos y vinculados
+					t.rollback();
+				}
+			} else {
+				exito = -23; // invernadero no existe o esta inactivo
+				t.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exito;
 	}
 
 	public Integer desvincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero) {
