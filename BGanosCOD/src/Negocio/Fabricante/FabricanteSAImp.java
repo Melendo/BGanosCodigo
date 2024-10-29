@@ -1,5 +1,6 @@
 package Negocio.Fabricante;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import Integracion.Fabricante.FabricanteDAO;
@@ -10,6 +11,7 @@ import Integracion.Transaction.TransaccionManager;
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
 public class FabricanteSAImp implements FabricanteSA {
+	
 	public Integer altaFabricante(TFabricante fabricante) {
 		int ret = -1;
 
@@ -169,10 +171,26 @@ public class FabricanteSAImp implements FabricanteSA {
 	}
 
 	public Set<TFabricante> listarFabricantes() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		
+		Set<TFabricante> listaFab = new LinkedHashSet<>();
+
+	    try {
+	   
+	        TransaccionManager tm = TransaccionManager.getInstance();
+	        Transaccion t = tm.newTransaccion();
+	        t.start();
+
+	        FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+	        FabricanteDAO fd = fi.getFabricanteDAO();
+	        
+	        listaFab = fd.listarFabricantes();
+	        t.commit(); 
+	        	        
+	    } catch (Exception e) {
+	        e.printStackTrace(); 
+	    }
+	    
+	    return listaFab;
 	}
 
 	public Set<TFabricante> listarFabricantesLocales() {
