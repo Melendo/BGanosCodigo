@@ -18,6 +18,18 @@ public class TEntrada {
 	private Integer stock_entradas;
 
 	private Boolean activo;
+	
+	
+	public TEntrada(Date fecha, Float precio, Integer stock, Integer idInvernadero) {
+		this.fecha = fecha;
+		this.precio = precio;
+		this.stock_entradas = stock;
+		this.idInvernadero = idInvernadero;
+	}
+	
+	public TEntrada() {
+		
+	}
 
 	public Integer getId() {
 		return id;

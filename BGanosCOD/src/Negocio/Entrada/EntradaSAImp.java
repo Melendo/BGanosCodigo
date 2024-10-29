@@ -80,37 +80,60 @@ public class EntradaSAImp implements EntradaSA {
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 			EntradaDAO entradaDao = f.getEntradaDAO();
 			TEntrada entrada = entradaDao.mostrarEntrada(id); // para comprobar que existe un pase con ese id
-			
-			if(entrada != null) {
-				
-				if(entrada.getActivo()) {
+
+			if (entrada != null) {
+
+				if (entrada.getActivo()) {
 					exito = entradaDao.bajaEntrada(id);
 					t.commit();
-				
+
 				} else {
 					exito = -52; // Error: el id es de un pase ya inactivo
 					t.rollback();
 				}
-			
+
 			} else {
 				exito = -51; // Error: id de un pase que no existe
 				t.rollback();
 			}
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return exito;
 	}
-	
+
 	public TEntrada mostrarEntrada(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		TEntrada entradaMostrar = new TEntrada();
+
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+			EntradaDAO entradaDao = f.getEntradaDAO();
+			TEntrada entradaBuscar = entradaDao.mostrarEntrada(id);
+
+			if (entradaBuscar != null) {
+				entradaMostrar.setId(entradaBuscar.getId());
+				entradaMostrar.setIdInvernadero(entradaBuscar.getIdInvernadero());
+				entradaMostrar.setFecha(entradaBuscar.getFecha());
+				entradaMostrar.setPrecio(entradaBuscar.getPrecio());
+				entradaMostrar.setStock(entradaBuscar.getStock());
+				t.commit();
+
+			} else {
+				entradaMostrar.setId(-51); // Error: id de una entrada que no existe
+				t.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return entradaMostrar;
 	}
-	
+
 	public Integer modificarEntrada(TEntrada entrada) {
 		// begin-user-code
 		// TODO Auto-generated method stub
