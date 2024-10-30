@@ -5,11 +5,11 @@ package Presentacion.Invernadero;
 
 import javax.swing.JFrame;
 
-import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
+import Presentacion.SistemaDeRiego.GUIAltaSistemaDeRiego;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -18,25 +18,22 @@ import Negocio.Invernadero.TInvernadero;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+@SuppressWarnings("serial")
 public class GUIAltaInvernadero extends JFrame implements IGUI {
 
-	private JPanel jPanel;
-
-	private JTextField jTextField;
-
-	private JLabel jLabel;
-
-	private JButton jButton;
+	private JTextField textNombre;
+	private JTextField textSustrato;
+	private JTextField textTipoIluminacion;
 
 	public GUIAltaInvernadero() {
 		super("Alta Invernadero");
@@ -53,74 +50,73 @@ public class GUIAltaInvernadero extends JFrame implements IGUI {
 	}
 
 	public void iniGUI() {
-		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		// Panel principal
+		JPanel mainPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(10, 10, 10, 10); // Margenes entre componentes
 		this.setContentPane(mainPanel);
 
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+		// Titulo
+		gbc.gridwidth = 2; // Dos columnas para el t�tulo
+		JLabel msgIntro = new JLabel("Introduzca los datos del sistema de riego", JLabel.CENTER);
+		mainPanel.add(msgIntro, gbc);
 
-		JLabel msgIntroIDCabecera = ComponentsBuilder
-				.createLabel("Introduzca los datos del habitat que desea dar de alta ", 1, 10, 80, 20, Color.BLACK);
-		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
-		mainPanel.add(msgIntroIDCabecera);
+		// Resetear para los campos
+		gbc.gridwidth = 1;
+		gbc.gridy = 1;
 
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
-
-		// Campo para introducir el nombre del invernadero
+		// Nombre
 		JLabel labelNombre = new JLabel("Nombre:");
-		labelNombre.setAlignmentX(CENTER_ALIGNMENT);
-		mainPanel.add(labelNombre);
+		gbc.gridx = 0;
+		mainPanel.add(labelNombre, gbc);
+		textNombre = new JTextField(20);
+		gbc.gridx = 1;
+		mainPanel.add(textNombre, gbc);
 
-		JTextField textNombre = new JTextField(20);
-		textNombre.setMaximumSize(textNombre.getPreferredSize());
-		mainPanel.add(textNombre);
-
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-
-		// Campo para introducir el sustrato
+		// Sustrato
 		JLabel labelSustrato = new JLabel("Sustrato:");
-		labelSustrato.setAlignmentX(CENTER_ALIGNMENT);
-		mainPanel.add(labelSustrato);
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		mainPanel.add(labelSustrato, gbc);
+		textSustrato = new JTextField(20);
+		gbc.gridx = 1;
+		mainPanel.add(textSustrato, gbc);
 
-		JTextField textSustrato = new JTextField(20);
-		textSustrato.setMaximumSize(textSustrato.getPreferredSize());
-		mainPanel.add(textSustrato);
+		// Tipo de Iluminacion
+		JLabel labelTipoIluminacion = new JLabel("Tipo de Iluminacion:");
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		mainPanel.add(labelTipoIluminacion, gbc);
+		textTipoIluminacion = new JTextField(20);
+		gbc.gridx = 1;
+		mainPanel.add(textTipoIluminacion, gbc);
 
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-
-		// Campo para introducir el tipo de iluminacion
-		JLabel labelIluminacion = new JLabel("Tipo de Iluminacion:");
-		labelIluminacion.setAlignmentX(CENTER_ALIGNMENT);
-		mainPanel.add(labelIluminacion);
-
-		JTextField textIluminacion = new JTextField(20);
-		textIluminacion.setMaximumSize(textIluminacion.getPreferredSize());
-		mainPanel.add(textIluminacion);
-
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-
-		// Panel para los botones
+		// Panel de botones
 		JPanel panelBotones = new JPanel();
-		mainPanel.add(panelBotones);
-
+		gbc.gridx = 0;
+		gbc.gridy = 6;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.CENTER;
+		mainPanel.add(panelBotones, gbc);
 		// BOTON ACEPTAR (GUARDAR LOS DATOS DEL ALTA)
 		JButton botonAceptar = new JButton("Aceptar");
 		botonAceptar.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUIAltaInvernadero.this.setVisible(false);
 				try {
 					String nombre = textNombre.getText();
 					String sustrato = textSustrato.getText();
-					String iluminacion = textIluminacion.getText();
+					String iluminacion = textTipoIluminacion.getText();
 
 					ApplicationController.getInstance().manageRequest(
 							new Context(Evento.ALTA_INVERNADERO, new TInvernadero(nombre != null ? nombre : "",
 									sustrato != null ? sustrato : "", iluminacion != null ? iluminacion : "")));
 				} catch (Exception ex) {
-					// ApplicationController.getInstance().manageRequest(new Context
-					// (Evento.V_ERRORES, -4));
+					JOptionPane.showMessageDialog(GUIAltaInvernadero.this, "Error en el formato de los datos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+
 				}
 			}
 		});
@@ -139,7 +135,6 @@ public class GUIAltaInvernadero extends JFrame implements IGUI {
 		panelBotones.add(botonCancelar);
 
 		this.setVisible(true);
-		this.setResizable(true);
 	}
 
 	@Override
@@ -147,8 +142,10 @@ public class GUIAltaInvernadero extends JFrame implements IGUI {
 		int resultado = (int) context.getDatos();
 		if (context.getEvento() == Evento.ALTA_INVERNADERO_OK) {
 
-			JOptionPane.showMessageDialog(this, "Inventario dado de alta correctamente con id: " + resultado, "Exito",
+			JOptionPane.showMessageDialog(this, "Invernadero dado de alta correctamente con id: " + resultado, "Exito",
 					JOptionPane.INFORMATION_MESSAGE);
+			GUIAltaInvernadero.this.setVisible(false);
+			ApplicationController.getInstance().manageRequest(new Context(Evento.INVERNADERO_VISTA, null));
 		} else if (context.getEvento() == Evento.ALTA_INVERNADERO_KO) {
 
 			switch (resultado) {
