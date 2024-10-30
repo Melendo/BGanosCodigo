@@ -83,15 +83,10 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			statement.setString(3, invernadero.getTipo_iluminacion());
 			statement.setInt(4, invernadero.getId());
 
-			statement.executeUpdate();
+			exito = statement.executeUpdate();
 
-			ResultSet result = statement.getGeneratedKeys();
-			if (result.next()) {
-				exito = result.getInt(1);
-			}
 
 			statement.close();
-			result.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
