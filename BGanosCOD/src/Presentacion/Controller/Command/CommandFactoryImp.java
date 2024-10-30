@@ -2,7 +2,8 @@ package Presentacion.Controller.Command;
 
 import Presentacion.Controller.Command.CommandEntrada.CommandAltaEntrada;
 import Presentacion.Controller.Command.CommandEntrada.CommandBajaEntrada;
-import Presentacion.Controller.Command.CommandEntrada.CommandListaEntrada;
+import Presentacion.Controller.Command.CommandEntrada.CommandListarEntrada;
+import Presentacion.Controller.Command.CommandEntrada.CommandListarEntradasPorInvernadero;
 import Presentacion.Controller.Command.CommandEntrada.CommandModificarEntrada;
 import Presentacion.Controller.Command.CommandEntrada.CommandMostrarEntrada;
 import Presentacion.Controller.Command.CommandFabricante.CommandAltaFabricante;
@@ -74,7 +75,9 @@ public class CommandFactoryImp extends CommandFactory {
 		case Evento.MOSTRAR_ENTRADA_POR_ID:
 		    return new CommandMostrarEntrada();
 		case Evento.LISTAR_ENTRADAS:
-		    return new CommandListaEntrada();
+		    return new CommandListarEntrada();
+		case Evento.LISTAR_ENTRADAS_POR_INVERNADERO:
+			return new CommandListarEntradasPorInvernadero();
 	
 
 		// Eventos de Fabricante
