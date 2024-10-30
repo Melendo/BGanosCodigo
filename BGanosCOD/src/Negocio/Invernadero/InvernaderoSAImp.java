@@ -105,7 +105,7 @@ public class InvernaderoSAImp implements InvernaderoSA {
 			TInvernadero nuevoInvernadero = daoInvernadero.mostrarInvernaderoPorID(invernadero.getId());
 			if (nuevoInvernadero != null) {
 				if (nuevoInvernadero.isActivo()) {
-					if (daoInvernadero.mostrarInvernaderoPorNombre(invernadero.getNombre()) != null) {
+					if (daoInvernadero.mostrarInvernaderoPorNombre(invernadero.getNombre()) == null) {
 						exito = daoInvernadero.modificarInvernadero(invernadero);
 						t.commit();
 					} else {
