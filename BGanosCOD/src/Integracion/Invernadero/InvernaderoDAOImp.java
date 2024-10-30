@@ -53,8 +53,7 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			TransaccionManager tManager = TransaccionManager.getInstance();
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
-			PreparedStatement statement = c.prepareStatement("UPDATE  invernadero SET activo = false WHERE id = ?",
-					Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement statement = c.prepareStatement("UPDATE invernadero SET activo = false WHERE id = ?");
 
 			statement.setInt(1, id);
 
