@@ -222,9 +222,9 @@ public class InvernaderoSAImp implements InvernaderoSA {
 
 	public Integer vincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero) {
 		int exito = -1;
-		if(id_sistema_riego == 0 || id_invernadero == 0) {
+		if (id_sistema_riego == 0 || id_invernadero == 0) {
 			exito = -2;
-		}else {
+		} else {
 			Transaccion t = null;
 			try {
 				TransaccionManager transaction = TransaccionManager.getInstance();
@@ -232,27 +232,29 @@ public class InvernaderoSAImp implements InvernaderoSA {
 				t.start();
 				FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 
-				if(f.getInvernaderoDAO().mostrarInvernaderoPorID(id_invernadero) != null) {
-					if(f.getSistemaDeRiegoDAO().mostrarSistemaDeRiegoPorID(id_sistema_riego) != null) {
+				TInvernadero invernaderoExiste = f.getInvernaderoDAO().mostrarInvernaderoPorID(id_invernadero);
+				if (invernaderoExiste != null && invernaderoExiste.isActivo()) {
+					TSistemaDeRiego sisExiste = f.getSistemaDeRiegoDAO().mostrarSistemaDeRiegoPorID(id_sistema_riego);
+					if (sisExiste != null && sisExiste.getActivo()) {
 						TTiene nuevoTiene = new TTiene();
 						nuevoTiene.setId_Invernadero(id_invernadero);
 						nuevoTiene.setId_SistemasDeRiego(id_sistema_riego);
 						TieneDAO daoT = f.getDaoTiene();
-						if(daoT.mostrarTiene(nuevoTiene) == null) {
+						if (daoT.mostrarTiene(nuevoTiene) == null) {
 							exito = daoT.vincularInvernaderoConSisRiego(nuevoTiene);
-						}else {
+						} else {
 							exito = -5;
 							t.rollback();
 						}
-					}else {
+					} else {
 						exito = -4;
 						t.rollback();
 					}
-				}else {
+				} else {
 					exito = -3;
 					t.rollback();
 				}
-			}catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -260,10 +262,43 @@ public class InvernaderoSAImp implements InvernaderoSA {
 	}
 
 	public Integer desvincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		int exito = -1;
+		if (id_sistema_riego == 0 || id_invernadero == 0) {
+			exito = -2;
+		} else {
+			Transaccion t = null;
+			try {
+				TransaccionManager transaction = TransaccionManager.getInstance();
+				t = transaction.newTransaccion();
+				t.start();
+				FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+				TInvernadero invernaderoExiste = f.getInvernaderoDAO().mostrarInvernaderoPorID(id_invernadero);
+				if (invernaderoExiste != null && invernaderoExiste.isActivo()) {
+					TSistemaDeRiego sisExiste = f.getSistemaDeRiegoDAO().mostrarSistemaDeRiegoPorID(id_sistema_riego);
+					if (sisExiste != null && sisExiste.getActivo()) {
+						TTiene nuevoTiene = new TTiene();
+						nuevoTiene.setId_Invernadero(id_invernadero);
+						nuevoTiene.setId_SistemasDeRiego(id_sistema_riego);
+						TieneDAO daoT = f.getDaoTiene();
+						if (daoT.mostrarTiene(nuevoTiene) == null) {
+							exito = daoT.desvincularInvernaderoConSisRiego(nuevoTiene);
+						} else {
+							exito = -5;
+							t.rollback();
+						}
+					} else {
+						exito = -4;
+						t.rollback();
+					}
+				} else {
+					exito = -3;
+					t.rollback();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return exito;
 	}
 
 }
