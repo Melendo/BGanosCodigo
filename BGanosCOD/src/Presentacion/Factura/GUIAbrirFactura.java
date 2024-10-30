@@ -4,15 +4,21 @@
 package Presentacion.Factura;
 
 import javax.swing.JFrame;
+
+import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Negocio.Factura.TCarrito;
 import Negocio.Factura.TFactura;
+import Negocio.Factura.TLineaFactura;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -49,7 +55,9 @@ public class GUIAbrirFactura extends JFrame implements IGUI {
 	*/
 	private JButton jButton;
 
-
+	public GUIAbrirFactura() {
+		initGUI();
+	}
 
 	/** 
 	* <!-- begin-UML-doc -->
@@ -59,7 +67,9 @@ public class GUIAbrirFactura extends JFrame implements IGUI {
 	public void initGUI() {
 		// begin-user-code
 		// TODO Auto-generated method stub
-
+		TCarrito carrito = new TCarrito();
+		carrito.setLineaFactura(new HashSet<TLineaFactura>());
+        ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_FACTURA_VISTA, carrito));
 		// end-user-code
 	}
 

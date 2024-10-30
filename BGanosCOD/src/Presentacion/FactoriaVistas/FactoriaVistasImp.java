@@ -54,6 +54,7 @@ import java.util.Set;
 
 import Negocio.Entrada.TEntrada;
 import Negocio.Fabricante.TFabricante;
+import Negocio.Factura.TCarrito;
 import Negocio.Factura.TFactura;
 import Negocio.Invernadero.TInvernadero;
 import Negocio.Planta.TPlanta;
@@ -136,7 +137,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
                 vistaActual = new GUIAbrirFactura();
                 return vistaActual;
             case Evento.CERRAR_FACTURA_VISTA:
-                vistaActual = new GUICerrarFactura();
+                vistaActual = new GUICerrarFactura((TCarrito) contexto.getDatos());
                 return vistaActual;
             case Evento.DEVOLVER_FACTURA_VISTA:
                 vistaActual = new GUIDevolverFactura();

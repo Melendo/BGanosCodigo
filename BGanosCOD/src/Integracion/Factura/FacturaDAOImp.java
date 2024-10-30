@@ -36,8 +36,8 @@ public class FacturaDAOImp implements FacturaDAO {
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c.prepareStatement(
-					"INSERT INTO factura(precio_total ,fecha_compra) VALUES (?,DATE_FORMAT(NOW(), '%Y-%m-%d'))", Statement.RETURN_GENERATED_KEYS);
-			statement.setDouble(1, tfactura.getPrecioTotal());
+					"INSERT INTO factura(precio_total ,fecha_compra) VALUES (?,NOW())", Statement.RETURN_GENERATED_KEYS);
+			statement.setFloat(1, tfactura.getPrecioTotal());
 			statement.executeUpdate();
 			ResultSet result = statement.getGeneratedKeys();
 			if (result.next())
@@ -127,10 +127,8 @@ public class FacturaDAOImp implements FacturaDAO {
 			PreparedStatement statement = c
 					.prepareStatement("UPDATE factura SET precio_total = ?, fecha_compra = ?, activo = ? WHERE id = ?");
 			
-			statement.setDouble(1, tfactura.getPrecioTotal());
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Formatear la fecha
-	        String formattedDate = dateFormat.format(tfactura.getFechaCompra()); // Obtener la fecha formateada como String
-	        statement.setString(2, formattedDate); // Establecer la fecha formateada en el PreparedStatement
+			statement.setFloat(1, tfactura.getPrecioTotal());
+	        statement.setDate(2, new java.sql.Date(tfactura.getFechaCompra().getTime()));
 			statement.setBoolean(3, tfactura.getActivo());
 			statement.setInt(4, tfactura.getid());
 			exito = statement.executeUpdate();

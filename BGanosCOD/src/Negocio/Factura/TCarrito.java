@@ -40,4 +40,14 @@ public class TCarrito {
 	public TFactura getFactura() {
 		return tFactura;
 	}
+
+	public void setLineaFactura(Set<TLineaFactura> tLineaFactura) {
+		this.tLineaFactura = tLineaFactura;
+	}
+
+	public void setFactura(TFactura tFactura) {
+		this.tFactura = tFactura;
+	}
+	
+	
 }

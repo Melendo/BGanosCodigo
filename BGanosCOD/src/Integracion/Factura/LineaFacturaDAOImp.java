@@ -97,7 +97,7 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 			Connection c = (Connection) TransaccionManager.getInstance().getTransaccion().getResource();
 			PreparedStatement statement = c.prepareStatement("UPDATE lineafactura SET cantidad = ?, precio = ? WHERE id_factura = ? AND id_pase = ?", Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, tlineaFactura.getCantidad());
-			statement.setDouble(2, tlineaFactura.getPrecio());
+			statement.setFloat(2, tlineaFactura.getPrecio());
 			statement.setInt(3, tlineaFactura.getidFactura());
 			statement.setInt(4, tlineaFactura.getidEntrada());
 			int affectedRows = statement.executeUpdate();
