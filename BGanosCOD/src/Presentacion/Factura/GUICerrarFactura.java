@@ -331,7 +331,7 @@ public class GUICerrarFactura extends JFrame implements IGUI {
         	
             switch (resultado) {
             case -1:
-                JOptionPane.showMessageDialog(this, "Se ha producido un error en negocio", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Se ha producido un error interno", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             case -2:
                 JOptionPane.showMessageDialog(this, "Datos incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
