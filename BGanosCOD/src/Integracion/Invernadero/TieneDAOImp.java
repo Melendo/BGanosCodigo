@@ -3,7 +3,6 @@
  */
 package Integracion.Invernadero;
 
-import Negocio.Invernadero.TInvernadero;
 import Negocio.Invernadero.TTiene;
 import java.util.Set;
 
