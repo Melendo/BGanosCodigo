@@ -9,6 +9,7 @@ import java.util.Set;
 
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
 import Integracion.Invernadero.InvernaderoDAO;
+import Integracion.Invernadero.TieneDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 import Negocio.Entrada.TEntrada;
@@ -220,10 +221,42 @@ public class InvernaderoSAImp implements InvernaderoSA {
 	}
 
 	public Integer vincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		int exito = -1;
+		if(id_sistema_riego == 0 || id_invernadero == 0) {
+			exito = -2;
+		}else {
+			Transaccion t = null;
+			try {
+				TransaccionManager transaction = TransaccionManager.getInstance();
+				t = transaction.newTransaccion();
+				t.start();
+				FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+
+				if(f.getInvernaderoDAO().mostrarInvernaderoPorID(id_invernadero) != null) {
+					if(f.getSistemaDeRiegoDAO().mostrarSistemaDeRiegoPorID(id_sistema_riego) != null) {
+						TTiene nuevoTiene = new TTiene();
+						nuevoTiene.setId_Invernadero(id_invernadero);
+						nuevoTiene.setId_SistemasDeRiego(id_sistema_riego);
+						TieneDAO daoT = f.getDaoTiene();
+						if(daoT.mostrarTiene(nuevoTiene) == null) {
+							exito = daoT.vincularInvernaderoConSisRiego(nuevoTiene);
+						}else {
+							exito = -5;
+							t.rollback();
+						}
+					}else {
+						exito = -4;
+						t.rollback();
+					}
+				}else {
+					exito = -3;
+					t.rollback();
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return exito;
 	}
 
 	public Integer desvincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero) {

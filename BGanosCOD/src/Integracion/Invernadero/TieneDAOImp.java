@@ -12,7 +12,6 @@ import Integracion.Transaction.TransaccionManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.HashSet;
 
 public class TieneDAOImp implements TieneDAO {
@@ -25,8 +24,7 @@ public class TieneDAOImp implements TieneDAO {
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c.prepareStatement(
-					"INSERT INTO sistemas_riego_de_invernadero(id_invernadero, id_sistema_riego) VALUES (?, ?)",
-					Statement.RETURN_GENERATED_KEYS);
+					"INSERT INTO sistemas_riego_de_invernadero(id_invernadero, id_sistema_riego) VALUES (?, ?)");
 
 			statement.setInt(1, tiene.getId_Invernadero());
 			statement.setInt(2, tiene.getId_SistemasDeRiego());
@@ -50,8 +48,7 @@ public class TieneDAOImp implements TieneDAO {
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c.prepareStatement(
-					"DELETE FROM sistemas_riego_de_invernadero WHERE id_invernadero = ? AND id_sistema_riego = ?",
-					Statement.RETURN_GENERATED_KEYS);
+					"DELETE FROM sistemas_riego_de_invernadero WHERE id_invernadero = ? AND id_sistema_riego = ?");
 
 			statement.setInt(1, idInvernadero);
 			statement.setInt(2, idSisRiego);
