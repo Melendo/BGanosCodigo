@@ -11,6 +11,8 @@ import Integracion.Factura.LineaFacturaDAO;
 import Integracion.Factura.LineaFacturaDAOImp;
 import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Invernadero.InvernaderoDAOImp;
+import Integracion.Invernadero.TieneDAO;
+import Integracion.Invernadero.TieneDAOImp;
 import Integracion.Planta.PlantaDAO;
 import Integracion.Planta.PlantaDAOImp;
 import Integracion.SistemaDeRiego.SistemaDeRiegoDAO;
@@ -46,5 +48,9 @@ public class FactoriaIntegracionImp extends FactoriaIntegracion {
 	
 	public LineaFacturaDAO getDAOLineaFactura() {
 		return new LineaFacturaDAOImp();
+	}
+
+	public TieneDAO getDaoTiene() {
+		return new TieneDAOImp();
 	}
 }
