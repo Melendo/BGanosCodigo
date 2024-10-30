@@ -15,6 +15,9 @@ public interface InvernaderoDAO {
 	public Integer bajaInvernadero(Integer id);
 
 	//
+	public Integer modificarInvernadero(TInvernadero invernadero);
+	
+	//
 	public TInvernadero mostrarInvernaderoPorID(Integer id);
 
 	//
@@ -26,6 +29,5 @@ public interface InvernaderoDAO {
 	//
 	public Set<TInvernadero> listarInvernaderoPorSR(Integer id_sistema_de_riego);
 
-	//
-	public Integer modificarInvernadero(TInvernadero invernadero);
+	
 }
