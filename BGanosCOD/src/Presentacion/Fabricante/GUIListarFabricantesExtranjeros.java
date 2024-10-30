@@ -92,10 +92,10 @@ public class GUIListarFabricantesExtranjeros extends JFrame implements IGUI {
 	}
 
 	public void actualizar(Context context) {
-		if (context.getEvento() == Evento.LISTAR_FABRICANTES_EXTRANGEROS_OK) {
+		if (context.getEvento() == Evento.LISTAR_FABRICANTES_EXTRANJEROS_OK) {
 			JOptionPane.showMessageDialog(this, "Fabricantes Extranjeros listados correctamente", "Éxito",
 					JOptionPane.INFORMATION_MESSAGE);
-		} else if (context.getEvento() == Evento.LISTAR_FABRICANTES_EXTRANGEROS_KO) {
+		} else if (context.getEvento() == Evento.LISTAR_FABRICANTES_EXTRANJEROS_KO) {
 			JOptionPane.showMessageDialog(this, "Error al tratar de listar los Fabricantes Extranjeros", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}

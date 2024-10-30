@@ -183,6 +183,7 @@ public class FabricanteSAImp implements FabricanteSA {
 
 			listaFab = fd.listarFabricantes();
 			t.commit();
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -226,7 +227,7 @@ public class FabricanteSAImp implements FabricanteSA {
 			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
 			FabricanteDAO fd = fi.getFabricanteDAO();
 
-			listaFab = fd.listarFabricantesExtrangeros();
+			listaFab = fd.listarFabricantesExtranjeros();
 			t.commit();
 
 		} catch (Exception e) {

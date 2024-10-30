@@ -15,7 +15,7 @@ public interface FabricanteDAO {
 
 	public Set<TFabricante> listarFabricantes();
 
-	public Set<TFabricante> listarFabricantesExtrangeros();
+	public Set<TFabricante> listarFabricantesExtranjeros();
 
 	public Set<TFabricante> listarFabricantesLocales();
 	

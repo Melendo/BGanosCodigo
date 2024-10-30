@@ -3,7 +3,6 @@ package Presentacion.Fabricante;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.HashSet;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,8 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Negocio.Fabricante.TFabricante;
-import Negocio.Fabricante.TFabricanteExtranjero;
-import Negocio.Fabricante.TFabricanteLocal;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
@@ -23,9 +20,6 @@ import Presentacion.Controller.IGUI;
 public class GUIFabricante extends JFrame implements IGUI {
 
 	private TFabricante tFabricante;
-	private HashSet<TFabricante> hSFabricante;
-	private HashSet<TFabricanteLocal> hSFabricanteL;
-	private HashSet<TFabricanteExtranjero> hSFabricanteE;
 	private JButton bAlta;
 	private JButton bBaja;
 	private JButton bModificar;
@@ -55,9 +49,6 @@ public class GUIFabricante extends JFrame implements IGUI {
 	private void initGUI() {
 
 		tFabricante = new TFabricante();
-		hSFabricante = new HashSet<TFabricante>();
-		hSFabricanteL = new HashSet<TFabricanteLocal>();
-		hSFabricanteE = new HashSet<TFabricanteExtranjero>();
 		JLabel label = ComponentsBuilder.createLabel("Fabricante", 250, 30, 500, 50, Color.BLACK);
 		this.add(label);
 
@@ -114,8 +105,7 @@ public class GUIFabricante extends JFrame implements IGUI {
 		bListar.addActionListener(a -> {
 
 			GUIFabricante.this.setVisible(false);
-			ApplicationController.getInstance()
-					.manageRequest(new Context(Evento.LISTAR_FABRICANTES_VISTA, hSFabricante));
+			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_FABRICANTES));
 
 		});
 
@@ -126,8 +116,7 @@ public class GUIFabricante extends JFrame implements IGUI {
 		bListarLocal.addActionListener(a -> {
 
 			GUIFabricante.this.setVisible(false);
-			ApplicationController.getInstance()
-					.manageRequest(new Context(Evento.LISTAR_FABRICANTES_LOCALES_VISTA, hSFabricanteL));
+			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_FABRICANTES_LOCALES));
 		});
 
 		// Listar extranjero
@@ -137,8 +126,7 @@ public class GUIFabricante extends JFrame implements IGUI {
 		bListarExtranjero.addActionListener(a -> {
 
 			GUIFabricante.this.setVisible(false);
-			ApplicationController.getInstance()
-					.manageRequest(new Context(Evento.LISTAR_FABRICANTES_EXTRANGEROS_VISTA, hSFabricanteE));
+			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_FABRICANTES_EXTRANJEROS));
 
 		});
 
