@@ -50,7 +50,7 @@ public class GUIEntrada extends JFrame implements IGUI {
 
 	private void initGUI() {
 		tEntrada = new TEntrada();
-		JLabel label = ComponentsBuilder.createLabel("Pase", 250, 30, 500, 50, Color.BLACK);
+		JLabel label = ComponentsBuilder.createLabel("Entrada", 250, 30, 500, 50, Color.BLACK);
 		this.add(label);
 
 		// ALTA ENTRADA
@@ -68,6 +68,18 @@ public class GUIEntrada extends JFrame implements IGUI {
 		this.add(bAltaEntrada);
 		
 		// BAJA ENTRADA
+		bBajaEntrada = ComponentsBuilder.createButton("Baja entrada", 407, 120, 185, 100);
+		bBajaEntrada.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIEntrada.this.setVisible(false);
+				ApplicationController.getInstance().manageRequest(new Context(Evento.BAJA_ENTRADA_VISTA, tEntrada));
+			}
+		});
+		
+		bBajaEntrada.setVisible(true);
+		this.add(bBajaEntrada);
 
 	}
 
