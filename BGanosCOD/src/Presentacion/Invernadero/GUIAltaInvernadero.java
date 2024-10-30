@@ -59,7 +59,7 @@ public class GUIAltaInvernadero extends JFrame implements IGUI {
 
 		// Titulo
 		gbc.gridwidth = 2; // Dos columnas para el t�tulo
-		JLabel msgIntro = new JLabel("Introduzca los datos del sistema de riego", JLabel.CENTER);
+		JLabel msgIntro = new JLabel("Introduzca los datos del Invernadero", JLabel.CENTER);
 		mainPanel.add(msgIntro, gbc);
 
 		// Resetear para los campos
@@ -158,7 +158,7 @@ public class GUIAltaInvernadero extends JFrame implements IGUI {
 						JOptionPane.ERROR_MESSAGE);
 				break;
 			default:
-				JOptionPane.showMessageDialog(this, "Error desconocido al modificar el sistema de riego.", "Error",
+				JOptionPane.showMessageDialog(this, "Error desconocido al modificar el Invernadero.", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
 			}
