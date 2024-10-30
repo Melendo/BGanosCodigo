@@ -13,12 +13,9 @@ public class CommandListarPlantasPorInvernadero implements Command {
 
 	public Context execute(Object datos) {
 		Set<TPlanta> res = new HashSet<> ();
-		try {
+
 			res = FactoriaNegocio.getInstance().getPlantaSA().listarPlantasPorInvernadero((Integer)datos);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		
 		if(res.size() == 1) {
 			TPlanta planta = res.iterator().next();

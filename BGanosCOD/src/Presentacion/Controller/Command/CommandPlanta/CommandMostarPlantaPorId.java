@@ -10,12 +10,9 @@ public class CommandMostarPlantaPorId implements Command {
 
 	public Context execute(Object datos) {
 		TPlanta res = new TPlanta();
-		try {
+
 			res = FactoriaNegocio.getInstance().getPlantaSA().mostrarPlantaPorId((int)datos);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		if(res.get_id() > -1) {
 			return new Context(Evento.MOSTRAR_PLANTA_POR_ID_OK, res);
 		}else {

@@ -13,12 +13,9 @@ public class CommandListarPlantasPorTipo implements Command {
 
 	public Context execute(Object datos) {
 		Set<TPlanta> res =  new HashSet<>() ;
-		try {
+
 			res = FactoriaNegocio.getInstance().getPlantaSA().listarPlantasPorTipo((String)datos);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		
 		
 		if(res.size() == 1) {

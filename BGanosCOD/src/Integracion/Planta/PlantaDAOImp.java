@@ -43,7 +43,8 @@ public class PlantaDAOImp implements PlantaDAO {
 				
 			        if(s.executeUpdate() == 0) {
 			        	s.close();
-			        	r.close(); return -1;
+			        	r.close(); 
+			        	return -1;
 			        }
 				}else if(planta instanceof TPlantaNoFrutal) {
 					s = c.prepareStatement("INSERT INTO planta_no_frutal (id, tipo_hoja) VALUES(?,?)");
@@ -76,7 +77,7 @@ public class PlantaDAOImp implements PlantaDAO {
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			
-			PreparedStatement s = c.prepareStatement("UPDATE empleado SET activo = false WHERE id = ?");
+			PreparedStatement s = c.prepareStatement("UPDATE planta SET activo = false WHERE id = ?");
 			s.setInt(1, id);
 			
 			s.executeUpdate();

@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Set;
@@ -33,6 +35,15 @@ import javax.swing.JPanel;
 public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 
 	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	
+	String seleccion = "";
 
 	public GUIListarPlantasPorTipo(Set<TPlanta> datos) {
 		super("Listar Plantas Por Tipo");
@@ -77,12 +88,28 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
  		tipoPlanta.setPreferredSize(new Dimension(250, 25));
  		paneltipo.add(tipoPlanta);
  		
- 		tipoPlanta.addItemListener(new ItemListener(){
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange() == ItemEvent.SELECTED){
-					String selected = (String) tipoPlanta.getSelectedItem();
+ 
+ 		
+ 		
+ 		
+ 		//PANEL DE LOS BOTONES
+ 		JPanel panelBotones = new JPanel();
+ 		mainPanel.add(panelBotones);
+ 		
+ 		//BOTON DE ACEPTAR
+ 		JButton botonAceptar = new JButton("Aceptar");
+ 		
+ 		
+ 		botonAceptar.addActionListener(new ActionListener() {
+ 			
+ 			@Override
+ 			public void actionPerformed(ActionEvent e) {
+ 				setVisible(false);
+ 				
+ 				try {
+ 					
+ 					String selected = (String) tipoPlanta.getSelectedItem();
+ 					
                     if (selected.equals("Frutal")) {
              
                     	
@@ -92,12 +119,14 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 
                     	ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_POR_TIPO,"No Frutal"));
                     }
-					
-					
-				}
-				
-			}
-        });
+ 			
+ 				} catch (Exception e1) {
+ 					//ApplicationController.getInstance().manageRequest(new Context(Evento.vista, -4));
+ 				}
+ 			}
+ 		});
+ 		
+ 		panelBotones.add(botonAceptar);
 
 	}
 

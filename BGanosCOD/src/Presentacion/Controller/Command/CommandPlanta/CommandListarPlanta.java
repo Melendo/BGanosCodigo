@@ -13,14 +13,13 @@ public class CommandListarPlanta implements Command {
 
 	public Context execute(Object datos) {
 		Set<TPlanta> res = new HashSet<>();
-		try {
-			 res = FactoriaNegocio.getInstance().getPlantaSA().listarPlanta();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
+		res = FactoriaNegocio.getInstance().getPlantaSA().listarPlanta();
+
+		
+		if(res.isEmpty() || res.size() == 0){return new Context(Evento.LISTAR_PLANTAS_KO,res);}
 		
 		
-		return new Context(Evento.LISTAR_PLANTAS_VISTA, res);
+		return new Context(Evento.LISTAR_PLANTAS_OK, res);
 	}
 }
