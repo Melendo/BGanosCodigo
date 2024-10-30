@@ -102,5 +102,21 @@ public class SistemaDeRiegoSATest {
 		}
 		
 	}
+	
+	@Test
+	public void bajaSistemaDeRiego(){
+		
+		try{
+			TSistemaDeRiego tSistemaRiego = getTSistemaDeRiego();
+			int idSistemaRiego = sistRiegoSA.altaSisRiego(tSistemaRiego);
+			int res = sistRiegoSA.bajaSisRiego(idSistemaRiego);
+			if(res < 0){
+				fail("Error: bajaSistemaDeRiego() no devuelve Id > 0");
+			}
+		}catch (Exception e) {
+			fail("Excepción");
+			e.printStackTrace();
+		}	
+	}
 
 }
