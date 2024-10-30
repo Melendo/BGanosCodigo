@@ -183,7 +183,7 @@ public class InvernaderoSAImp implements InvernaderoSA {
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
 			TInvernadero invernaderoExiste = daoInvernadero.mostrarInvernaderoPorID(id);
-			if (invernaderoExiste != null) {
+			if (invernaderoExiste != null && invernaderoExiste.isActivo()) {
 				invernadero = invernaderoExiste;
 				t.commit();
 			} else {
