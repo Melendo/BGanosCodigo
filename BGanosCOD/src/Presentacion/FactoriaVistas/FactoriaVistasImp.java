@@ -6,6 +6,7 @@ import Presentacion.Controller.Command.Context;
 import Presentacion.Entrada.GUIAltaEntrada;
 import Presentacion.Entrada.GUIBajaEntrada;
 import Presentacion.Entrada.GUIEntrada;
+import Presentacion.Entrada.GUILIstarEntradasPorInvernadero;
 import Presentacion.Entrada.GUIListarEntradas;
 import Presentacion.Entrada.GUIModificarEntrada;
 import Presentacion.Entrada.GUIMostrarEntrada;
@@ -93,7 +94,9 @@ public class FactoriaVistasImp extends FactoriaVistas {
             case Evento.LISTAR_ENTRADAS_VISTA:
                 vistaActual = new GUIListarEntradas((Set<TEntrada>) contexto.getDatos());
                 return vistaActual;
-             
+            case Evento.LISTAR_ENTRADAS_POR_INVERNADERO_VISTA:
+            	vistaActual = new GUILIstarEntradasPorInvernadero((Set<TEntrada>) contexto.getDatos());
+            	return vistaActual;
                 
                 
 
