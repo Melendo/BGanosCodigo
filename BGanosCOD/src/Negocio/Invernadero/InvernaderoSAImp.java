@@ -87,37 +87,6 @@ public class InvernaderoSAImp implements InvernaderoSA {
 		return exito;
 	}
 
-	public Integer desvincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
-
-	public Collection<TInvernadero> listarInvernadero() {
-		Set<TInvernadero> invernaderos = new HashSet<>();
-		Transaccion t = null;
-		try {
-			TransaccionManager transaction = TransaccionManager.getInstance();
-			t = transaction.newTransaccion();
-			t.start();
-			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
-
-			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
-			invernaderos = daoInvernadero.listarInvernadero();
-
-			t.commit();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return invernaderos;
-	}
-
-	public Collection<TInvernadero> listarInvernaderoPorSR(Integer id_sistema_riegos) {
-		return null;
-	}
-
 	public Integer modificarInvernadero(TInvernadero invernadero) {
 		if (invernadero.getId() == 0 || invernadero.getNombre().isEmpty() || invernadero.getSustrato().isEmpty()
 				|| invernadero.getTipo_iluminacion().isEmpty()) {
@@ -158,6 +127,50 @@ public class InvernaderoSAImp implements InvernaderoSA {
 		return exito;
 	}
 
+	public Collection<TInvernadero> listarInvernadero() {
+		Set<TInvernadero> invernaderos = new HashSet<>();
+		Transaccion t = null;
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+
+			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
+			invernaderos = daoInvernadero.listarInvernadero();
+
+			t.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return invernaderos;
+	}
+
+	public TInvernadero mostrarInvernaderoPorNombre(String nombre) {
+		TInvernadero invernadero = new TInvernadero();
+		invernadero.setId(-1);
+
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			Transaccion t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
+			TInvernadero invernaderoExiste = daoInvernadero.mostrarInvernaderoPorNombre(nombre);
+			if (invernaderoExiste != null) {
+				invernadero = invernaderoExiste;
+				t.commit();
+			} else {
+				t.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return invernadero;
+	}
+
 	public TInvernadero mostrarInvernaderoPorID(Integer id) {
 		TInvernadero invernadero = new TInvernadero();
 		invernadero.setId(-1);
@@ -182,6 +195,30 @@ public class InvernaderoSAImp implements InvernaderoSA {
 		return invernadero;
 	}
 
+	public Collection<TInvernadero> listarInvernaderoPorSR(Integer id_sistema_riegos) {
+
+		Set<TInvernadero> invernaderos = new HashSet<TInvernadero>();
+		Transaccion t = null;
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+
+			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
+			TSistemaDeRiego sisRiego = f.getSistemaDeRiegoDAO().mostrarSistemaDeRiegoPorID(id_sistema_riegos);
+			if (sisRiego != null && sisRiego.getActivo()) {
+				invernaderos = daoInvernadero.listarInvernaderoPorSR(id_sistema_riegos);
+				t.commit();
+			}
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		}
+		return invernaderos;
+	}
+
 	public Integer vincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero) {
 		// begin-user-code
 		// TODO Auto-generated method stub
@@ -189,28 +226,11 @@ public class InvernaderoSAImp implements InvernaderoSA {
 		// end-user-code
 	}
 
-	@Override
-	public TInvernadero mostrarInvernaderoPorNombre(String nombre) {
-		TInvernadero invernadero = new TInvernadero();
-		invernadero.setId(-1);
-
-		try {
-			TransaccionManager transaction = TransaccionManager.getInstance();
-			Transaccion t = transaction.newTransaccion();
-			t.start();
-			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
-			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
-			TInvernadero invernaderoExiste = daoInvernadero.mostrarInvernaderoPorNombre(nombre);
-			if (invernaderoExiste != null) {
-				invernadero = invernaderoExiste;
-				t.commit();
-			} else {
-				t.rollback();
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return invernadero;
+	public Integer desvincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
 	}
+
 }
