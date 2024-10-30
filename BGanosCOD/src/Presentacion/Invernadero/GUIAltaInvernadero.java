@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import Negocio.Invernadero.TInvernadero;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -114,8 +115,9 @@ public class GUIAltaInvernadero extends JFrame implements IGUI {
 					String sustrato = textSustrato.getText();
 					String iluminacion = textIluminacion.getText();
 
-					ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_INVERNADERO,
-							new TInvernadero(nombre != null ? nombre : "", sustrato != null ? sustrato : "", iluminacion != null ? iluminacion : "")));
+					ApplicationController.getInstance().manageRequest(
+							new Context(Evento.ALTA_INVERNADERO, new TInvernadero(nombre != null ? nombre : "",
+									sustrato != null ? sustrato : "", iluminacion != null ? iluminacion : "")));
 				} catch (Exception ex) {
 					// ApplicationController.getInstance().manageRequest(new Context
 					// (Evento.V_ERRORES, -4));
@@ -123,26 +125,46 @@ public class GUIAltaInvernadero extends JFrame implements IGUI {
 			}
 		});
 		panelBotones.add(botonAceptar);
-		
-		//BOTON CANCELAR
-	    JButton botonCancelar = new JButton("Cancelar");
-	    botonCancelar.addActionListener(new ActionListener() {
 
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	        	GUIAltaInvernadero.this.setVisible(false);
-	            ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_INVERNADERO_VISTA, null));
-	        }
-	    });
-	    panelBotones.add(botonCancelar);
+		// BOTON CANCELAR
+		JButton botonCancelar = new JButton("Cancelar");
+		botonCancelar.addActionListener(new ActionListener() {
 
-	    this.setVisible(true);
-	    this.setResizable(true);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIAltaInvernadero.this.setVisible(false);
+				ApplicationController.getInstance().manageRequest(new Context(Evento.INVERNADERO_VISTA, null));
+			}
+		});
+		panelBotones.add(botonCancelar);
+
+		this.setVisible(true);
+		this.setResizable(true);
 	}
 
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
+		int resultado = (int) context.getDatos();
+		if (context.getEvento() == Evento.ALTA_INVERNADERO_OK) {
 
+			JOptionPane.showMessageDialog(this, "Inventario dado de alta correctamente con id: " + resultado, "Exito",
+					JOptionPane.INFORMATION_MESSAGE);
+		} else if (context.getEvento() == Evento.ALTA_INVERNADERO_KO) {
+
+			switch (resultado) {
+			case -3:
+				JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -23:
+				JOptionPane.showMessageDialog(this, "Error: Ya existe un Invernadero con el mismo nombre.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			default:
+				JOptionPane.showMessageDialog(this, "Error desconocido al modificar el sistema de riego.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			}
+		}
 	}
 }
