@@ -48,6 +48,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 
             rs.close();
             ps.close();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

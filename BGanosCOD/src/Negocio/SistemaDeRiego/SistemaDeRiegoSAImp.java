@@ -50,10 +50,12 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 									res = daoSistRiego.modificarSistemaDeRiego(sisRiego); //Reactivar y actualizar
 									trans.commit();
 								}else{ // Existe y activo
-									res = -2; 
+									res = -2;
+									trans.rollback();
 								}
 							}else{
-								res = -511; //Fabricante no activo
+								res = -511;
+								trans.rollback();//Fabricante no activo
 							}
 							
 						}else{
@@ -72,7 +74,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 		int res = -1;
 
 	    try {
-	        // Inicializa la transacción
+	        // Inicializa la transacciï¿½n
 	        TransaccionManager transaction = TransaccionManager.getInstance();
 	        Transaccion trans = transaction.newTransaccion();
 	        trans.start();
@@ -109,7 +111,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 	        sisRiego.getCantidad_agua() == -1 || sisRiego.getPotenciaRiego() == -1 || 
 	        		sisRiego.getIdFabricante() == null || sisRiego.getId() <= 0) { 
 	    	
-	        return -3; // Error: casos vacíos 
+	        return -3; // Error: casos vacï¿½os 
 	    }
 	    
 	    int res = -1;
