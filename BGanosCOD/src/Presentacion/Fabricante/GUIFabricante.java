@@ -3,8 +3,6 @@ package Presentacion.Fabricante;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashSet;
 
 import javax.swing.JButton;
@@ -161,7 +159,5 @@ public class GUIFabricante extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
-
 	}
 }

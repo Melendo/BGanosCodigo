@@ -9,7 +9,7 @@ import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 
 public class FabricanteSAImp implements FabricanteSA {
-	
+
 	public Integer altaFabricante(TFabricante fabricante) {
 		int ret = -1;
 
@@ -17,12 +17,12 @@ public class FabricanteSAImp implements FabricanteSA {
 				|| fabricante.getTelefono().isEmpty())// faltan datos
 			return -2;
 
-		if (fabricante instanceof TFabricanteLocal || ((TFabricanteLocal) fabricante).getImpuesto() < 0
-				|| ((TFabricanteLocal) fabricante).getSubvencion() < 0)// faltan datos local
+		if (fabricante.getClass() == TFabricanteLocal.class && (((TFabricanteLocal) fabricante).getImpuesto() < 0
+				|| ((TFabricanteLocal) fabricante).getSubvencion() < 0))// faltan datos local
 			return -2;
 
-		if (((TFabricanteExtranjero) fabricante).getAranceles() < 0
-				|| ((TFabricanteExtranjero) fabricante).getPaisDeOrigen().isEmpty())// faltan datos extranjero
+		if (fabricante.getClass() == TFabricanteExtranjero.class && (((TFabricanteExtranjero) fabricante).getAranceles() < 0
+				|| ((TFabricanteExtranjero) fabricante).getPaisDeOrigen().isEmpty()))// faltan datos extranjero
 			return -2;
 
 		try {
@@ -169,70 +169,70 @@ public class FabricanteSAImp implements FabricanteSA {
 	}
 
 	public Set<TFabricante> listarFabricantes() {
-		
+
 		Set<TFabricante> listaFab = new LinkedHashSet<>();
 
-	    try {
-	   
-	        TransaccionManager tm = TransaccionManager.getInstance();
-	        Transaccion t = tm.newTransaccion();
-	        t.start();
+		try {
 
-	        FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
-	        FabricanteDAO fd = fi.getFabricanteDAO();
-	        
-	        listaFab = fd.listarFabricantes();
-	        t.commit(); 
-	        	        
-	    } catch (Exception e) {
-	        e.printStackTrace(); 
-	    }
-	    
-	    return listaFab;
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+
+			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+			FabricanteDAO fd = fi.getFabricanteDAO();
+
+			listaFab = fd.listarFabricantes();
+			t.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return listaFab;
 	}
 
 	public Set<TFabricante> listarFabricantesLocales() {
-		
+
 		Set<TFabricante> listaFab = new LinkedHashSet<>();
 
-	    try {
-	   
-	        TransaccionManager tm = TransaccionManager.getInstance();
-	        Transaccion t = tm.newTransaccion();
-	        t.start();
+		try {
 
-	        FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
-	        FabricanteDAO fd = fi.getFabricanteDAO();
-	        
-	        listaFab = fd.listarFabricantesLocales();
-	        t.commit(); 
-	        	        
-	    } catch (Exception e) {
-	        e.printStackTrace(); 
-	    }
-	    
-	    return listaFab;
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+
+			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+			FabricanteDAO fd = fi.getFabricanteDAO();
+
+			listaFab = fd.listarFabricantesLocales();
+			t.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return listaFab;
 	}
 
 	public Set<TFabricante> listarFabricantesExtranjeros() {
 		Set<TFabricante> listaFab = new LinkedHashSet<>();
 
-	    try {
-	   
-	        TransaccionManager tm = TransaccionManager.getInstance();
-	        Transaccion t = tm.newTransaccion();
-	        t.start();
+		try {
 
-	        FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
-	        FabricanteDAO fd = fi.getFabricanteDAO();
-	        
-	        listaFab = fd.listarFabricantesExtrangeros();
-	        t.commit(); 
-	        	        
-	    } catch (Exception e) {
-	        e.printStackTrace(); 
-	    }
-	    
-	    return listaFab;
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+
+			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+			FabricanteDAO fd = fi.getFabricanteDAO();
+
+			listaFab = fd.listarFabricantesExtrangeros();
+			t.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return listaFab;
 	}
 }
