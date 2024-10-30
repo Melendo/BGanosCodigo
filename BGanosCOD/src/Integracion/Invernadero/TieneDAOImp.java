@@ -122,9 +122,31 @@ public class TieneDAOImp implements TieneDAO {
 	}
 
 	public TTiene mostrarTiene(TTiene tiene) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		TTiene existe = null;
+		try {
+			TransaccionManager tManager = TransaccionManager.getInstance();
+			Transaccion t = tManager.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			PreparedStatement statement = c
+					.prepareStatement("SELECT * FROM sistema_riego_de_invernadero WHERE id_sistema_riego = ? AND id_invernadero = ? FOR UPDATE");
+			statement.setInt(1, tiene.getId_SistemasDeRiego());
+			statement.setInt(2, tiene.getId_Invernadero());
+
+
+			ResultSet result = statement.executeQuery();
+
+			if (result.next()) {
+				existe = new TTiene();
+				existe.setId_Invernadero(result.getInt("id_invernadero"));
+				existe.setId_SistemasDeRiego(result.getInt("id_sistema_riego"));
+
+			}
+
+			statement.close();
+			result.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return existe;
 	}
 }

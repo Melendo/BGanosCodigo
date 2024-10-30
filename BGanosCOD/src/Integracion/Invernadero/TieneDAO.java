@@ -15,8 +15,10 @@ public interface TieneDAO {
 	//
 	public Set<TTiene> listarTiene();
 
+	//
 	public Integer vincularInvernaderoConSisRiego(TTiene tiene);
 
+	//
 	public Integer desvincularInvernaderoConSisRiego(TTiene tiene);
 
 	//
@@ -25,5 +27,6 @@ public interface TieneDAO {
 	//
 	public Set<TTiene> mostrarTienePorSisRiego(Integer idSisRiego);
 
+	//
 	public TTiene mostrarTiene(TTiene tiene);
 }
