@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
+import Presentacion.Controller.GUIMSG;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
@@ -34,38 +35,7 @@ public class GUIMostarPlantasPorID extends JFrame implements IGUI {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JButton jButton;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JPanel jPanel;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	
 	
 
 	public GUIMostarPlantasPorID() {
@@ -89,7 +59,7 @@ public class GUIMostarPlantasPorID extends JFrame implements IGUI {
 	    this.setVisible(true);
 	    mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 	    
-	    JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("BAJA PLANTA", 1, 10, 80, 20, Color.BLACK);
+	    JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("MOSTRAR PLANTA", 1, 10, 80, 20, Color.BLACK);
 	    msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
 	    mainPanel.add(msgIntroIDCabecera);
 
@@ -99,8 +69,6 @@ public class GUIMostarPlantasPorID extends JFrame implements IGUI {
 
 	    mainPanel.add(panelID);
 
- 		
- 		
  		
  		JLabel labelID = ComponentsBuilder.createLabel("ID de la planta: ", 10, 100, 80, 20,Color.BLACK);
  		panelID.add(labelID);
@@ -119,17 +87,19 @@ public class GUIMostarPlantasPorID extends JFrame implements IGUI {
  			
  			@Override
  			public void actionPerformed(ActionEvent e) {
- 				setVisible(false);
+ 				
  				
  				try {
+ 				
  					
  					int idtmp = Integer.parseInt(textID.getText());
  		
  						
  						ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_PLANTA_POR_ID,idtmp));
- 			
+ 						setVisible(false);
+ 						System.out.println(textID.getText());
  				} catch (Exception e1) {
- 					//ApplicationController.getInstance().manageRequest(new Context(Evento.vista, -4));
+ 					GUIMSG.showMessage("Formato incorrecto", "MOSTRAR PLANTA", true);
  				}
  			}
  		});
@@ -143,13 +113,13 @@ public class GUIMostarPlantasPorID extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		switch(context.getEvento()) {
 		case Evento.MOSTRAR_PLANTA_POR_ID_KO:
-		
+			GUIMSG.showMessage("No se encontro la planta", "MOSTRAR PLANTA", true);
 			break;
 		case  Evento.MOSTRAR_PLANTA_POR_ID_OK:
-		
+			GUIMSG.showMessage(context.getDatos().toString(), "MOSTRAR PLANTA", false);
 			break;
 		default:
-			
+			GUIMSG.showMessage("ERROR INESPERADO", "MOSTRAR PLANTA", true);
 			break;
 		}
 	}

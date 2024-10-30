@@ -1,6 +1,7 @@
 package Negocio.Planta;
 
 import java.util.HashSet;
+
 import java.util.Set;
 
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
@@ -12,183 +13,132 @@ import Negocio.Invernadero.TInvernadero;
 
 public class PlantaSAImp implements PlantaSA {
 
-	public Integer altaPlanta(TPlanta planta) throws Exception {
-		
-		TransaccionManager manager = TransaccionManager.getInstance();
-		Transaccion trans = manager.newTransaccion();
-		FactoriaIntegracion integracion = FactoriaIntegracion.getInstance();
-		PlantaDAO daoP = integracion.getPlantaDAO();
-		
-		trans.start();
+	public Integer altaPlanta(TPlanta planta) {
+		int exito = -1;
+		Transaccion t = null;
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 
-		int resp = daoP.altaPlanta(planta);
 			
-		if(resp > 0){
-			trans.commit();
-		}
-		else{trans.rollback();}
-
-		
-		return resp;
-	}
-
-	public Integer bajaPlanta(Integer id) throws Exception {
-		TransaccionManager manager = TransaccionManager.getInstance();
-		Transaccion trans = manager.newTransaccion();
-		FactoriaIntegracion integracion = FactoriaIntegracion.getInstance();
-		PlantaDAO daoP = integracion.getPlantaDAO();
-		
-		trans.start();
-		
-		TPlanta tmp = daoP.mostrarPorId(id);
-		
-		if(tmp != null ){
+			InvernaderoDAO daoinv = f.getInvernaderoDAO();
+			PlantaDAO dao = f.getPlantaDAO();
 			
-			if(tmp.getActivo()){
-				int resp = daoP.bajaPlanta(id);
+			
+			TInvernadero inv = daoinv.mostrarInvernaderoPorID(planta.get_id_invernadero());
+			
+			if(inv == null || !inv.isActivo()){
 				
-				if(resp > 0){
-					trans.commit();
-					return resp;
-				}
-				else{ 
-					trans.rollback();
-				}
-				
-	
-			}
+				exito = -1;
+				t.rollback();
+			} 
 			else{
-				trans.rollback();
+			
+			
+			exito = dao.altaPlanta(planta);
+			
+			if(exito>-1) {t.commit();}
+			else {t.rollback();}
+			
+			} 
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exito;
+	}
+
+	public Integer bajaPlanta(Integer id) {
+		int exito = -1;
+		Transaccion t = null;
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+
+			PlantaDAO dao = f.getPlantaDAO();
+			
+
+			TPlanta p = dao.mostrarPorId(id);
+			
+			if(p == null || !p.getActivo()) {
+				t.rollback();
+				exito = -2;
+			}
+			else {
+				exito = dao.bajaPlanta(id);
+				
+				
+				if(exito>-1) {t.commit();}
+				else {t.rollback();}
 			}
 			
-			
+		
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		else{
-			trans.rollback();
-		}
+		return exito;
+	}
+
+	public Integer modificarPlanta(TPlanta planta)  {
 		
-		
-		
-		
+
 		return -1;
 	}
 
-	public Integer modificarPlanta(TPlanta planta) throws Exception {
-
-		TransaccionManager manager = TransaccionManager.getInstance();
-		Transaccion trans = manager.newTransaccion();
-		FactoriaIntegracion integracion = FactoriaIntegracion.getInstance();
-		PlantaDAO daoP = integracion.getPlantaDAO();
-		
-		trans.start();
-		
-		
-		TPlanta tmp = daoP.mostrarPorId(planta.get_id());
-		
-		if(tmp == null){
-			trans.rollback();
-			
-		}
-		else{
-			
-		int resp = daoP.modificarPlanta(planta);
-		trans.commit();
-		return resp;
-		}
-		return -1;
-	}
-
-	public Set<TPlanta> listarPlanta() throws Exception {
-		TransaccionManager manager = TransaccionManager.getInstance();
-		Transaccion trans = manager.newTransaccion();
-		FactoriaIntegracion integracion = FactoriaIntegracion.getInstance();
-		PlantaDAO daoP = integracion.getPlantaDAO();
-		
-		trans.start();
-		
-		Set<TPlanta> tmp = daoP.listarPlantas();
-		
-		if(tmp == null){
-			trans.rollback();
-			return new HashSet<>();
-		}
-		else{
-			trans.commit();
-			return tmp;
-		}
+	public Set<TPlanta> listarPlanta()  {
+return null;
 		
 	}
 
-	public TPlanta mostrarPlantaPorId(Integer id) throws Exception {
-		TransaccionManager manager = TransaccionManager.getInstance();
-		Transaccion trans = manager.newTransaccion();
-		FactoriaIntegracion integracion = FactoriaIntegracion.getInstance();
-		PlantaDAO daoP = integracion.getPlantaDAO();
+	public TPlanta mostrarPlantaPorId(Integer id) {
+		Transaccion t = null;
+		TPlanta p = null;
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+
+			PlantaDAO dao = f.getPlantaDAO();
+			
+
+			p = dao.mostrarPorId(id);
+			
+			if(p == null ) {
+				t.rollback();
+				
+			}
+			else {
+			
+				
+				t.commit();
+				
+			}
+			
 		
-		trans.start();
-		
-		
-		TPlanta tmp = daoP.mostrarPorId(id);
-		
-		if(tmp == null){
-			trans.rollback();
-			return new TPlanta();
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		else{
-			trans.commit();
-			return tmp;
-		}
+		
+		
+		return p;
 	}
 
-	public Set<TPlanta> listarPlantasPorTipo(String tipo) throws Exception {
+	public Set<TPlanta> listarPlantasPorTipo(String tipo)  {
 		
-		TransaccionManager manager = TransaccionManager.getInstance();
-		Transaccion trans = manager.newTransaccion();
-		FactoriaIntegracion integracion = FactoriaIntegracion.getInstance();
-		PlantaDAO daoP = integracion.getPlantaDAO();
-		
-		trans.start();
-		int t = 1;
-		
-		if(tipo == "Frutal"){t = 0;}
-		
-		Set<TPlanta> tmp = daoP.mostrarPorTipo(t);
-		
-		if(tmp == null){
-			trans.rollback();
-			return new HashSet<>() ;
-		}
-		else {
-			trans.commit();
-			return tmp ;
-		}
 
+return null;
 	}
 
-	public Set<TPlanta> listarPlantasPorInvernadero(Integer id_invernadero) throws Exception {
+	public Set<TPlanta> listarPlantasPorInvernadero(Integer id_invernadero) {
 		
-		TransaccionManager manager = TransaccionManager.getInstance();
-		Transaccion trans = manager.newTransaccion();
-		FactoriaIntegracion integracion = FactoriaIntegracion.getInstance();
-		PlantaDAO daoP = integracion.getPlantaDAO();
-		InvernaderoDAO daoI = integracion.getInvernaderoDAO();
-		
-		trans.start();
-		
-		TInvernadero inv = daoI.mostrarInvernaderoPorID(id_invernadero);
-		
-		if(inv == null || !inv.isActivo()){
-			
-			trans.rollback();
-			return new HashSet<>() ;
-			
-		}
-		else{
-			Set<TPlanta> tmp = daoP.MostrarPorInvernadero(id_invernadero);
-			trans.commit();
-			return tmp;
-			
-		}
-		
+
+		return null;
 	}
 }

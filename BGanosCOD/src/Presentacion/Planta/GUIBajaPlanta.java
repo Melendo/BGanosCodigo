@@ -103,7 +103,7 @@ public class GUIBajaPlanta extends JFrame implements IGUI {
  						ApplicationController.getInstance().manageRequest(new Context(Evento.BAJA_PLANTA,idtmp));
  			
  				} catch (Exception e1) {
- 					//ApplicationController.getInstance().manageRequest(new Context(Evento.vista, -4));
+ 					GUIMSG.showMessage("Formato incorrecto", "BAJA PLANTA", true);
  				}
  			}
  		});
@@ -118,10 +118,10 @@ public class GUIBajaPlanta extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		switch(context.getEvento()) {
 		case Evento.BAJA_PLANTA_OK:
-			GUIMSG.showMessage("Planta dado de baja con ID: " + context.getDatos().toString(), "BAJA PLANTA", false);
+			GUIMSG.showMessage("Planta dado de baja correctamente", "BAJA PLANTA", false);
 			break;
 		case  Evento.BAJA_PLANTA_KO:
-			GUIMSG.showMessage("Planta NO se pudo dar de baja con ID: " + context.getDatos().toString(), "BAJA PLANTA", true);
+			GUIMSG.showMessage("Planta NO se pudo dar de baja", "BAJA PLANTA", true);
 			break;
 		default:
 			GUIMSG.showMessage("ERROR INESPERADO", "BAJA PLANTA", true);
