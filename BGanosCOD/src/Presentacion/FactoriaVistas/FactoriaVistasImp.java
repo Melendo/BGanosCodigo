@@ -206,7 +206,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
                     vistaActual = new GUIMostarPlantasPorID();
                     return vistaActual;
                 case Evento.LISTAR_PLANTAS_VISTA:
-                    vistaActual = new GUIListarPlantas((Set<TPlanta>) contexto.getDatos()); 
+                    vistaActual = new GUIListarPlantas(); 
                     return vistaActual;
                 case Evento.LISTAR_PLANTAS_POR_TIPO_VISTA:
                     vistaActual = new GUIListarPlantasPorTipo((Set<TPlanta>) contexto.getDatos()); 

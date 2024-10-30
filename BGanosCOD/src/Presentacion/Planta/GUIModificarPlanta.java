@@ -4,6 +4,8 @@
 package Presentacion.Planta;
 
 import javax.swing.JFrame;
+
+import Presentacion.Controller.GUIMSG;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
@@ -13,73 +15,30 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
-public class GUIModificarPlanta extends JFrame implements IGUI {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JButton jButton;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JPanel jPanel;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	public Void initGUI() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+public class GUIModificarPlanta extends JFrame implements IGUI {
+
+	private static final long serialVersionUID = 1L;
+
+	public void initGUI() {
+
+		
+	
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see IGUI#actualizar(Context context)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 
 
 	@Override
 	public void actualizar(Context context) {
 		switch(context.getEvento()) {
 		case Evento.MODIFICAR_PLANTA_OK:
-		
+			GUIMSG.showMessage("Se realizo la modificacion correctamente", "LISTAR PLANTAS", false);
 			break;
 		case  Evento.MODIFICAR_PLANTA_KO:
-		
+			GUIMSG.showMessage("No se pudo realizar la modificacion", "MODIFICAR PLANTAS", true);
 			break;
 		default:
-			
+			GUIMSG.showMessage("ERROR INESPERADO", "LISTAR PLANTAS", true);
 			break;
 		
 	}
