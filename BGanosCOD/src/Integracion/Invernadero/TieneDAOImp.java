@@ -3,21 +3,20 @@
  */
 package Integracion.Invernadero;
 
+import Negocio.Invernadero.TInvernadero;
 import Negocio.Invernadero.TTiene;
 import java.util.Set;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
+import Integracion.Transaction.Transaccion;
+import Integracion.Transaction.TransaccionManager;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.HashSet;
+
 public class TieneDAOImp implements TieneDAO {
-	/** 
-	* (non-Javadoc)
-	* @see TieneDAO#altaTiene(TTiene tiene)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	public Integer altaTiene(TTiene tiene) {
 		// begin-user-code
 		// TODO Auto-generated method stub
@@ -25,11 +24,6 @@ public class TieneDAOImp implements TieneDAO {
 		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see TieneDAO#bajaTiene(Integer idInvernadero, Integer idSisRiego)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Integer bajaTiene(Integer idInvernadero, Integer idSisRiego) {
 		// begin-user-code
 		// TODO Auto-generated method stub
@@ -37,71 +31,96 @@ public class TieneDAOImp implements TieneDAO {
 		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see TieneDAO#listarTiene()
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Set<TTiene> listarTiene() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TTiene> tienen = new HashSet<TTiene>();
+		try {
+			TransaccionManager tManager = TransaccionManager.getInstance();
+			Transaccion t = tManager.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			PreparedStatement statement = c.prepareStatement("SELECT * FROM sistema_riego_de_invernadero FOR UPDATE");
+
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				TTiene tiene = new TTiene();
+				tiene.setId_Invernadero(result.getInt("id_invernadero"));
+				tiene.setId_SistemasDeRiego(result.getInt("id_sistema_riego"));
+
+				tienen.add(tiene);
+			}
+
+			statement.close();
+			result.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tienen;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see TieneDAO#vincularInvernaderoConSisRiego(TTiene tiene)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Integer vincularInvernaderoConSisRiego(TTiene tiene) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return altaTiene(tiene);
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see TieneDAO#desvincularInvernaderoConSisRiego(TTiene tiene)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Integer desvincularInvernaderoConSisRiego(TTiene tiene) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return bajaTiene(tiene.getId_Invernadero(), tiene.getId_SistemasDeRiego());
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see TieneDAO#mostrarTienePorInvernadero(Integer idInvernadero)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Set<TTiene> mostrarTienePorInvernadero(Integer idInvernadero) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TTiene> tienen = new HashSet<TTiene>();
+		try {
+			TransaccionManager tManager = TransaccionManager.getInstance();
+			Transaccion t = tManager.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			PreparedStatement statement = c
+					.prepareStatement("SELECT * FROM sistema_riego_de_invernadero WHERE id_invernadero = ? FOR UPDATE");
+			statement.setInt(1, idInvernadero);
+
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				TTiene tiene = new TTiene();
+				tiene.setId_Invernadero(result.getInt("id_invernadero"));
+				tiene.setId_SistemasDeRiego(result.getInt("id_sistema_riego"));
+
+				tienen.add(tiene);
+			}
+
+			statement.close();
+			result.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tienen;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see TieneDAO#mostrarTienePorSisRiego(Integer idSisRiego)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Set<TTiene> mostrarTienePorSisRiego(Integer idSisRiego) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TTiene> tienen = new HashSet<TTiene>();
+		try {
+			TransaccionManager tManager = TransaccionManager.getInstance();
+			Transaccion t = tManager.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			PreparedStatement statement = c
+					.prepareStatement("SELECT * FROM sistema_riego_de_invernadero WHERE id_sistema_riego = ? FOR UPDATE");
+			statement.setInt(1, idSisRiego);
+
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				TTiene tiene = new TTiene();
+				tiene.setId_Invernadero(result.getInt("id_invernadero"));
+				tiene.setId_SistemasDeRiego(result.getInt("id_sistema_riego"));
+
+				tienen.add(tiene);
+			}
+
+			statement.close();
+			result.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tienen;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see TieneDAO#mostrarTiene(TTiene tiene)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public TTiene mostrarTiene(TTiene tiene) {
 		// begin-user-code
 		// TODO Auto-generated method stub
