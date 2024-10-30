@@ -36,7 +36,7 @@ public class FacturaDAOImp implements FacturaDAO {
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c.prepareStatement(
-					"INSERT INTO factura(precio_total ,fecha_compra) VALUES (?,NOW())", Statement.RETURN_GENERATED_KEYS);
+					"INSERT INTO factura(precio_total ,fecha_compra, activo) VALUES (?,NOW(), true)", Statement.RETURN_GENERATED_KEYS);
 			statement.setFloat(1, tfactura.getPrecioTotal());
 			statement.executeUpdate();
 			ResultSet result = statement.getGeneratedKeys();

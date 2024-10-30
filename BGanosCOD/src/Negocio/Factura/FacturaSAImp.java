@@ -36,11 +36,11 @@ public class FacturaSAImp implements FacturaSA {
 			FactoriaIntegracion fDAO = FactoriaIntegracion.getInstance();
 			if(!carrito.getLineasFactura().isEmpty())
 			{
-				EntradaDAO daoPase = fDAO.getEntradaDAO();
+				EntradaDAO daoEntrada = fDAO.getEntradaDAO();
 				float precio_total = 0;
 				for(TLineaFactura lineaFact : carrito.getLineasFactura())
 				{
-					TEntrada entrada = daoPase.mostrarEntrada(lineaFact.getidEntrada());
+					TEntrada entrada = daoEntrada.mostrarEntrada(lineaFact.getidEntrada());
 					if(entrada != null)
 					{
 						if(entrada.getActivo())
@@ -48,7 +48,7 @@ public class FacturaSAImp implements FacturaSA {
 							if(lineaFact.getCantidad() <= entrada.getStock())
 							{
 								entrada.setStock(entrada.getStock() - lineaFact.getCantidad());
-								daoPase.modificarEntrada(entrada);
+								daoEntrada.modificarEntrada(entrada);
 								//Calculamos el precio de la linea Factura y actualizamos en la linea Factura
 								float precio_lineaF = lineaFact.getCantidad() * entrada.getPrecio();
 								lineaFact.setPrecio(precio_lineaF);
@@ -57,20 +57,20 @@ public class FacturaSAImp implements FacturaSA {
 							else
 							{
 								t.rollback();
-								return -1;//60 No hay cantidad disponible del pase
+								return -1;
 							}
 								
 						}
 						else
 						{
 							t.rollback();
-							return -1; //61 Este pase no esta activo
+							return -1;
 						}
 					}
 					else
 					{
 						t.rollback();
-						return -1; //62 Pase no existe
+						return -1;
 					}
 				}
 				FacturaDAO daoFactura = fDAO.getFacturaDAO();
@@ -237,15 +237,14 @@ public class FacturaSAImp implements FacturaSA {
 			{
 				if(factura.getActivo())
 				{	
-					EntradaDAO daoPase = fDAO.getEntradaDAO();
-					TEntrada entrada = daoPase.mostrarEntrada(tlineaFactura.getidEntrada());
+					EntradaDAO daoEntrada = fDAO.getEntradaDAO();
+					TEntrada entrada = daoEntrada.mostrarEntrada(tlineaFactura.getidEntrada());
 					if(entrada != null)
 					{
 						LineaFacturaDAO daoLF = fDAO.getDAOLineaFactura();
 						TLineaFactura lf = daoLF.mostrarLineaFactura(tlineaFactura.getidFactura(), tlineaFactura.getidEntrada());
 						if(lf != null)
 						{
-							//Comprobamos que la cantidad a devolver no es superior a la cantidad que tenia la factura
 							if(lf.getCantidad() < tlineaFactura.getCantidad()){
 								t.rollback();
 								return -75; 
@@ -253,13 +252,12 @@ public class FacturaSAImp implements FacturaSA {
 							if(!entrada.getActivo())
 								entrada.setActivo(true);
 							entrada.setStock(entrada.getStock() + tlineaFactura.getCantidad());
-							r = daoPase.modificarEntrada(entrada);
+							r = daoEntrada.modificarEntrada(entrada);
 							if(r < 0)
 							{
 								t.rollback();
-								return -68;//68 Error al modificar pase
+								return -68;
 							}
-							//Si la factura pasa a tener un precioTotal = 0, la pasamos a dar de baja
 							factura.setPrecioTotal(factura.getPrecioTotal() - (tlineaFactura.getCantidad() * entrada.getPrecio()));
 							if(factura.getPrecioTotal() == 0)
 								factura.setActivo(false);
@@ -267,12 +265,9 @@ public class FacturaSAImp implements FacturaSA {
 							if(r < 0)
 							{
 								t.rollback();
-								return -67; //67 Error al modificar factura
+								return -67;
 							}
-							//Se comprueba si se devuelve toda la linea factura o no
-							//Actualizamos la cantidad
 							lf.setCantidad(lf.getCantidad() - tlineaFactura.getCantidad());
-							//Actualizamos el precio de la linea Factura
 							lf.setPrecio(lf.getPrecio() - ((tlineaFactura.getCantidad() * entrada.getPrecio())));
 							r = daoLF.modificarLineaFactura(lf);
 							if(r < 0)

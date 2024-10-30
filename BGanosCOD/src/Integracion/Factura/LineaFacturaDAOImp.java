@@ -31,7 +31,7 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 	public Integer crearLineaFactura(TLineaFactura lineaFactura) {
 		try {
 			Connection c = (Connection) TransaccionManager.getInstance().getTransaccion().getResource();
-			PreparedStatement statement = c.prepareStatement("INSERT INTO lineafactura (id_factura, id_pase, cantidad, precio) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement statement = c.prepareStatement("INSERT INTO linea_factura (id_factura, id_entrada, cantidad, precio) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, lineaFactura.getidFactura());
 			statement.setInt(2, lineaFactura.getidEntrada());
 			statement.setInt(3, lineaFactura.getCantidad());
@@ -59,12 +59,12 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 		TLineaFactura lineaFactura = null;
 		try {
 			Connection c = (Connection) TransaccionManager.getInstance().getTransaccion().getResource();
-			PreparedStatement statement = c.prepareStatement("DELETE FROM lineafactura WHERE id_factura = ? AND id_pase = ?", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement statement = c.prepareStatement("DELETE FROM linea_factura WHERE id_factura = ? AND id_entrada = ?", Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, idFactura);
 			statement.setInt(2, idEntrada);
 			int affectedRows = statement.executeUpdate();
 			
-			statement = c.prepareStatement("SELECT * FROM lineafactura WHERE id_factura = ? AND id_pase = ? FOR UPDATE", Statement.RETURN_GENERATED_KEYS);
+			statement = c.prepareStatement("SELECT * FROM linea_factura WHERE id_factura = ? AND id_entrada = ? FOR UPDATE", Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, idFactura);
 			statement.setInt(2, idEntrada);
 			ResultSet result = statement.executeQuery();
@@ -95,7 +95,7 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 	public Integer modificarLineaFactura(TLineaFactura tlineaFactura) {
 		try {
 			Connection c = (Connection) TransaccionManager.getInstance().getTransaccion().getResource();
-			PreparedStatement statement = c.prepareStatement("UPDATE lineafactura SET cantidad = ?, precio = ? WHERE id_factura = ? AND id_pase = ?", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement statement = c.prepareStatement("UPDATE linea_factura SET cantidad = ?, precio = ? WHERE id_factura = ? AND id_entrada = ?", Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, tlineaFactura.getCantidad());
 			statement.setFloat(2, tlineaFactura.getPrecio());
 			statement.setInt(3, tlineaFactura.getidFactura());
@@ -123,7 +123,7 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 		TLineaFactura lineafactura = null;
 		try {
 			Connection c = (Connection) TransaccionManager.getInstance().getTransaccion().getResource();
-			PreparedStatement statement = c.prepareStatement("SELECT * FROM lineafactura WHERE id_factura = ? AND id_pase = ? FOR UPDATE", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement statement = c.prepareStatement("SELECT * FROM linea_factura WHERE id_factura = ? AND id_entrada = ? FOR UPDATE", Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, idFactura);
 			statement.setInt(2, idEntrada);
 			ResultSet result = statement.executeQuery();
@@ -153,18 +153,18 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 
 		try {
 			Connection c = (Connection) TransaccionManager.getInstance().getTransaccion().getResource();
-			PreparedStatement statement = c.prepareStatement("SELECT * FROM lineafactura");
+			PreparedStatement statement = c.prepareStatement("SELECT * FROM linea_factura");
 			ResultSet result = statement.executeQuery();
 			lineasfactura = new HashSet<TLineaFactura>();
 			
 			while (result.next()) {
 				Integer idF = result.getInt(1);
-				Integer idP = result.getInt(2);
+				Integer idE = result.getInt(2);
 				Integer cant = result.getInt(3);
 				Float pre = result.getFloat(4);
 				TLineaFactura f = new TLineaFactura();
 				f.setidFactura(idF);
-				f.setidEntrada(idP);
+				f.setidEntrada(idE);
 				f.setCantidad(cant);
 				f.setPrecio(pre);
 				lineasfactura.add(f);
@@ -189,19 +189,19 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 
 		try {
 			Connection c = (Connection) TransaccionManager.getInstance().getTransaccion().getResource();
-			PreparedStatement statement = c.prepareStatement("SELECT * FROM lineafactura WHERE id_factura = ? FOR UPDATE", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement statement = c.prepareStatement("SELECT * FROM linea_factura WHERE id_factura = ? FOR UPDATE", Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, idFactura);
 			ResultSet result = statement.executeQuery();
 			lineasfactura = new HashSet<TLineaFactura>();
 			
 			while (result.next()) {
 				Integer idF = result.getInt(1);
-				Integer idP = result.getInt(2);
+				Integer idE = result.getInt(2);
 				Integer cant = result.getInt(3);
 				Float pre = result.getFloat(4);
 				TLineaFactura f = new TLineaFactura();
 				f.setidFactura(idF);
-				f.setidEntrada(idP);
+				f.setidEntrada(idE);
 				f.setCantidad(cant);
 				f.setPrecio(pre);
 				lineasfactura.add(f);
