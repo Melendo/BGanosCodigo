@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -138,11 +139,10 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUICerrarFactura.this.setVisible(false);
 				try {
 					
 					if(id.getText().isEmpty() || cantidadtxt.getText().isEmpty()){
-		    			ApplicationController.getInstance().manageRequest(new Context (Evento.ABRIR_FACTURA_KO, -1));
+		    			ApplicationController.getInstance().manageRequest(new Context (Evento.ABRIR_FACTURA_KO, -2));
 					}
 					else{
 						int idEntrada = Integer.parseInt(id.getText());
@@ -162,6 +162,7 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 	                    if(!modificacionLineaFactura)
 	                        lineaFacturas.add(lineaFactura);
 	                    tCarrito.setLineaFactura(lineaFacturas);
+	                    GUICerrarFactura.this.setVisible(false);
 	                    ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_FACTURA_VISTA, tCarrito));
 					}
 					
@@ -216,9 +217,7 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUICerrarFactura.this.setVisible(false);
 				try {
-					
 					if(idOut.getText().isEmpty() || cantidadOuttxt.getText().isEmpty()){
 		    			ApplicationController.getInstance().manageRequest(new Context (Evento.CERRAR_FACTURA_KO, -1));
 					}
@@ -251,6 +250,7 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 			    			ApplicationController.getInstance().manageRequest(new Context (Evento.CERRAR_FACTURA_KO, -3));
 	                    }
 	                    else{
+	                    	GUICerrarFactura.this.setVisible(false);
 	                        tCarrito.setLineaFactura(lineaFacturas);
 	                        ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_FACTURA_VISTA, tCarrito));
 	                    }
@@ -306,7 +306,6 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUICerrarFactura.this.setVisible(false);
 				tCarrito.setFactura(factura);
 	            ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_FACTURA, tCarrito));
 			}
@@ -324,11 +323,23 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		if (context.getEvento() == Evento.CERRAR_FACTURA_OK) {			
-			ApplicationController.getInstance().manageRequest(new Context (Evento.CERRAR_FACTURA_OK, (int) context.getDatos()));
-		} else if (context.getEvento() == Evento.CERRAR_FACTURA_KO) {
-			ApplicationController.getInstance().manageRequest(new Context (Evento.CERRAR_FACTURA_KO, (int) context.getDatos()));
-		}
-		dispose();
+		int resultado = (int) context.getDatos();
+        if (context.getEvento() == Evento.CERRAR_FACTURA_OK) {
+        	
+            JOptionPane.showMessageDialog(this, "Factura creada correctamente con id: " + resultado , "�xito", JOptionPane.INFORMATION_MESSAGE);
+        } else if (context.getEvento() == Evento.CERRAR_FACTURA_KO) {
+        	
+            switch (resultado) {
+            case -1:
+                JOptionPane.showMessageDialog(this, "Se ha producido un error en negocio", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            case -2:
+                JOptionPane.showMessageDialog(this, "Datos incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Error desconocido al cerrar la factura.", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            }
+        }
 	}
 }
