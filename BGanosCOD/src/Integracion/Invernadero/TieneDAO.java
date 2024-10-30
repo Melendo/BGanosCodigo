@@ -8,8 +8,10 @@ import java.util.Set;
 
 public interface TieneDAO {
 
+	//
 	public Integer altaTiene(TTiene tiene);
 
+	//
 	public Integer bajaTiene(Integer idInvernadero, Integer idSisRiego);
 
 	//

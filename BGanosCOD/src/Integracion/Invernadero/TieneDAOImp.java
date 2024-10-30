@@ -13,22 +13,59 @@ import Integracion.Transaction.TransaccionManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.HashSet;
 
 public class TieneDAOImp implements TieneDAO {
 
 	public Integer altaTiene(TTiene tiene) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		int exito = -1;
+
+		try {
+			TransaccionManager tManager = TransaccionManager.getInstance();
+			Transaccion t = tManager.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			PreparedStatement statement = c.prepareStatement(
+					"INSERT INTO sistemas_riego_de_invernadero(id_invernadero, id_sistema_riego) VALUES (?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
+
+			statement.setInt(1, tiene.getId_Invernadero());
+			statement.setInt(2, tiene.getId_SistemasDeRiego());
+
+			if (statement.executeUpdate() != 0) {
+				exito = tiene.getId_Invernadero();
+			}
+
+			statement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exito;
 	}
 
 	public Integer bajaTiene(Integer idInvernadero, Integer idSisRiego) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		int exito = -1;
+
+		try {
+			TransaccionManager tManager = TransaccionManager.getInstance();
+			Transaccion t = tManager.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			PreparedStatement statement = c.prepareStatement(
+					"DELETE FROM sistemas_riego_de_invernadero WHERE id_invernadero = ? AND id_sistema_riego = ?",
+					Statement.RETURN_GENERATED_KEYS);
+
+			statement.setInt(1, idInvernadero);
+			statement.setInt(2, idSisRiego);
+
+			if (statement.executeUpdate() != 0) {
+				exito = idInvernadero;
+			}
+
+			statement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exito;
 	}
 
 	public Set<TTiene> listarTiene() {
@@ -99,8 +136,8 @@ public class TieneDAOImp implements TieneDAO {
 			TransaccionManager tManager = TransaccionManager.getInstance();
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
-			PreparedStatement statement = c
-					.prepareStatement("SELECT * FROM sistema_riego_de_invernadero WHERE id_sistema_riego = ? FOR UPDATE");
+			PreparedStatement statement = c.prepareStatement(
+					"SELECT * FROM sistema_riego_de_invernadero WHERE id_sistema_riego = ? FOR UPDATE");
 			statement.setInt(1, idSisRiego);
 
 			ResultSet result = statement.executeQuery();
@@ -127,11 +164,10 @@ public class TieneDAOImp implements TieneDAO {
 			TransaccionManager tManager = TransaccionManager.getInstance();
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
-			PreparedStatement statement = c
-					.prepareStatement("SELECT * FROM sistema_riego_de_invernadero WHERE id_sistema_riego = ? AND id_invernadero = ? FOR UPDATE");
+			PreparedStatement statement = c.prepareStatement(
+					"SELECT * FROM sistema_riego_de_invernadero WHERE id_sistema_riego = ? AND id_invernadero = ? FOR UPDATE");
 			statement.setInt(1, tiene.getId_SistemasDeRiego());
 			statement.setInt(2, tiene.getId_Invernadero());
-
 
 			ResultSet result = statement.executeQuery();
 
