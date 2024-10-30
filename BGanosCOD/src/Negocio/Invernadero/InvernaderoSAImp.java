@@ -69,7 +69,7 @@ public class InvernaderoSAImp implements InvernaderoSA {
 				Set<TEntrada> entradasActivas = f.getEntradaDAO().listarEntradasPorInvernadero(id);
 				Set<TSistemaDeRiego> sisRiegoActivos = f.getSistemaDeRiegoDAO().listarSistemaDeRiegoInvernadero(id);
 				Set<TPlanta> plantasActivas = f.getPlantaDAO().MostrarPorInvernadero(id);
-				if (entradasActivas.size() != 0 && sisRiegoActivos.size() != 0 && plantasActivas.size() != 0) {
+				if (entradasActivas.size() == 0 && sisRiegoActivos.size() == 0 && plantasActivas.size() == 0) {
 					exito = daoInvernadero.bajaInvernadero(id);
 					t.commit();
 				} else {
