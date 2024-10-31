@@ -211,6 +211,11 @@ public class InvernaderoSAImp implements InvernaderoSA {
 			if (sisRiego != null && sisRiego.getActivo()) {
 				invernaderos = daoInvernadero.listarInvernaderoPorSR(id_sistema_riegos);
 				t.commit();
+			}else {
+				TInvernadero inv = new TInvernadero();
+				inv.setId(-1);
+				invernaderos.add(inv);
+				t.rollback();
 			}
 		} catch (
 

@@ -189,8 +189,11 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			TransaccionManager tManager = TransaccionManager.getInstance();
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
-			PreparedStatement statement = c.prepareStatement("SELECT in.* " + "FROM sistemas_riego_de_invernadero sri "
-					+ "JOIN invernadero in ON sri.id_invernadero = in.id " + "WHERE sri.id_sistema_riego = ?");
+			PreparedStatement statement = c.prepareStatement(
+					"SELECT inv.* "
+						    + "FROM sistemas_riego_de_invernadero sri "
+						    + "JOIN invernadero inv ON sri.id_invernadero = inv.id "
+						    + "WHERE sri.id_sistema_riego = ?");
 
 			statement.setInt(1, id_sistema_de_riego);
 			ResultSet result = statement.executeQuery();
