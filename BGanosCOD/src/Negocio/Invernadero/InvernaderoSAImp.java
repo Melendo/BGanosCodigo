@@ -286,8 +286,9 @@ public class InvernaderoSAImp implements InvernaderoSA {
 						nuevoTiene.setId_Invernadero(id_invernadero);
 						nuevoTiene.setId_SistemasDeRiego(id_sistema_riego);
 						TieneDAO daoT = f.getDaoTiene();
-						if (daoT.mostrarTiene(nuevoTiene) == null) {
+						if (daoT.mostrarTiene(nuevoTiene) != null) {
 							exito = daoT.desvincularInvernaderoConSisRiego(nuevoTiene);
+							t.commit();
 						} else {
 							exito = -5;
 							t.rollback();
