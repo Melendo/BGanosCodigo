@@ -161,7 +161,7 @@ public class TieneDAOImp implements TieneDAO {
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c.prepareStatement(
-					"SELECT * FROM sistema_riego_de_invernadero WHERE id_sistema_riego = ? AND id_invernadero = ? FOR UPDATE");
+					"SELECT * FROM sistemas_riego_de_invernadero WHERE id_sistema_riego = ? AND id_invernadero = ? FOR UPDATE");
 			statement.setInt(1, tiene.getId_SistemasDeRiego());
 			statement.setInt(2, tiene.getId_Invernadero());
 

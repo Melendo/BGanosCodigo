@@ -247,6 +247,7 @@ public class InvernaderoSAImp implements InvernaderoSA {
 						TieneDAO daoT = f.getDaoTiene();
 						if (daoT.mostrarTiene(nuevoTiene) == null) {
 							exito = daoT.vincularInvernaderoConSisRiego(nuevoTiene);
+							t.commit();
 						} else {
 							exito = -5;
 							t.rollback();
