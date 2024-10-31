@@ -3,25 +3,20 @@
  */
 package Presentacion.Controller.Command.CommandInvernadero;
 
+import java.util.Set;
+
+import Negocio.FactoriaNegocio.FactoriaNegocio;
+import Negocio.Invernadero.TInvernadero;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
 public class CommandListarInvernadero implements Command {
-	/** 
-	* (non-Javadoc)
-	* @see Command#execute(Object datos)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	public Context execute(Object datos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TInvernadero> resultado = (Set<TInvernadero>) FactoriaNegocio.getInstance().getInvernaderoSA()
+				.listarInvernadero();
+
+		return new Context(Evento.LISTAR_INVERNADEROS_VISTA, resultado);
 	}
 }

@@ -4,77 +4,95 @@
 package Presentacion.Invernadero;
 
 import javax.swing.JFrame;
+
+import Presentacion.ComponentsBuilder.ComponentsBuilder;
+import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
-import javax.swing.JLabel;
-
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Set;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 
 import Negocio.Invernadero.TInvernadero;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
+@SuppressWarnings("serial")
 public class GUIListarInvernadero extends JFrame implements IGUI {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JButton jButton;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JPanel jPanel;
 
 	public GUIListarInvernadero(Set<TInvernadero> datos) {
-		// TODO Auto-generated constructor stub
+		super("Mostrar todos los Invernaderos");
+		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+		int ancho = 800;
+		int alto = 400;
+		int x = (pantalla.width - ancho) / 2;
+		int y = (pantalla.height - alto) / 2;
+		this.setBounds(x, y, ancho, alto);
+		this.setLayout(null);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		iniGUI(datos);
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	public void iniGUI() {
-		// begin-user-code
-		// TODO Auto-generated method stub
+	public void iniGUI(Set<TInvernadero> datos) {
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		this.setContentPane(mainPanel);
 
-		// end-user-code
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+		// Tabla
+		String[] nombreColumnas = { "ID", "Nombre", "Sustrato", "Tipo de Iluminacion", "Activo" };
+		String[][] tablaDatos = new String[datos.size()][nombreColumnas.length];
+
+		int i = 0;
+		for (TInvernadero invernadero : datos) {
+			tablaDatos[i][0] = invernadero.getId().toString();
+			tablaDatos[i][1] = invernadero.getNombre();
+			tablaDatos[i][2] = invernadero.getSustrato();
+			tablaDatos[i][3] = invernadero.getTipo_iluminacion();
+			tablaDatos[i][4] = invernadero.isActivo() ? "Si" : "No";
+			i++;
+		}
+
+		JTable tabla = ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, tablaDatos);
+		JScrollPane scroll = new JScrollPane(tabla);
+		scroll.setPreferredSize(new Dimension(750, 250));
+		mainPanel.add(scroll);
+
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+		// Panel de botones
+		JPanel panelBotones = new JPanel();
+		mainPanel.add(panelBotones);
+
+		JButton botonCancelar = new JButton("Volver");
+		botonCancelar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIListarInvernadero.this.setVisible(false);
+				ApplicationController.getInstance().manageRequest(new Context(Evento.INVERNADERO_VISTA, null));
+			}
+		});
+		panelBotones.add(botonCancelar);
+
+		this.setVisible(true);
+		this.setResizable(true);
 	}
-
-	/** 
-	* (non-Javadoc)
-	* @see IGUI#actualizar(Context context)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 
 	@Override
 	public void actualizar(Context context) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
