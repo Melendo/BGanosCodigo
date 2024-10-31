@@ -95,7 +95,7 @@ public class GUIBajaFabricante extends JFrame implements IGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GUIBajaFabricante.this.setVisible(false);
-				ApplicationController.getInstance().manageRequest(new Context(Evento.SISTEMA_RIEGO_VISTA, null));
+				ApplicationController.getInstance().manageRequest(new Context(Evento.FABRICANTE_VISTA, null));
 			}
 		});
 		panelBotones.add(botonCancelar);

@@ -58,7 +58,7 @@ public class GUIFabricante extends JFrame implements IGUI {
 		this.add(bAlta);
 		bAlta.addActionListener(a -> {
 
-			GUIFabricante.this.setVisible(false);
+			this.setVisible(false);
 			ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_FABRICANTE_VISTA, tFabricante));
 
 		});
@@ -69,7 +69,7 @@ public class GUIFabricante extends JFrame implements IGUI {
 		this.add(bBaja);
 		bBaja.addActionListener(a -> {
 
-			GUIFabricante.this.setVisible(false);
+			this.setVisible(false);
 			ApplicationController.getInstance().manageRequest(new Context(Evento.BAJA_FABRICANTE_VISTA, tFabricante));
 
 		});
@@ -94,7 +94,7 @@ public class GUIFabricante extends JFrame implements IGUI {
 
 			GUIFabricante.this.setVisible(false);
 			ApplicationController.getInstance()
-					.manageRequest(new Context(Evento.MODIFICAR_FABRICANTE_VISTA, tFabricante));
+					.manageRequest(new Context(Evento.MOSTRAR_FABRICANTE_POR_ID_VISTA, tFabricante));
 
 		});
 
@@ -125,7 +125,7 @@ public class GUIFabricante extends JFrame implements IGUI {
 		this.add(bListarExtranjero);
 		bListarExtranjero.addActionListener(a -> {
 
-			GUIFabricante.this.setVisible(false);
+			this.setVisible(false);
 			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_FABRICANTES_EXTRANJEROS));
 
 		});

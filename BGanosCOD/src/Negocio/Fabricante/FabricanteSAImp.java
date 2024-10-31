@@ -90,12 +90,12 @@ public class FabricanteSAImp implements FabricanteSA {
 				|| fabricante.getTelefono().isEmpty())// faltan datos
 			return -2;
 
-		if (fabricante instanceof TFabricanteLocal || ((TFabricanteLocal) fabricante).getImpuesto() < 0
-				|| ((TFabricanteLocal) fabricante).getSubvencion() < 0)// faltan datos local
+		if ((fabricante instanceof TFabricanteLocal) && (((TFabricanteLocal) fabricante).getImpuesto() < 0
+				|| ((TFabricanteLocal) fabricante).getSubvencion() < 0))// faltan datos local
 			return -2;
 
-		if (((TFabricanteExtranjero) fabricante).getAranceles() < 0
-				|| ((TFabricanteExtranjero) fabricante).getPaisDeOrigen().isEmpty())// faltan datos extranjero
+		if ((fabricante instanceof TFabricanteExtranjero) && (((TFabricanteExtranjero) fabricante).getAranceles() < 0
+				|| ((TFabricanteExtranjero) fabricante).getPaisDeOrigen().isEmpty()))// faltan datos extranjero
 			return -2;
 
 		try {
