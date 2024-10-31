@@ -141,7 +141,7 @@ public class EntradaDAOImp implements EntradaDAO {
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM entradas FOR UPDATE");
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM entrada FOR UPDATE");
 
 			ResultSet rs = ps.executeQuery();
 

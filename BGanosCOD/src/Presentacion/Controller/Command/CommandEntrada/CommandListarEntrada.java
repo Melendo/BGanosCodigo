@@ -15,6 +15,6 @@ public class CommandListarEntrada implements Command {
 
 	public Context execute(Object datos) {
 		Set<TEntrada> resultado = FactoriaNegocio.getInstance().getEntradaSA().listarEntrada();
-		return new Context(Evento.LISTAR_ENTRADA_OK, resultado);
+		return new Context(Evento.LISTAR_ENTRADAS_VISTA, resultado);
 	}
 }

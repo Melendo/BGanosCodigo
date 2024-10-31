@@ -3,6 +3,7 @@
  */
 package Negocio.Entrada;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import Integracion.Entrada.EntradaDAO;
@@ -14,6 +15,7 @@ import Negocio.Invernadero.TInvernadero;
 
 public class EntradaSAImp implements EntradaSA {
 
+	@Override
 	public Integer altaEntrada(TEntrada entrada) {
 		// comprobaciones del formato de los datos
 
@@ -49,7 +51,7 @@ public class EntradaSAImp implements EntradaSA {
 						t.commit();
 
 					} else {
-						exito = -50; // Error: ya existe el pase
+						exito = -50; // Error: ya existe la entrada
 					}
 
 				} else {
@@ -79,7 +81,7 @@ public class EntradaSAImp implements EntradaSA {
 			t.start();
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 			EntradaDAO entradaDao = f.getEntradaDAO();
-			TEntrada entrada = entradaDao.mostrarEntrada(id); // para comprobar que existe un pase con ese id
+			TEntrada entrada = entradaDao.mostrarEntrada(id); // para comprobar que existe una entrada con ese id
 
 			if (entrada != null) {
 
@@ -88,12 +90,12 @@ public class EntradaSAImp implements EntradaSA {
 					t.commit();
 
 				} else {
-					exito = -52; // Error: el id es de un pase ya inactivo
+					exito = -52; // Error: el id es de una entrada ya inactivo
 					t.rollback();
 				}
 
 			} else {
-				exito = -51; // Error: id de un pase que no existe
+				exito = -51; // Error: id de una entrada que no existe
 				t.rollback();
 			}
 
@@ -103,6 +105,79 @@ public class EntradaSAImp implements EntradaSA {
 		return exito;
 	}
 
+	@Override
+	public Integer modificarEntrada(TEntrada entrada) {
+		if (entrada.getId() == 0 || entrada.getFecha() == null || entrada.getPrecio() == 0 || entrada.getStock() == 0
+				|| entrada.getIdInvernadero() == 0) {
+			return -3;
+		}
+
+		int exito = -1;
+
+		try {
+
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+			EntradaDAO entradaDao = f.getEntradaDAO();
+			TEntrada entradaBuscar = entradaDao.mostrarEntrada(entrada.getId()); // para comprobar que existe una
+																					// entrada
+																					// con ese id
+			if (entradaBuscar != null) {
+
+				if (entradaBuscar.getActivo()) {
+
+					// Comprobamos que el id de invernadero existe y está activo
+					InvernaderoDAO invernaderoDAO = f.getInvernaderoDAO();
+					TInvernadero invernadero = invernaderoDAO.mostrarInvernaderoPorID(entrada.getIdInvernadero());
+
+					if (invernadero != null) {
+
+						if (invernadero.isActivo()) {
+							TEntrada entradaUnica = entradaDao.mostrarEntrada(entrada.getId());
+
+							if (entradaUnica == null) {
+								exito = entradaDao.modificarEntrada(entrada);
+								t.commit();
+
+							} else if (!entradaUnica.getActivo()) { // Comprobamos si esa entrada que ya tiene los
+																	// mismos datos esta dada de baja
+								exito = -53;
+								t.rollback();
+
+							} else {
+								exito = -50; // Error: ya existe la entrada con los mismos datos y está activa
+								t.rollback();
+							}
+
+						} else {
+							exito = -21; // Error: el invernadero asociado no está activo
+							t.rollback();
+						}
+
+					} else {
+						exito = -20; // Error: el invernadero asociado no existe
+						t.rollback();
+					}
+
+				} else {
+					exito = -52; // Error: id de una entrada inactiva
+					t.rollback();
+				}
+
+			} else {
+				exito = -51; // Error: el id es de una entrada que no existe
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return exito;
+	}
+
+	@Override
 	public TEntrada mostrarEntrada(Integer id) {
 		TEntrada entradaMostrar = new TEntrada();
 
@@ -134,25 +209,69 @@ public class EntradaSAImp implements EntradaSA {
 		return entradaMostrar;
 	}
 
-	public Integer modificarEntrada(TEntrada entrada) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
-
+	@Override
 	public Set<TEntrada> listarEntrada() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+
+		Set<TEntrada> entradas = new HashSet<>();
+		
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+			EntradaDAO entradaDao = f.getEntradaDAO();
+			Set<TEntrada> entradasBuscar = entradaDao.listarEntradas();
+
+			for(TEntrada entrada : entradasBuscar) {
+				entradas.add(entrada);
+			}
+			
+			entradasBuscar = null; // liberamos memoria
+			t.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return entradas;
 	}
 
+	@Override
 	public Set<TEntrada> listarEntradasPorInvernadero(Integer idInvernadero) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TEntrada> entradas = new HashSet<>();
+		TEntrada entrada = new TEntrada();
+		
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+
+			InvernaderoDAO invernaderoDao = f.getInvernaderoDAO();
+			TInvernadero invernadero = invernaderoDao.mostrarInvernaderoPorID(idInvernadero);
+			
+			if(invernadero != null) {
+				
+				EntradaDAO entradaDao = f.getEntradaDAO();
+				Set<TEntrada> entradasBuscar = entradaDao.listarEntradas();
+
+				for(TEntrada entradaEncontrada : entradasBuscar) {
+					entradas.add(entradaEncontrada);
+				}
+				
+				entradasBuscar = null; // Liberamos memoria			
+				
+			} else {
+				entrada.setId(-20); // Error: id de invernadero no existe
+				entradas.add(entrada);
+				t.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return entradas;
 	}
 
 }
