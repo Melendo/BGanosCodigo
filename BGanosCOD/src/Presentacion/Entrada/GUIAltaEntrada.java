@@ -82,7 +82,7 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 		mainPanel.add(labelPrecio);
 
 		JTextField textPrecio = new JTextField(20);
-		textPrecio.setMaximumSize(textFecha.getPreferredSize());
+		textPrecio.setMaximumSize(textPrecio.getPreferredSize());
 		mainPanel.add(textPrecio);
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -133,9 +133,10 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 							.manageRequest(new Context(Evento.ALTA_ENTRADA,
 									new TEntrada(fecha != null ? fecha : null, precio != null ? precio : 0,
 											!textStock.getText().isEmpty() ? stock : 0,
-											!textIdInvernadero.getText().isEmpty() ? idInvernadero : 0)));
+											!textIdInvernadero.getText().isEmpty() ? idInvernadero : 0, true)));
 
 				} catch (Exception ex) {
+					// TODO
 				}
 
 			}
