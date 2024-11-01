@@ -132,7 +132,7 @@ public class SistemaDeRiegoSAImp implements SistemaDeRiegoSA {
 		                TSistemaDeRiego tSistRiegoExistente = daoSistRiego.leerPorNombreUnico(sisRiego.getNombre());
 
 		                if (tSistRiegoExistente == null || 
-		                    (tSistRiegoExistente.getId().equals(sisRiego.getId()) && !tSistRiegoExistente.getActivo())) {
+		                    (tSistRiegoExistente.getId().equals(sisRiego.getId()))) {
 		                    // Si no existe un sistema de riego con el mismo nombre o si el nombre pertenece a uno inactivo
 		                    res = daoSistRiego.modificarSistemaDeRiego(sisRiego);
 		                    trans.commit(); 
