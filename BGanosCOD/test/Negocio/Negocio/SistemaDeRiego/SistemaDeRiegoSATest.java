@@ -3,6 +3,7 @@ package Negocio.SistemaDeRiego;
 import static org.junit.Assert.*;
 
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.BeforeClass;
@@ -173,6 +174,7 @@ public class SistemaDeRiegoSATest {
 	public void modificarSistemaDeRiego(){
 		try{
 			TSistemaDeRiego tSistemaRiego = getTSistemaDeRiego();
+			@SuppressWarnings("unused")
 			int idSistemaRiego = sistRiegoSA.altaSisRiego(tSistemaRiego);
 			tSistemaRiego.setCantidad_agua(getNumRandom());
 			int res = sistRiegoSA.modificarSisRiego(tSistemaRiego);
@@ -184,6 +186,39 @@ public class SistemaDeRiegoSATest {
 			fail("Excepción");
 			e.printStackTrace();
 		}		
+	}
+	
+	
+	@Test
+	public void listarSistemaDeRiego(){
+		
+		try{
+			TSistemaDeRiego tSistemaRiego = getTSistemaDeRiego();
+			TSistemaDeRiego tSistemaRiego2 = getTSistemaDeRiego();
+	
+			int idSistemaRiego = sistRiegoSA.altaSisRiego(tSistemaRiego);
+			int idSistemaRiego2 = sistRiegoSA.altaSisRiego(tSistemaRiego2);
+	            
+	        Set<TSistemaDeRiego> sistemasDeRiego = sistRiegoSA.listarSisRiego();
+		
+	        boolean foundtSistemaRiego = false;
+	        boolean foundtSistemaRiego2 = false;
+	
+	        for (TSistemaDeRiego sistema : sistemasDeRiego) {
+	            if (sistema.getId() == idSistemaRiego) {
+	            	foundtSistemaRiego = true;
+	            } else if (sistema.getId() == idSistemaRiego2) {
+	            	foundtSistemaRiego2 = true;
+	            }
+	        }
+	        if (!foundtSistemaRiego || !foundtSistemaRiego2) {
+	            fail("Error: No listo todos los sistemas");
+	        }
+		}catch (Exception e) {
+	        fail("Excepción");
+	        e.printStackTrace();
+	    }
+		
 	}
 	
 
