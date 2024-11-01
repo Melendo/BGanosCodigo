@@ -3,6 +3,7 @@
  */
 package Negocio.Factura;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -31,6 +32,8 @@ public class TFacturaConEntradas {
 		return tLineaFactura;
 	}
 	public void incluirLineaEntrada(TLineaFactura TLineaFactura) {
+		if(tLineaFactura == null)
+			tLineaFactura = new HashSet<TLineaFactura>();
 		tLineaFactura.add(TLineaFactura);
 	}
 	public TFactura gettFactura() {

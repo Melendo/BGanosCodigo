@@ -119,7 +119,6 @@ public class FacturaSAImp implements FacturaSA {
 	*/
 	public TFacturaConEntradas mostrarFacturaPorID(Integer id) {
 		TFacturaConEntradas facturaEntradas = new TFacturaConEntradas();		
-		Set<TEntrada> entradas = new HashSet<TEntrada>();
 		TFactura factura = new TFactura();
 		try{
 			TransaccionManager transaction = TransaccionManager.getInstance();
@@ -133,7 +132,6 @@ public class FacturaSAImp implements FacturaSA {
 				
 				Set<TLineaFactura> lineasfacturaBD = fDAO.getDAOLineaFactura().mostrarLineaFacturaPorFactura(id);				
 				
-				EntradaDAO entradaDAO = fDAO.getEntradaDAO();
 				for (TLineaFactura tLineaFactura : lineasfacturaBD) {
 					facturaEntradas.incluirLineaEntrada(tLineaFactura);
 					

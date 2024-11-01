@@ -234,7 +234,7 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 					}
 
 				} catch (Exception ex) {
-	    			ApplicationController.getInstance().manageRequest(new Context (Evento.CERRAR_FACTURA_KO, -4));
+	    			ApplicationController.getInstance().manageRequest(new Context (Evento.CERRAR_FACTURA_KO, -3));
 				}
 
 			}
