@@ -9,18 +9,18 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import Integracion.Transaction.Transaccion;
 import Negocio.Fabricante.FabricanteSA;
 import Negocio.Fabricante.TFabricante;
 import Negocio.FactoriaNegocio.FactoriaNegocio;
 import Negocio.Invernadero.InvernaderoSA;
+import Negocio.Invernadero.TInvernadero;
+
 
 public class SistemaDeRiegoSATest {
 	
 	private static SistemaDeRiegoSA sistRiegoSA;
 	private static FabricanteSA fabricanteSA;
 	private static InvernaderoSA invernaderoSA;
-	
 	
 	@BeforeClass
 	public static void beforeClass(){
@@ -39,6 +39,12 @@ public class SistemaDeRiegoSATest {
       //  return new TFabricante(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
 		return null;
 	}
+	
+	private TInvernadero getTInvernadero() {
+	   //  return new TFabricante(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
+	  	return null;
+	}
+	
 
 	private String getNameRandom() {
 		String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -261,9 +267,12 @@ public class SistemaDeRiegoSATest {
 	        Integer idSistemaDeRiego2 = sistRiegoSA.altaSisRiego(sistRiego2);	        
 	        sistRiego2.setId(idSistemaDeRiego2);	        
 	        boolean encontrado2 = false;
+	              
+	        TInvernadero tInvernadero= getTInvernadero();
+	        Integer idInvernadero = invernaderoSA.altaInvernadero(tInvernadero);  
 	        
-	        Integer idInvernadero = getNumRandom();  //meter a la tabla la relacionrealmente
-
+	        invernaderoSA.vincularSRInvernadero(idSistemaDeRiego, idInvernadero);
+	        
 	        Set<TSistemaDeRiego> sistRiegoInvernadero = sistRiegoSA.listarSisRiegoDelInvernadero(idInvernadero);
 
 	        for (TSistemaDeRiego sistR : sistRiegoInvernadero) {

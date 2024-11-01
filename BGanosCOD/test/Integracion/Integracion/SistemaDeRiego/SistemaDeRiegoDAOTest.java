@@ -17,6 +17,7 @@ import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 import Negocio.Fabricante.TFabricante;
 import Negocio.Invernadero.TInvernadero;
+import Negocio.Invernadero.TTiene;
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
 public class SistemaDeRiegoDAOTest {
@@ -57,10 +58,13 @@ public class SistemaDeRiegoDAOTest {
   		return null;
   	}
     
-    private void VincularInvernaderoSistemaDeRiego(int idSistRiego){
-    	
+    private TTiene getTTiene(int idSistRiego, int idInvernadero){
+    	TTiene tTiene = new TTiene();
+    	tTiene.setId_Invernadero(idInvernadero);
+    	tTiene.setId_SistemasDeRiego(idSistRiego);
+    	return tTiene;
     }
-
+    
 
 	private String getNameRandom() {
 		String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -284,8 +288,12 @@ public class SistemaDeRiegoDAOTest {
 	        sistRiego2.setId(idSistemaDeRiego2);	        
 	        boolean encontrado2 = false;
 	        
-	        Integer idInvernadero = getNumRandom();  //meter a la tabla la relacionrealmente
+	        TInvernadero tInvernadero= getTInvernadero();
+	        Integer idInvernadero = invernaderoDAO.altaInvernadero(tInvernadero);  
 
+	        tieneDAO.altaTiene(getTTiene(idSistemaDeRiego, idInvernadero));
+	        tieneDAO.altaTiene(getTTiene(idSistemaDeRiego2, idInvernadero));
+	        
 	        Set<TSistemaDeRiego> sistRiegoInvernadero = sistemaRiegoDAO.listarSistemaDeRiegoInvernadero(idInvernadero);
 
 	        for (TSistemaDeRiego sistR : sistRiegoInvernadero) {
