@@ -101,7 +101,7 @@ public class PlantaSAImp implements PlantaSA {
 	
 				
 				
-				if(exito>-1) {t.commit();}
+				if(exito > -1) {t.commit();}
 				else {t.rollback();}
 			
 			

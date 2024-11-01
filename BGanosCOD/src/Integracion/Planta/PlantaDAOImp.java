@@ -129,7 +129,8 @@ public class PlantaDAOImp implements PlantaDAO {
 				
 				lplantas.add(planta);
 			}
-			
+			r.close();
+			s.close();
 			s = c.prepareStatement("SELECT * FROM planta AS p "
 					+ //"JOIN planta_frutal AS pf ON p.id = pf.id_planta FOR UPDATE"
 					 " JOIN planta_no_frutal AS pn ON p.id = pn.id FOR UPDATE"
@@ -174,7 +175,8 @@ public class PlantaDAOImp implements PlantaDAO {
 			s.setString(2, planta.get_nombre_cientifico());
 			s.setBoolean(3, planta.getActivo());
 			s.setInt(4, planta.get_id());
-			
+			s.executeUpdate();
+			s.close();
 			if(planta instanceof TPlantaFrutal) {
 				s = c.prepareStatement("UPDATE planta_frutal SET nombre_fruta = ?, maduracion = ? WHERE id_planta = ?");
 				s.setString(1, ((TPlantaFrutal)planta).get_nombre_fruta());
@@ -366,7 +368,8 @@ public class PlantaDAOImp implements PlantaDAO {
 			}
 			
 			
-			
+			r.close();
+			s.close();
 			
 			s = c.prepareStatement("SELECT * FROM planta AS p "
 					//+ "LEFT JOIN planta_frutal AS pf ON p.id = pf.id_planta "
