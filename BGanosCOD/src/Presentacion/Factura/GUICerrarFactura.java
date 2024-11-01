@@ -43,30 +43,6 @@ import javax.swing.JButton;
 * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 */
 public class GUICerrarFactura extends JFrame implements IGUI {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JPanel jPanel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JButton jButton;
 	
 	private TCarrito tCarrito;
 	
@@ -326,7 +302,7 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 		int resultado = (int) context.getDatos();
         if (context.getEvento() == Evento.CERRAR_FACTURA_OK) {
         	
-            JOptionPane.showMessageDialog(this, "Factura creada correctamente con id: " + resultado , "�xito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Factura creada correctamente con id: " + resultado , "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } else if (context.getEvento() == Evento.CERRAR_FACTURA_KO) {
         	
             switch (resultado) {
