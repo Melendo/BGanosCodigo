@@ -118,5 +118,40 @@ public class SistemaDeRiegoSATest {
 			e.printStackTrace();
 		}	
 	}
+	
+	@Test
+	public void bajaSistemaDeRiegoInexistente(){
+		
+		try{
+			int idSistemaRiego = 999999;
+			int res = sistRiegoSA.bajaSisRiego(idSistemaRiego);
+			if(res!=-404){
+				fail("Error: bajaSistemaDeRiego() debe dar error -404");
+			}
+		}catch (Exception e) {
+			fail("Excepción");
+			e.printStackTrace();
+		}	
+	}
+	
+	@Test
+	public void bajaSistemaDeRiegoInactivo(){
+		
+		try{
+			TSistemaDeRiego tSistemaRiego = getTSistemaDeRiego();
+			int idSistemaRiego = sistRiegoSA.altaSisRiego(tSistemaRiego);
+			int res = sistRiegoSA.bajaSisRiego(idSistemaRiego);
+			if(res < 0){
+				fail("Error: bajaSistemaDeRiego() no devuelve Id > 0");
+			}
+			int res2 =  sistRiegoSA.bajaSisRiego(idSistemaRiego);
+			if(res2!=-2){
+				fail("Error: bajaSistemaDeRiego() debe dar error -2");
+			}
+		}catch (Exception e) {
+			fail("Excepción");
+			e.printStackTrace();
+		}	
+	}
 
 }
