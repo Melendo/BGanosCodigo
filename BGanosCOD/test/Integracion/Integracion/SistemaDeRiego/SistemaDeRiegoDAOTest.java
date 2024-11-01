@@ -12,6 +12,7 @@ import org.junit.Test;
 import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
 import Integracion.Invernadero.InvernaderoDAO;
+import Integracion.Invernadero.TieneDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 import Negocio.Fabricante.TFabricante;
@@ -23,6 +24,7 @@ public class SistemaDeRiegoDAOTest {
 	private static SistemaDeRiegoDAO sistemaRiegoDAO;
 	private static FabricanteDAO fabricanteDAO;
 	private static InvernaderoDAO invernaderoDAO;
+	private static TieneDAO tieneDAO;
 	
     // Comparar dos objetos TSistemaDeRiego
     private boolean equals(TSistemaDeRiego s1, TSistemaDeRiego s2) {
@@ -90,7 +92,8 @@ public class SistemaDeRiegoDAOTest {
 	public static void beforeClass() {
 		sistemaRiegoDAO = FactoriaIntegracion.getInstance().getSistemaDeRiegoDAO();
 		fabricanteDAO =	FactoriaIntegracion.getInstance().getFabricanteDAO();
-		invernaderoDAO =	FactoriaIntegracion.getInstance().getInvernaderoDAO();
+		invernaderoDAO = FactoriaIntegracion.getInstance().getInvernaderoDAO();
+		//tieneDAO = FactoriaIntegracion.getInstance().getTieneDAO();
 	}
 
 	@Test
