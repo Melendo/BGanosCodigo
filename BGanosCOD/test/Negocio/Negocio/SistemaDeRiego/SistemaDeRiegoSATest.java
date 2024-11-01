@@ -162,13 +162,29 @@ public class SistemaDeRiegoSATest {
 			TSistemaDeRiego sistRes = sistRiegoSA.mostrarSisRiego(idSistemaRiego);
 			if(sistRes.getId() != idSistemaRiego){
 				fail("Error debería mostrar el sistema de riego correcto");
+			}	
+		}catch (Exception e) {
+			fail("Excepción");
+			e.printStackTrace();
+		}			
+	}
+	
+	@Test
+	public void modificarSistemaDeRiego(){
+		try{
+			TSistemaDeRiego tSistemaRiego = getTSistemaDeRiego();
+			int idSistemaRiego = sistRiegoSA.altaSisRiego(tSistemaRiego);
+			tSistemaRiego.setCantidad_agua(getNumRandom());
+			int res = sistRiegoSA.modificarSisRiego(tSistemaRiego);
+			if(res < 0){
+				fail("Error al Modificar " + res );	
 			}
 			
 		}catch (Exception e) {
 			fail("Excepción");
 			e.printStackTrace();
 		}		
-		
 	}
+	
 
 }
