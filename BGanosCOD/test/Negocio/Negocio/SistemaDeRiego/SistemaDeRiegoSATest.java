@@ -73,7 +73,7 @@ public class SistemaDeRiegoSATest {
 			TSistemaDeRiego tSistemaRiego = getTSistemaDeRiego();
 			tSistemaRiego.setIdFabricante(idFabricante);
 			int idSistemaRiego = sistRiegoSA.altaSisRiego(tSistemaRiego);
-			if(idSistemaRiego<0){
+			if(idSistemaRiego < 0){
 				fail("Error: altaSisRiego() debería retornar ID > 0");
 			}
 		} catch (Exception e) {
@@ -93,7 +93,7 @@ public class SistemaDeRiegoSATest {
 			TSistemaDeRiego tSistemaRiego = getTSistemaDeRiego();
 			tSistemaRiego.setIdFabricante(idFabricante);
 			int idSistemaRiego = sistRiegoSA.altaSisRiego(tSistemaRiego);
-			if(idSistemaRiego>0){
+			if(idSistemaRiego > 0){
 				fail("Error: altaSisRiego() debería retornar ID < 0 ya que fabricante inactivo");
 			}
 		} catch (Exception e) {
@@ -125,7 +125,7 @@ public class SistemaDeRiegoSATest {
 		try{
 			int idSistemaRiego = 999999;
 			int res = sistRiegoSA.bajaSisRiego(idSistemaRiego);
-			if(res!=-404){
+			if(res != -404){
 				fail("Error: bajaSistemaDeRiego() debe dar error -404");
 			}
 		}catch (Exception e) {
@@ -145,13 +145,30 @@ public class SistemaDeRiegoSATest {
 				fail("Error: bajaSistemaDeRiego() no devuelve Id > 0");
 			}
 			int res2 =  sistRiegoSA.bajaSisRiego(idSistemaRiego);
-			if(res2!=-2){
+			if(res2 != -2){
 				fail("Error: bajaSistemaDeRiego() debe dar error -2");
 			}
 		}catch (Exception e) {
 			fail("Excepción");
 			e.printStackTrace();
 		}	
+	}
+	
+	@Test
+	public void mostrarSistemaDeRiego(){
+		try{
+			TSistemaDeRiego tSistemaRiego = getTSistemaDeRiego();
+			int idSistemaRiego = sistRiegoSA.altaSisRiego(tSistemaRiego);
+			TSistemaDeRiego sistRes = sistRiegoSA.mostrarSisRiego(idSistemaRiego);
+			if(sistRes.getId() != idSistemaRiego){
+				fail("Error debería mostrar el sistema de riego correcto");
+			}
+			
+		}catch (Exception e) {
+			fail("Excepción");
+			e.printStackTrace();
+		}		
+		
 	}
 
 }
