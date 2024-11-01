@@ -16,18 +16,13 @@ public class CommandListarPlantasPorInvernadero implements Command {
 
 			res = FactoriaNegocio.getInstance().getPlantaSA().listarPlantasPorInvernadero((Integer)datos);
 
-		
-		if(res.size() == 1) {
-			TPlanta planta = res.iterator().next();
-			
-			if(planta.get_id() <= 0) {
-				return new Context(Evento.LISTAR_PLANTAS_DE_INVERNADERO_KO, planta);
-			}else {
-				return new Context(Evento.LISTAR_PLANTAS_DE_INVERNADERO_OK, res);
+			if(res == null || res.isEmpty()){
+				return new Context(Evento.LISTAR_PLANTAS_DE_INVERNADERO_KO, null);
 			}
-			
-		}else {
-			return new Context(Evento.LISTAR_PLANTAS_DE_INVERNADERO_OK, res);
-		}
+			else{
+				
+				return new Context(Evento.LISTAR_PLANTAS_DE_INVERNADERO_OK,res);
+			}
+
 	}
 }

@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
+import Presentacion.Controller.GUIMSG;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
@@ -72,7 +73,7 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 	    msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
 	    mainPanel.add(msgIntroIDCabecera);
 	    
- mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
+	    mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
 	    
 	    //PANEL DE TIPO DE LA PLANTA
 	    JPanel paneltipo = new JPanel();
@@ -87,10 +88,6 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
  		tipoPlanta.addItem("No Frutal");
  		tipoPlanta.setPreferredSize(new Dimension(250, 25));
  		paneltipo.add(tipoPlanta);
- 		
- 
- 		
- 		
  		
  		//PANEL DE LOS BOTONES
  		JPanel panelBotones = new JPanel();
@@ -112,7 +109,6 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
  					
                     if (selected.equals("Frutal")) {
              
-                    	
                     	ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_POR_TIPO,"Frutal"));
                     } 
                     else {
@@ -121,7 +117,7 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
                     }
  			
  				} catch (Exception e1) {
- 					//ApplicationController.getInstance().manageRequest(new Context(Evento.vista, -4));
+ 					
  				}
  			}
  		});
@@ -134,15 +130,17 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
+		
 		switch(context.getEvento()) {
 		case Evento.LISTAR_PLANTAS_POR_TIPO_KO:
-		
+			GUIMSG.showMessage("No existe plantas del tipo seleccionado", "LISTAR PLANTAS", true);
 			break;
 		case  Evento.LISTAR_PLANTAS_POR_TIPO_OK:
-		
+			
+			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_VISTA,context.getDatos()));
 			break;
 		default:
-			
+			GUIMSG.showMessage("ERROR INESPERADO", "LISTAR PLANTAS POR TIPO", true);
 			break;
 		
 	}

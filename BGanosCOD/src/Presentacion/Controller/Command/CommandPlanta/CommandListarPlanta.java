@@ -15,16 +15,8 @@ public class CommandListarPlanta implements Command {
 	
 		Set<TPlanta> res = FactoriaNegocio.getInstance().getPlantaSA().listarPlanta();
 
-		
-		if(res == null || res.isEmpty() || res.size() == 0){
-			
-			
-			return new Context(Evento.LISTAR_PLANTAS_KO,null);
-		
-		
-		}
-		
-		
-		return new Context(Evento.LISTAR_PLANTAS_OK, res);
+		return new Context(Evento.LISTAR_PLANTAS_VISTA,res);
+
 	}
+
 }

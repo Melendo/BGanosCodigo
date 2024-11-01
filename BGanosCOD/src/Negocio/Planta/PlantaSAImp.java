@@ -85,16 +85,63 @@ public class PlantaSAImp implements PlantaSA {
 	}
 
 	public Integer modificarPlanta(TPlanta planta)  {
+		int exito = -1;
+		Transaccion t = null;
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+
+			PlantaDAO dao = f.getPlantaDAO();
+			
+
+			exito = dao.modificarPlanta(planta);
+			
+	
+				
+				
+				if(exito>-1) {t.commit();}
+				else {t.rollback();}
+			
+			
 		
 
-		return -1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exito;
 	}
 
 	public Set<TPlanta> listarPlanta()  {
+		Transaccion t = null;
+		Set<TPlanta> p = new HashSet<>();
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+
+			PlantaDAO dao = f.getPlantaDAO();
+			
+			 p = dao.listarPlantas();
 		
+			if(p == null ) {
+				t.rollback();
+				
+			}
+			else {
+			
+				t.commit();
+				
+			}
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		
-		return null;
+		return p;
 		
 	}
 
@@ -134,14 +181,72 @@ public class PlantaSAImp implements PlantaSA {
 	}
 
 	public Set<TPlanta> listarPlantasPorTipo(String tipo)  {
+		Transaccion t = null;
+		Set<TPlanta> p = new HashSet<>();
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+
+			PlantaDAO dao = f.getPlantaDAO();
+			int tip = 1;
+			if(tipo == "Frutal")  {tip = 0;}
+			
+			p = dao.mostrarPorTipo(tip);
+	
+			
+			if(p == null ) {
+				t.rollback();
+				
+			}
+			else {
+			
+				t.commit();
+				
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 		
 
-return null;
+		return p;
 	}
 
 	public Set<TPlanta> listarPlantasPorInvernadero(Integer id_invernadero) {
-		
+		Transaccion t = null;
+		Set<TPlanta> p = null;
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 
-		return null;
+			PlantaDAO dao = f.getPlantaDAO();
+			
+
+			p = dao.MostrarPorInvernadero(id_invernadero);
+			
+			if(p == null ) {
+				t.rollback();
+				
+			}
+			else {
+			
+				t.commit();
+				
+			}
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	
+		return p;
 	}
 }

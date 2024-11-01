@@ -24,19 +24,9 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
 public class GUIMostarPlantasPorID extends JFrame implements IGUI {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
-	
+	private static final long serialVersionUID = 1L;
 
 	public GUIMostarPlantasPorID() {
 		super("Mostrar Planta Por ID");
@@ -93,11 +83,10 @@ public class GUIMostarPlantasPorID extends JFrame implements IGUI {
  				
  					
  					int idtmp = Integer.parseInt(textID.getText());
- 		
  						
- 						ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_PLANTA_POR_ID,idtmp));
- 						setVisible(false);
- 						System.out.println(textID.getText());
+					ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_PLANTA_POR_ID,idtmp));
+					setVisible(false);
+				
  				} catch (Exception e1) {
  					GUIMSG.showMessage("Formato incorrecto", "MOSTRAR PLANTA", true);
  				}
