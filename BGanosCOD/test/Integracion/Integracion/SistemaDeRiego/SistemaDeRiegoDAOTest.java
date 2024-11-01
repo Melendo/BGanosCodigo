@@ -215,11 +215,11 @@ public class SistemaDeRiegoDAOTest {
 	    try {
 	    	Transaccion trans = crearTransaccion();
 	    	trans.start();
-
-	    	Integer idFabricante = getNumRandom();  //HACER ALTA FABRICANTE
 	    	
 	    	TSistemaDeRiego sistRiego = getTSistemaDeRiego();
+	    	Integer idFabricante = sistRiego.getIdFabricante();
 			TSistemaDeRiego sistRiego2 = getTSistemaDeRiego(); 
+			sistRiego2.setIdFabricante(idFabricante);
 
 	        Integer idSistemaDeRiego = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
 	        sistRiego.setId(idSistemaDeRiego);
