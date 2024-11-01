@@ -11,15 +11,18 @@ import org.junit.Test;
 
 import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
+import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 import Negocio.Fabricante.TFabricante;
+import Negocio.Invernadero.TInvernadero;
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
 public class SistemaDeRiegoDAOTest {
 	
 	private static SistemaDeRiegoDAO sistemaRiegoDAO;
 	private static FabricanteDAO fabricanteDAO;
+	private static InvernaderoDAO invernaderoDAO;
 	
     // Comparar dos objetos TSistemaDeRiego
     private boolean equals(TSistemaDeRiego s1, TSistemaDeRiego s2) {
@@ -46,6 +49,15 @@ public class SistemaDeRiegoDAOTest {
         //  return new TFabricante(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
   		return null;
   	}
+    
+    private TInvernadero getTInvernadero() {
+        //  return new TFabricante(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
+  		return null;
+  	}
+    
+    private void VincularInvernaderoSistemaDeRiego(int idSistRiego){
+    	
+    }
 
 
 	private String getNameRandom() {
@@ -78,6 +90,7 @@ public class SistemaDeRiegoDAOTest {
 	public static void beforeClass() {
 		sistemaRiegoDAO = FactoriaIntegracion.getInstance().getSistemaDeRiegoDAO();
 		fabricanteDAO =	FactoriaIntegracion.getInstance().getFabricanteDAO();
+		invernaderoDAO =	FactoriaIntegracion.getInstance().getInvernaderoDAO();
 	}
 
 	@Test
