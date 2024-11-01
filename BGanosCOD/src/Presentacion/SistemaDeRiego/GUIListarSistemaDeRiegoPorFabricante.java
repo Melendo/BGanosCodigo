@@ -117,9 +117,11 @@ public class GUIListarSistemaDeRiegoPorFabricante extends JFrame implements IGUI
         }
     }
 
-    @Override
+
+	@Override
     public void actualizar(Context context) {
         if (context.getEvento() == Evento.LISTAR_SISTEMA_DE_RIEGO_POR_FABRICANTE_OK) {
+        	@SuppressWarnings("unchecked")
             Set<TSistemaDeRiego> sistemas = (Set<TSistemaDeRiego>) context.getDatos();
           
             String[][] datos = new String[sistemas.size()][7]; 

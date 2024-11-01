@@ -21,8 +21,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-import Negocio.SistemaDeRiego.TSistemaDeRiego;
-
 @SuppressWarnings("serial")
 public class GUIBajaSistemaDeRiego extends JFrame implements IGUI {
 	

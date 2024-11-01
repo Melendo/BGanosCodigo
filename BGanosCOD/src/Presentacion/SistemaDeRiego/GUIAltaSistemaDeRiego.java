@@ -11,6 +11,7 @@ import Presentacion.FactoriaVistas.Evento;
 import Presentacion.Controller.ApplicationController;
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
+@SuppressWarnings("serial")
 public class GUIAltaSistemaDeRiego extends JFrame implements IGUI {
 
     private JTextField textNombre;

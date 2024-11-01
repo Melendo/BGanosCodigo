@@ -116,7 +116,8 @@ public class GUIListarSistemaDeRiegoDelInvernadero extends JFrame implements IGU
     @Override
     public void actualizar(Context context) {
         if (context.getEvento() == Evento.LISTAR_SISTEMA_DE_RIEGO_DE_INVERNADERO_OK) {
-            Set<TSistemaDeRiego> sistemas = (Set<TSistemaDeRiego>) context.getDatos();
+            @SuppressWarnings("unchecked")
+			Set<TSistemaDeRiego> sistemas = (Set<TSistemaDeRiego>) context.getDatos();
           
             String[][] datos = new String[sistemas.size()][7];
             int i = 0;

@@ -1,7 +1,7 @@
 package Presentacion.SistemaDeRiego;
 
 import javax.swing.*;
-import javax.swing.table.TableColumnModel;
+
 
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
