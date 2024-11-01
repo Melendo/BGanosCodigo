@@ -13,6 +13,7 @@ import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
+import Negocio.Fabricante.TFabricante;
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
 public class SistemaDeRiegoDAOTest {
@@ -36,9 +37,15 @@ public class SistemaDeRiegoDAOTest {
 
     // Crear un sistema de riego con valores predeterminados
     private TSistemaDeRiego getTSistemaDeRiego() {
-        return new TSistemaDeRiego(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
+		TFabricante tFabricante = getTFabricante();
+		int idFabricante = fabricanteDAO.altaFabricante(tFabricante);
+        return new TSistemaDeRiego(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, idFabricante);
     }
-
+    
+    private TFabricante getTFabricante() {
+        //  return new TFabricante(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
+  		return null;
+  	}
 
 
 	private String getNameRandom() {
