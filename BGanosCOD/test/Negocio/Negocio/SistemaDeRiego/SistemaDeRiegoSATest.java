@@ -9,6 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import Integracion.Transaction.Transaccion;
 import Negocio.Fabricante.FabricanteSA;
 import Negocio.Fabricante.TFabricante;
 import Negocio.FactoriaNegocio.FactoriaNegocio;
@@ -27,24 +28,13 @@ public class SistemaDeRiegoSATest {
 		fabricanteSA = FactoriaNegocio.getInstance().getFabricanteSA();
 		invernaderoSA = FactoriaNegocio.getInstance().getInvernaderoSA();
 	}
-	
-	private boolean equals(TSistemaDeRiego s1, TSistemaDeRiego s2) {
-        if (s1 == null || s2 == null) {
-            return false;
-        }
-        return s1.getId().equals(s2.getId()) &&
-               s1.getNombre().equals(s2.getNombre()) &&
-               s1.getPotenciaRiego().equals(s2.getPotenciaRiego()) &&
-               s1.getCantidad_agua().equals(s2.getCantidad_agua()) &&
-               s1.getFrecuencia().equals(s2.getFrecuencia()) &&
-               s1.getActivo().equals(s2.getActivo()) &&
-               s1.getIdFabricante().equals(s2.getIdFabricante());
-    }
-	
+		
 	private TSistemaDeRiego getTSistemaDeRiego() {
-        return new TSistemaDeRiego(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
+		TFabricante tFabricante = getTFabricante();
+		int idFabricante = fabricanteSA.altaFabricante(tFabricante);
+        return new TSistemaDeRiego(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, idFabricante);
     }
-
+	
 	private TFabricante getTFabricante() {
       //  return new TFabricante(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
 		return null;
@@ -221,5 +211,76 @@ public class SistemaDeRiegoSATest {
 		
 	}
 	
+	@Test
+	public void testListarSistemaDeRiegoPorFabricante() {
+	    try {
+	    	
+	    	
+	    	TSistemaDeRiego sistRiego = getTSistemaDeRiego();
+	    	Integer idFabricante = sistRiego.getIdFabricante();
+			TSistemaDeRiego sistRiego2 = getTSistemaDeRiego(); 
+			sistRiego2.setIdFabricante(idFabricante);
+
+	        Integer idSistemaDeRiego = sistRiegoSA.altaSisRiego(sistRiego);
+	        sistRiego.setId(idSistemaDeRiego);
+	        
+	        boolean encontrado = false;
+	        Integer idSistemaDeRiego2 = sistRiegoSA.altaSisRiego(sistRiego2);	        
+	        sistRiego2.setId(idSistemaDeRiego2);
+	     
+	        boolean encontrado2 = false;
+
+	        Set<TSistemaDeRiego> sistRiegoFabricante = sistRiegoSA.listarSisRiegoPorFabricante(idFabricante);
+
+	        for (TSistemaDeRiego sistR : sistRiegoFabricante) {
+	            if (sistR.getId().equals(sistRiego.getId())) {
+	            	encontrado = true;
+	            } else if (sistR.getId().equals(sistRiego2.getId())) {
+	            	encontrado2 = true;
+	            }
+	        }
+	        
+	        if (!encontrado || !encontrado2) {
+	        	fail("Error: La lista no muestra todos los sistemas de riego");           
+	        }
+	    } catch (Exception e) {
+	        fail("Excepción");
+	        e.printStackTrace();
+	    }
+	}
+	
+	@Test
+	public void testListarSistemaDeRiegoEnInvernaderos() {
+	    try {
+	    	TSistemaDeRiego sistRiego = getTSistemaDeRiego();
+			TSistemaDeRiego sistRiego2 = getTSistemaDeRiego(); 
+
+	        Integer idSistemaDeRiego = sistRiegoSA.altaSisRiego(sistRiego);
+	        sistRiego.setId(idSistemaDeRiego);	     
+	        boolean encontrado = false;
+	        Integer idSistemaDeRiego2 = sistRiegoSA.altaSisRiego(sistRiego2);	        
+	        sistRiego2.setId(idSistemaDeRiego2);	        
+	        boolean encontrado2 = false;
+	        
+	        Integer idInvernadero = getNumRandom();  //meter a la tabla la relacionrealmente
+
+	        Set<TSistemaDeRiego> sistRiegoInvernadero = sistRiegoSA.listarSisRiegoDelInvernadero(idInvernadero);
+
+	        for (TSistemaDeRiego sistR : sistRiegoInvernadero) {
+	            if (sistR.getId().equals(sistRiego.getId())) {
+	            	encontrado = true;
+	            } else if (sistR.getId().equals(sistRiego2.getId())) {
+	            	encontrado2 = true;
+	            }
+	        }
+	        
+	        if (!encontrado || !encontrado2) {
+	        	fail("Error: La lista no muestra todos los sistemas de riego");	               
+	        }	     
+	    } catch (Exception e) {
+	        fail("Excepción");
+	        e.printStackTrace();
+	    }
+	}
 
 }

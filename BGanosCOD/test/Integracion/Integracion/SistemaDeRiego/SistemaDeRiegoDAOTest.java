@@ -82,12 +82,12 @@ public class SistemaDeRiegoDAOTest {
 			Integer idSistemaDeRiego = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
 			if (idSistemaDeRiego < 0) {
 				trans.rollback();
-				fail("Error: altaSistemaDeRiego() deber韆 retornar ID > 0");
+				fail("Error: altaSistemaDeRiego() deber锟絘 retornar ID > 0");
 			}
 			trans.commit(); 
 		} catch (Exception e) {
 			
-			fail("Excepci髇");
+			fail("Excepci贸n");
 			e.printStackTrace();
 		}
 	}
@@ -102,11 +102,11 @@ public class SistemaDeRiegoDAOTest {
 			Integer result = sistemaRiegoDAO.bajaSistemaDeRiego(idSistemaDeRiego);
 			if (result < 0) {
 				trans.rollback();
-				fail("Error: bajaSistemaDeRiego() deber韆 retornar un n鷐ero positivo");
+				fail("Error: bajaSistemaDeRiego() deber锟絘 retornar un n锟絤ero positivo");
 			}
 			trans.commit(); 
 		} catch (Exception e) {
-			fail("Excepci髇");
+			fail("Excepci贸n");
 			e.printStackTrace();
 		}
 	}
@@ -127,7 +127,7 @@ public class SistemaDeRiegoDAOTest {
 
 			trans.commit(); 
 		} catch (Exception e) {
-			fail("Excepci髇");
+			fail("Excepci贸n");
 			e.printStackTrace();
 		}
 	}
@@ -160,7 +160,7 @@ public class SistemaDeRiegoDAOTest {
 
 	        trans.commit();
 	    } catch (Exception e) {
-	        fail("Excepci髇");
+	        fail("Excepci贸n");
 	        e.printStackTrace();
 	    }
 	}
@@ -198,7 +198,7 @@ public class SistemaDeRiegoDAOTest {
 
 	        trans.commit();
 	    } catch (Exception e) {
-	        fail("Excepci髇");
+	        fail("Excepci贸n");
 	        e.printStackTrace();
 	    }
 	}
@@ -240,7 +240,7 @@ public class SistemaDeRiegoDAOTest {
 
 	        trans.commit();
 	    } catch (Exception e) {
-	        fail("Excepci髇");
+	        fail("Excepci贸n");
 	        e.printStackTrace();
 	    }
 	}
@@ -280,7 +280,7 @@ public class SistemaDeRiegoDAOTest {
 
 	        trans.commit();
 	    } catch (Exception e) {
-	        fail("Excepci髇");
+	        fail("Excepci贸n");
 	        e.printStackTrace();
 	    }
 	}
@@ -305,7 +305,7 @@ public class SistemaDeRiegoDAOTest {
 
 	        trans.commit();
 	    } catch (Exception e) {
-	        fail("Excepci髇");
+	        fail("Excepci贸n");
 	        e.printStackTrace();
 	    }
 	}
