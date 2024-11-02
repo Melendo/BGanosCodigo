@@ -5,8 +5,12 @@ import java.util.Set;
 
 import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
+import Integracion.FactoriaQuery.FactoriaQuery;
+import Integracion.FactoriaQuery.Query;
+import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
+import Negocio.Invernadero.TInvernadero;
 
 public class FabricanteSAImp implements FabricanteSA {
 
@@ -25,6 +29,10 @@ public class FabricanteSAImp implements FabricanteSA {
 				&& (((TFabricanteExtranjero) fabricante).getAranceles() < 0
 						|| ((TFabricanteExtranjero) fabricante).getPaisDeOrigen().isEmpty()))// faltan datos extranjero
 			return -2;
+
+		if (!comprobarTelefono(fabricante.getTelefono())) {
+			return -4;
+		}
 
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
@@ -99,9 +107,9 @@ public class FabricanteSAImp implements FabricanteSA {
 				|| ((TFabricanteExtranjero) fabricante).getPaisDeOrigen().isEmpty()))// faltan datos extranjero
 			return -2;
 
-		if(!comprobarTelefono(fabricante.getTelefono()))
+		if (!comprobarTelefono(fabricante.getTelefono()))
 			return -6;
-		
+
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.newTransaccion();
@@ -239,8 +247,41 @@ public class FabricanteSAImp implements FabricanteSA {
 
 		return listaFab;
 	}
-	
-	private boolean comprobarTelefono(String telefono) {		
+
+	@SuppressWarnings("unchecked")
+	public Set<TFabricante> listarFabricantesPorInvernadero(Integer id) {
+		Set<TFabricante> listaFab = new LinkedHashSet<>();
+
+		try {
+
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+
+			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+			InvernaderoDAO finv = fi.getInvernaderoDAO();
+
+			TInvernadero ti = finv.mostrarInvernaderoPorID(id);
+
+			if (ti != null) { // el invernadero existe
+				FactoriaQuery fq = FactoriaQuery.getInstance();
+				Query q = fq.getNewQuery("ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero");
+				
+				listaFab = (Set<TFabricante>) q.execute(id);
+				
+			} else { // el invernadero no existe
+				t.rollback();
+				return null;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return listaFab;
+	}
+
+	private boolean comprobarTelefono(String telefono) {
 		return telefono.matches("\\d{9}");
 	}
 }

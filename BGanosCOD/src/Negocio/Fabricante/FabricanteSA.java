@@ -16,5 +16,6 @@ public interface FabricanteSA {
 	public Set<TFabricante> listarFabricantesLocales();
 
 	public Set<TFabricante> listarFabricantesExtranjeros();
-
+	
+	public Set<TFabricante> listarFabricantesPorInvernadero(Integer id);
 }

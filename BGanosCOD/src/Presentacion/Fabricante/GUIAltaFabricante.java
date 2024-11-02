@@ -228,6 +228,9 @@ public class GUIAltaFabricante extends JFrame implements IGUI {
 				JOptionPane.showMessageDialog(this, "Ya existe un fabricante con el mismo codigo y está activo.",
 						"Error", JOptionPane.ERROR_MESSAGE);
 				break;
+			case -4:
+				JOptionPane.showMessageDialog(this, "Telefono invalido.", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
 			default:
 				JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta el fabricante.", "Error",
 						JOptionPane.ERROR_MESSAGE);
