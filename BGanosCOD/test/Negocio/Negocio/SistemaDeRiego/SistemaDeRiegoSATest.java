@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import Negocio.Fabricante.FabricanteSA;
 import Negocio.Fabricante.TFabricante;
+import Negocio.Fabricante.TFabricanteLocal;
 import Negocio.FactoriaNegocio.FactoriaNegocio;
 import Negocio.Invernadero.InvernaderoSA;
 import Negocio.Invernadero.TInvernadero;
@@ -36,13 +37,25 @@ public class SistemaDeRiegoSATest {
     }
 	
 	private TFabricante getTFabricante() {
-      //  return new TFabricante(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
-		return null;
+		TFabricanteLocal  tFabricanteLocal= new TFabricanteLocal();
+		tFabricanteLocal.setActivo(true);
+		tFabricanteLocal.setCodFabricante(getNameRandom());
+		tFabricanteLocal.setNombre(getNameRandom());
+		tFabricanteLocal.setTelefono(getNameRandom());
+		tFabricanteLocal.setImpuesto(getNumRandom());
+		tFabricanteLocal.setSubvencion(getNumRandom());
+		
+        return tFabricanteLocal;	
 	}
 	
 	private TInvernadero getTInvernadero() {
-	   //  return new TFabricante(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
-	  	return null;
+		TInvernadero tInvernadero = new TInvernadero();
+		tInvernadero.setActivo(true);
+		tInvernadero.setNombre(getNameRandom());
+		tInvernadero.setSustrato(getNameRandom());
+		tInvernadero.setTipo_iluminacion(getNameRandom());
+		
+	  	return tInvernadero;
 	}
 	
 
