@@ -21,8 +21,9 @@ public class FabricanteSAImp implements FabricanteSA {
 				|| ((TFabricanteLocal) fabricante).getSubvencion() < 0))// faltan datos local
 			return -2;
 
-		if (fabricante.getClass() == TFabricanteExtranjero.class && (((TFabricanteExtranjero) fabricante).getAranceles() < 0
-				|| ((TFabricanteExtranjero) fabricante).getPaisDeOrigen().isEmpty()))// faltan datos extranjero
+		if (fabricante.getClass() == TFabricanteExtranjero.class
+				&& (((TFabricanteExtranjero) fabricante).getAranceles() < 0
+						|| ((TFabricanteExtranjero) fabricante).getPaisDeOrigen().isEmpty()))// faltan datos extranjero
 			return -2;
 
 		try {
@@ -98,6 +99,9 @@ public class FabricanteSAImp implements FabricanteSA {
 				|| ((TFabricanteExtranjero) fabricante).getPaisDeOrigen().isEmpty()))// faltan datos extranjero
 			return -2;
 
+		if(!comprobarTelefono(fabricante.getTelefono()))
+			return -6;
+		
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.newTransaccion();
@@ -158,7 +162,7 @@ public class FabricanteSAImp implements FabricanteSA {
 				t.commit();
 			} else {
 				tf = new TFabricante();
-				tf.setId(id);// No encontrado dejamos el id para sacar el mensaje de erro
+				tf.setId(id);// No encontrado dejamos el id para sacar el mensaje de error
 				t.rollback();
 			}
 		} catch (Exception e) {
@@ -183,7 +187,6 @@ public class FabricanteSAImp implements FabricanteSA {
 
 			listaFab = fd.listarFabricantes();
 			t.commit();
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -235,5 +238,9 @@ public class FabricanteSAImp implements FabricanteSA {
 		}
 
 		return listaFab;
+	}
+	
+	private boolean comprobarTelefono(String telefono) {		
+		return telefono.matches("\\d{9}");
 	}
 }

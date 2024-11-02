@@ -99,11 +99,12 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement s = c
-					.prepareStatement("UPDATE fabricante SET nombre=?, activo=?, cod_fabricante=? WHERE id=?");
+					.prepareStatement("UPDATE fabricante SET nombre=?, activo=?, telefono=?, cod_fabricante=? WHERE id=?");
 			s.setString(1, fabricante.getNombre());
 			s.setBoolean(2, fabricante.getActivo());
-			s.setString(3, fabricante.getCodFabricante());
-			s.setInt(4, fabricante.getId());
+			s.setString(3, fabricante.getTelefono());
+			s.setString(4, fabricante.getCodFabricante());
+			s.setInt(5, fabricante.getId());
 
 			s.executeUpdate();
 

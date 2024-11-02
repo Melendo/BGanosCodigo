@@ -221,11 +221,11 @@ public class GUIModificarFabricante extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		int resultado = (int) context.getDatos();
 
-		if (context.getEvento() == Evento.ALTA_SISTEMA_DE_RIEGO_OK)
+		if (context.getEvento() == Evento.MODIFICAR_FABRICANTE_OK)
 
-			JOptionPane.showMessageDialog(this, "Fabricante dado de alta correctamente con id: " + resultado, "Éxito",
+			JOptionPane.showMessageDialog(this, "Fabricante modificado correctamente con id: " + resultado, "Éxito",
 					JOptionPane.INFORMATION_MESSAGE);
-		else if (context.getEvento() == Evento.ALTA_SISTEMA_DE_RIEGO_KO)
+		else if (context.getEvento() == Evento.MODIFICAR_FABRICANTE_KO)
 			switch (resultado) {
 			case -2:
 				JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error",
@@ -236,12 +236,15 @@ public class GUIModificarFabricante extends JFrame implements IGUI {
 						JOptionPane.ERROR_MESSAGE);
 				break;
 			case -4:
+				JOptionPane.showMessageDialog(this, "El fabricante que estas intentando modificar es extranjero.",
+						"Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			case -5:
 				JOptionPane.showMessageDialog(this, "El fabricante que estas intentando modificar es local.", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
-			case -5:
-				JOptionPane.showMessageDialog(this, "El fabricante que estas intentando modificar es extranjero.",
-						"Error", JOptionPane.ERROR_MESSAGE);
+			case -6:
+				JOptionPane.showMessageDialog(this, "Telefono invalido.", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
 			default:
 				JOptionPane.showMessageDialog(this, "Error desconocido al modificar el fabricante.", "Error",
