@@ -1,5 +1,7 @@
 package Integracion.SistemaDeRiego;
 
+
+
 import static org.junit.Assert.*;
 
 import java.util.Random;
@@ -110,7 +112,7 @@ public class SistemaDeRiegoDAOTest {
 		sistemaRiegoDAO = FactoriaIntegracion.getInstance().getSistemaDeRiegoDAO();
 		fabricanteDAO =	FactoriaIntegracion.getInstance().getFabricanteDAO();
 		invernaderoDAO = FactoriaIntegracion.getInstance().getInvernaderoDAO();
-		//tieneDAO = FactoriaIntegracion.getInstance().getTieneDAO();
+		tieneDAO = FactoriaIntegracion.getInstance().getDaoTiene();
 	}
 
 	@Test
