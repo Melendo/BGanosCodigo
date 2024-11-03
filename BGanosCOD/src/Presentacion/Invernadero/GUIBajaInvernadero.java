@@ -113,7 +113,7 @@ public class GUIBajaInvernadero extends JFrame implements IGUI {
 		int resultado = (int) context.getDatos();
 		if (context.getEvento() == Evento.BAJA_INVERNADERO_OK) {
 
-			JOptionPane.showMessageDialog(this, "Invernadero " + resultado + " dado de baja correctamente", "Exito",
+			JOptionPane.showMessageDialog(this, "Invernadero con id " + resultado + " dado de baja correctamente", "Exito",
 					JOptionPane.INFORMATION_MESSAGE);
 		} else if (context.getEvento() == Evento.BAJA_INVERNADERO_KO) {
 
