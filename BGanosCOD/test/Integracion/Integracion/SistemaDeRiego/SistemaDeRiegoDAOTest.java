@@ -2,6 +2,7 @@ package Integracion.SistemaDeRiego;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
@@ -115,21 +116,24 @@ public class SistemaDeRiegoDAOTest {
 
 	@Test
 	public void testAltaSistemaDeRiego() {
+		
 		try {
 			Transaccion trans = crearTransaccion();
 			trans.start();
+			
 			TSistemaDeRiego sistRiego = getTSistemaDeRiego();
 			Integer idSistemaDeRiego = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
 			if (idSistemaDeRiego < 0) {
 				trans.rollback();
-				fail("Error: altaSistemaDeRiego() deber�a retornar ID > 0");
+				fail("Error: altaSistemaDeRiego() deberia retornar ID > 0");
 			}
 			trans.commit(); 
+		} catch (SQLException e) {
+		    fail("SQL Error: " + e.getMessage());
 		} catch (Exception e) {
-			
-			fail("Excepción");
-			e.printStackTrace();
+		    fail("Exception: " + e.getMessage());
 		}
+
 	}
 	
 	@Test
@@ -142,7 +146,7 @@ public class SistemaDeRiegoDAOTest {
 			Integer result = sistemaRiegoDAO.bajaSistemaDeRiego(idSistemaDeRiego);
 			if (result < 0) {
 				trans.rollback();
-				fail("Error: bajaSistemaDeRiego() deber�a retornar un n�mero positivo");
+				fail("Error: bajaSistemaDeRiego() deberia retornar un n�mero positivo");
 			}
 			trans.commit(); 
 		} catch (Exception e) {
