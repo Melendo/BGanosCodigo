@@ -51,7 +51,7 @@ public class GUIMostrarFabricantePorID extends JFrame implements IGUI {
 		gbc.insets = new Insets(10, 10, 10, 10); // M�rgenes entre los componentes
 		this.setContentPane(mainPanel);
 
-		// T�tulo
+		// Titulo
 		gbc.gridwidth = 2; // Toma dos columnas para el t�tulo
 		JLabel msgIntro = new JLabel("Introduzca el ID del fabricante a mostrar", JLabel.CENTER);
 		mainPanel.add(msgIntro, gbc);

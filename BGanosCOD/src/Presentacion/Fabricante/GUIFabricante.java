@@ -129,6 +129,17 @@ public class GUIFabricante extends JFrame implements IGUI {
 			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_FABRICANTES_EXTRANJEROS));
 
 		});
+		
+		// Query
+				bListarExtranjero = ComponentsBuilder.createButton("Listar Fabricantes Por Invernadero", 700, 250, 185, 100);
+				bListarExtranjero.setVisible(true);
+				this.add(bListarExtranjero);
+				bListarExtranjero.addActionListener(a -> {
+
+					this.setVisible(false);
+					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_VISTA));
+
+				});
 
 		// Atras
 		bAtras = ComponentsBuilder.createBackButton();

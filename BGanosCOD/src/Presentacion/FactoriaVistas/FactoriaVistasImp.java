@@ -16,6 +16,7 @@ import Presentacion.Fabricante.GUIFabricante;
 import Presentacion.Fabricante.GUIListarFabricantes;
 import Presentacion.Fabricante.GUIListarFabricantesExtranjeros;
 import Presentacion.Fabricante.GUIListarFabricantesLocales;
+import Presentacion.Fabricante.GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero;
 import Presentacion.Fabricante.GUIModificarFabricante;
 import Presentacion.Fabricante.GUIMostrarFabricantePorID;
 import Presentacion.Factura.GUIAbrirFactura;
@@ -121,9 +122,9 @@ public class FactoriaVistasImp extends FactoriaVistas {
                 case Evento.LISTAR_FABRICANTES_EXTRANJEROS_VISTA:
                     vistaActual = new GUIListarFabricantesExtranjeros((Set<TFabricante>) contexto.getDatos()); 
                     return vistaActual;
-//                case Evento.LISTAR_FABRICANTES_EXTRANGEROS_VISTA:
-//                    vistaActual = new GUIListarFabricantesSistemaRiego((Set<TFabricante>) contexto.getDatos()); 
-//                    return vistaActual;
+                case Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_VISTA:
+                    vistaActual = new GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero((Set<TFabricante>) contexto.getDatos()); 
+                    return vistaActual;
                 case Evento.LISTAR_FABRICANTES_VISTA:
                     vistaActual = new GUIListarFabricantes((Set<TFabricante>) contexto.getDatos()); 
                     return vistaActual;

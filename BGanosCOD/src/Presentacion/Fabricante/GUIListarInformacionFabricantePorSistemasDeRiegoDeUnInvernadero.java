@@ -1,82 +1,97 @@
 package Presentacion.Fabricante;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.util.Set;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
 import Negocio.Fabricante.TFabricante;
-import Negocio.Fabricante.TFabricanteLocal;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero extends JFrame implements IGUI {
 
 	Set<TFabricante> listaFabricantes;
+	private JTextField textId;
 
 	public GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero(Set<TFabricante> listaFabricantes) {
-		super("Mostrar todos los Fabricantes");
-		this.listaFabricantes = listaFabricantes;
+		super("Mostrar Fabricante");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-		int ancho = 800;
+		int ancho = 600;
 		int alto = 400;
 		int x = (pantalla.width - ancho) / 2;
 		int y = (pantalla.height - alto) / 2;
 		this.setBounds(x, y, ancho, alto);
-		this.setLayout(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initGUI();
-
 	}
 
 	public void initGUI() {
-		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		// Panel principal con GridBagLayout para mayor control sobre la alineaci�n y el
+		// centrado
+		JPanel mainPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(10, 10, 10, 10); // M�rgenes entre los componentes
 		this.setContentPane(mainPanel);
 
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+		// Titulo
+		gbc.gridwidth = 2; // Toma dos columnas para el t�tulo
+		JLabel msgIntro = new JLabel("Introduzca el ID del invernadero", JLabel.CENTER);
+		mainPanel.add(msgIntro, gbc);
 
-		// Tabla
-		String[] nombreColumnas = { "ID", "Nombre", "Cod. Fabricante", "Teléfono", "Activo" };
-		String[][] tablaDatos = new String[listaFabricantes.size()][nombreColumnas.length];
+		// Resetear para los campos
+		gbc.gridwidth = 1;
+		gbc.gridy = 1;
 
-		int i = 0;
-		for (TFabricante sistema : listaFabricantes) {
-			tablaDatos[i][0] = sistema.getId().toString();
-			tablaDatos[i][1] = sistema.getNombre();
-			tablaDatos[i][2] = sistema.getCodFabricante();
-			tablaDatos[i][3] = sistema.getTelefono();
-			tablaDatos[i][4] = sistema.getActivo() ? "Sí" : "No";
-			i++;
-		}
-
-		JTable tabla = ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, tablaDatos);
-		JScrollPane scroll = new JScrollPane(tabla);
-		scroll.setPreferredSize(new Dimension(750, 250));
-		mainPanel.add(scroll);
-
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+		// Campo para el ID del sistema de riego
+		JLabel labelId = new JLabel("ID:");
+		gbc.gridx = 0; // Columna 0
+		mainPanel.add(labelId, gbc);
+		textId = new JTextField(20);
+		gbc.gridx = 1; // Columna 1
+		mainPanel.add(textId, gbc);
 
 		// Panel de botones
 		JPanel panelBotones = new JPanel();
-		mainPanel.add(panelBotones);
+		gbc.gridx = 0;
+		gbc.gridy = 6;
+		gbc.gridwidth = 2; // Los botones ocupar�n dos columnas
+		gbc.anchor = GridBagConstraints.CENTER; // Centrar los botones
+		mainPanel.add(panelBotones, gbc);
 
+		// Boton de aceptar
+		JButton botonAceptar = new JButton("Aceptar");
+		botonAceptar.addActionListener(a -> {
+			try {
+				// Crear un contexto con el evento de mostrar y el ID del sistema
+				ApplicationController.getInstance().manageRequest(
+						
+						new Context(Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO, Integer.parseInt(textId.getText())));
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero.this, "Error en el formato del ID", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		panelBotones.add(botonAceptar);
+
+		// Bot�n de cancelar
 		JButton botonCancelar = new JButton("Cancelar");
 		botonCancelar.addActionListener(a -> {
 			GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero.this.setVisible(false);
@@ -85,12 +100,13 @@ public class GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero ext
 		panelBotones.add(botonCancelar);
 
 		this.setVisible(true);
-		this.setResizable(true);
+
 	}
 
 	public void actualizar(Context context) {
 		if (context.getEvento() == Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_OK) {
-            JOptionPane.showMessageDialog(this, "Fabricantes listados correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_FABRICANTES_VISTA,context.getDatos()));
+			dispose();
         } else if (context.getEvento() == Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_KO) {
         	if(context.getDatos() == null) {
         		JOptionPane.showMessageDialog(this, "El invernadero no existe", "Error", JOptionPane.ERROR_MESSAGE);
