@@ -20,11 +20,21 @@ public class TEntrada {
 	private Boolean activo;
 	
 	
-	public TEntrada(Date fecha, Float precio, Integer stock, Integer idInvernadero) {
+	public TEntrada(Integer id, Date fecha, Float precio, Integer stock, Integer idInvernadero, Boolean activo) {
+		this.id = id;
 		this.fecha = fecha;
 		this.precio = precio;
 		this.stock_entradas = stock;
 		this.idInvernadero = idInvernadero;
+		this.activo = activo;
+	}
+	
+	public TEntrada(Date fecha, Float precio, Integer stock, Integer idInvernadero, Boolean activo) {
+		this.fecha = fecha;
+		this.precio = precio;
+		this.stock_entradas = stock;
+		this.idInvernadero = idInvernadero;
+		this.activo = activo;
 	}
 	
 	public TEntrada() {

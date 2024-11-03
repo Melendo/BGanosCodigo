@@ -24,7 +24,9 @@ public class GUIEntrada extends JFrame implements IGUI {
 	private JButton bAltaEntrada;
 	private JButton bBajaEntrada;
 	private JButton bModificarEntrada;
-	// faltan
+	private JButton bMostrarEntrada;
+	private JButton bListarEntradas;
+	private JButton bListarEntradasPorInvernadero;
 
 	private JPanel j;
 
@@ -50,7 +52,7 @@ public class GUIEntrada extends JFrame implements IGUI {
 
 	private void initGUI() {
 		tEntrada = new TEntrada();
-		JLabel label = ComponentsBuilder.createLabel("Pase", 250, 30, 500, 50, Color.BLACK);
+		JLabel label = ComponentsBuilder.createLabel("Entrada", 250, 30, 500, 50, Color.BLACK);
 		this.add(label);
 
 		// ALTA ENTRADA
@@ -68,6 +70,77 @@ public class GUIEntrada extends JFrame implements IGUI {
 		this.add(bAltaEntrada);
 		
 		// BAJA ENTRADA
+		bBajaEntrada = ComponentsBuilder.createButton("Baja entrada", 407, 120, 185, 100);
+		bBajaEntrada.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIEntrada.this.setVisible(false);
+				ApplicationController.getInstance().manageRequest(new Context(Evento.BAJA_ENTRADA_VISTA, tEntrada));
+			}
+		});
+		
+		bBajaEntrada.setVisible(true);
+		this.add(bBajaEntrada);
+		
+		
+		// MODIFICAR ENTRADA
+		bModificarEntrada = ComponentsBuilder.createButton("Modificar entrada", 715, 120, 185, 100);
+		bModificarEntrada.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIEntrada.this.setVisible(false);
+				ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_ENTRADA_VISTA, tEntrada));
+			}
+
+		});
+		bModificarEntrada.setVisible(true);
+		this.add(bModificarEntrada);
+		
+		// MOSTRAR ENTRADA
+		bMostrarEntrada = ComponentsBuilder.createButton("Mostrar entrada", 100, 290, 185, 100);
+		bMostrarEntrada.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIEntrada.this.setVisible(false);
+				ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_ENTRADA_POR_ID_VISTA, tEntrada));
+			}
+
+		});
+		bMostrarEntrada.setVisible(true);
+		this.add(bMostrarEntrada);
+		
+		// LISTAR ENTRADAS
+		bListarEntradas = ComponentsBuilder.createButton("Listar entradas", 407, 290, 200, 100);
+		bListarEntradas.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIEntrada.this.setVisible(false);
+				// TODO ??qué no es la vista
+				ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_ENTRADAS, tEntrada));
+			}
+
+		});
+		bListarEntradas.setVisible(true);
+		this.add(bListarEntradas);
+		
+		
+		// LISTAR ENTRADAS POR INVERNADERO
+		bListarEntradasPorInvernadero = ComponentsBuilder.createButton("Listar entradas por invernadero", 715, 290, 200, 100);
+		bListarEntradasPorInvernadero.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIEntrada.this.setVisible(false);
+				ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_ENTRADAS_POR_INVERNADERO_VISTA, tEntrada));
+			}
+
+		});
+		bListarEntradasPorInvernadero.setVisible(true);
+		this.add(bListarEntradasPorInvernadero);
 
 	}
 
@@ -75,12 +148,4 @@ public class GUIEntrada extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 
 	}
-
-//	public class main {
-//		public static void main(String[] args) {
-//			Context c = new Context(Evento.VISTA_PRINCIPAL, null);
-//			ApplicationController.getInstance().manageRequest(c);
-//		}
-//	}
-
 }
