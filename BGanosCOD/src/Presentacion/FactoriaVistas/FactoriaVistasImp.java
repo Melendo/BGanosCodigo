@@ -190,6 +190,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
                     return vistaActual;
                 case Evento.CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO_VISTA:
                 	vistaActual = new GUITresFechasMasVendidas();
+                	return vistaActual;
 //                
                 
                 
