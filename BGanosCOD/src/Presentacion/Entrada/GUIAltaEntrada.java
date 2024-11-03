@@ -188,7 +188,7 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 				break;
 				
 			case -50:
-				JOptionPane.showMessageDialog(this, "Error: ya existe la entrada", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error: ya existe la entrada con dicha fecha", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
 				
 			default:
@@ -197,7 +197,5 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 			}
 
 		}
-
-//		dispose();
 	}
 }

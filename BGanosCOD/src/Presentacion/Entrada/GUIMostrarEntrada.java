@@ -22,6 +22,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import Negocio.Entrada.TEntrada;
+
 import javax.swing.JPanel;
 
 public class GUIMostrarEntrada extends JFrame implements IGUI {
@@ -47,16 +50,16 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initGUI();
 	}
-	
-	
+
 	public void initGUI() {
-		
+
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-		JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("Introduzca el ID de la entrada que quiere que se muestre ", 1, 10, 80, 20, Color.BLACK);
+		JLabel msgIntroIDCabecera = ComponentsBuilder
+				.createLabel("Introduzca el ID de la entrada que quiere que se muestre ", 1, 10, 80, 20, Color.BLACK);
 		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(msgIntroIDCabecera);
 
@@ -65,8 +68,8 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 		JPanel panelID = new JPanel();
 		mainPanel.add(panelID);
 
-		JLabel textIdPase = ComponentsBuilder.createLabel("ID entrada: ", 10, 100, 80, 20, Color.BLACK);
-		panelID.add(textIdPase);
+		JLabel textIdEntrada = ComponentsBuilder.createLabel("ID entrada: ", 10, 100, 80, 20, Color.BLACK);
+		panelID.add(textIdEntrada);
 
 		JTextField id = new JTextField();
 		id.setPreferredSize(new Dimension(250, 30));
@@ -81,7 +84,7 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 		// Boton de aceptar
 		JButton botonAceptar = new JButton("Aceptar");
 		botonAceptar.setBounds(75, 50, 100, 100);
-		
+
 		botonAceptar.addActionListener(new ActionListener() {
 
 			@Override
@@ -90,43 +93,63 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 
 				try {
 					Integer id_entrada = Integer.parseInt(id.getText());
-					//Vamos a tratar el error de campos nulos
-					ApplicationController.getInstance().manageRequest(new Context (Evento.MOSTRAR_ENTRADA_POR_ID,
-							!id.getText().isEmpty() ? id_entrada : 0));
-					
+					// Vamos a tratar el error de campos nulos
+					ApplicationController.getInstance().manageRequest(
+							new Context(Evento.MOSTRAR_ENTRADA_POR_ID, !id.getText().isEmpty() ? id_entrada : 0));
+
 				} catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(GUIMostrarEntrada.this, "Error en el formato del ID", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(GUIMostrarEntrada.this, "Error en el formato del ID", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
 		});
-		
+
 		panelBotones.add(botonAceptar);
-		
+
 		// Boton de cancelar
 		JButton botonCancelar = new JButton("Cancelar");
 		botonCancelar.setBounds(200, 50, 100, 100);
-		
+
 		botonCancelar.addActionListener(new ActionListener() {
 
-			 @Override
-		        public void actionPerformed(ActionEvent e) {
-				 GUIMostrarEntrada.this.setVisible(false);
-				 ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_ENTRADA_POR_ID_VISTA, null));
-		        }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIMostrarEntrada.this.setVisible(false);
+				ApplicationController.getInstance()
+						.manageRequest(new Context(Evento.ENTRADA_VISTA, null));
+			}
 		});
-		
-		
-		
+
 		panelBotones.add(botonCancelar);
 
 		this.setVisible(true);
 		this.setResizable(true);
-		
+
 	}
 
 	@Override
 	public void actualizar(Context context) {
+
+		if (context.getEvento() == Evento.MOSTRAR_ENTRADA_OK) {
+			TEntrada entrada = (TEntrada) context.getDatos();
+			String texto = "ID: " + entrada.getId() + 
+					", Id invernadero: " + entrada.getIdInvernadero() +
+					", Fecha: " + entrada.getFecha() + 
+					", Precio: " + entrada.getPrecio() + 
+					", Stock: " + entrada.getStock() + 
+					", Activo: " + entrada.getActivo();
+		
+			JOptionPane.showMessageDialog(this, texto, "Entrada", JOptionPane.INFORMATION_MESSAGE);
+		
+		} else if (context.getEvento() == Evento.MOSTRAR_ENTRADA_KO) {
+			JOptionPane.showMessageDialog(this, "No existe entrada con ID: " + ((TEntrada) context.getDatos()).getId(), "Error", JOptionPane.ERROR_MESSAGE);
+
+		}
+		
+		this.setVisible(false);
+		ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_ENTRADA_POR_ID_VISTA, null));
+
 
 	}
 }

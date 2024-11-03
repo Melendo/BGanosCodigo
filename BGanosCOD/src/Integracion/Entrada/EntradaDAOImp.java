@@ -203,5 +203,47 @@ public class EntradaDAOImp implements EntradaDAO {
 		
 		return entradas;
 	}
+	
+	// TODO nueva función
+	@Override
+	public TEntrada leerPorFechaUnica(Date fecha) {
+		
+		TEntrada entrada = null;
+		
+		try {
+
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.getTransaccion();
+			Connection c = (Connection) t.getResource();
+
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM entrada WHERE fecha = ?");
+			ps.setDate(1, fecha);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				entrada = new TEntrada();
+				entrada.setId(rs.getInt("id"));
+				entrada.setIdInvernadero(rs.getInt("id_invernadero"));
+				entrada.setFecha(rs.getDate("fecha"));
+				entrada.setPrecio(rs.getFloat("precio"));
+				entrada.setStock(rs.getInt("stock_entradas"));
+				entrada.setActivo(rs.getBoolean("activo"));
+			}
+			
+			ps.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return entrada;
+	}
+
+
+	
+
+	
+	
 
 }

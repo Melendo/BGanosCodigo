@@ -3,6 +3,7 @@
  */
 package Negocio.Entrada;
 
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class EntradaSAImp implements EntradaSA {
 	public Integer altaEntrada(TEntrada entrada) {
 		// comprobaciones del formato de los datos
 
-		// comprobamos si en el alta hay campis vacíos
+		// comprobamos si en el alta hay campos vacíos
 		if (entrada.getIdInvernadero() == 0 || entrada.getFecha().equals(null) || entrada.getPrecio() == 0
 				|| entrada.getStock() == 0) {
 			return -3; // enviamos error de que no se pueden dejar campos vacíos en el alta
@@ -28,6 +29,7 @@ public class EntradaSAImp implements EntradaSA {
 		int exito = -1;
 
 		try {
+						
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.newTransaccion();
 			t.start();
@@ -39,7 +41,7 @@ public class EntradaSAImp implements EntradaSA {
 
 				if (invernadero.isActivo()) {
 					EntradaDAO entradaDao = f.getEntradaDAO();
-					TEntrada entradaUnica = entradaDao.mostrarEntrada(entrada.getId());
+					TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha());
 
 					if (entradaUnica == null) {
 						exito = entradaDao.altaEntrada(entrada);
@@ -58,9 +60,7 @@ public class EntradaSAImp implements EntradaSA {
 					exito = -21; // Error: el id de invernadero no está activo
 				}
 
-			}
-
-			else {
+			} else {
 				exito = -20; // Error: el id de invernadero no existe
 				t.rollback();
 			}
@@ -135,7 +135,7 @@ public class EntradaSAImp implements EntradaSA {
 					if (invernadero != null) {
 
 						if (invernadero.isActivo()) {
-							TEntrada entradaUnica = entradaDao.mostrarEntrada(entrada.getId());
+							TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha());
 
 							if (entradaUnica == null) {
 								exito = entradaDao.modificarEntrada(entrada);
@@ -198,7 +198,8 @@ public class EntradaSAImp implements EntradaSA {
 				t.commit();
 
 			} else {
-				entradaMostrar.setId(-51); // Error: id de una entrada que no existe
+				entradaMostrar = new TEntrada();
+				entradaMostrar.setId(id); // Error: id de una entrada que no existe
 				t.rollback();
 			}
 
@@ -213,7 +214,7 @@ public class EntradaSAImp implements EntradaSA {
 	public Set<TEntrada> listarEntrada() {
 
 		Set<TEntrada> entradas = new HashSet<>();
-		
+
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.newTransaccion();
@@ -222,17 +223,17 @@ public class EntradaSAImp implements EntradaSA {
 			EntradaDAO entradaDao = f.getEntradaDAO();
 			Set<TEntrada> entradasBuscar = entradaDao.listarEntradas();
 
-			for(TEntrada entrada : entradasBuscar) {
+			for (TEntrada entrada : entradasBuscar) {
 				entradas.add(entrada);
 			}
-			
+
 			entradasBuscar = null; // liberamos memoria
 			t.commit();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return entradas;
 	}
 
@@ -240,7 +241,7 @@ public class EntradaSAImp implements EntradaSA {
 	public Set<TEntrada> listarEntradasPorInvernadero(Integer idInvernadero) {
 		Set<TEntrada> entradas = new HashSet<>();
 		TEntrada entrada = new TEntrada();
-		
+
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.newTransaccion();
@@ -249,18 +250,18 @@ public class EntradaSAImp implements EntradaSA {
 
 			InvernaderoDAO invernaderoDao = f.getInvernaderoDAO();
 			TInvernadero invernadero = invernaderoDao.mostrarInvernaderoPorID(idInvernadero);
-			
-			if(invernadero != null) {
-				
+
+			if (invernadero != null) {
+
 				EntradaDAO entradaDao = f.getEntradaDAO();
 				Set<TEntrada> entradasBuscar = entradaDao.listarEntradas();
 
-				for(TEntrada entradaEncontrada : entradasBuscar) {
+				for (TEntrada entradaEncontrada : entradasBuscar) {
 					entradas.add(entradaEncontrada);
 				}
-				
-				entradasBuscar = null; // Liberamos memoria			
-				
+
+				entradasBuscar = null; // Liberamos memoria
+
 			} else {
 				entrada.setId(-20); // Error: id de invernadero no existe
 				entradas.add(entrada);
@@ -270,7 +271,7 @@ public class EntradaSAImp implements EntradaSA {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return entradas;
 	}
 

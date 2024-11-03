@@ -23,6 +23,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import Negocio.Entrada.TEntrada;
@@ -146,13 +147,14 @@ public class GUIModificarEntrada extends JFrame implements IGUI {
 					Integer idInvernadero = Integer.parseInt(textIdInvernadero.getText());
 
 					ApplicationController.getInstance()
-							.manageRequest(new Context(Evento.ALTA_ENTRADA,
+							.manageRequest(new Context(Evento.MODIFICAR_ENTRADA,
 									new TEntrada(id_entrada != 0 ? id_entrada : 0, fecha != null ? fecha : null,
 											precio != null ? precio : 0, !textStock.getText().isEmpty() ? stock : 0,
 											!textIdInvernadero.getText().isEmpty() ? idInvernadero : 0, true)));
 
 				} catch (Exception ex) {
-					// TODO
+					JOptionPane.showMessageDialog(GUIModificarEntrada.this, "Error en el formato de los datos", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 
@@ -166,7 +168,7 @@ public class GUIModificarEntrada extends JFrame implements IGUI {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	            GUIModificarEntrada.this.setVisible(false);
-	            ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_ENTRADA_VISTA, null));
+	            ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
 	        }
 	    });
 	    panelBotones.add(botonCancelar);
@@ -179,15 +181,47 @@ public class GUIModificarEntrada extends JFrame implements IGUI {
 	@Override
 	public void actualizar(Context context) {
 		
-		if(context.getEvento() == Evento.ALTA_ENTRADA_OK) {
-			
-			
-			
-		} else if(context.getEvento() == Evento.ALTA_ENTRADA_KO) {
-			
-			
-		}
+		int res = (int) context.getDatos();
 
-		dispose();
+		if (context.getEvento() == Evento.MODIFICAR_ENTRADA_OK) {
+			JOptionPane.showMessageDialog(this, "Entrada modificada correctamente con id " + res, "Exito",
+					JOptionPane.INFORMATION_MESSAGE);
+
+		} else if (context.getEvento() == Evento.MODIFICAR_ENTRADA_KO) {
+
+			switch (res) {
+				
+			case -21:
+				JOptionPane.showMessageDialog(this, "Error: el id de invernadero no está activo", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+				
+			case -20:
+				JOptionPane.showMessageDialog(this, "Error: el id de invernadero no existe", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+				
+			case -50:
+				JOptionPane.showMessageDialog(this, "Error: ya existe la entrada con dicha fecha", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+				
+			case -51:
+				JOptionPane.showMessageDialog(this, "Error: id de una entrada que no existe", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+				
+			case -52:
+				JOptionPane.showMessageDialog(this, "Error: id de una entrada inactiva", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+				
+			case -53:
+				JOptionPane.showMessageDialog(this, "Error: la entrada ya existe con la misma fecha y está inactiva", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+				
+			default:
+				JOptionPane.showMessageDialog(this, "Error desconocido", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			}
+
+		}
 	}
 }
