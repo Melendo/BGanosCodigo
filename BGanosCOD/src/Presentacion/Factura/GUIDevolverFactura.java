@@ -156,10 +156,10 @@ public class GUIDevolverFactura extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		
 		int resultado = (int) context.getDatos();
-        if (context.getEvento() == Evento.CERRAR_FACTURA_OK) {
+        if (context.getEvento() == Evento.DEVOLVER_FACTURA_OK) {
         	
             JOptionPane.showMessageDialog(this, "Factura devuelta correctamente" + resultado , "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } else if (context.getEvento() == Evento.CERRAR_FACTURA_KO) {
+        } else if (context.getEvento() == Evento.DEVOLVER_FACTURA_KO) {
         	
             switch (resultado) {
             case -1:

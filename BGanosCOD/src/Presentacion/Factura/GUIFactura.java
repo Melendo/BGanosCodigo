@@ -124,7 +124,7 @@ public class GUIFactura extends JFrame implements IGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GUIFactura.this.setVisible(false);
-				ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_FACTURAS_VISTA, null));
+				ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_FACTURAS, null));
 			}
 
 		});

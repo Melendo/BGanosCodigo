@@ -12,17 +12,28 @@ import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
+import Negocio.Factura.TFactura;
 import Negocio.Factura.TFacturaConEntradas;
+import Negocio.Factura.TLineaFactura;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -31,11 +42,17 @@ import javax.swing.JButton;
 
 public class GUIMostrarFacturaID extends JFrame implements IGUI {
 	
+	private JTable tablaDatos;
+	
+	private JLabel mensajeFactura;
+	
+	private JScrollPane scroll;
+	
 	public GUIMostrarFacturaID() {
 		super("Mostrar Factura");
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        int ancho = 430;
-        int alto = 330;
+        int ancho = 700;
+        int alto = 700;
         int x = (pantalla.width - ancho) / 2;
         int y = (pantalla.height - alto) / 2;
         this.setBounds(x, y, ancho, alto);
@@ -71,18 +88,30 @@ public class GUIMostrarFacturaID extends JFrame implements IGUI {
         panelID.add(id);
 
         mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
+        
+        JPanel mensaje = new JPanel();
+		mainPanel.add(mensaje);
+
+		mensajeFactura = ComponentsBuilder.createLabel("", 10, 100, 80, 20, Color.BLACK);
+		mensaje.add(mensajeFactura);
+        
+        String[] nombreColumnas = { "Id Factura", "ID Entrada", "Cantidad", "Precio" };
+		List<String[]> datosColumnas = new ArrayList<String[]>();
+		
+		tablaDatos = ComponentsBuilder.createTable(0, 4, nombreColumnas, datosColumnas.toArray(new String[][] {}));
+		scroll = new JScrollPane(tablaDatos);
+		scroll.setBounds(50, 115, 900, 288);
+		mainPanel.add(scroll);
 
         JPanel panelBotones = new JPanel();
         mainPanel.add(panelBotones);
 
-        // BOTON ACEPTAR
         JButton botonAceptar = new JButton("Aceptar");
         botonAceptar.setBounds(75, 50, 100, 100);
         botonAceptar.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-            	//GUIMostrarFacturaID.this.setVisible(false);
                 try {
                 	Integer id_Factura = Integer.parseInt(id.getText());
                     ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_FACTURA_POR_ID, 
@@ -121,7 +150,29 @@ public class GUIMostrarFacturaID extends JFrame implements IGUI {
 			msg = resultado.gettFactura().getid();
         if (context.getEvento() == Evento.MOSTRAR_FACTURA_POR_ID_OK) {
         	
-        	ApplicationController.getInstance().manageRequest(new Context (Evento.MOSTRAR_FACTURA_POR_ID, resultado));
+        	DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            
+            TFactura factura = resultado.gettFactura();
+            String datosFactura = "Precio total: " + factura.getPrecioTotal() + "; Fecha de compra: " + df.format(factura.getFechaCompra());
+            
+            mensajeFactura.setText(datosFactura); // Actualiza el mensaje sin crear un nuevo JLabel
+            
+            // Actualiza los datos de la tabla
+            DefaultTableModel model = (DefaultTableModel) tablaDatos.getModel();
+            model.setRowCount(0); // Limpia las filas anteriores
+            
+            for (TLineaFactura t : resultado.gettLineaFactura()) {
+                String[] datos = new String[4];
+                datos[0] = t.getidFactura().toString();
+                datos[1] = t.getidEntrada().toString();
+                datos[2] = t.getCantidad().toString();
+                datos[3] = "" + t.getPrecio();
+                model.addRow(datos); // Agrega las nuevas filas
+            }
+            
+            scroll.revalidate();
+            scroll.repaint();
+
         } else if (context.getEvento() == Evento.MOSTRAR_FACTURA_POR_ID_KO) {
         	
             switch (msg) {

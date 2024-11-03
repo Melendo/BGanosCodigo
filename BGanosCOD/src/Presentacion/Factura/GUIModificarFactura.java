@@ -25,6 +25,10 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -80,7 +84,6 @@ public class GUIModificarFactura extends JFrame implements IGUI {
 
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Fecha de Compra
         JPanel panelFechaCompra = new JPanel();
         mainPanel.add(panelFechaCompra);
 
@@ -106,7 +109,10 @@ public class GUIModificarFactura extends JFrame implements IGUI {
 
                 try {
                     TFactura factura = new TFactura();
-	            	Date fecha= Date.valueOf(fechaCompra.getText());
+                    String fechaInput = fechaCompra.getText();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.FRANCE);
+                    LocalDate date = LocalDate.parse(fechaInput, formatter);
+	            	Date fecha= Date.valueOf(date);
                     factura.setid(Integer.parseInt(id.getText()));
                     factura.setPrecioTotal((float) 0.0);
                     factura.setFechaCompra(fecha);
@@ -145,10 +151,10 @@ public class GUIModificarFactura extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		
 		int resultado = (int) context.getDatos();
-        if (context.getEvento() == Evento.CERRAR_FACTURA_OK) {
+        if (context.getEvento() == Evento.MODIFICAR_FACTURA_OK) {
         	
-            JOptionPane.showMessageDialog(this, "Factura modificar correctamente" + resultado , "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } else if (context.getEvento() == Evento.CERRAR_FACTURA_KO) {
+            JOptionPane.showMessageDialog(this, "Factura modificar correctamente la factura con id " + resultado , "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } else if (context.getEvento() == Evento.MODIFICAR_FACTURA_KO) {
         	
             switch (resultado) {
             case -1:

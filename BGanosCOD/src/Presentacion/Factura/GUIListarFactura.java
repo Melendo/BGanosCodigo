@@ -111,7 +111,7 @@ public class GUIListarFactura extends JFrame implements IGUI {
 
         String[] nombreColumnas = {"ID", "Precio Total", "Fecha de Compra", "Activo"};
         List<String[]> datosColumnas = new ArrayList<String[]>();
-        JTable tabla = ComponentsBuilder.createTable(datos.size(), 4, nombreColumnas, datosColumnas.toArray(new String[][] {}));
+        
 
         int i = 0;
         for (TFactura factura : datos) {
@@ -126,6 +126,8 @@ public class GUIListarFactura extends JFrame implements IGUI {
 			datosColumnas.add(datosFila);
 			i++;
         }
+        
+        JTable tabla = ComponentsBuilder.createTable(datos.size(), 4, nombreColumnas, datosColumnas.toArray(new String[][] {}));
 
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setBounds(50, 115, 800, 288);
@@ -143,11 +145,11 @@ public class GUIListarFactura extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		int resultado = (int) context.getDatos();
-        if (context.getEvento() == Evento.CERRAR_FACTURA_OK) {
+		/*int resultado = (int) context.getDatos();
+        if (context.getEvento() == Evento.LISTAR_FACTURAS_OK) {
         	
             JOptionPane.showMessageDialog(this, "Factura creada correctamente con id: " + resultado , "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } else if (context.getEvento() == Evento.CERRAR_FACTURA_KO) {
+        } else if (context.getEvento() == Evento.LISTAR_FACTURAS_KO) {
         	
             switch (resultado) {
             case -1:
@@ -160,6 +162,6 @@ public class GUIListarFactura extends JFrame implements IGUI {
                 JOptionPane.showMessageDialog(this, "Error desconocido al cerrar la factura.", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             }
-        }
+        }*/
 	}
 }
