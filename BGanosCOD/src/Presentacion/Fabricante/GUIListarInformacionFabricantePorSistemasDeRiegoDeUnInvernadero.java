@@ -1,6 +1,8 @@
 package Presentacion.Fabricante;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
@@ -12,24 +14,22 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.util.Set;
 
 import javax.swing.JButton;
-import javax.swing.JTextField;
 
 import Negocio.Fabricante.TFabricante;
-import Negocio.Fabricante.TFabricanteLocal;
-import Negocio.Fabricante.TFabricanteExtranjero;
 
 import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class GUIMostrarFabricantePorID extends JFrame implements IGUI {
+public class GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero extends JFrame implements IGUI {
 
+	Set<TFabricante> listaFabricantes;
 	private JTextField textId;
 
-	public GUIMostrarFabricantePorID() {
+	public GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero(Set<TFabricante> listaFabricantes) {
 		super("Mostrar Fabricante");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 600;
@@ -53,7 +53,7 @@ public class GUIMostrarFabricantePorID extends JFrame implements IGUI {
 
 		// Titulo
 		gbc.gridwidth = 2; // Toma dos columnas para el t�tulo
-		JLabel msgIntro = new JLabel("Introduzca el ID del fabricante a mostrar", JLabel.CENTER);
+		JLabel msgIntro = new JLabel("Introduzca el ID del invernadero", JLabel.CENTER);
 		mainPanel.add(msgIntro, gbc);
 
 		// Resetear para los campos
@@ -82,9 +82,10 @@ public class GUIMostrarFabricantePorID extends JFrame implements IGUI {
 			try {
 				// Crear un contexto con el evento de mostrar y el ID del sistema
 				ApplicationController.getInstance().manageRequest(
-						new Context(Evento.MOSTRAR_FABRICANTE_POR_ID, Integer.parseInt(textId.getText())));
+						
+						new Context(Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO, Integer.parseInt(textId.getText())));
 			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(GUIMostrarFabricantePorID.this, "Error en el formato del ID", "Error",
+				JOptionPane.showMessageDialog(GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero.this, "Error en el formato del ID", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		});
@@ -93,7 +94,7 @@ public class GUIMostrarFabricantePorID extends JFrame implements IGUI {
 		// Bot�n de cancelar
 		JButton botonCancelar = new JButton("Cancelar");
 		botonCancelar.addActionListener(a -> {
-			GUIMostrarFabricantePorID.this.setVisible(false);
+			GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero.this.setVisible(false);
 			ApplicationController.getInstance().manageRequest(new Context(Evento.FABRICANTE_VISTA, null));
 		});
 		panelBotones.add(botonCancelar);
@@ -102,27 +103,15 @@ public class GUIMostrarFabricantePorID extends JFrame implements IGUI {
 
 	}
 
-	@Override
 	public void actualizar(Context context) {
-
-		if (context.getEvento() == Evento.MOSTRAR_FABRICANTE_POR_ID_OK) {
-			TFabricante tf = (TFabricante) context.getDatos();
-
-			String texto = "ID: " + tf.getId() + ", Nombre: " + tf.getNombre() + ", Potencia de Riego: "
-					+ tf.getCodFabricante() + ", Cantidad de Agua: " + tf.getTelefono() + ", Activo: "
-					+ (tf.getActivo() ? "Sí" : "No")
-					+ (tf instanceof TFabricanteLocal
-							? (", Impuestos:" + ((TFabricanteLocal) tf).getImpuesto() + ", Subvenciones:"
-									+ ((TFabricanteLocal) tf).getSubvencion())
-							: (", Pais de origen:" + ((TFabricanteExtranjero) tf).getPaisDeOrigen() + ", Aranceles:"
-									+ ((TFabricanteExtranjero) tf).getAranceles()));
-
-			JOptionPane.showMessageDialog(this, texto, "Fabricante", JOptionPane.INFORMATION_MESSAGE);
-		} else if (context.getEvento() == Evento.MOSTRAR_FABRICANTE_POR_ID_KO) {
-			JOptionPane.showMessageDialog(this,
-					"No existe sistema de riego con ID: " + ((TFabricante) context.getDatos()).getId(), "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
-		
+		if (context.getEvento() == Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_OK) {
+			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_FABRICANTES_VISTA,context.getDatos()));
+			dispose();
+        } else if (context.getEvento() == Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_KO) {
+        	if(context.getDatos() == null) {
+        		JOptionPane.showMessageDialog(this, "El invernadero no existe", "Error", JOptionPane.ERROR_MESSAGE);
+        	}
+            JOptionPane.showMessageDialog(this, "Error al tratar de listar los Fabricantes", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 	}
 }

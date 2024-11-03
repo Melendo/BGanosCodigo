@@ -13,7 +13,7 @@ public class CommandAltaFabricante implements Command {
 		if(ret > -1){
 			return new Context(Evento.ALTA_FABRICANTE_OK,ret);
 		}else {
-			return new Context(Evento.ALTA_ENTRADA_KO,ret);
+			return new Context(Evento.ALTA_FABRICANTE_KO,ret);
 		}
 	}
 }

@@ -1,22 +1,42 @@
 package Negocio.Fabricante;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
+import Integracion.FactoriaQuery.FactoriaQuery;
+import Integracion.FactoriaQuery.Query;
+import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
+import Negocio.Invernadero.TInvernadero;
 
 public class FabricanteSAImp implements FabricanteSA {
+
 	public Integer altaFabricante(TFabricante fabricante) {
 		int ret = -1;
 
-		if (fabricante.getNombre().isEmpty() || fabricante.getCodFabricante().isEmpty())
-			return -1;// XXX: falta añadir el evento de error
+		if (fabricante.getNombre().isEmpty() || fabricante.getCodFabricante().isEmpty()
+				|| fabricante.getTelefono().isEmpty())// faltan datos
+			return -2;
+
+		if (fabricante.getClass() == TFabricanteLocal.class && (((TFabricanteLocal) fabricante).getImpuesto() < 0
+				|| ((TFabricanteLocal) fabricante).getSubvencion() < 0))// faltan datos local
+			return -2;
+
+		if (fabricante.getClass() == TFabricanteExtranjero.class
+				&& (((TFabricanteExtranjero) fabricante).getAranceles() < 0
+						|| ((TFabricanteExtranjero) fabricante).getPaisDeOrigen().isEmpty()))// faltan datos extranjero
+			return -2;
+
+		if (!comprobarTelefono(fabricante.getTelefono())) {
+			return -4;
+		}
 
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
-			Transaccion t = tm.getTransaccion();
+			Transaccion t = tm.newTransaccion();
 			t.start();
 			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
 			FabricanteDAO fd = fi.getFabricanteDAO();
@@ -26,11 +46,11 @@ public class FabricanteSAImp implements FabricanteSA {
 			if (tfa == null) { // no existe por lo que le damos de alta
 				ret = fd.altaFabricante(fabricante);
 				t.commit();
-			} else if(!tfa.getActivo()) { // esta desactivado, lo activamos
+			} else if (!tfa.getActivo()) { // esta desactivado, lo activamos
 				ret = fd.modificarFabricante(fabricante);
 				t.commit();
 			} else { // ya existe y esta activado
-				ret = -1; //XXX: falta el cod del error
+				ret = -3;
 				t.rollback();
 			}
 
@@ -42,51 +62,226 @@ public class FabricanteSAImp implements FabricanteSA {
 	}
 
 	public Integer bajaFabricante(Integer idFabricante) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
+		int ret = -1;
 
-	public TFabricante mostrarFabricantePorId(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+
+			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+			FabricanteDAO fd = fi.getFabricanteDAO();
+			TFabricante tf = fd.mostrarFabricantePorId(idFabricante);
+
+			if (tf != null) {
+				if (tf.getActivo()) {
+					ret = fd.bajaFabricante(idFabricante);
+					t.commit();
+				} else {
+					ret = -2; // No esta activo
+					t.rollback();
+				}
+			} else {
+				ret = -3; // No existe
+				t.rollback();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return ret;
 	}
 
 	public Integer modificarFabricante(TFabricante fabricante) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		int ret = -1;
+
+		if (fabricante.getNombre().isEmpty() || fabricante.getCodFabricante().isEmpty()
+				|| fabricante.getTelefono().isEmpty())// faltan datos
+			return -2;
+
+		if ((fabricante instanceof TFabricanteLocal) && (((TFabricanteLocal) fabricante).getImpuesto() < 0
+				|| ((TFabricanteLocal) fabricante).getSubvencion() < 0))// faltan datos local
+			return -2;
+
+		if ((fabricante instanceof TFabricanteExtranjero) && (((TFabricanteExtranjero) fabricante).getAranceles() < 0
+				|| ((TFabricanteExtranjero) fabricante).getPaisDeOrigen().isEmpty()))// faltan datos extranjero
+			return -2;
+
+		if (!comprobarTelefono(fabricante.getTelefono()))
+			return -6;
+
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+
+			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+			FabricanteDAO fd = fi.getFabricanteDAO();
+			TFabricante tfa = fd.mostrarFabricantePorId(fabricante.getId());
+
+			if (tfa == null) { // no existe
+				ret = -3;
+				t.rollback();
+			} else if (tfa instanceof TFabricanteExtranjero && fabricante instanceof TFabricanteLocal) { // el de la BD
+																											// es local
+																											// y
+																											// intentamos
+																											// que se
+																											// extranjero
+				ret = -4;
+				t.rollback();
+			} else if (fabricante instanceof TFabricanteExtranjero && tfa instanceof TFabricanteLocal) { // el de la BD
+																											// es
+																											// extranjero
+																											// y
+																											// intentamos
+																											// que se
+																											// local
+				ret = -5;
+				t.rollback();
+			} else { // lo modificamos
+				ret = fd.modificarFabricante(fabricante);
+				t.commit();
+			}
+
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		}
+
+		return ret;
+
+	}
+
+	public TFabricante mostrarFabricantePorId(Integer id) {
+		TFabricante tf = null;
+		try {
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+
+			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+			FabricanteDAO fd = fi.getFabricanteDAO();
+
+			tf = fd.mostrarFabricantePorId(id);
+
+			if (tf != null) {
+				t.commit();
+			} else {
+				tf = new TFabricante();
+				tf.setId(id);// No encontrado dejamos el id para sacar el mensaje de error
+				t.rollback();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return tf;
 	}
 
 	public Set<TFabricante> listarFabricantes() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
 
-	public Set<TFabricante> listarFabricantePorNombre(String nombre) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TFabricante> listaFab = new LinkedHashSet<>();
+
+		try {
+
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+
+			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+			FabricanteDAO fd = fi.getFabricanteDAO();
+
+			listaFab = fd.listarFabricantes();
+			t.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return listaFab;
 	}
 
 	public Set<TFabricante> listarFabricantesLocales() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+
+		Set<TFabricante> listaFab = new LinkedHashSet<>();
+
+		try {
+
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+
+			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+			FabricanteDAO fd = fi.getFabricanteDAO();
+
+			listaFab = fd.listarFabricantesLocales();
+			t.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return listaFab;
 	}
 
 	public Set<TFabricante> listarFabricantesExtranjeros() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TFabricante> listaFab = new LinkedHashSet<>();
+
+		try {
+
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+
+			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+			FabricanteDAO fd = fi.getFabricanteDAO();
+
+			listaFab = fd.listarFabricantesExtranjeros();
+			t.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return listaFab;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Set<TFabricante> listarFabricantesPorInvernadero(Integer id) {
+		Set<TFabricante> listaFab = new LinkedHashSet<>();
+
+		try {
+
+			TransaccionManager tm = TransaccionManager.getInstance();
+			Transaccion t = tm.newTransaccion();
+			t.start();
+
+			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
+			InvernaderoDAO finv = fi.getInvernaderoDAO();
+
+			TInvernadero ti = finv.mostrarInvernaderoPorID(id);
+
+			if (ti != null) { // el invernadero existe
+				FactoriaQuery fq = FactoriaQuery.getInstance();
+				Query q = fq.getNewQuery("ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero");
+				
+				listaFab = (Set<TFabricante>) q.execute(id);
+				
+			} else { // el invernadero no existe
+				t.rollback();
+				return null;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return listaFab;
+	}
+
+	private boolean comprobarTelefono(String telefono) {
+		return telefono.matches("\\d{9}");
 	}
 }

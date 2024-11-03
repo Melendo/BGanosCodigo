@@ -58,7 +58,7 @@ public class Evento {
     public static final int MOSTRAR_FABRICANTE_POR_ID_VISTA = 305;
     public static final int LISTAR_FABRICANTES_POR_NOMBRE_VISTA = 306;
     public static final int LISTAR_FABRICANTES_LOCALES_VISTA = 307;
-    public static final int LISTAR_FABRICANTES_EXTRANGEROS_VISTA = 308;
+    public static final int LISTAR_FABRICANTES_EXTRANJEROS_VISTA = 308;
     public static final int LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_VISTA = 309;
     
     // 				Funciones Fabricante				320 - 349
@@ -69,7 +69,7 @@ public class Evento {
     public static final int MOSTRAR_FABRICANTE_POR_ID = 324;
     public static final int LISTAR_FABRICANTES_POR_NOMBRE = 325;
     public static final int LISTAR_FABRICANTES_LOCALES = 326;
-    public static final int LISTAR_FABRICANTES_EXTRANGEROS = 327;
+    public static final int LISTAR_FABRICANTES_EXTRANJEROS = 327;
     public static final int LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO = 328;
     
     //				OKs y KOs Fabricante					350 - 399
@@ -95,8 +95,8 @@ public class Evento {
     public static final int LISTAR_FABRICANTES_LOCALES_OK = 362;
     public static final int LISTAR_FABRICANTES_LOCALES_KO = 363;
     //					Listar por Extrangeros
-    public static final int LISTAR_FABRICANTES_EXTRANGEROS_OK = 364;
-    public static final int LISTAR_FABRICANTES_EXTRANGEROS_KO = 365;
+    public static final int LISTAR_FABRICANTES_EXTRANJEROS_OK = 364;
+    public static final int LISTAR_FABRICANTES_EXTRANJEROS_KO = 365;
     //					Listar por INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO
     public static final int LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_OK = 366;
     public static final int LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_KO = 367;

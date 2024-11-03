@@ -8,9 +8,8 @@ import Presentacion.Controller.Command.CommandEntrada.CommandModificarEntrada;
 import Presentacion.Controller.Command.CommandEntrada.CommandMostrarEntrada;
 import Presentacion.Controller.Command.CommandFabricante.CommandAltaFabricante;
 import Presentacion.Controller.Command.CommandFabricante.CommandGUIBajaFabricante;
-import Presentacion.Controller.Command.CommandFabricante.CommandListarFabricantePorNombre;
 import Presentacion.Controller.Command.CommandFabricante.CommandListarFabricantes;
-import Presentacion.Controller.Command.CommandFabricante.CommandListarFabricantesExtrangeros;
+import Presentacion.Controller.Command.CommandFabricante.CommandListarFabricantesExtranjeros;
 import Presentacion.Controller.Command.CommandFabricante.CommandListarFabricantesLocales;
 import Presentacion.Controller.Command.CommandFabricante.CommandListarInformacionFabricanteDeSistemaDeRiegoDeUnInvernadero;
 import Presentacion.Controller.Command.CommandFabricante.CommandModificarFabricante;
@@ -91,12 +90,12 @@ public class CommandFactoryImp extends CommandFactory {
 		    return new CommandListarFabricantes();
 		case Evento.MOSTRAR_FABRICANTE_POR_ID:
 		    return new CommandMostrarFabricantePorId();
-		case Evento.LISTAR_FABRICANTES_POR_NOMBRE:
-		    return new CommandListarFabricantePorNombre();
+//		case Evento.LISTAR_FABRICANTES_POR_NOMBRE:
+//		    return new CommandListarFabricantePorNombre();
 		case Evento.LISTAR_FABRICANTES_LOCALES:
 		    return new CommandListarFabricantesLocales();
-		case Evento.LISTAR_FABRICANTES_EXTRANGEROS:
-		    return new CommandListarFabricantesExtrangeros();
+		case Evento.LISTAR_FABRICANTES_EXTRANJEROS:
+		    return new CommandListarFabricantesExtranjeros();
 		case Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO:
 			return new CommandListarInformacionFabricanteDeSistemaDeRiegoDeUnInvernadero();
 		  

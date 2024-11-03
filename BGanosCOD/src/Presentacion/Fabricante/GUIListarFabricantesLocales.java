@@ -1,7 +1,6 @@
 package Presentacion.Fabricante;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
@@ -23,14 +22,15 @@ import Negocio.Fabricante.TFabricanteLocal;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
-public class GUIListarFabricantes extends JFrame implements IGUI {
+public class GUIListarFabricantesLocales extends JFrame implements IGUI {
 
 	Set<TFabricante> listaFabricantes;
 
-	public GUIListarFabricantes(Set<TFabricante> listaFabricantes) {
-		super("Mostrar todos los Fabricantes");
+	public GUIListarFabricantesLocales(Set<TFabricante> listaFabricantes) {
+		super("Mostrar Fabricantes Extranjeros");
 		this.listaFabricantes = listaFabricantes;
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 800;
@@ -53,7 +53,8 @@ public class GUIListarFabricantes extends JFrame implements IGUI {
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
 		// Tabla
-		String[] nombreColumnas = { "ID", "Nombre", "Cod. Fabricante", "Teléfono", "Tipo", "Activo" };
+		String[] nombreColumnas = { "ID", "Nombre", "Cod. Fabricante", "Teléfono", "Subvenciones", "Impuesto",
+				"Activo" };
 		String[][] tablaDatos = new String[listaFabricantes.size()][nombreColumnas.length];
 
 		int i = 0;
@@ -62,8 +63,9 @@ public class GUIListarFabricantes extends JFrame implements IGUI {
 			tablaDatos[i][1] = sistema.getNombre();
 			tablaDatos[i][2] = sistema.getCodFabricante();
 			tablaDatos[i][3] = sistema.getTelefono();
-			tablaDatos[i][4] = (sistema instanceof TFabricanteLocal) ? "Local" : "Extranjero";
-			tablaDatos[i][5] = sistema.getActivo() ? "Sí" : "No";
+			tablaDatos[i][4] = ((TFabricanteLocal) sistema).getSubvencion().toString();
+			tablaDatos[i][5] = ((TFabricanteLocal) sistema).getImpuesto().toString();
+			tablaDatos[i][6] = sistema.getActivo() ? "Sí" : "No";
 			i++;
 		}
 
@@ -80,7 +82,7 @@ public class GUIListarFabricantes extends JFrame implements IGUI {
 
 		JButton botonCancelar = new JButton("Cancelar");
 		botonCancelar.addActionListener(a -> {
-			GUIListarFabricantes.this.setVisible(false);
+			GUIListarFabricantesLocales.this.setVisible(false);
 			ApplicationController.getInstance().manageRequest(new Context(Evento.FABRICANTE_VISTA, null));
 		});
 		panelBotones.add(botonCancelar);
@@ -90,10 +92,12 @@ public class GUIListarFabricantes extends JFrame implements IGUI {
 	}
 
 	public void actualizar(Context context) {
-		if (context.getEvento() == Evento.LISTAR_FABRICANTES_OK) {
-            JOptionPane.showMessageDialog(this, "Fabricantes listados correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } else if (context.getEvento() == Evento.LISTAR_FABRICANTES_KO) {
-            JOptionPane.showMessageDialog(this, "Error al tratar de listar los Fabricantes", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+		if (context.getEvento() == Evento.LISTAR_FABRICANTES_LOCALES_OK) {
+			JOptionPane.showMessageDialog(this, "Fabricantes Extranjeros listados correctamente", "Éxito",
+					JOptionPane.INFORMATION_MESSAGE);
+		} else if (context.getEvento() == Evento.LISTAR_FABRICANTES_LOCALES_KO) {
+			JOptionPane.showMessageDialog(this, "Error al tratar de listar los Fabricantes Extranjeros", "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }
