@@ -80,7 +80,7 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c.prepareStatement(
-					"UPDATE invernadero SET nombre = ?, sustrato = ?, tipo_iluminacion = ? where id = ?",
+					"UPDATE invernadero SET nombre = ?, sustrato = ?, tipo_iluminacion = ?, activo = 1 where id = ?",
 					Statement.RETURN_GENERATED_KEYS);
 
 			statement.setString(1, invernadero.getNombre());
@@ -193,7 +193,7 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 	}
 
 	public Set<TInvernadero> listarInvernaderoPorSR(Integer id_sistema_de_riego) {
-		Set<TInvernadero> invernaderos = new HashSet<>();
+		Set<TInvernadero> invernaderos = new LinkedHashSet<>();
 		try {
 			TransaccionManager tManager = TransaccionManager.getInstance();
 			Transaccion t = tManager.getTransaccion();
