@@ -10,6 +10,7 @@ public interface InvernaderoSA {
 	//
 	public Integer altaInvernadero(TInvernadero invernadero);
 
+	//
 	public Integer bajaInvernadero(Integer id);
 
 	//
@@ -24,10 +25,13 @@ public interface InvernaderoSA {
 	//
 	public Collection<TInvernadero> listarInvernadero();
 
+	//
 	public Collection<TInvernadero> listarInvernaderoPorSR(Integer id_sistema_riegos);
 
+	//
 	public Integer vincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero);
 
+	//
 	public Integer desvincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero);
 
 }

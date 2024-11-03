@@ -2,6 +2,7 @@
 package Integracion.FactoriaIntegracion;
 
 import  Integracion.Invernadero.InvernaderoDAO;
+import Integracion.Invernadero.TieneDAO;
 import Integracion.Entrada.EntradaDAO;
 import Integracion.Fabricante.FabricanteDAO;
 import Integracion.Factura.FacturaDAO;
@@ -35,6 +36,9 @@ public  abstract class FactoriaIntegracion {
 	public abstract PlantaDAO getPlantaDAO();
 	
 	public abstract LineaFacturaDAO getDAOLineaFactura();
+	
+	public abstract TieneDAO getDaoTiene();
+
 	
 	
 }

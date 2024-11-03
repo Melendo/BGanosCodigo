@@ -179,7 +179,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
                     vistaActual = new GUIListarInvernadero((Set<TInvernadero>) contexto.getDatos());
                     return vistaActual;
                 case Evento.LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO_VISTA:
-                    vistaActual = new GUIListarInvernaderoPorSR((Set<TInvernadero>) contexto.getDatos()); 
+                    vistaActual = new GUIListarInvernaderoPorSR(); 
                     return vistaActual;
                 case Evento.VINCULAR_SISTEMA_RIEGO_INVERNADERO_VISTA:
                     vistaActual = new GUIVincularSRInvernadero(); 
