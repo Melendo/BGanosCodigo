@@ -70,6 +70,7 @@ public class ComponentsBuilder {
         button.setBackground(new Color(220, 220, 220));
         button.setFocusPainted(false);
         button.setBorder(createRoundedBorder());
+        button.setText("←");
         return button;
     }
 

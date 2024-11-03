@@ -179,7 +179,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 		}
 	}
 
-	public Set<TFabricante> listarFabricantesExtrangeros() {
+	public Set<TFabricante> listarFabricantesExtranjeros() {
 		Set<TFabricante> lFabricantes = new HashSet<>();
 
 		try {
