@@ -24,7 +24,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement s = c.prepareStatement(
-					"INSERT INTO fabricante (cod_fabricante, nombre, telefono, activo) VALUES(?,?,?,?)",
+					"INSERT INTO fabricante (cod_fabricante, nombre, telefono, activo) VALUES (?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 			s.setString(1, fabricante.getCodFabricante());
 			s.setString(2, fabricante.getNombre());
@@ -38,7 +38,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 
 				if (fabricante instanceof TFabricanteLocal) {
 					s = c.prepareStatement(
-							"INSERT INTO fabricante_local(id_fabricante, impuestos, subvenciones) Values(?,?,?)");
+							"INSERT INTO fabricante_local (id_fabricante, impuestos, subvenciones) Values (?, ?, ?)");
 					s.setInt(1, id);
 					s.setInt(2, ((TFabricanteLocal) fabricante).getImpuesto());
 					s.setInt(3, ((TFabricanteLocal) fabricante).getSubvencion());
@@ -50,10 +50,10 @@ public class FabricanteDAOImp implements FabricanteDAO {
 					}
 				} else if (fabricante instanceof TFabricanteExtranjero) {
 					s = c.prepareStatement(
-							"INSERT INTO fabricante_extranjero (id_fabricante, aranceles, pais_origen) Values(?,?,?)");
+							"INSERT INTO fabricante_extranjero (id_fabricante, aranceles, pais_origen) Values (?, ?, ?)");
 					s.setInt(1, id);
 					s.setInt(2, ((TFabricanteExtranjero) fabricante).getAranceles());
-					s.setString(2, ((TFabricanteExtranjero) fabricante).getPaisDeOrigen());
+					s.setString(3, ((TFabricanteExtranjero) fabricante).getPaisDeOrigen());
 
 					if (s.executeUpdate() == 0) {
 						s.close();
@@ -61,7 +61,6 @@ public class FabricanteDAOImp implements FabricanteDAO {
 						return -1;
 					}
 				}
-
 				s.close();
 				r.close();
 				return id;
@@ -99,12 +98,13 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 
-			PreparedStatement s = c
-					.prepareStatement("UPDATE fabricante SET nombre=?, activo=?, cod_fabricante=? WHERE id=?");
+			PreparedStatement s = c.prepareStatement(
+					"UPDATE fabricante SET nombre=?, activo=?, telefono=?, cod_fabricante=? WHERE id=?");
 			s.setString(1, fabricante.getNombre());
 			s.setBoolean(2, fabricante.getActivo());
-			s.setString(3, fabricante.getCodFabricante());
-			s.setInt(4, fabricante.getId());
+			s.setString(3, fabricante.getTelefono());
+			s.setString(4, fabricante.getCodFabricante());
+			s.setInt(5, fabricante.getId());
 
 			s.executeUpdate();
 
@@ -141,12 +141,12 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement s = c.prepareStatement(
-					"SELECT * FROM fabricante AS e LEFT JOIN fabricante_local AS el ON e.id=el.id LEFT JOIN fabricante_extranjero AS ez ON e.id=ez.id FOR UPDATE");
+					"SELECT * FROM fabricante AS e LEFT JOIN fabricante_local AS el ON e.id=el.id_fabricante LEFT JOIN fabricante_extranjero AS ez ON e.id=ez.id_fabricante FOR UPDATE");
 			ResultSet r = s.executeQuery();
 
 			while (r.next()) {
 
-				if (r.getInt("impuestos") > 0) {
+				if (r.getString("pais_origen") == null) {
 					TFabricanteLocal tLocal = new TFabricanteLocal();
 					tLocal.setActivo(r.getBoolean("activo"));
 					tLocal.setCodFabricante(r.getString("cod_fabricante"));
@@ -175,6 +175,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			s.close();
 			return lFabricantes;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -188,18 +189,18 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement s = c.prepareStatement(
-					"SELECT * FROM fabricante AS e LEFT JOIN fabricante_extranjero AS ez ON e.id=ez.id_fabricante FOR UPDATE");
+					"SELECT * FROM fabricante_extranjero AS e LEFT JOIN fabricante AS ez ON e.id_fabricante = ez.id FOR UPDATE");
 			ResultSet r = s.executeQuery();
 
 			while (r.next()) {
 
-				TFabricanteLocal tLocal = new TFabricanteLocal();
+				TFabricanteExtranjero tLocal = new TFabricanteExtranjero();
 				tLocal.setActivo(r.getBoolean("activo"));
 				tLocal.setCodFabricante(r.getString("cod_fabricante"));
 				tLocal.setId(r.getInt("id"));
-				tLocal.setImpuesto(r.getInt("impuestos"));
+				tLocal.setAranceles(r.getInt("aranceles"));
 				tLocal.setNombre(r.getString("nombre"));
-				tLocal.setSubvencion(r.getInt("subvenciones"));
+				tLocal.setPaisDeOrigen(r.getString("pais_origen"));
 				tLocal.setTelefono(r.getString("telefono"));
 
 				lFabricantes.add(tLocal);
@@ -209,6 +210,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			s.close();
 			return lFabricantes;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -222,27 +224,28 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement s = c.prepareStatement(
-					"SELECT * FROM fabricante AS e LEFT JOIN fabricante_local AS ez ON e.id=ez.id_fabricante FOR UPDATE");
+					"SELECT * FROM fabricante_Local AS e LEFT JOIN fabricante AS ez ON e.id_fabricante = ez.id FOR UPDATE");
 			ResultSet r = s.executeQuery();
 
 			while (r.next()) {
 
-				TFabricanteExtranjero tExtranjero = new TFabricanteExtranjero();
-				tExtranjero.setActivo(r.getBoolean("activo"));
-				tExtranjero.setAranceles(r.getInt("aranceles"));
-				tExtranjero.setCodFabricante(r.getString("cod_fabricante"));
-				tExtranjero.setId(r.getInt("id"));
-				tExtranjero.setNombre(r.getString("nombre"));
-				tExtranjero.setPaisDeOrigen(r.getString("pais_origen"));
-				tExtranjero.setTelefono(r.getString("telefono"));
+				TFabricanteLocal tLocal = new TFabricanteLocal();
+				tLocal.setActivo(r.getBoolean("activo"));
+				tLocal.setImpuesto(r.getInt("impuestos"));
+				tLocal.setCodFabricante(r.getString("cod_fabricante"));
+				tLocal.setId(r.getInt("id"));
+				tLocal.setNombre(r.getString("nombre"));
+				tLocal.setSubvencion(r.getInt("impuestos"));
+				tLocal.setTelefono(r.getString("telefono"));
 
-				lFabricantes.add(tExtranjero);
+				lFabricantes.add(tLocal);
 			}
 
 			r.close();
 			s.close();
 			return lFabricantes;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

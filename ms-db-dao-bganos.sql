@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-10-2024 a las 11:51:34
+-- Tiempo de generación: 03-11-2024 a las 22:59:28
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `ms_db_dao_beganos`
+-- Base de datos: `ms-db-dao-bganos`
 --
 
 -- --------------------------------------------------------
@@ -59,8 +59,7 @@ CREATE TABLE `fabricante` (
 CREATE TABLE `fabricante_extranjero` (
   `id_fabricante` int(11) NOT NULL,
   `aranceles` int(11) NOT NULL,
-  `pais_origen` varchar(255) NOT NULL,
-  `activo` tinyint(1) NOT NULL
+  `pais_origen` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -72,8 +71,7 @@ CREATE TABLE `fabricante_extranjero` (
 CREATE TABLE `fabricante_local` (
   `id_fabricante` int(11) NOT NULL,
   `impuestos` int(11) NOT NULL,
-  `subvenciones` int(11) NOT NULL,
-  `activo` tinyint(1) NOT NULL
+  `subvenciones` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -140,8 +138,7 @@ CREATE TABLE `planta` (
 CREATE TABLE `planta_frutal` (
   `id_planta` int(11) NOT NULL,
   `nombre_fruta` varchar(255) NOT NULL,
-  `maduracion` varchar(255) NOT NULL,
-  `activo` tinyint(1) NOT NULL
+  `maduracion` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -152,8 +149,7 @@ CREATE TABLE `planta_frutal` (
 
 CREATE TABLE `planta_no_frutal` (
   `id` int(11) NOT NULL,
-  `tipo_hoja` varchar(255) NOT NULL,
-  `activo` tinyint(1) NOT NULL
+  `tipo_hoja` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -277,7 +273,7 @@ ALTER TABLE `sistemas_riego_de_invernadero`
 -- AUTO_INCREMENT de la tabla `entrada`
 --
 ALTER TABLE `entrada`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `fabricante`
@@ -320,22 +316,22 @@ ALTER TABLE `sistemas_riego`
 --
 
 --
--- Filtros para la tabla `fabricante`
+-- Filtros para la tabla `entrada`
 --
-ALTER TABLE `fabricante`
-  ADD CONSTRAINT `fabricante_ibfk_1` FOREIGN KEY (`id`) REFERENCES `fabricante_extranjero` (`id_fabricante`);
+ALTER TABLE `entrada`
+  ADD CONSTRAINT `entrada_ibfk_1` FOREIGN KEY (`id_invernadero`) REFERENCES `invernadero` (`id`);
+
+--
+-- Filtros para la tabla `fabricante_extranjero`
+--
+ALTER TABLE `fabricante_extranjero`
+  ADD CONSTRAINT `fabricante_ibfk_1` FOREIGN KEY (`id_fabricante`) REFERENCES `fabricante` (`id`);
 
 --
 -- Filtros para la tabla `fabricante_local`
 --
 ALTER TABLE `fabricante_local`
   ADD CONSTRAINT `fabricante_local_ibfk_1` FOREIGN KEY (`id_fabricante`) REFERENCES `fabricante` (`id`);
-
---
--- Filtros para la tabla `invernadero`
---
-ALTER TABLE `invernadero`
-  ADD CONSTRAINT `invernadero_ibfk_1` FOREIGN KEY (`id`) REFERENCES `entrada` (`id_invernadero`);
 
 --
 -- Filtros para la tabla `linea_factura`
