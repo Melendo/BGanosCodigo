@@ -60,6 +60,10 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 
 			exito = statement.executeUpdate();
 
+			if (exito == 1) {
+				exito = id;
+			}
+
 			statement.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -86,6 +90,9 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 
 			exito = statement.executeUpdate();
 
+			if (exito == 1) {
+				exito = invernadero.getId();
+			}
 
 			statement.close();
 		} catch (Exception e) {
@@ -190,11 +197,8 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			TransaccionManager tManager = TransaccionManager.getInstance();
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
-			PreparedStatement statement = c.prepareStatement(
-					"SELECT inv.* "
-						    + "FROM sistemas_riego_de_invernadero sri "
-						    + "JOIN invernadero inv ON sri.id_invernadero = inv.id "
-						    + "WHERE sri.id_sistema_riego = ?");
+			PreparedStatement statement = c.prepareStatement("SELECT inv.* " + "FROM sistemas_riego_de_invernadero sri "
+					+ "JOIN invernadero inv ON sri.id_invernadero = inv.id " + "WHERE sri.id_sistema_riego = ?");
 
 			statement.setInt(1, id_sistema_de_riego);
 			ResultSet result = statement.executeQuery();
