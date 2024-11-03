@@ -42,7 +42,7 @@ public class ComponentsBuilder {
                 ancho = Math.max(ancho, anchoCelda);
             }
 
-            modeloColumnas.getColumn(i).setPreferredWidth(ancho + 10); // Añadir un margen extra
+            modeloColumnas.getColumn(i).setPreferredWidth(ancho + 10); // Aï¿½adir un margen extra
         }
         tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
@@ -66,7 +66,7 @@ public class ComponentsBuilder {
         icon = new ImageIcon(newImg);
         button.setIcon(icon);
         button.setBounds(40, 25, 80, 60);
-        button.setToolTipText("Atrás");
+        button.setToolTipText("AtrÃ¡s");
         button.setBackground(new Color(220, 220, 220));
         button.setFocusPainted(false);
         button.setBorder(createRoundedBorder());
@@ -76,7 +76,7 @@ public class ComponentsBuilder {
     public static JPanel createPanel(int x, int y, int width, int height) {
         JPanel panel = new JPanel();
         panel.setBounds(x, y, width, height);
-        panel.setBackground(new Color(250, 250, 250));  // Fondo más claro para contraste
+        panel.setBackground(new Color(250, 250, 250));  // Fondo mï¿½s claro para contraste
         return panel;
     }
 
@@ -85,7 +85,7 @@ public class ComponentsBuilder {
         label.setBounds(x, y, width, height);
         label.setForeground(color);
         label.setHorizontalAlignment(JLabel.CENTER);
-        label.setFont(new Font("Verdana", Font.BOLD, 18));  // Fuente más grande para mejor visibilidad
+        label.setFont(new Font("Verdana", Font.BOLD, 18));  // Fuente mï¿½s grande para mejor visibilidad
         return label;
     }
 

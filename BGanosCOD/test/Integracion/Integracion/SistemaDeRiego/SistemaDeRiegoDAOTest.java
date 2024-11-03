@@ -11,14 +11,22 @@ import org.junit.Test;
 
 import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
+import Integracion.Invernadero.InvernaderoDAO;
+import Integracion.Invernadero.TieneDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
+import Negocio.Fabricante.TFabricante;
+import Negocio.Fabricante.TFabricanteLocal;
+import Negocio.Invernadero.TInvernadero;
+import Negocio.Invernadero.TTiene;
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
 public class SistemaDeRiegoDAOTest {
 	
 	private static SistemaDeRiegoDAO sistemaRiegoDAO;
 	private static FabricanteDAO fabricanteDAO;
+	private static InvernaderoDAO invernaderoDAO;
+	private static TieneDAO tieneDAO;
 	
     // Comparar dos objetos TSistemaDeRiego
     private boolean equals(TSistemaDeRiego s1, TSistemaDeRiego s2) {
@@ -36,10 +44,40 @@ public class SistemaDeRiegoDAOTest {
 
     // Crear un sistema de riego con valores predeterminados
     private TSistemaDeRiego getTSistemaDeRiego() {
-        return new TSistemaDeRiego(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, getNumRandom());
+		TFabricante tFabricante = getTFabricante();
+		int idFabricante = fabricanteDAO.altaFabricante(tFabricante);
+        return new TSistemaDeRiego(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(), true, idFabricante);
     }
-
-
+    
+	private TFabricante getTFabricante() {
+		TFabricanteLocal  tFabricanteLocal= new TFabricanteLocal();
+		tFabricanteLocal.setActivo(true);
+		tFabricanteLocal.setCodFabricante(getNameRandom());
+		tFabricanteLocal.setNombre(getNameRandom());
+		tFabricanteLocal.setTelefono(getNameRandom());
+		tFabricanteLocal.setImpuesto(getNumRandom());
+		tFabricanteLocal.setSubvencion(getNumRandom());
+		
+        return tFabricanteLocal;	
+	}
+	
+	private TInvernadero getTInvernadero() {
+		TInvernadero tInvernadero = new TInvernadero();
+		tInvernadero.setActivo(true);
+		tInvernadero.setNombre(getNameRandom());
+		tInvernadero.setSustrato(getNameRandom());
+		tInvernadero.setTipo_iluminacion(getNameRandom());
+		
+	  	return tInvernadero;
+	}
+    
+    private TTiene getTTiene(int idSistRiego, int idInvernadero){
+    	TTiene tTiene = new TTiene();
+    	tTiene.setId_Invernadero(idInvernadero);
+    	tTiene.setId_SistemasDeRiego(idSistRiego);
+    	return tTiene;
+    }
+    
 
 	private String getNameRandom() {
 		String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -71,6 +109,8 @@ public class SistemaDeRiegoDAOTest {
 	public static void beforeClass() {
 		sistemaRiegoDAO = FactoriaIntegracion.getInstance().getSistemaDeRiegoDAO();
 		fabricanteDAO =	FactoriaIntegracion.getInstance().getFabricanteDAO();
+		invernaderoDAO = FactoriaIntegracion.getInstance().getInvernaderoDAO();
+		//tieneDAO = FactoriaIntegracion.getInstance().getTieneDAO();
 	}
 
 	@Test
@@ -82,12 +122,12 @@ public class SistemaDeRiegoDAOTest {
 			Integer idSistemaDeRiego = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
 			if (idSistemaDeRiego < 0) {
 				trans.rollback();
-				fail("Error: altaSistemaDeRiego() deber韆 retornar ID > 0");
+				fail("Error: altaSistemaDeRiego() deber锟絘 retornar ID > 0");
 			}
 			trans.commit(); 
 		} catch (Exception e) {
 			
-			fail("Excepci髇");
+			fail("Excepci贸n");
 			e.printStackTrace();
 		}
 	}
@@ -102,11 +142,11 @@ public class SistemaDeRiegoDAOTest {
 			Integer result = sistemaRiegoDAO.bajaSistemaDeRiego(idSistemaDeRiego);
 			if (result < 0) {
 				trans.rollback();
-				fail("Error: bajaSistemaDeRiego() deber韆 retornar un n鷐ero positivo");
+				fail("Error: bajaSistemaDeRiego() deber锟絘 retornar un n锟絤ero positivo");
 			}
 			trans.commit(); 
 		} catch (Exception e) {
-			fail("Excepci髇");
+			fail("Excepci贸n");
 			e.printStackTrace();
 		}
 	}
@@ -127,7 +167,7 @@ public class SistemaDeRiegoDAOTest {
 
 			trans.commit(); 
 		} catch (Exception e) {
-			fail("Excepci髇");
+			fail("Excepci贸n");
 			e.printStackTrace();
 		}
 	}
@@ -160,7 +200,7 @@ public class SistemaDeRiegoDAOTest {
 
 	        trans.commit();
 	    } catch (Exception e) {
-	        fail("Excepci髇");
+	        fail("Excepci贸n");
 	        e.printStackTrace();
 	    }
 	}
@@ -198,7 +238,7 @@ public class SistemaDeRiegoDAOTest {
 
 	        trans.commit();
 	    } catch (Exception e) {
-	        fail("Excepci髇");
+	        fail("Excepci贸n");
 	        e.printStackTrace();
 	    }
 	}
@@ -208,11 +248,11 @@ public class SistemaDeRiegoDAOTest {
 	    try {
 	    	Transaccion trans = crearTransaccion();
 	    	trans.start();
-
-	    	Integer idFabricante = getNumRandom();  //HACER ALTA FABRICANTE
 	    	
 	    	TSistemaDeRiego sistRiego = getTSistemaDeRiego();
+	    	Integer idFabricante = sistRiego.getIdFabricante();
 			TSistemaDeRiego sistRiego2 = getTSistemaDeRiego(); 
+			sistRiego2.setIdFabricante(idFabricante);
 
 	        Integer idSistemaDeRiego = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
 	        sistRiego.setId(idSistemaDeRiego);
@@ -240,7 +280,7 @@ public class SistemaDeRiegoDAOTest {
 
 	        trans.commit();
 	    } catch (Exception e) {
-	        fail("Excepci髇");
+	        fail("Excepci贸n");
 	        e.printStackTrace();
 	    }
 	}
@@ -261,8 +301,12 @@ public class SistemaDeRiegoDAOTest {
 	        sistRiego2.setId(idSistemaDeRiego2);	        
 	        boolean encontrado2 = false;
 	        
-	        Integer idInvernadero = getNumRandom();  //meter a la tabla la relacionrealmente
+	        TInvernadero tInvernadero= getTInvernadero();
+	        Integer idInvernadero = invernaderoDAO.altaInvernadero(tInvernadero);  
 
+	        tieneDAO.altaTiene(getTTiene(idSistemaDeRiego, idInvernadero));
+	        tieneDAO.altaTiene(getTTiene(idSistemaDeRiego2, idInvernadero));
+	        
 	        Set<TSistemaDeRiego> sistRiegoInvernadero = sistemaRiegoDAO.listarSistemaDeRiegoInvernadero(idInvernadero);
 
 	        for (TSistemaDeRiego sistR : sistRiegoInvernadero) {
@@ -280,7 +324,7 @@ public class SistemaDeRiegoDAOTest {
 
 	        trans.commit();
 	    } catch (Exception e) {
-	        fail("Excepci髇");
+	        fail("Excepci贸n");
 	        e.printStackTrace();
 	    }
 	}
@@ -305,7 +349,7 @@ public class SistemaDeRiegoDAOTest {
 
 	        trans.commit();
 	    } catch (Exception e) {
-	        fail("Excepci髇");
+	        fail("Excepci贸n");
 	        e.printStackTrace();
 	    }
 	}

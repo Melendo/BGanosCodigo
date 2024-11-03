@@ -113,13 +113,15 @@ public class GUIListarSistemaDeRiegoPorFabricante extends JFrame implements IGUI
             int idFabricante = Integer.parseInt(fabricante); 
             ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_SISTEMAS_RIEGO_POR_FABRICANTE, idFabricante));
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido para el ID del fabricante.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un nÃºmero vÃ¡lido para el ID del fabricante.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    @Override
+
+	@Override
     public void actualizar(Context context) {
         if (context.getEvento() == Evento.LISTAR_SISTEMA_DE_RIEGO_POR_FABRICANTE_OK) {
+        	@SuppressWarnings("unchecked")
             Set<TSistemaDeRiego> sistemas = (Set<TSistemaDeRiego>) context.getDatos();
           
             String[][] datos = new String[sistemas.size()][7]; 
@@ -131,7 +133,7 @@ public class GUIListarSistemaDeRiegoPorFabricante extends JFrame implements IGUI
                     String.valueOf(sistema.getPotenciaRiego()),
                     String.valueOf(sistema.getCantidad_agua()),
                     String.valueOf(sistema.getFrecuencia()),
-                    sistema.getActivo() ? "Sí" : "No",
+                    sistema.getActivo() ? "Si" : "No",
                     String.valueOf(sistema.getIdFabricante())              
                 };
               

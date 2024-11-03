@@ -43,15 +43,15 @@ public class GUIMostrarSistemaDeRiegoPorID extends JFrame implements IGUI {
     }	   	 
     
     public void initGUI() {
-        // Panel principal con GridBagLayout para mayor control sobre la alineación y el centrado
+        // Panel principal con GridBagLayout para mayor control sobre la alineacion y el centrado
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 10, 10, 10); // Márgenes entre los componentes
+        gbc.insets = new Insets(10, 10, 10, 10); // Margenes entre los componentes
         this.setContentPane(mainPanel);
 
-        // Título
-        gbc.gridwidth = 2; // Toma dos columnas para el título
+        // Titulo
+        gbc.gridwidth = 2; // Toma dos columnas para el titulo
         JLabel msgIntro = new JLabel("Introduzca el ID del sistema de riego a mostrar", JLabel.CENTER);
         mainPanel.add(msgIntro, gbc);
 
@@ -71,11 +71,11 @@ public class GUIMostrarSistemaDeRiegoPorID extends JFrame implements IGUI {
         JPanel panelBotones = new JPanel();
         gbc.gridx = 0;
         gbc.gridy = 6;
-        gbc.gridwidth = 2; // Los botones ocuparán dos columnas
+        gbc.gridwidth = 2; // Los botones ocuparon dos columnas
         gbc.anchor = GridBagConstraints.CENTER; // Centrar los botones
         mainPanel.add(panelBotones, gbc);
 
-        // Botón de aceptar
+        // Boton de aceptar
         JButton botonAceptar = new JButton("Aceptar");
         botonAceptar.addActionListener(new ActionListener() {
             @Override
@@ -93,7 +93,7 @@ public class GUIMostrarSistemaDeRiegoPorID extends JFrame implements IGUI {
         });
         panelBotones.add(botonAceptar);
 
-        // Botón de cancelar
+        // Boton de cancelar
         JButton botonCancelar = new JButton("Cancelar");
         botonCancelar.addActionListener(new ActionListener() {
             @Override
@@ -118,7 +118,7 @@ public class GUIMostrarSistemaDeRiegoPorID extends JFrame implements IGUI {
                            ", Potencia de Riego: " + sistemaRiego.getPotenciaRiego() + 
                            ", Cantidad de Agua: " + sistemaRiego.getCantidad_agua() + 
                            ", Frecuencia: " + sistemaRiego.getFrecuencia() + 
-                           ", Activo: " + (sistemaRiego.getActivo() ? "Sí" : "No") +
+                           ", Activo: " + (sistemaRiego.getActivo() ? "Si" : "No") +
                            ", Fabricante: " + sistemaRiego.getIdFabricante()
                            ;
             

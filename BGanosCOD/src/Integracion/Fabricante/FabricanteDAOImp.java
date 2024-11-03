@@ -24,7 +24,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement s = c.prepareStatement(
-					"INSERT INTO fabricante (cod_fabricante, nombre, telefono, activo) VALUES (?, ?, ?, ?)",
+					"INSERT INTO fabricante (cod_fabricante, nombre, telefono, activo VALUES(?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 			s.setString(1, fabricante.getCodFabricante());
 			s.setString(2, fabricante.getNombre());
@@ -38,7 +38,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 
 				if (fabricante instanceof TFabricanteLocal) {
 					s = c.prepareStatement(
-							"INSERT INTO fabricante_local (id_fabricante, impuestos, subvenciones) Values (?, ?, ?)");
+							"INSERT INTO fabricante_local(id_fabricante, impuestos, subvenciones) Values(?,?,?)");
 					s.setInt(1, id);
 					s.setInt(2, ((TFabricanteLocal) fabricante).getImpuesto());
 					s.setInt(3, ((TFabricanteLocal) fabricante).getSubvencion());
@@ -50,10 +50,10 @@ public class FabricanteDAOImp implements FabricanteDAO {
 					}
 				} else if (fabricante instanceof TFabricanteExtranjero) {
 					s = c.prepareStatement(
-							"INSERT INTO fabricante_extranjero (id_fabricante, aranceles, pais_origen) Values (?, ?, ?)");
+							"INSERT INTO fabricante_extranjero (id_fabricante, aranceles, pais_origen) Values(?,?,?)");
 					s.setInt(1, id);
 					s.setInt(2, ((TFabricanteExtranjero) fabricante).getAranceles());
-					s.setString(3, ((TFabricanteExtranjero) fabricante).getPaisDeOrigen());
+					s.setString(2, ((TFabricanteExtranjero) fabricante).getPaisDeOrigen());
 
 					if (s.executeUpdate() == 0) {
 						s.close();
@@ -61,6 +61,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 						return -1;
 					}
 				}
+
 				s.close();
 				r.close();
 				return id;
@@ -99,12 +100,11 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement s = c
-					.prepareStatement("UPDATE fabricante SET nombre=?, activo=?, telefono=?, cod_fabricante=? WHERE id=?");
+					.prepareStatement("UPDATE fabricante SET nombre=?, activo=?, cod_fabricante=? WHERE id=?");
 			s.setString(1, fabricante.getNombre());
 			s.setBoolean(2, fabricante.getActivo());
-			s.setString(3, fabricante.getTelefono());
-			s.setString(4, fabricante.getCodFabricante());
-			s.setInt(5, fabricante.getId());
+			s.setString(3, fabricante.getCodFabricante());
+			s.setInt(4, fabricante.getId());
 
 			s.executeUpdate();
 
@@ -141,12 +141,12 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement s = c.prepareStatement(
-					"SELECT * FROM fabricante AS e LEFT JOIN fabricante_local AS el ON e.id=el.id_fabricante LEFT JOIN fabricante_extranjero AS ez ON e.id=ez.id_fabricante FOR UPDATE");
+					"SELECT * FROM fabricante AS e LEFT JOIN fabricante_local AS el ON e.id=el.id LEFT JOIN fabricante_extranjero AS ez ON e.id=ez.id FOR UPDATE");
 			ResultSet r = s.executeQuery();
 
 			while (r.next()) {
 
-				if (r.getString("pais_origen") == null) {
+				if (r.getInt("impuestos") > 0) {
 					TFabricanteLocal tLocal = new TFabricanteLocal();
 					tLocal.setActivo(r.getBoolean("activo"));
 					tLocal.setCodFabricante(r.getString("cod_fabricante"));
@@ -175,12 +175,11 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			s.close();
 			return lFabricantes;
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public Set<TFabricante> listarFabricantesExtranjeros() {
+	public Set<TFabricante> listarFabricantesExtrangeros() {
 		Set<TFabricante> lFabricantes = new HashSet<>();
 
 		try {
@@ -189,18 +188,18 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement s = c.prepareStatement(
-					"SELECT * FROM fabricante_extranjero AS e LEFT JOIN fabricante AS ez ON e.id_fabricante = ez.id FOR UPDATE");
+					"SELECT * FROM fabricante AS e LEFT JOIN fabricante_extranjero AS ez ON e.id=ez.id_fabricante FOR UPDATE");
 			ResultSet r = s.executeQuery();
 
 			while (r.next()) {
 
-				TFabricanteExtranjero tLocal = new TFabricanteExtranjero();
+				TFabricanteLocal tLocal = new TFabricanteLocal();
 				tLocal.setActivo(r.getBoolean("activo"));
 				tLocal.setCodFabricante(r.getString("cod_fabricante"));
 				tLocal.setId(r.getInt("id"));
-				tLocal.setAranceles(r.getInt("aranceles"));
+				tLocal.setImpuesto(r.getInt("impuestos"));
 				tLocal.setNombre(r.getString("nombre"));
-				tLocal.setPaisDeOrigen(r.getString("pais_origen"));
+				tLocal.setSubvencion(r.getInt("subvenciones"));
 				tLocal.setTelefono(r.getString("telefono"));
 
 				lFabricantes.add(tLocal);
@@ -210,7 +209,6 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			s.close();
 			return lFabricantes;
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
@@ -224,28 +222,27 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement s = c.prepareStatement(
-					"SELECT * FROM fabricante_Local AS e LEFT JOIN fabricante AS ez ON e.id_fabricante = ez.id FOR UPDATE");
+					"SELECT * FROM fabricante AS e LEFT JOIN fabricante_local AS ez ON e.id=ez.id_fabricante FOR UPDATE");
 			ResultSet r = s.executeQuery();
 
 			while (r.next()) {
 
-				TFabricanteLocal tLocal = new TFabricanteLocal();
-				tLocal.setActivo(r.getBoolean("activo"));
-				tLocal.setImpuesto(r.getInt("impuestos"));
-				tLocal.setCodFabricante(r.getString("cod_fabricante"));
-				tLocal.setId(r.getInt("id"));
-				tLocal.setNombre(r.getString("nombre"));
-				tLocal.setSubvencion(r.getInt("impuestos"));
-				tLocal.setTelefono(r.getString("telefono"));
+				TFabricanteExtranjero tExtranjero = new TFabricanteExtranjero();
+				tExtranjero.setActivo(r.getBoolean("activo"));
+				tExtranjero.setAranceles(r.getInt("aranceles"));
+				tExtranjero.setCodFabricante(r.getString("cod_fabricante"));
+				tExtranjero.setId(r.getInt("id"));
+				tExtranjero.setNombre(r.getString("nombre"));
+				tExtranjero.setPaisDeOrigen(r.getString("pais_origen"));
+				tExtranjero.setTelefono(r.getString("telefono"));
 
-				lFabricantes.add(tLocal);
+				lFabricantes.add(tExtranjero);
 			}
 
 			r.close();
 			s.close();
 			return lFabricantes;
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
@@ -309,7 +306,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement s = c.prepareStatement(
-					"SELECT * FROM fabricante AS e JOIN fabricante_local AS el ON e.id=el.id_fabricante WHERE e.cod_fabricante=? FOR UPDATE");
+					"SELECT * FROM fabricante AS e JOIN fabricante_local AS el ON e.id=el.id WHERE e.cod_fabricante=? FOR UPDATE");
 			s.setString(1, codFabricante);
 			ResultSet r = s.executeQuery();
 
@@ -326,7 +323,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 				tf = tfl;
 			} else {
 				s = c.prepareStatement(
-						"SELECT * FROM fabricante AS e JOIN fabricante_extranjero AS es ON e.id=es.id_fabricante WHERE e.cod_fabricante=? FOR UPDATE");
+						"SELECT * FROM fabricante AS e JOIN fabricante_extranjero AS es ON e.id=es.id WHERE e.cod_fabricante=? FOR UPDATE");
 				s.setString(1, codFabricante);
 				r = s.executeQuery();
 

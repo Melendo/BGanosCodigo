@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -48,6 +47,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 
             rs.close();
             ps.close();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -214,7 +214,7 @@ public class SistemaDeRiegoDAOImp implements SistemaDeRiegoDAO {
 	            
 	            sistemasDeRiego.add(sistemaDeRiego);
 	        }
-
+	        
 	        ps.close();
 	        rs.close();
 	    } catch (Exception e) {
