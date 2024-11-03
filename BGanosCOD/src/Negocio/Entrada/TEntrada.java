@@ -38,7 +38,12 @@ public class TEntrada {
 	}
 	
 	public TEntrada() {
-		
+//		this.id = -1;
+//		this.fecha = null;
+//		this.precio = 0.0f; // el 0.0f es para que interprete que es float
+//		this.stock_entradas = 0;
+//		this.idInvernadero = -1;
+//		this.activo = false;
 	}
 
 	public Integer getId() {

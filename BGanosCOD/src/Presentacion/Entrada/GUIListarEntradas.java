@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
 
 public class GUIListarEntradas extends JFrame implements IGUI {
 
-	private JButton jButton;
+	private JButton botonCancelar;
 
 	private JPanel jPanel;
 
@@ -92,12 +92,12 @@ public class GUIListarEntradas extends JFrame implements IGUI {
         JPanel panelBotones = new JPanel();
         mainPanel.add(panelBotones);
 
-        JButton botonCancelar = new JButton("Cancelar");
+        botonCancelar = new JButton("Cancelar");
         botonCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	GUIListarEntradas.this.setVisible(false);
-            	ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_ENTRADAS_VISTA, null));
+            	ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
             }
         });
         panelBotones.add(botonCancelar);

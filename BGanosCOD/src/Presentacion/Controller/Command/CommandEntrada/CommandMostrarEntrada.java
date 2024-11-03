@@ -14,7 +14,7 @@ public class CommandMostrarEntrada implements Command {
 	public Context execute(Object datos) {
 		TEntrada resultado = FactoriaNegocio.getInstance().getEntradaSA().mostrarEntrada((int) datos);
 		
-		if (resultado.getId() > -1) {
+		if (resultado.getIdInvernadero() != null && resultado.getId() > -1) {
 			return new Context(Evento.MOSTRAR_ENTRADA_OK, resultado);
 		} else {
 			return new Context(Evento.MOSTRAR_ENTRADA_KO, resultado);
