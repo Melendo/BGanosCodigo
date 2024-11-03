@@ -34,6 +34,7 @@ import Presentacion.Invernadero.GUIListarInvernadero;
 import Presentacion.Invernadero.GUIListarInvernaderoPorSR;
 import Presentacion.Invernadero.GUIModificarInvernadero;
 import Presentacion.Invernadero.GUIMostrarInvernaderoPorID;
+import Presentacion.Invernadero.GUITresFechasMasVendidas;
 import Presentacion.Invernadero.GUIVincularSRInvernadero;
 import Presentacion.Planta.GUIAltaPlanta;
 import Presentacion.Planta.GUIBajaPlanta;
@@ -187,6 +188,8 @@ public class FactoriaVistasImp extends FactoriaVistas {
                 case Evento.DESVINCULAR_SISTEMA_RIEGO_INVERNADERO_VISTA:
                     vistaActual = new GUIDesvincularSRInvernadero(); 
                     return vistaActual;
+                case Evento.CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO_VISTA:
+                	vistaActual = new GUITresFechasMasVendidas();
 //                
                 
                 
