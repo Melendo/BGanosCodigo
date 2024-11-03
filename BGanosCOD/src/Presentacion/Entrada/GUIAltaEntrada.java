@@ -22,6 +22,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 
@@ -136,7 +137,8 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 											!textIdInvernadero.getText().isEmpty() ? idInvernadero : 0, true)));
 
 				} catch (Exception ex) {
-					// TODO
+					JOptionPane.showMessageDialog(GUIAltaEntrada.this, "Error en el formato de los datos", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
@@ -144,36 +146,58 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 		});
 
 		panelBotones.add(botonAceptar);
-		
+
 		// BOTON CANCELAR
-	    JButton botonCancelar = new JButton("Cancelar");
-	    botonCancelar.addActionListener(new ActionListener() {
+		JButton botonCancelar = new JButton("Cancelar");
+		botonCancelar.addActionListener(new ActionListener() {
 
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	        	GUIAltaEntrada.this.setVisible(false);
-	        	ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
-	        }
-	    });
-	    panelBotones.add(botonCancelar);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIAltaEntrada.this.setVisible(false);
+				ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
+			}
+		});
+		panelBotones.add(botonCancelar);
 
-	    this.setVisible(true);
-	    this.setResizable(true);
+		this.setVisible(true);
+		this.setResizable(true);
 
 	}
 
 	@Override
 	public void actualizar(Context context) {
-		
-		if(context.getEvento() == Evento.ALTA_ENTRADA_OK) {
-			
-			
-			
-		} else if(context.getEvento() == Evento.ALTA_ENTRADA_KO) {
-			
-			
+
+		int res = (int) context.getDatos();
+
+		if (context.getEvento() == Evento.ALTA_ENTRADA_OK) {
+			JOptionPane.showMessageDialog(this, "Entrada dada de alta correctamente con id " + res, "Exito",
+					JOptionPane.INFORMATION_MESSAGE);
+
+		} else if (context.getEvento() == Evento.ALTA_ENTRADA_KO) {
+
+			switch (res) {
+				
+			case -21:
+				JOptionPane.showMessageDialog(this, "Error: el id de invernadero no está activo", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+				
+			case -20:
+				JOptionPane.showMessageDialog(this, "Error: el id de invernadero no existe", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+				
+			case -50:
+				JOptionPane.showMessageDialog(this, "Error: ya existe la entrada", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+				
+			default:
+				JOptionPane.showMessageDialog(this, "Error desconocido", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			}
+
 		}
 
-		dispose();
+//		dispose();
 	}
 }

@@ -10,14 +10,12 @@ import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.SistemaDeRiego.GUIListarSistemaDeRiegoPorFabricante;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +29,6 @@ import javax.swing.JTextField;
 import Negocio.Entrada.TEntrada;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 public class GUILIstarEntradasPorInvernadero extends JFrame implements IGUI {
 
