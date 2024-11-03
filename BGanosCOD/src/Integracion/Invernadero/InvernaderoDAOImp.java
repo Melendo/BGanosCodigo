@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import Integracion.Transaction.Transaccion;
@@ -156,7 +157,7 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 	}
 
 	public Set<TInvernadero> listarInvernadero() {
-		Set<TInvernadero> invernaderos = new HashSet<>();
+		Set<TInvernadero> invernaderos = new LinkedHashSet<>();
 		try {
 			TransaccionManager tManager = TransaccionManager.getInstance();
 			Transaccion t = tManager.getTransaccion();
