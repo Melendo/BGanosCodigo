@@ -24,7 +24,7 @@ public class InvernaderoSAImp implements InvernaderoSA {
 
 	public Integer altaInvernadero(TInvernadero invernadero) {
 		if (invernadero.getNombre().isEmpty()
-				|| invernadero.getSustrato().isEmpty() && invernadero.getTipo_iluminacion().isEmpty()) {
+				|| invernadero.getSustrato().isEmpty() || invernadero.getTipo_iluminacion().isEmpty()) {
 			return -3;
 		}
 		int exito = -1;
