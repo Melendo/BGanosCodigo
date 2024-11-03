@@ -73,7 +73,7 @@ public class GUITresFechasMasVendidas extends JFrame implements IGUI {
 		panelCentro.add(botonBuscar);
 
 		// Tabla
-		String[] nombreColumnas = { "ID", "Nombre", "Sustrato", "Tipo de Iluminacion", "Activo" };
+		String[] nombreColumnas = { "FECHAS" };
 		tabla = ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, null);
 		JScrollPane scroll = new JScrollPane(tabla);
 		scroll.setPreferredSize(new Dimension(750, 250));

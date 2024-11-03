@@ -43,7 +43,7 @@ public class GUIInvernadero extends JFrame implements IGUI {
 		 super("Invernadero");
 	        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	        int ancho = 1000;
-	        int alto = 525;
+	        int alto = 650;
 	        int x = (pantalla.width - ancho) / 2;
 	        int y = (pantalla.height - alto) / 2;
 	        this.setBounds(x, y, ancho, alto);
@@ -122,7 +122,7 @@ public class GUIInvernadero extends JFrame implements IGUI {
         this.add(buttonListarInvernadero);
 
         // LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO_VISTA
-        buttonListarInvernaderoPorSistemasRiego = ComponentsBuilder.createButton("Listar por Sistema de Riego", 300, 250, 185, 100);
+        buttonListarInvernaderoPorSistemasRiego = ComponentsBuilder.createButton("Listar por SR", 300, 250, 185, 100);
         buttonListarInvernaderoPorSistemasRiego.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -134,7 +134,7 @@ public class GUIInvernadero extends JFrame implements IGUI {
         this.add(buttonListarInvernaderoPorSistemasRiego);
         
         // VINCULAR_SISTEMA_RIEGO_INVERNADERO_VISTA
-        buttonVincularSistemasRiegoAInvernadero = ComponentsBuilder.createButton("Vincular un Sistema de Riego", 500, 250, 185, 100);
+        buttonVincularSistemasRiegoAInvernadero = ComponentsBuilder.createButton("Vincular a un SR", 500, 250, 185, 100);
         buttonVincularSistemasRiegoAInvernadero.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -146,12 +146,24 @@ public class GUIInvernadero extends JFrame implements IGUI {
         this.add(buttonVincularSistemasRiegoAInvernadero);
         
      // DESVINCULAR_SISTEMA_RIEGO_INVERNADERO_VISTA
-        buttonDesincularSistemasRiegoAInvernadero = ComponentsBuilder.createButton("Desvincular un Sistema de Riego", 700, 250, 185, 100);
+        buttonDesincularSistemasRiegoAInvernadero = ComponentsBuilder.createButton("Desvincular de un SR", 700, 250, 185, 100);
         buttonDesincularSistemasRiegoAInvernadero.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	GUIInvernadero.this.setVisible(false);
                 ApplicationController.getInstance().manageRequest(new Context(Evento.DESVINCULAR_SISTEMA_RIEGO_INVERNADERO_VISTA, invernadero));
+            }
+        });
+        buttonDesincularSistemasRiegoAInvernadero.setVisible(true);
+        this.add(buttonDesincularSistemasRiegoAInvernadero);
+        
+     // Calcular Las Tres Fechas Mas Vendidas De Un Invernadero
+        buttonDesincularSistemasRiegoAInvernadero = ComponentsBuilder.createButton("3 Fechas Más Vendidas", 400, 400, 185, 100);
+        buttonDesincularSistemasRiegoAInvernadero.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	GUIInvernadero.this.setVisible(false);
+                ApplicationController.getInstance().manageRequest(new Context(Evento.CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO_VISTA, invernadero));
             }
         });
         buttonDesincularSistemasRiegoAInvernadero.setVisible(true);
