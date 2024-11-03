@@ -136,7 +136,7 @@ public class GUIEntrada extends JFrame implements IGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GUIEntrada.this.setVisible(false);
-				ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_ENTRADAS_POR_INVERNADERO, tEntrada));
+				ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_ENTRADAS_POR_INVERNADERO_VISTA, tEntrada));
 			}
 
 		});

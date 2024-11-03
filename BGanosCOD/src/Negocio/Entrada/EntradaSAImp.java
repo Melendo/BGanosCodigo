@@ -240,7 +240,6 @@ public class EntradaSAImp implements EntradaSA {
 	@Override
 	public Set<TEntrada> listarEntradasPorInvernadero(Integer idInvernadero) {
 		Set<TEntrada> entradas = new HashSet<>();
-		TEntrada entrada = new TEntrada();
 
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
@@ -248,22 +247,18 @@ public class EntradaSAImp implements EntradaSA {
 			t.start();
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 
-			InvernaderoDAO invernaderoDao = f.getInvernaderoDAO();
-			TInvernadero invernadero = invernaderoDao.mostrarInvernaderoPorID(idInvernadero);
+			EntradaDAO entradaDAO = f.getEntradaDAO();
+			TInvernadero invernadero = f.getInvernaderoDAO().mostrarInvernaderoPorID(idInvernadero);
 
-			if (invernadero != null) {
-
-				EntradaDAO entradaDao = f.getEntradaDAO();
-				Set<TEntrada> entradasBuscar = entradaDao.listarEntradas();
-
-				for (TEntrada entradaEncontrada : entradasBuscar) {
-					entradas.add(entradaEncontrada);
-				}
-
-				entradasBuscar = null; // Liberamos memoria
-
+			if (invernadero != null && invernadero.isActivo()) {
+			
+				entradas = entradaDAO.listarEntradasPorInvernadero(idInvernadero);
+				t.commit();
+				
+				
 			} else {
-				entrada.setId(-20); // Error: id de invernadero no existe
+				TEntrada entrada = new TEntrada();
+				entrada.setId(-1); // Error: id de invernadero no existe
 				entradas.add(entrada);
 				t.rollback();
 			}
