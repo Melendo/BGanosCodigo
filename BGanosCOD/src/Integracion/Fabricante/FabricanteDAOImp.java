@@ -24,7 +24,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement s = c.prepareStatement(
-					"INSERT INTO fabricante (cod_fabricante, nombre, telefono, activo VALUES(?,?,?,?)",
+					"INSERT INTO fabricante (cod_fabricante, nombre, telefono, activo) VALUES(?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 			s.setString(1, fabricante.getCodFabricante());
 			s.setString(2, fabricante.getNombre());
@@ -306,7 +306,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement s = c.prepareStatement(
-					"SELECT * FROM fabricante AS e JOIN fabricante_local AS el ON e.id=el.id WHERE e.cod_fabricante=? FOR UPDATE");
+					"SELECT * FROM fabricante AS e JOIN fabricante_local AS el ON e.id=el.id_fabricante WHERE e.cod_fabricante=? FOR UPDATE");
 			s.setString(1, codFabricante);
 			ResultSet r = s.executeQuery();
 
@@ -323,7 +323,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 				tf = tfl;
 			} else {
 				s = c.prepareStatement(
-						"SELECT * FROM fabricante AS e JOIN fabricante_extranjero AS es ON e.id=es.id WHERE e.cod_fabricante=? FOR UPDATE");
+						"SELECT * FROM fabricante AS e JOIN fabricante_extranjero AS es ON e.id=es.id_fabricante WHERE e.cod_fabricante=? FOR UPDATE");
 				s.setString(1, codFabricante);
 				r = s.executeQuery();
 

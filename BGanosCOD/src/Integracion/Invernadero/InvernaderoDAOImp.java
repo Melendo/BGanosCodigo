@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import Integracion.Transaction.Transaccion;
@@ -59,6 +60,10 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 
 			exito = statement.executeUpdate();
 
+			if (exito == 1) {
+				exito = id;
+			}
+
 			statement.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,6 +90,9 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 
 			exito = statement.executeUpdate();
 
+			if (exito == 1) {
+				exito = invernadero.getId();
+			}
 
 			statement.close();
 		} catch (Exception e) {
@@ -156,12 +164,12 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 	}
 
 	public Set<TInvernadero> listarInvernadero() {
-		Set<TInvernadero> invernaderos = new HashSet<>();
+		Set<TInvernadero> invernaderos = new LinkedHashSet<>();
 		try {
 			TransaccionManager tManager = TransaccionManager.getInstance();
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
-			PreparedStatement statement = c.prepareStatement("SELECT * FROM invernadero FOR UPDATE");
+			PreparedStatement statement = c.prepareStatement("SELECT * FROM invernadero WHERE activo = 1 FOR UPDATE");
 
 			ResultSet result = statement.executeQuery();
 
@@ -189,11 +197,8 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			TransaccionManager tManager = TransaccionManager.getInstance();
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
-			PreparedStatement statement = c.prepareStatement(
-					"SELECT inv.* "
-						    + "FROM sistemas_riego_de_invernadero sri "
-						    + "JOIN invernadero inv ON sri.id_invernadero = inv.id "
-						    + "WHERE sri.id_sistema_riego = ?");
+			PreparedStatement statement = c.prepareStatement("SELECT inv.* " + "FROM sistemas_riego_de_invernadero sri "
+					+ "JOIN invernadero inv ON sri.id_invernadero = inv.id " + "WHERE sri.id_sistema_riego = ? AND inv.activo = 1");
 
 			statement.setInt(1, id_sistema_de_riego);
 			ResultSet result = statement.executeQuery();

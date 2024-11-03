@@ -3,6 +3,7 @@
  */
 package Negocio.Invernadero;
 
+import java.sql.Date;
 import java.util.Collection;
 
 public interface InvernaderoSA {
@@ -33,5 +34,7 @@ public interface InvernaderoSA {
 
 	//
 	public Integer desvincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero);
+	
+	public Collection<Date> calcularLasTresFechasMasVendidasDeUnInvernadero (Integer id_invernadero);
 
 }

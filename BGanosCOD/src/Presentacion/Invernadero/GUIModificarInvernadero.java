@@ -170,8 +170,8 @@ public class GUIModificarInvernadero extends JFrame implements IGUI {
 		int resultado = (int) context.getDatos();
 		if (context.getEvento() == Evento.MODIFICAR_INVERNADERO_OK) {
 
-			JOptionPane.showMessageDialog(this, "Invernadero modificado correctamente con id: " + resultado, "Exito",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Invernadero con id " + resultado + " modificado correctamente",
+					"Exito", JOptionPane.INFORMATION_MESSAGE);
 			GUIModificarInvernadero.this.setVisible(false);
 			ApplicationController.getInstance().manageRequest(new Context(Evento.INVERNADERO_VISTA, null));
 		} else if (context.getEvento() == Evento.MODIFICAR_INVERNADERO_KO) {

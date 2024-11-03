@@ -1,47 +1,38 @@
-/**
- * 
- */
 package Presentacion.Invernadero;
-
-import javax.swing.JFrame;
-
-import Presentacion.ComponentsBuilder.ComponentsBuilder;
-import Presentacion.Controller.ApplicationController;
-import Presentacion.Controller.IGUI;
-import Presentacion.Controller.Command.Context;
-import Presentacion.FactoriaVistas.Evento;
-import Presentacion.SistemaDeRiego.GUIListarSistemaDeRiegoDelInvernadero;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.Set;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JTextField;
-
-import Negocio.Invernadero.TInvernadero;
-import Negocio.SistemaDeRiego.TSistemaDeRiego;
-
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
-public class GUIListarInvernaderoPorSR extends JFrame implements IGUI {
+import Presentacion.ComponentsBuilder.ComponentsBuilder;
+import Presentacion.Controller.ApplicationController;
+import Presentacion.Controller.IGUI;
+import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
+@SuppressWarnings("serial")
+public class GUITresFechasMasVendidas extends JFrame implements IGUI {
 	private JTextField idText;
 	private JPanel mainPanel;
 	private JTable tabla;
 	private JButton botonCancelar;
 
-	public GUIListarInvernaderoPorSR() {
-		super("Listar Invernaderos que implementan un Sistema de Riego");
+	public GUITresFechasMasVendidas() {
+		super("Listar las tres fechas más vendidas de un invernadero");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 800;
 		int alto = 400;
@@ -76,13 +67,13 @@ public class GUIListarInvernaderoPorSR extends JFrame implements IGUI {
 		botonBuscar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				buscarPorSistemaRiego();
+				buscarPorInvernadero();
 			}
 		});
 		panelCentro.add(botonBuscar);
 
 		// Tabla
-		String[] nombreColumnas = { "ID", "Nombre", "Sustrato", "Tipo de Iluminacion" };
+		String[] nombreColumnas = { "FECHAS" };
 		tabla = ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, null);
 		JScrollPane scroll = new JScrollPane(tabla);
 		scroll.setPreferredSize(new Dimension(750, 250));
@@ -94,7 +85,7 @@ public class GUIListarInvernaderoPorSR extends JFrame implements IGUI {
 		botonCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUIListarInvernaderoPorSR.this.setVisible(false);
+				GUITresFechasMasVendidas.this.setVisible(false);
 				ApplicationController.getInstance().manageRequest(new Context(Evento.INVERNADERO_VISTA, null));
 			}
 		});
@@ -104,10 +95,10 @@ public class GUIListarInvernaderoPorSR extends JFrame implements IGUI {
 		this.setVisible(true);
 	}
 
-	private void buscarPorSistemaRiego() {
+	private void buscarPorInvernadero() {
 		String id = idText.getText().trim();
 		if (id.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Por favor, ingrese un Sistemad e Riego.", "Advertencia",
+			JOptionPane.showMessageDialog(this, "Por favor, ingrese un Invernadero.", "Advertencia",
 					JOptionPane.WARNING_MESSAGE);
 			return;
 		}
@@ -115,9 +106,9 @@ public class GUIListarInvernaderoPorSR extends JFrame implements IGUI {
 		try {
 			int idSR = Integer.parseInt(id);
 			ApplicationController.getInstance()
-					.manageRequest(new Context(Evento.LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO, idSR));
+					.manageRequest(new Context(Evento.CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO, idSR));
 		} catch (NumberFormatException ex) {
-			JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID valido para el Sistema de Riego.", "Error",
+			JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID valido para el Invernadero.", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -125,22 +116,18 @@ public class GUIListarInvernaderoPorSR extends JFrame implements IGUI {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void actualizar(Context context) {
-		if (context.getEvento() == Evento.LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO_OK) {
-			Set<TInvernadero> invernaderos = (Set<TInvernadero>) context.getDatos();
+		if (context.getEvento() == Evento.CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO_OK) {
+			Set<Date> fechas = (Set<Date>) context.getDatos();
 
-			String[][] datos = new String[invernaderos.size()][7];
+			String[][] datos = new String[fechas.size()][1];
 			int i = 0;
-			for (TInvernadero invernadero : invernaderos) {
-				datos[i++] = new String[] { String.valueOf(invernadero.getId()), invernadero.getNombre(),
-						invernadero.getSustrato(), invernadero.getTipo_iluminacion(),
-
-				};
+			for (Date fecha : fechas) {
+				datos[i++] = new String[] { String.valueOf(fecha) };
 			}
-			tabla.setModel(new javax.swing.table.DefaultTableModel(datos,
-					new String[] { "ID", "Nombre", "Sustrato", "Tipo de Iluminacion" }));
+			tabla.setModel(new javax.swing.table.DefaultTableModel(datos, new String[] { "Fecha" }));
 			ComponentsBuilder.adjustColumnWidths(tabla);
-		} else if (context.getEvento() == Evento.LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO_KO) {
-			JOptionPane.showMessageDialog(this, "Error al listar los Invernaderosd e un Sistema de Riego.", "Error",
+		} else if (context.getEvento() == Evento.CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO_KO) {
+			JOptionPane.showMessageDialog(this, "Error al listar las tres fechas más vendidas de un invernadero.", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 
