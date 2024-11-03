@@ -52,7 +52,7 @@ public class GUIListarInvernadero extends JFrame implements IGUI {
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
 		// Tabla
-		String[] nombreColumnas = { "ID", "Nombre", "Sustrato", "Tipo de Iluminacion", "Activo" };
+		String[] nombreColumnas = { "ID", "Nombre", "Sustrato", "Tipo de Iluminacion"};
 		String[][] tablaDatos = new String[datos.size()][nombreColumnas.length];
 
 		int i = 0;
@@ -61,7 +61,6 @@ public class GUIListarInvernadero extends JFrame implements IGUI {
 			tablaDatos[i][1] = invernadero.getNombre();
 			tablaDatos[i][2] = invernadero.getSustrato();
 			tablaDatos[i][3] = invernadero.getTipo_iluminacion();
-			tablaDatos[i][4] = invernadero.isActivo() ? "Si" : "No";
 			i++;
 		}
 
