@@ -27,8 +27,9 @@ public class GUIEntrada extends JFrame implements IGUI {
 	private JButton bMostrarEntrada;
 	private JButton bListarEntradas;
 	private JButton bListarEntradasPorInvernadero;
+	private JButton backButton;
 
-	private JPanel j;
+	private JPanel panel;
 
 	private TEntrada tEntrada;
 
@@ -42,7 +43,7 @@ public class GUIEntrada extends JFrame implements IGUI {
 		int y = (pantalla.height - alto) / 2;
 		this.setBounds(x, y, ancho, alto);
 		this.setLayout(null);
-		j = new JPanel();
+		panel = new JPanel();
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		initGUI();
@@ -142,6 +143,20 @@ public class GUIEntrada extends JFrame implements IGUI {
 		bListarEntradasPorInvernadero.setVisible(true);
 		this.add(bListarEntradasPorInvernadero);
 
+		// BOTON DE VOLVER
+        backButton = ComponentsBuilder.createBackButton();
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GUIEntrada.this.setVisible(false);
+                ApplicationController.getInstance().manageRequest(new Context(Evento.VISTA_PRINCIPAL, null));
+                dispose();
+            }
+        });
+        backButton.setVisible(true);
+        this.add(backButton);
+
+        getContentPane().add(panel);
 	}
 
 	@Override
