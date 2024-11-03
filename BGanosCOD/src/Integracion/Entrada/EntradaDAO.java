@@ -16,9 +16,8 @@ public interface EntradaDAO {
 
 	public Set<TEntrada> listarEntradas();
 
-	// TODO cambié el parámetro de Integer entrada a TEntrada entrada
 	// TODO preguntar si puedo poner el throws Exception
-	public Integer modificarEntrada(TEntrada entrada) throws Exception;
+	public Integer modificarEntrada(TEntrada entrada);
 
 	public TEntrada mostrarEntrada(Integer id);
 

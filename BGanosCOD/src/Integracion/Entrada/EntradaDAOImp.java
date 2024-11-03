@@ -74,7 +74,9 @@ public class EntradaDAOImp implements EntradaDAO {
 		}
 	}
 
-	public Integer modificarEntrada(TEntrada entrada) throws Exception {
+	public Integer modificarEntrada(TEntrada entrada) {
+		int res = -1;
+		
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.getTransaccion();
@@ -92,11 +94,14 @@ public class EntradaDAOImp implements EntradaDAO {
 			ps.executeUpdate();
 			ps.close();
 
-			return entrada.getId();
+			res = entrada.getId();
+			ps.close();
 
 		} catch (Exception e) {
-			throw new Exception("La conexión con la BBDD no se ha realizado correctamente");
+            e.printStackTrace();
 		}
+		
+		return (res > 0) ? entrada.getId() : -1;
 	}
 
 	public TEntrada mostrarEntrada(Integer id) {
@@ -203,7 +208,7 @@ public class EntradaDAOImp implements EntradaDAO {
 		
 		return entradas;
 	}
-	
+
 	// TODO nueva función
 	@Override
 	public TEntrada leerPorFechaUnica(Date fecha) {
@@ -239,11 +244,5 @@ public class EntradaDAOImp implements EntradaDAO {
 		}
 		return entrada;
 	}
-
-
-	
-
-	
-	
 
 }
