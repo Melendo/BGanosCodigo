@@ -22,15 +22,15 @@ public class calcularLasTresFechasMasVendidasDeUnInvernadero implements Query {
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement s = c.prepareStatement(""
-					+ "SELECT e.fecha AS fecha_entrada" 
-					+ "FROM entrada e"
-					+ "JOIN linea_factura lf ON e.id = lf.id_entrada" 
-					+ "JOIN factura f ON lf.id_factura = f.id"
+					+ "SELECT e.fecha AS fecha_entrada " 
+					+ "FROM entrada e "
+					+ "JOIN linea_factura lf ON e.id = lf.id_entrada " 
+					+ "JOIN factura f ON lf.id_factura = f.id "
 					+ "WHERE e.id_invernadero = ? " 
 					+ "AND e.activo = 1 " 
-					+ "AND f.activo = 1" 
-					+ "GROUP BY e.fecha"
-					+ "ORDER BY SUM(lf.cantidad) DESC" 
+					+ "AND f.activo = 1 " 
+					+ "GROUP BY e.fecha "
+					+ "ORDER BY SUM(lf.cantidad) DESC " 
 					+ "LIMIT 3;");
 
 			s.setInt(1, id_Invernadero);
@@ -38,7 +38,8 @@ public class calcularLasTresFechasMasVendidasDeUnInvernadero implements Query {
 			ResultSet r = s.executeQuery();
 
 			while (r.next()) {
-				fechas.add(r.getDate("fecha"));
+				Date date = new Date(r.getDate("fecha_entrada").getTime());
+				fechas.add(date);
 			}
 
 			r.close();
