@@ -202,7 +202,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
                     vistaActual = new GUIBajaPlanta(); 
                     return vistaActual;
                 case Evento.MODIFICAR_PLANTA_VISTA:
-                    vistaActual = new GUIModificarPlanta(); 
+                    vistaActual = new GUIModificarPlanta((TPlanta)contexto.getDatos()); 
                     return vistaActual;
                 case Evento.MOSTRAR_PLANTA_POR_ID_VISTA:
                     vistaActual = new GUIMostarPlantasPorID();

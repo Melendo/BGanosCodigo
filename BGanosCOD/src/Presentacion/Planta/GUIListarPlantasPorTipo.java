@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
+import Presentacion.Controller.GUIMSG;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
@@ -16,6 +17,8 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Set;
@@ -33,6 +36,15 @@ import javax.swing.JPanel;
 public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 
 	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	
+	String seleccion = "";
 
 	public GUIListarPlantasPorTipo(Set<TPlanta> datos) {
 		super("Listar Plantas Por Tipo");
@@ -61,7 +73,7 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 	    msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
 	    mainPanel.add(msgIntroIDCabecera);
 	    
- mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
+	    mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
 	    
 	    //PANEL DE TIPO DE LA PLANTA
 	    JPanel paneltipo = new JPanel();
@@ -77,27 +89,40 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
  		tipoPlanta.setPreferredSize(new Dimension(250, 25));
  		paneltipo.add(tipoPlanta);
  		
- 		tipoPlanta.addItemListener(new ItemListener(){
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange() == ItemEvent.SELECTED){
-					String selected = (String) tipoPlanta.getSelectedItem();
+ 		//PANEL DE LOS BOTONES
+ 		JPanel panelBotones = new JPanel();
+ 		mainPanel.add(panelBotones);
+ 		
+ 		//BOTON DE ACEPTAR
+ 		JButton botonAceptar = new JButton("Aceptar");
+ 		
+ 		
+ 		botonAceptar.addActionListener(new ActionListener() {
+ 			
+ 			@Override
+ 			public void actionPerformed(ActionEvent e) {
+ 				setVisible(false);
+ 				
+ 				try {
+ 					
+ 					String selected = (String) tipoPlanta.getSelectedItem();
+ 					
                     if (selected.equals("Frutal")) {
              
-                    	
                     	ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_POR_TIPO,"Frutal"));
                     } 
                     else {
 
                     	ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_POR_TIPO,"No Frutal"));
                     }
-					
-					
-				}
-				
-			}
-        });
+ 			
+ 				} catch (Exception e1) {
+ 					
+ 				}
+ 			}
+ 		});
+ 		
+ 		panelBotones.add(botonAceptar);
 
 	}
 
@@ -105,7 +130,21 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
+		
+		switch(context.getEvento()) {
+		case Evento.LISTAR_PLANTAS_POR_TIPO_KO:
+			GUIMSG.showMessage("No existe plantas del tipo seleccionado", "LISTAR PLANTAS", true);
+			break;
+		case  Evento.LISTAR_PLANTAS_POR_TIPO_OK:
+			
+			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_VISTA,context.getDatos()));
+			break;
+		default:
+			GUIMSG.showMessage("ERROR INESPERADO", "LISTAR PLANTAS POR TIPO", true);
+			break;
 		
 	}
+	}
+		
+	
 }

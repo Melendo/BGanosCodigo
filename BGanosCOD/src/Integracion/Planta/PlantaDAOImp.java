@@ -24,7 +24,8 @@ public class PlantaDAOImp implements PlantaDAO {
 			Connection c = (Connection) t.getResource();
 			//frutal -> id, nombre_fruta, maduracion
 			//no -> id, tipo_hoja
-			PreparedStatement s = c.prepareStatement("INSERT INTO planta (id_invernadero, nombre, nombre_cientifico, activo) VALUES(?,?,?,?)",
+			PreparedStatement s = c.prepareStatement(
+					"INSERT INTO planta (id_invernadero, nombre, nombre_cientifico, activo) VALUES(?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 			s.setInt(1, planta.get_id_invernadero());
 			s.setString(2, planta.get_nombre());
@@ -33,23 +34,28 @@ public class PlantaDAOImp implements PlantaDAO {
 			s.executeUpdate();
 			
 			ResultSet r = s.getGeneratedKeys();
+			
 			if(r.next()) {
+			
+				
 				int id = r.getInt(1);
+				
 				if(planta instanceof TPlantaFrutal) {
-					s = c.prepareStatement("INSERT INTO planta_frutal (id, nombre_fruta, maduracion) VALUES(?,?,?)");
+					s = c.prepareStatement("INSERT INTO planta_frutal (id_planta, nombre_fruta, maduracion) VALUES(?,?,?)");
 					s.setInt(1, id);
 					s.setString(2, ((TPlantaFrutal)planta).get_nombre_fruta());
 					s.setString(3, ((TPlantaFrutal)planta).get_maduracion());
-				
+					//s.setBoolean(4, planta.getActivo());
 			        if(s.executeUpdate() == 0) {
 			        	s.close();
-			        	r.close(); return -1;
+			        	r.close(); 
+			        	return -1;
 			        }
 				}else if(planta instanceof TPlantaNoFrutal) {
 					s = c.prepareStatement("INSERT INTO planta_no_frutal (id, tipo_hoja) VALUES(?,?)");
 					s.setInt(1, id);
 					s.setString(2, ((TPlantaNoFrutal)planta).get_tipo_hoja());
-					
+					//s.setBoolean(3, planta.getActivo());
 					if(s.executeUpdate() == 0) {
 						s.close();
 						r.close();
@@ -76,8 +82,9 @@ public class PlantaDAOImp implements PlantaDAO {
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			
-			PreparedStatement s = c.prepareStatement("UPDATE empleado SET activo = false WHERE id = ?");
-			s.setInt(1, id);
+			PreparedStatement s = c.prepareStatement("UPDATE planta SET activo = ? WHERE id = ?");
+			s.setBoolean(1, false);
+			s.setInt(2, id);
 			
 			s.executeUpdate();
 			s.close();
@@ -89,43 +96,62 @@ public class PlantaDAOImp implements PlantaDAO {
 
 	@Override
 	public Set<TPlanta> listarPlantas() {
+
 		Set<TPlanta> lplantas = new HashSet<>();
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			
+		
 			PreparedStatement s = c.prepareStatement("SELECT * FROM planta AS p "
-					+ "LEFT JOIN planta_frutal AS pf ON p.id = pf.id "
-					+ "LEFT JOIN planta_no_frutal AS pn ON p.id = pn.id FOR UPDATE");
+					+ "JOIN planta_frutal AS pf ON p.id = pf.id_planta FOR UPDATE"
+					//+ "LEFT JOIN planta_no_frutal AS pn ON p.id = pn.id FOR UPDATE"
+					);
 			ResultSet r = s.executeQuery();
 			
+			TPlanta planta;
 			while(r.next()) {
-				TPlanta planta;
-				if(r.getInt("tipo") == 0) {
-					TPlantaFrutal tpfrutal = new TPlantaFrutal();
-					tpfrutal.set_id(r.getInt("id"));
-					tpfrutal.set_nombre(r.getString("nombre"));
-					tpfrutal.set_nombre_cientifico(r.getString("nombre_cientifico"));
-					tpfrutal.setActivo(r.getBoolean("activo"));
-					tpfrutal.set_tipo(0);
-					tpfrutal.set_nombre_fruta(r.getString("nombre_fruta"));
-					tpfrutal.set_maduracion(r.getString("maduracion"));
-					
-					planta = tpfrutal;
-				}else {
-					TPlantaNoFrutal tpno = new TPlantaNoFrutal();
-					tpno.set_id(r.getInt("id"));
-					tpno.set_nombre(r.getString("nombre"));
-					tpno.set_nombre_cientifico(r.getString("nombre_cientifico"));
-					tpno.setActivo(r.getBoolean("activo"));
-					tpno.set_tipo(1);
-					tpno.set_tipo_hoja(r.getString("tipo_hoja"));
-					
-					planta = tpno;
-				}
+				
+				
+			
+				TPlantaFrutal tpfrutal = new TPlantaFrutal();
+				tpfrutal.set_id(r.getInt("id_planta"));
+				tpfrutal.set_nombre(r.getString("nombre"));
+				tpfrutal.set_nombre_cientifico(r.getString("nombre_cientifico"));
+				tpfrutal.setActivo(r.getBoolean("activo"));
+				tpfrutal.set_tipo(0);
+				tpfrutal.set_nombre_fruta(r.getString("nombre_fruta"));
+				tpfrutal.set_maduracion(r.getString("maduracion"));
+				tpfrutal.set_id_invernadero(r.getInt("id_invernadero"));
+				
+				planta = tpfrutal;
+				
 				lplantas.add(planta);
 			}
+			r.close();
+			s.close();
+			s = c.prepareStatement("SELECT * FROM planta AS p "
+					+ //"JOIN planta_frutal AS pf ON p.id = pf.id_planta FOR UPDATE"
+					 " JOIN planta_no_frutal AS pn ON p.id = pn.id FOR UPDATE"
+					);
+			r = s.executeQuery();
+			
+			while(r.next()) {
+
+				TPlantaNoFrutal tpno = new TPlantaNoFrutal();
+				tpno.set_id(r.getInt("id"));
+				tpno.set_nombre(r.getString("nombre"));
+				tpno.set_nombre_cientifico(r.getString("nombre_cientifico"));
+				tpno.setActivo(r.getBoolean("activo"));
+				tpno.set_tipo(1);
+				tpno.set_tipo_hoja(r.getString("tipo_hoja"));
+				tpno.set_id_invernadero(r.getInt("id_invernadero"));
+				planta = tpno;
+				lplantas.add(planta);
+			}
+			
+		
 			r.close();
 			s.close();
 			
@@ -138,6 +164,7 @@ public class PlantaDAOImp implements PlantaDAO {
 	@SuppressWarnings("resource")
 	@Override
 	public Integer modificarPlanta(TPlanta planta) {
+		
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.getTransaccion();
@@ -147,25 +174,27 @@ public class PlantaDAOImp implements PlantaDAO {
 			s.setString(1, planta.get_nombre());
 			s.setString(2, planta.get_nombre_cientifico());
 			s.setBoolean(3, planta.getActivo());
-			
+			s.setInt(4, planta.get_id());
+			s.executeUpdate();
+			s.close();
 			if(planta instanceof TPlantaFrutal) {
-				s = c.prepareStatement("UPDATE planta_frutal SET nombre_fruta = ?, maduracion = ? WHERE id = ?");
+				s = c.prepareStatement("UPDATE planta_frutal SET nombre_fruta = ?, maduracion = ? WHERE id_planta = ?");
 				s.setString(1, ((TPlantaFrutal)planta).get_nombre_fruta());
 				s.setString(2, ((TPlantaFrutal)planta).get_maduracion());
 				s.setInt(3, planta.get_id());
 				
-				s.executeUpdate();
-				s.close();
+				
 			}else if( planta instanceof TPlantaNoFrutal) {
 				s = c.prepareStatement("UPDATE planta SET tipo_hoja = ? WHERE id = ?");
 				s.setString(1, ((TPlantaNoFrutal)planta).get_tipo_hoja());
 				s.setInt(2, planta.get_id());
 				
-				s.executeUpdate();
-				s.close();
-			}
 			
+			}
+			s.executeUpdate();
+			s.close();
 			return planta.get_id();
+			
 		}catch(Exception e) {
 			return -1;
 		}
@@ -179,20 +208,23 @@ public class PlantaDAOImp implements PlantaDAO {
 			Connection c = (Connection) t.getResource();
 			
 			PreparedStatement s = c.prepareStatement("SELECT * FROM planta AS p "
-					+ "JOIN planta_frutal AS pf p.id = pf.id "
-					+ "WHERE e.id = ? FOR UPDATE");
+					+ "JOIN planta_frutal AS pf ON p.id = pf.id_planta "
+					+ "WHERE p.id = ? FOR UPDATE");
 			s.setInt(1, id);
 			ResultSet r = s.executeQuery();
 			TPlanta planta = null;
 			
+			
 			if(r.next()) {
 				TPlantaFrutal tpfrutal = new TPlantaFrutal();
-				tpfrutal.set_id(r.getInt("id"));
+				tpfrutal.set_id(r.getInt("id_planta"));
+				tpfrutal.set_id_invernadero(r.getInt("id_invernadero"));
 				tpfrutal.set_nombre(r.getString("nombre"));
 				tpfrutal.set_nombre_cientifico(r.getString("nombre_cientifico"));
 				tpfrutal.setActivo(r.getBoolean("activo"));
 				tpfrutal.set_nombre_fruta(r.getString("nombre_fruta"));
 				tpfrutal.set_maduracion(r.getString("maduracion"));
+				tpfrutal.set_tipo(0);
 				
 				planta = tpfrutal;
 			}else {
@@ -208,8 +240,9 @@ public class PlantaDAOImp implements PlantaDAO {
 					tpno.set_nombre(r.getString("nombre"));
 					tpno.set_nombre_cientifico(r.getString("nombre_cientifico"));
 					tpno.setActivo(r.getBoolean("activo"));
+					tpno.set_id_invernadero(r.getInt("id_invernadero"));
 					tpno.set_tipo_hoja(r.getString("tipo_hoja"));
-					
+					tpno.set_tipo(1);
 					planta = tpno;
 				}
 			}
@@ -228,30 +261,53 @@ public class PlantaDAOImp implements PlantaDAO {
 	@Override
 	public Set<TPlanta> mostrarPorTipo(Integer tipo) {
 		Set<TPlanta>lplantas = new HashSet<>();
+		
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
+			PreparedStatement s;
+			ResultSet r;
+			TPlanta planta;
 			
-			PreparedStatement s = c.prepareStatement("SELECT * FROM planta AS p "
-					+ "LEFT JOIN planta_frutal AS pf ON p.id = pf.id "
-					+ "LEFT JOIN planta_no_frutal AS pn ON p.id = pn.id");
-			ResultSet r = s.executeQuery();
-			
-			while(r.next()) {
-				TPlanta planta  = new TPlanta();
-				if(r.getInt("tipo") == tipo) {
+			if(tipo == 0) {
+				
+				s = c.prepareStatement("SELECT * FROM planta AS p "
+						+ "JOIN planta_frutal AS pf ON p.id = pf.id_planta FOR UPDATE"
+						//+ "LEFT JOIN planta_no_frutal AS pn ON p.id = pn.id FOR UPDATE"
+						);
+				r = s.executeQuery();
+				
+				
+				while(r.next()) {
+					
+					
+					
 					TPlantaFrutal tpfrutal = new TPlantaFrutal();
-					tpfrutal.set_id(r.getInt("id"));
+					tpfrutal.set_id(r.getInt("id_planta"));
 					tpfrutal.set_nombre(r.getString("nombre"));
 					tpfrutal.set_nombre_cientifico(r.getString("nombre_cientifico"));
 					tpfrutal.setActivo(r.getBoolean("activo"));
 					tpfrutal.set_tipo(0);
 					tpfrutal.set_nombre_fruta(r.getString("nombre_fruta"));
 					tpfrutal.set_maduracion(r.getString("maduracion"));
+					tpfrutal.set_id_invernadero(r.getInt("id_invernadero"));
 					
 					planta = tpfrutal;
-				}else if (r.getInt("tipo") == tipo) {
+					
+					lplantas.add(planta);
+				}
+				
+			}
+			else{
+				s = c.prepareStatement("SELECT * FROM planta AS p "
+						+ //"JOIN planta_frutal AS pf ON p.id = pf.id_planta FOR UPDATE"
+						 " JOIN planta_no_frutal AS pn ON p.id = pn.id FOR UPDATE"
+						);
+				r = s.executeQuery();
+				
+				while(r.next()) {
+
 					TPlantaNoFrutal tpno = new TPlantaNoFrutal();
 					tpno.set_id(r.getInt("id"));
 					tpno.set_nombre(r.getString("nombre"));
@@ -259,17 +315,20 @@ public class PlantaDAOImp implements PlantaDAO {
 					tpno.setActivo(r.getBoolean("activo"));
 					tpno.set_tipo(1);
 					tpno.set_tipo_hoja(r.getString("tipo_hoja"));
-					
+					tpno.set_id_invernadero(r.getInt("id_invernadero"));
 					planta = tpno;
+					lplantas.add(planta);
 				}
-				lplantas.add(planta);
+				
 			}
 			
+
 			r.close();
 			s.close();
 			
 			return lplantas;
 		}catch(Exception e) {
+			
 			return null;
 		}
 	}
@@ -277,45 +336,62 @@ public class PlantaDAOImp implements PlantaDAO {
 	@Override
 	public Set<TPlanta> MostrarPorInvernadero(Integer id_invernadero) {
 		Set<TPlanta> lplantas = new HashSet<>();
+		TPlanta planta;
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			
 			PreparedStatement s = c.prepareStatement("SELECT * FROM planta AS p "
-					+ "LEFT JOIN planta_frutal AS pf ON p.id = pf.id"
-					+ "LEFT JOIN planta_no_frutal AS pn ON p.id = pn.id"
+					+ "JOIN planta_frutal AS pf ON p.id = pf.id_planta "
+					//+ "LEFT JOIN planta_no_frutal AS pn ON p.id = pn.id "
 					+ "WHERE p.id_invernadero = ?");
 			s.setInt(1, id_invernadero);
 			ResultSet r = s.executeQuery();
 			
 			while(r.next()) {
-				TPlanta planta = new TPlanta();
-				if(r.getInt("tipo") == 0) {
-					TPlantaFrutal tpfrutal = new TPlantaFrutal();
-					tpfrutal.set_id(r.getInt("id"));
-					tpfrutal.set_nombre(r.getString("nombre"));
-					tpfrutal.set_nombre_cientifico(r.getString("nombre_cientifico"));
-					tpfrutal.setActivo(r.getBoolean("activo"));
-					tpfrutal.set_tipo(0);
-					tpfrutal.set_nombre_fruta(r.getString("nombre_fruta"));
-					tpfrutal.set_maduracion(r.getString("maduracion"));
-					
-					planta = tpfrutal;
-				}else if (r.getInt("tipo") == 1) {
-					TPlantaNoFrutal tpno = new TPlantaNoFrutal();
-					tpno.set_id(r.getInt("id"));
-					tpno.set_nombre(r.getString("nombre"));
-					tpno.set_nombre_cientifico(r.getString("nombre_cientifico"));
-					tpno.setActivo(r.getBoolean("activo"));
-					tpno.set_tipo(1);
-					tpno.set_tipo_hoja(r.getString("tipo_hoja"));
-					
-					planta = tpno;
-				}
+			
+				TPlantaFrutal tpfrutal = new TPlantaFrutal();
+				tpfrutal.set_id(r.getInt("id_planta"));
+				tpfrutal.set_nombre(r.getString("nombre"));
+				tpfrutal.set_nombre_cientifico(r.getString("nombre_cientifico"));
+				tpfrutal.setActivo(r.getBoolean("activo"));
+				tpfrutal.set_tipo(0);
+				tpfrutal.set_nombre_fruta(r.getString("nombre_fruta"));
+				tpfrutal.set_maduracion(r.getString("maduracion"));
+				tpfrutal.set_id_invernadero(r.getInt("id_invernadero"));
+				
+				planta = tpfrutal;
+				
 				lplantas.add(planta);
+			
 			}
 			
+			
+			r.close();
+			s.close();
+			
+			s = c.prepareStatement("SELECT * FROM planta AS p "
+					//+ "LEFT JOIN planta_frutal AS pf ON p.id = pf.id_planta "
+					+ "JOIN planta_no_frutal AS pn ON p.id = pn.id "
+					+ "WHERE p.id_invernadero = ?");
+			s.setInt(1, id_invernadero);
+			r = s.executeQuery();
+			
+			while(r.next()) {
+				
+				TPlantaNoFrutal tpno = new TPlantaNoFrutal();
+				tpno.set_id(r.getInt("id"));
+				tpno.set_nombre(r.getString("nombre"));
+				tpno.set_nombre_cientifico(r.getString("nombre_cientifico"));
+				tpno.setActivo(r.getBoolean("activo"));
+				tpno.set_tipo(1);
+				tpno.set_tipo_hoja(r.getString("tipo_hoja"));
+				tpno.set_id_invernadero(r.getInt("id_invernadero"));
+				planta = tpno;
+				lplantas.add(planta);
+			}
+		
 			r.close();
 			s.close();
 			

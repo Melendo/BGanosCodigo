@@ -11,7 +11,12 @@ import Presentacion.FactoriaVistas.Evento;
 public class CommandListarPlanta implements Command {
 
 	public Context execute(Object datos) {
+		
+	
 		Set<TPlanta> res = FactoriaNegocio.getInstance().getPlantaSA().listarPlanta();
-		return new Context(Evento.LISTAR_PLANTAS_VISTA, datos);
+
+		return new Context(Evento.LISTAR_PLANTAS_VISTA,res);
+
 	}
+
 }

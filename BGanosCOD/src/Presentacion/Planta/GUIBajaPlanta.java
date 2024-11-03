@@ -5,8 +5,10 @@ package Presentacion.Planta;
 
 import javax.swing.JFrame;
 
+
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
+import Presentacion.Controller.GUIMSG;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
@@ -20,44 +22,15 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
 public class GUIBajaPlanta extends JFrame implements IGUI {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JButton jButton;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-	private JPanel jPanel;
 
-	
+
+	private static final long serialVersionUID = 1L;
+
 
 	public GUIBajaPlanta() {
 		super("Baja Planta");
@@ -73,12 +46,7 @@ public class GUIBajaPlanta extends JFrame implements IGUI {
 		initGUI();
 	}
 	
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	public void initGUI() {
 		JPanel mainPanel = new JPanel();
 	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -126,7 +94,7 @@ public class GUIBajaPlanta extends JFrame implements IGUI {
  						ApplicationController.getInstance().manageRequest(new Context(Evento.BAJA_PLANTA,idtmp));
  			
  				} catch (Exception e1) {
- 					//ApplicationController.getInstance().manageRequest(new Context(Evento.vista, -4));
+ 					GUIMSG.showMessage("Formato incorrecto", "BAJA PLANTA", true);
  				}
  			}
  		});
@@ -136,14 +104,20 @@ public class GUIBajaPlanta extends JFrame implements IGUI {
 		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see IGUI#actualizar(Context context)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
+		switch(context.getEvento()) {
+		case Evento.BAJA_PLANTA_OK:
+			GUIMSG.showMessage("Planta dado de baja correctamente", "BAJA PLANTA", false);
+			break;
+		case  Evento.BAJA_PLANTA_KO:
+			GUIMSG.showMessage("Planta NO se pudo dar de baja", "BAJA PLANTA", true);
+			break;
+		default:
+			GUIMSG.showMessage("ERROR INESPERADO", "BAJA PLANTA", true);
+			break;
 		
 	}
+}
 }

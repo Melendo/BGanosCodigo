@@ -1,25 +1,14 @@
 package Presentacion.Planta;
 
 import javax.swing.JFrame;
-
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import Negocio.Planta.TPlanta;
-import Negocio.Planta.TPlantaFrutal;
-import Negocio.Planta.TPlantaNoFrutal;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.swing.JButton;
-
 import Presentacion.FactoriaVistas.*;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
@@ -28,9 +17,7 @@ import Presentacion.Controller.Command.Context;
 
 public class GUIPlanta extends JFrame implements IGUI {
 	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private JButton bAltaPlanta;
 	private JButton bBajaPlanta;
@@ -42,10 +29,6 @@ public class GUIPlanta extends JFrame implements IGUI {
 	private JButton backButton;
 	private JPanel j;
 	
-	//private TPlanta tPlanta;
-	//private Set<TPlanta> hsPlanta;
-	//private Set<TPlantaFrutal> hsPlantaFrutal;
-	//private Set<TPlantaNoFrutal> hsPlantaNoFrutal;
 
 	public GUIPlanta() {
 		super("BGANOS");
@@ -74,7 +57,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 					
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUIPlanta.this.setVisible(false);
+			//	GUIPlanta.this.setVisible(false);
 				ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PLANTA_VISTA, null));
 			}
 		});
@@ -87,7 +70,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUIPlanta.this.setVisible(false);
+			//	GUIPlanta.this.setVisible(false);
 				ApplicationController.getInstance().manageRequest(new Context(Evento.BAJA_PLANTA_VISTA, null));
 			}
 		});
@@ -100,7 +83,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUIPlanta.this.setVisible(false);
+			//	GUIPlanta.this.setVisible(false);
 				ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_PLANTA_VISTA, null));
 			}
 		});
@@ -113,7 +96,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUIPlanta.this.setVisible(false);
+			//	GUIPlanta.this.setVisible(false);
 				ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_PLANTA_POR_ID_VISTA, null));
 			}
 		});
@@ -126,8 +109,8 @@ public class GUIPlanta extends JFrame implements IGUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUIPlanta.this.setVisible(false);
-				ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_VISTA, null));
+				//GUIPlanta.this.setVisible(false);
+				ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS, null));
 			}
 		});
 		bListarPlantas.setVisible(true);
@@ -139,7 +122,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUIPlanta.this.setVisible(false);
+			//	GUIPlanta.this.setVisible(false);
 				ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_POR_TIPO_VISTA, null));
 			}
 		});
@@ -152,7 +135,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUIPlanta.this.setVisible(false);
+				//GUIPlanta.this.setVisible(false);
 				ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_INVERNADERO_VISTA, null));
 			}
 		});
@@ -166,7 +149,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUIPlanta.this.setVisible(false);
+				//GUIPlanta.this.setVisible(false);
 				ApplicationController.getInstance().manageRequest(new Context(Evento.VISTA_PRINCIPAL,null));
 				dispose();
 			}
