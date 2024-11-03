@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import Negocio.Invernadero.TInvernadero;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
@@ -55,7 +56,7 @@ public class GUITresFechasMasVendidas extends JFrame implements IGUI {
 		mainPanel.add(panelCentro);
 
 		// Campo de entrada para el invernadero
-		JLabel labelInvernadero = new JLabel("Ingrese el id del Sistema de Riego:");
+		JLabel labelInvernadero = new JLabel("Ingrese el id del Invernadero:");
 		panelCentro.add(labelInvernadero);
 
 		idText = new JTextField();
@@ -73,7 +74,7 @@ public class GUITresFechasMasVendidas extends JFrame implements IGUI {
 		panelCentro.add(botonBuscar);
 
 		// Tabla
-		String[] nombreColumnas = { "FECHAS" };
+		String[] nombreColumnas = { "Id", "Fecha" };
 		tabla = ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, null);
 		JScrollPane scroll = new JScrollPane(tabla);
 		scroll.setPreferredSize(new Dimension(750, 250));
@@ -116,19 +117,23 @@ public class GUITresFechasMasVendidas extends JFrame implements IGUI {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void actualizar(Context context) {
+
 		if (context.getEvento() == Evento.CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO_OK) {
 			Set<Date> fechas = (Set<Date>) context.getDatos();
 
-			String[][] datos = new String[fechas.size()][1];
+			String[][] datos = new String[fechas.size()][2];
 			int i = 0;
+
 			for (Date fecha : fechas) {
-				datos[i++] = new String[] { String.valueOf(fecha) };
+				datos[i][0] = String.valueOf(i + 1);
+				datos[i][1] = fecha.toString();
+				i++;
 			}
-			tabla.setModel(new javax.swing.table.DefaultTableModel(datos, new String[] { "Fecha" }));
+			tabla.setModel(new javax.swing.table.DefaultTableModel(datos, new String[] { "Id", "Fecha" }));
 			ComponentsBuilder.adjustColumnWidths(tabla);
 		} else if (context.getEvento() == Evento.CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO_KO) {
-			JOptionPane.showMessageDialog(this, "Error al listar las tres fechas más vendidas de un invernadero.", "Error",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error al listar las tres fechas más vendidas de un invernadero.",
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
