@@ -29,7 +29,7 @@ public class EntradaSAImp implements EntradaSA {
 		int exito = -1;
 
 		try {
-						
+
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.newTransaccion();
 			t.start();
@@ -251,11 +251,10 @@ public class EntradaSAImp implements EntradaSA {
 			TInvernadero invernadero = f.getInvernaderoDAO().mostrarInvernaderoPorID(idInvernadero);
 
 			if (invernadero != null && invernadero.isActivo()) {
-			
+
 				entradas = entradaDAO.listarEntradasPorInvernadero(idInvernadero);
 				t.commit();
-				
-				
+
 			} else {
 				TEntrada entrada = new TEntrada();
 				entrada.setId(-1); // Error: id de invernadero no existe
