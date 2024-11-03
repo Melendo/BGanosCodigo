@@ -97,7 +97,7 @@ public class GUIListarEntradas extends JFrame implements IGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
             	GUIListarEntradas.this.setVisible(false);
-            	ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_ENTRADAS_VISTA, null));
+            	ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
             }
         });
         panelBotones.add(botonCancelar);

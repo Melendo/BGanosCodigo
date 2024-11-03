@@ -97,7 +97,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
                 vistaActual = new GUIListarEntradas((Set<TEntrada>) contexto.getDatos());
                 return vistaActual;
             case Evento.LISTAR_ENTRADAS_POR_INVERNADERO_VISTA:
-            	vistaActual = new GUILIstarEntradasPorInvernadero((Set<TEntrada>) contexto.getDatos());
+            	vistaActual = new GUILIstarEntradasPorInvernadero();
             	return vistaActual;
                 
                 
