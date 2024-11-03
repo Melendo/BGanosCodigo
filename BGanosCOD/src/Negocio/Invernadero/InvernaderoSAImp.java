@@ -4,11 +4,14 @@
  */
 package Negocio.Invernadero;
 
+import java.sql.Date;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
+import Integracion.FactoriaQuery.FactoriaQuery;
+import Integracion.FactoriaQuery.Query;
 import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Invernadero.TieneDAO;
 import Integracion.Transaction.Transaccion;
@@ -307,6 +310,38 @@ public class InvernaderoSAImp implements InvernaderoSA {
 			}
 		}
 		return exito;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<Date> calcularLasTresFechasMasVendidasDeUnInvernadero(Integer id_invernadero) {
+		Set<Date> fechas = new HashSet<Date>();
+		Transaccion t = null;
+		try {
+			TransaccionManager transaction = TransaccionManager.getInstance();
+			t = transaction.newTransaccion();
+			t.start();
+			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+
+			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
+			
+			if (daoInvernadero.mostrarInvernaderoPorID(id_invernadero) != null ) {
+				FactoriaQuery fq = FactoriaQuery.getInstance();
+				Query q = fq.getNewQuery("calcularLasTresFechasMasVendidasDeUnInvernadero");
+				
+				fechas = (Set<Date>) q.execute(id_invernadero);
+				t.commit();
+			}else {
+				Date fecha =  null;
+				fechas.add(fecha);
+				t.rollback();
+			}
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		}
+		return fechas;
 	}
 
 }
