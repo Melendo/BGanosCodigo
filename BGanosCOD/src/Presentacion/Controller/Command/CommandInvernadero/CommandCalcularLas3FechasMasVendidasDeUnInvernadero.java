@@ -3,9 +3,7 @@ package Presentacion.Controller.Command.CommandInvernadero;
 import java.sql.Date;
 import java.util.Set;
 
-import Integracion.FactoriaQuery.FactoriaQuery;
 import Negocio.FactoriaNegocio.FactoriaNegocio;
-import Negocio.Invernadero.TInvernadero;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
@@ -18,9 +16,9 @@ public class CommandCalcularLas3FechasMasVendidasDeUnInvernadero implements Comm
 
 		if (resultado.size() == 1) {
 			if (resultado.iterator().next() == null) {
-				return new Context(Evento.LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO_KO, resultado);
+				return new Context(Evento.CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO_KO, resultado);
 			}
 		}
-		return new Context(Evento.LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO_OK, resultado);
+		return new Context(Evento.CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO_OK, resultado);
 	}
 }
