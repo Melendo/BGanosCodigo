@@ -134,11 +134,11 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 		if (context.getEvento() == Evento.MOSTRAR_ENTRADA_OK) {
 			TEntrada entrada = (TEntrada) context.getDatos();
 			String texto = "ID: " + entrada.getId() + 
-					", Id invernadero: " + entrada.getIdInvernadero() +
-					", Fecha: " + entrada.getFecha() + 
-					", Precio: " + entrada.getPrecio() + 
-					", Stock: " + entrada.getStock() + 
-					", Activo: " + entrada.getActivo();
+					"\nId invernadero: " + entrada.getIdInvernadero() +
+					"\nFecha: " + entrada.getFecha() + 
+					"\nPrecio: " + entrada.getPrecio() + 
+					"\nStock: " + entrada.getStock() + 
+					"\nActivo: " + (entrada.getActivo() ? "Si" : "No");
 		
 			JOptionPane.showMessageDialog(this, texto, "Entrada", JOptionPane.INFORMATION_MESSAGE);
 		

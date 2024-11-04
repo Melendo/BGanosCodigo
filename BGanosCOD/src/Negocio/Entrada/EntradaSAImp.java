@@ -195,6 +195,8 @@ public class EntradaSAImp implements EntradaSA {
 				entradaMostrar.setFecha(entradaBuscar.getFecha());
 				entradaMostrar.setPrecio(entradaBuscar.getPrecio());
 				entradaMostrar.setStock(entradaBuscar.getStock());
+				entradaMostrar.setActivo(entradaBuscar.getActivo());
+
 				t.commit();
 
 			} else {
