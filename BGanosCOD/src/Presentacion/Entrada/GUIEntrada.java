@@ -57,7 +57,7 @@ public class GUIEntrada extends JFrame implements IGUI {
 		this.add(label);
 
 		// ALTA ENTRADA
-		bAltaEntrada = ComponentsBuilder.createButton("Alta entrada", 100, 120, 185, 100);
+		bAltaEntrada = ComponentsBuilder.createButton("Alta entrada", 70, 120, 250, 100);
 		bAltaEntrada.addActionListener(new ActionListener() {
 
 			@Override
@@ -71,7 +71,7 @@ public class GUIEntrada extends JFrame implements IGUI {
 		this.add(bAltaEntrada);
 		
 		// BAJA ENTRADA
-		bBajaEntrada = ComponentsBuilder.createButton("Baja entrada", 407, 120, 185, 100);
+		bBajaEntrada = ComponentsBuilder.createButton("Baja entrada", 370, 120, 250, 100);
 		bBajaEntrada.addActionListener(new ActionListener() {
 			
 			@Override
@@ -86,7 +86,7 @@ public class GUIEntrada extends JFrame implements IGUI {
 		
 		
 		// MODIFICAR ENTRADA
-		bModificarEntrada = ComponentsBuilder.createButton("Modificar entrada", 715, 120, 185, 100);
+		bModificarEntrada = ComponentsBuilder.createButton("Modificar entrada", 670, 120, 250, 100);
 		bModificarEntrada.addActionListener(new ActionListener() {
 
 			@Override
@@ -100,7 +100,7 @@ public class GUIEntrada extends JFrame implements IGUI {
 		this.add(bModificarEntrada);
 		
 		// MOSTRAR ENTRADA
-		bMostrarEntrada = ComponentsBuilder.createButton("Mostrar entrada", 100, 290, 185, 100);
+		bMostrarEntrada = ComponentsBuilder.createButton("Mostrar entrada", 70, 290, 250, 100);
 		bMostrarEntrada.addActionListener(new ActionListener() {
 
 			@Override
@@ -114,7 +114,7 @@ public class GUIEntrada extends JFrame implements IGUI {
 		this.add(bMostrarEntrada);
 		
 		// LISTAR ENTRADAS
-		bListarEntradas = ComponentsBuilder.createButton("Listar entradas", 407, 290, 200, 100);
+		bListarEntradas = ComponentsBuilder.createButton("Listar entradas", 370, 290, 250, 100);
 		bListarEntradas.addActionListener(new ActionListener() {
 
 			@Override
@@ -130,7 +130,8 @@ public class GUIEntrada extends JFrame implements IGUI {
 		
 		
 		// LISTAR ENTRADAS POR INVERNADERO
-		bListarEntradasPorInvernadero = ComponentsBuilder.createButton("Listar entradas por invernadero", 715, 290, 200, 100);
+//		bListarEntradasPorInvernadero = ComponentsBuilder.createButton("Listar entradas por invernadero", 715, 290, 200, 100);
+		bListarEntradasPorInvernadero = ComponentsBuilder.createButton("Listar entradas por invernadero", 670, 290, 250, 100);
 		bListarEntradasPorInvernadero.addActionListener(new ActionListener() {
 
 			@Override

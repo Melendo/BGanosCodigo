@@ -134,8 +134,6 @@ public class GUIModificarEntrada extends JFrame implements IGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				GUIModificarEntrada.this.setVisible(false);
-
 				try {
 
 					Integer id_entrada = Integer.parseInt(textID.getText());
@@ -186,6 +184,9 @@ public class GUIModificarEntrada extends JFrame implements IGUI {
 		if (context.getEvento() == Evento.MODIFICAR_ENTRADA_OK) {
 			JOptionPane.showMessageDialog(this, "Entrada modificada correctamente con id " + res, "Exito",
 					JOptionPane.INFORMATION_MESSAGE);
+			GUIModificarEntrada.this.setVisible(false);
+			ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
+
 
 		} else if (context.getEvento() == Evento.MODIFICAR_ENTRADA_KO) {
 
@@ -200,10 +201,10 @@ public class GUIModificarEntrada extends JFrame implements IGUI {
 				JOptionPane.showMessageDialog(this, "Error: el id de invernadero no existe", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
-				
-			case -50:
-				JOptionPane.showMessageDialog(this, "Error: ya existe la entrada con dicha fecha", "Error", JOptionPane.ERROR_MESSAGE);
-				break;
+//				
+//			case -50:
+//				JOptionPane.showMessageDialog(this, "Error: ya existe la entrada con dicha fecha", "Error", JOptionPane.ERROR_MESSAGE);
+//				break;
 				
 			case -51:
 				JOptionPane.showMessageDialog(this, "Error: id de una entrada que no existe", "Error", JOptionPane.ERROR_MESSAGE);

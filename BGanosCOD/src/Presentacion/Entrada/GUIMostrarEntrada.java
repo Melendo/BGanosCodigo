@@ -89,13 +89,14 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUIMostrarEntrada.this.setVisible(false);
 
 				try {
 					Integer id_entrada = Integer.parseInt(id.getText());
 					// Vamos a tratar el error de campos nulos
+					//GUIMostrarEntrada.this.setVisible(false);
 					ApplicationController.getInstance().manageRequest(
 							new Context(Evento.MOSTRAR_ENTRADA_POR_ID, !id.getText().isEmpty() ? id_entrada : 0));
+					setVisible(false);
 
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(GUIMostrarEntrada.this, "Error en el formato del ID", "Error",
@@ -116,8 +117,7 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GUIMostrarEntrada.this.setVisible(false);
-				ApplicationController.getInstance()
-						.manageRequest(new Context(Evento.ENTRADA_VISTA, null));
+				ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
 			}
 		});
 
@@ -133,22 +133,22 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 
 		if (context.getEvento() == Evento.MOSTRAR_ENTRADA_OK) {
 			TEntrada entrada = (TEntrada) context.getDatos();
-			String texto = "ID: " + entrada.getId() + 
-					"\nId invernadero: " + entrada.getIdInvernadero() +
-					"\nFecha: " + entrada.getFecha() + 
-					"\nPrecio: " + entrada.getPrecio() + 
-					"\nStock: " + entrada.getStock() + 
-					"\nActivo: " + (entrada.getActivo() ? "Si" : "No");
-		
+			String texto = "ID: " + entrada.getId() + "\nId invernadero: " + entrada.getIdInvernadero() + "\nFecha: "
+					+ entrada.getFecha() + "\nPrecio: " + entrada.getPrecio() + "\nStock: " + entrada.getStock()
+					+ "\nActivo: " + (entrada.getActivo() ? "Si" : "No");
+
 			JOptionPane.showMessageDialog(this, texto, "Entrada", JOptionPane.INFORMATION_MESSAGE);
-		
+			this.setVisible(false);
+			ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
+
 		} else if (context.getEvento() == Evento.MOSTRAR_ENTRADA_KO) {
-			JOptionPane.showMessageDialog(this, "No existe entrada con ID: " + ((TEntrada) context.getDatos()).getId(), "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No existe entrada con ID: " + ((TEntrada) context.getDatos()).getId(),
+					"Error", JOptionPane.ERROR_MESSAGE);
+
+			 this.setVisible(false);
+			 ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_ENTRADA_POR_ID_VISTA, null));
 
 		}
-		
-		this.setVisible(false);
-		ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_ENTRADA_POR_ID_VISTA, null));
 
 
 	}

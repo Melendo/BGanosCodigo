@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 import org.junit.FixMethodOrder;
@@ -34,7 +35,7 @@ public class EntradaDAOTest {
 
 		return e1.getId().equals(e2.getId()) && e1.getIdInvernadero().equals(e2.getIdInvernadero())
 				&& e1.getPrecio().equals(e2.getPrecio()) && e1.getStock().equals(e2.getStock())
-				&& e1.getActivo().equals(e2.getActivo()) /*&& e1.getFecha().equals(e2.getFecha())*/;
+				&& e1.getActivo().equals(e2.getActivo()) && e1.getFecha().equals(e2.getFecha());
 	}
 
 	private Transaccion crearTransaccion() {
@@ -192,7 +193,7 @@ public class EntradaDAOTest {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void D_mostrar() {
 
@@ -234,11 +235,11 @@ public class EntradaDAOTest {
 			// System.out.println(idEntrada);
 			TEntrada e2 = daoEntrada.mostrarEntrada(idEntrada);
 
-			// System.out.println(""+ e1.getId() +","+ e1.getIdInvernadero()+ ","+
-			// e1.getFecha()+", "+e1.getPrecio() + ","+ e1.getStock());
-
-			// System.out.println(""+ e2.getId() +","+ e2.getIdInvernadero()+ ","+
-			// e2.getFecha()+", "+e2.getPrecio() + ","+ e2.getStock());
+//			 System.out.println(""+ e1.getId() +","+ e1.getIdInvernadero()+ ","+
+//			 e1.getFecha()+", "+e1.getPrecio() + ","+ e1.getStock());
+//			
+//			 System.out.println(""+ e2.getId() +","+ e2.getIdInvernadero()+ ","+
+//			 e2.getFecha()+", "+e2.getPrecio() + ","+ e2.getStock());
 
 			if (!equals(e1, e2)) {
 				fail("No se ha leido correctamente la entrada");
@@ -251,9 +252,9 @@ public class EntradaDAOTest {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
-	public void E_listar() {
+	public void E_listar_entradas() {
 		EntradaDAO daoEntrada = FactoriaIntegracion.getInstance().getEntradaDAO();
 
 		try {
@@ -285,23 +286,73 @@ public class EntradaDAOTest {
 			statement.execute("SET FOREIGN_KEY_CHECKS = 1");
 			statement.close(); // Cerrar el Statement
 
-
 			TEntrada entrada1 = new TEntrada(1, java.sql.Date.valueOf("2012-10-10"), 12.0f, 12, 1, true);
 			TEntrada entrada2 = new TEntrada(2, java.sql.Date.valueOf("2013-03-03"), 13.0f, 13, 1, true);
 
 			Set<TEntrada> lista = daoEntrada.listarEntradas();
-			
-			for(TEntrada e : lista) {
-				if(!equals(e, entrada1) && !equals(e, entrada2))
+
+			for (TEntrada e : lista) {
+				if (!equals(e, entrada1) && !equals(e, entrada2))
 					fail("Fallo en la lista");
 			}
-			
+
 			t.commit();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Test
+	public void F_listar_entradas_por_invernadero() {
+		EntradaDAO daoEntrada = FactoriaIntegracion.getInstance().getEntradaDAO();
+		InvernaderoDAO daoInvernadero = FactoriaIntegracion.getInstance().getInvernaderoDAO();
+
+		try {
+			Transaccion t;
+			t = crearTransaccion();
+			t.start();
+			Connection c = (Connection) t.getResource();
+
+			// Desactivar las comprobaciones de claves foráneas, luego las vuelvo a activar,
+			// solo para poder truncar todas las tablas implicadas
+			Statement statement = c.createStatement();
+			statement.execute("SET FOREIGN_KEY_CHECKS = 0");
+
+			PreparedStatement ps1 = c.prepareStatement("TRUNCATE linea_factura");
+			ps1.executeUpdate();
+			PreparedStatement ps3 = c.prepareStatement("TRUNCATE factura");
+			ps3.executeUpdate();
+			PreparedStatement ps = c.prepareStatement("TRUNCATE entrada");
+			ps.executeUpdate();
+			PreparedStatement ps2 = c.prepareStatement("TRUNCATE invernadero");
+			ps2.executeUpdate();
+
+			ps1.close();
+			ps3.close();
+			ps.close();
+			ps2.close();
 			
+			// creo un invernadero
+			TInvernadero inv = new TInvernadero(1, "inv1", "abono", "artificial", true);
+			inv.setId(daoInvernadero.altaInvernadero(inv));
+
+			TEntrada e1 = new TEntrada(1, java.sql.Date.valueOf("2012-10-10"), 12.0f, 12, inv.getId(), true);
+			Integer idEntrada = daoEntrada.altaEntrada(e1);
+			
+			Collection<TEntrada> lista = daoEntrada.listarEntradasPorInvernadero(idEntrada);
+			
+			for(TEntrada entrada : lista) {
+				if(!equals(e1, entrada))
+					fail("Fallo en el listar entradas por invernadero");
+			}
+			
+			t.commit();
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

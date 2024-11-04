@@ -4,7 +4,7 @@
 package Negocio.Entrada;
 
 import java.sql.Date;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import Integracion.Entrada.EntradaDAO;
@@ -147,8 +147,10 @@ public class EntradaSAImp implements EntradaSA {
 								t.rollback();
 
 							} else {
-								exito = -50; // Error: ya existe la entrada con los mismos datos y está activa
-								t.rollback();
+								exito = entradaDao.modificarEntrada(entrada);
+								t.commit();
+//								exito = -50; // Error: ya existe la entrada con los mismos datos y está activa
+//								t.rollback();
 							}
 
 						} else {
@@ -215,7 +217,7 @@ public class EntradaSAImp implements EntradaSA {
 	@Override
 	public Set<TEntrada> listarEntrada() {
 
-		Set<TEntrada> entradas = new HashSet<>();
+		Set<TEntrada> entradas = new LinkedHashSet<>();
 
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
@@ -241,7 +243,7 @@ public class EntradaSAImp implements EntradaSA {
 
 	@Override
 	public Set<TEntrada> listarEntradasPorInvernadero(Integer idInvernadero) {
-		Set<TEntrada> entradas = new HashSet<>();
+		Set<TEntrada> entradas = new LinkedHashSet<>();
 
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
