@@ -121,7 +121,7 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				GUIAltaEntrada.this.setVisible(false);
+				//GUIAltaEntrada.this.setVisible(false);
 
 				try {
 					// fecha, precio, stock, id_invernadero
@@ -172,6 +172,8 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 		if (context.getEvento() == Evento.ALTA_ENTRADA_OK) {
 			JOptionPane.showMessageDialog(this, "Entrada dada de alta correctamente con id " + res, "Exito",
 					JOptionPane.INFORMATION_MESSAGE);
+			GUIAltaEntrada.this.setVisible(false);
+			ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
 
 		} else if (context.getEvento() == Evento.ALTA_ENTRADA_KO) {
 
