@@ -9,31 +9,32 @@ import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.Invernadero.GUIListarInvernaderoPorSR;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
-import Negocio.Fabricante.TFabricante;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import Negocio.Fabricante.TFabricante;
+import Negocio.Fabricante.TFabricanteLocal;
 
 @SuppressWarnings("serial")
 public class GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero extends JFrame implements IGUI {
 
+	private Set<TFabricante> listaFabricantes;
+	private String[] nombreColumnas = { "ID", "Nombre", "Cod. Fabricante", "Teléfono", "Tipo" };
 	private JTextField idText;
 	private JPanel mainPanel;
 	private JTable tabla;
@@ -41,6 +42,7 @@ public class GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero ext
 
 	public GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero() {
 		super("Mostrar Fabricante");
+		listaFabricantes = new HashSet<TFabricante>();
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 600;
 		int alto = 400;
@@ -63,7 +65,7 @@ public class GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero ext
 		mainPanel.add(panelCentro);
 
 		// Campo de entrada para el invernadero
-		JLabel labelInvernadero = new JLabel("Ingrese el id del Sistema de Riego:");
+		JLabel labelInvernadero = new JLabel("Ingrese el id del Invernadero:");
 		panelCentro.add(labelInvernadero);
 
 		idText = new JTextField();
@@ -75,12 +77,22 @@ public class GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero ext
 		botonBuscar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				if (idText.getText().isEmpty())
+					JOptionPane.showMessageDialog(GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero.this,
+							"Por favor, ingrese un id.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+				else {
+					ApplicationController.getInstance()
+							.manageRequest(new Context(
+									Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO,
+									Integer.parseInt(idText.getText())));
+					idText.setText("");
+				}
 			}
 		});
 		panelCentro.add(botonBuscar);
 
 		// Tabla
-		String[] nombreColumnas = { "ID", "Nombre", "Cod. Fabricante", "Teléfono" };
 		tabla = ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, null);
 		JScrollPane scroll = new JScrollPane(tabla);
 		scroll.setPreferredSize(new Dimension(750, 250));
@@ -93,7 +105,7 @@ public class GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero ext
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero.this.setVisible(false);
-				ApplicationController.getInstance().manageRequest(new Context(Evento.INVERNADERO_VISTA, null));
+				ApplicationController.getInstance().manageRequest(new Context(Evento.FABRICANTE_VISTA, null));
 			}
 		});
 		panelBotones.add(botonCancelar);
@@ -102,11 +114,23 @@ public class GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero ext
 		this.setVisible(true);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void actualizar(Context context) {
 		if (context.getEvento() == Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_OK) {
-			ApplicationController.getInstance()
-					.manageRequest(new Context(Evento.LISTAR_FABRICANTES_VISTA, context.getDatos()));
-			dispose();
+
+			listaFabricantes = (Set<TFabricante>) context.getDatos();
+			String[][] tablaDatos = new String[listaFabricantes.size()][nombreColumnas.length];
+
+			int i = 0;
+			for (TFabricante sistema : listaFabricantes) {
+				tablaDatos[i][0] = sistema.getId().toString();
+				tablaDatos[i][1] = sistema.getNombre();
+				tablaDatos[i][2] = sistema.getCodFabricante();
+				tablaDatos[i][3] = sistema.getTelefono();
+				tablaDatos[i][4] = (sistema instanceof TFabricanteLocal) ? "Local" : "Extranjero";
+				i++;
+			}
+			tabla.setModel(new DefaultTableModel(tablaDatos, nombreColumnas));
 		} else if (context
 				.getEvento() == Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_KO) {
 			if (context.getDatos() == null) {

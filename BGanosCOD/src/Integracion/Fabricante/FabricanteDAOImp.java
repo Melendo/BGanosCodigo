@@ -142,7 +142,8 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Connection c = (Connection) t.getResource();
 
 			PreparedStatement s = c.prepareStatement(
-					"SELECT * FROM fabricante AS e LEFT JOIN fabricante_local AS el ON e.id=el.id_fabricante LEFT JOIN fabricante_extranjero AS ez ON e.id=ez.id_fabricante FOR UPDATE");
+					"SELECT * FROM fabricante AS e " + "LEFT JOIN fabricante_local AS el ON e.id=el.id_fabricante "
+							+ "LEFT JOIN fabricante_extranjero AS ez ON e.id=ez.id_fabricante FOR UPDATE");
 			ResultSet r = s.executeQuery();
 
 			while (r.next()) {
@@ -157,7 +158,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 					tLocal.setSubvencion(r.getInt("subvenciones"));
 					tLocal.setTelefono(r.getString("telefono"));
 
-					if (r.getBoolean("activo"))
+					if (tLocal.getActivo())
 						lFabricantes.add(tLocal);
 				} else {
 					TFabricanteExtranjero tExtranjero = new TFabricanteExtranjero();
@@ -169,7 +170,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 					tExtranjero.setPaisDeOrigen(r.getString("pais_origen"));
 					tExtranjero.setTelefono(r.getString("telefono"));
 
-					if (r.getBoolean("activo"))
+					if (tExtranjero.getActivo())
 						lFabricantes.add(tExtranjero);
 				}
 			}
@@ -191,8 +192,8 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 
-			PreparedStatement s = c.prepareStatement(
-					"SELECT * FROM fabricante_extranjero AS e LEFT JOIN fabricante AS ez ON e.id_fabricante = ez.id FOR UPDATE");
+			PreparedStatement s = c.prepareStatement("SELECT * FROM fabricante_extranjero AS e "
+					+ "LEFT JOIN fabricante AS ez ON e.id_fabricante = ez.id FOR UPDATE");
 			ResultSet r = s.executeQuery();
 
 			while (r.next()) {
@@ -206,7 +207,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 				tExtranjero.setPaisDeOrigen(r.getString("pais_origen"));
 				tExtranjero.setTelefono(r.getString("telefono"));
 
-				if (r.getBoolean("activo"))
+				if (tExtranjero.getActivo())
 					lFabricantes.add(tExtranjero);
 			}
 
@@ -227,8 +228,8 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 
-			PreparedStatement s = c.prepareStatement(
-					"SELECT * FROM fabricante_Local AS e LEFT JOIN fabricante AS ez ON e.id_fabricante = ez.id FOR UPDATE");
+			PreparedStatement s = c.prepareStatement("SELECT * FROM fabricante_Local AS e "
+					+ "LEFT JOIN fabricante AS ez ON e.id_fabricante = ez.id FOR UPDATE");
 			ResultSet r = s.executeQuery();
 
 			while (r.next()) {
@@ -241,7 +242,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 				tLocal.setNombre(r.getString("nombre"));
 				tLocal.setSubvencion(r.getInt("impuestos"));
 				tLocal.setTelefono(r.getString("telefono"));
-				if (r.getBoolean("activo"))
+				if (tLocal.getActivo())
 					lFabricantes.add(tLocal);
 			}
 

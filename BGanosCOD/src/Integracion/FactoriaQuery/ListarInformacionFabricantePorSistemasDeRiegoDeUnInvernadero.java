@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.util.HashSet;
 
 import Negocio.Fabricante.TFabricante;
+import Negocio.Fabricante.TFabricanteExtranjero;
 
 public class ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero implements Query {
 
@@ -24,6 +25,8 @@ public class ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero implem
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement s = c.prepareStatement("SELECT F.* FROM fabricante F "
+					+ "LEFT JOIN fabricante_local AS fl ON F.id = fl.id_fabricante "
+					+ "LEFT JOIN fabricante_extranjero AS fe ON F.id = fe.id_fabricante "
 					+ "JOIN sistemas_riego S ON F.id = S.id_fabricante "
 					+ "JOIN sistemas_riego_de_invernadero SJI ON S.id = SJI.id_sistema_riego WHERE SJI.id_invernadero = ?");
 
@@ -32,16 +35,18 @@ public class ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero implem
 			ResultSet r = s.executeQuery();
 
 			while (r.next()) {
-				TFabricante tf = new TFabricante();
+				TFabricanteExtranjero tf = new TFabricanteExtranjero();
 				tf.setId(r.getInt("id"));
 				tf.setActivo(r.getBoolean("activo"));
 				tf.setCodFabricante(r.getString("cod_fabricante"));
 				tf.setNombre(r.getString("nombre"));
 				tf.setTelefono(r.getString("telefono"));
-
-				lFabricantes.add(tf);
+				if (tf.getActivo())
+					lFabricantes.add(tf);
 			}
 
+			r.close();
+			s.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

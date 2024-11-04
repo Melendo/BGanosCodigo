@@ -16,6 +16,6 @@ public class CommandListarInformacionFabricanteDeSistemaDeRiegoDeUnInvernadero i
 		if (res == null) {
 			return new Context(Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_KO, res);
 		} else
-			return new Context(Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO, res);
+			return new Context(Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_OK, res);
 	}
 }
