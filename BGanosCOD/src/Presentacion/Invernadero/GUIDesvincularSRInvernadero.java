@@ -27,9 +27,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-
 public class GUIDesvincularSRInvernadero extends JFrame implements IGUI {
-	
+
 	private JTextField textId_Invernadero;
 	private JTextField textId_SisRiego;
 
@@ -81,7 +80,7 @@ public class GUIDesvincularSRInvernadero extends JFrame implements IGUI {
 		textId_SisRiego = new JTextField(20);
 		gbc.gridx = 1; // Columna 1
 		mainPanel.add(textId_SisRiego, gbc);
-		
+
 		// Panel de botones
 		JPanel panelBotones = new JPanel();
 		gbc.gridx = 0;
@@ -97,20 +96,20 @@ public class GUIDesvincularSRInvernadero extends JFrame implements IGUI {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					String idTexto1 = textId_Invernadero.getText();
-					Integer idInvernadero = Integer.parseInt(idTexto1);
-					
+					Integer idInvernadero = idTexto1 != null ? Integer.parseInt(idTexto1) : 0;
+
 					String idTexto2 = textId_SisRiego.getText();
-					Integer idSisRiego = Integer.parseInt(idTexto2);
+					Integer idSisRiego = idTexto2 != null ? Integer.parseInt(idTexto2) : 0;
 
 					TTiene tiene = new TTiene();
 					tiene.setId_Invernadero(idInvernadero);
 					tiene.setId_SistemasDeRiego(idSisRiego);
-					
+
 					ApplicationController.getInstance()
 							.manageRequest(new Context(Evento.DESVINCULAR_SISTEMA_RIEGO_DE_INVERNADERO, tiene));
 				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(GUIDesvincularSRInvernadero.this, "Error en el formato del ID", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(GUIDesvincularSRInvernadero.this, "Error en el formato del ID o campos vacios",
+							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -129,18 +128,21 @@ public class GUIDesvincularSRInvernadero extends JFrame implements IGUI {
 
 		this.setVisible(true);
 	}
-	
 
 	@Override
 	public void actualizar(Context context) {
 		int resultado = (int) context.getDatos();
 		if (context.getEvento() == Evento.DESVINCULAR_SISTEMA_RIEGO_DE_INVERNADERO_OK) {
 
-			JOptionPane.showMessageDialog(this, "Invernadero y Sistema de riego se han desvinculados correctamente", "Exito",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Invernadero y Sistema de riego se han desvinculados correctamente",
+					"Exito", JOptionPane.INFORMATION_MESSAGE);
 		} else if (context.getEvento() == Evento.DESVINCULAR_SISTEMA_RIEGO_DE_INVERNADERO_KO) {
 
 			switch (resultado) {
+			case -2:
+				JOptionPane.showMessageDialog(this, "Error: Los IDs tienen que ser mayores o iguales que 0.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
 			case -3:
 				JOptionPane.showMessageDialog(this, "Error: El Invernadero introducido no Existe.", "Error",
 						JOptionPane.ERROR_MESSAGE);
@@ -156,6 +158,6 @@ public class GUIDesvincularSRInvernadero extends JFrame implements IGUI {
 				break;
 			}
 		}
-		
+
 	}
 }

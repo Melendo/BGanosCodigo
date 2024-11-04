@@ -134,7 +134,7 @@ public class GUIModificarInvernadero extends JFrame implements IGUI {
 					String iluminacion = textTipoIluminacion.getText();
 
 					TInvernadero invernadero = new TInvernadero();
-					invernadero.setId(id);
+					invernadero.setId(id != null ? id : null);
 					invernadero.setNombre(nombre != null ? nombre : "");
 					invernadero.setSustrato(sustrato != null ? sustrato : "");
 					invernadero.setTipo_iluminacion(iluminacion != null ? iluminacion : "");
@@ -177,6 +177,10 @@ public class GUIModificarInvernadero extends JFrame implements IGUI {
 		} else if (context.getEvento() == Evento.MODIFICAR_INVERNADERO_KO) {
 
 			switch (resultado) {
+			case -2:
+				JOptionPane.showMessageDialog(this, "Error: el ID proporcionado debe ser mayor o igual a 0.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
 			case -3:
 				JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error",
 						JOptionPane.ERROR_MESSAGE);

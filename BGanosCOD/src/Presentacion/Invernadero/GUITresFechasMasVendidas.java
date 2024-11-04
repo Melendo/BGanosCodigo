@@ -98,13 +98,13 @@ public class GUITresFechasMasVendidas extends JFrame implements IGUI {
 
 	private void buscarPorInvernadero() {
 		String id = idText.getText().trim();
-		if (id.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Por favor, ingrese un Invernadero.", "Advertencia",
-					JOptionPane.WARNING_MESSAGE);
-			return;
-		}
-
 		try {
+			if (Integer.parseInt(id) <= 0) {
+				JOptionPane.showMessageDialog(this, "Error: Los IDs tienen que ser mayores o iguales que 0.", "Advertencia",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+
 			int idSR = Integer.parseInt(id);
 			ApplicationController.getInstance()
 					.manageRequest(new Context(Evento.CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO, idSR));

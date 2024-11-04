@@ -98,10 +98,10 @@ public class GUIVincularSRInvernadero extends JFrame implements IGUI {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					String idTexto1 = textId_Invernadero.getText();
-					Integer idInvernadero = Integer.parseInt(idTexto1);
+					Integer idInvernadero = idTexto1 != null ? Integer.parseInt(idTexto1) : 0;
 					
 					String idTexto2 = textId_SisRiego.getText();
-					Integer idSisRiego = Integer.parseInt(idTexto2);
+					Integer idSisRiego = idTexto2 != null ? Integer.parseInt(idTexto2) : 0;
 
 					TTiene tiene = new TTiene();
 					tiene.setId_Invernadero(idInvernadero);
@@ -110,7 +110,7 @@ public class GUIVincularSRInvernadero extends JFrame implements IGUI {
 					ApplicationController.getInstance()
 							.manageRequest(new Context(Evento.VINCULAR_SISTEMA_RIEGO_A_INVERNADERO, tiene));
 				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(GUIVincularSRInvernadero.this, "Error en el formato del ID", "Error",
+					JOptionPane.showMessageDialog(GUIVincularSRInvernadero.this, "Error en el formato del ID o campos vacios", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -141,6 +141,10 @@ public class GUIVincularSRInvernadero extends JFrame implements IGUI {
 		} else if (context.getEvento() == Evento.VINCULAR_SISTEMA_RIEGO_A_INVERNADERO_KO) {
 
 			switch (resultado) {
+			case -2:
+				JOptionPane.showMessageDialog(this, "Error: Los IDs tienen que ser mayores o iguales que 0.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
 			case -3:
 				JOptionPane.showMessageDialog(this, "Error: El Invernadero introducido no Existe.", "Error",
 						JOptionPane.ERROR_MESSAGE);
