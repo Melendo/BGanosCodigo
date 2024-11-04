@@ -11,12 +11,15 @@ import org.junit.Test;
 
 import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
+import Integracion.FactoriaQuery.FactoriaQuery;
+import Integracion.FactoriaQuery.Query;
 import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Invernadero.TieneDAO;
 import Integracion.SistemaDeRiego.SistemaDeRiegoDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 import Negocio.Fabricante.TFabricante;
+import Negocio.Fabricante.TFabricanteExtranjero;
 import Negocio.Fabricante.TFabricanteLocal;
 import Negocio.Invernadero.TInvernadero;
 import Negocio.Invernadero.TTiene;
@@ -27,8 +30,8 @@ public class FabricanteDAOTest {
 	private static SistemaDeRiegoDAO sistemaRiegoDAO;
 	private static FabricanteDAO fabricanteDAO;
 	private static InvernaderoDAO invernaderoDAO;
-	private static TieneDAO tieneDAO;
-
+	private static Query query;
+	
 	private boolean equals(TFabricante t1, TFabricante t2) {
 		if (t1 == null || t2 == null)
 			return false;
@@ -39,22 +42,26 @@ public class FabricanteDAOTest {
 
 	// Crear un sistema de riego con valores predeterminados
 	private TFabricante getTFabricanteLocal() {
-		TFabricante tf = new TFabricante();
+		TFabricanteLocal tf = new TFabricanteLocal();
 		tf.setActivo(true);
 		tf.setCodFabricante(getNameRandom() + getNumRandom());
 		tf.setId(getNumRandom());
 		tf.setNombre(getNameRandom());
 		tf.setTelefono(getTelRamdom());
+		tf.setImpuesto(getNumRandom());
+		tf.setSubvencion(getNumRandom());
 		return tf;
 	}
 
 	private TFabricante getTFabricanteExtranjero() {
-		TFabricante tf = new TFabricante();
+		TFabricanteExtranjero tf = new TFabricanteExtranjero();
 		tf.setActivo(true);
 		tf.setCodFabricante(getNameRandom() + getNumRandom());
 		tf.setId(getNumRandom());
 		tf.setNombre(getNameRandom());
 		tf.setTelefono(getTelRamdom());
+		tf.setPaisDeOrigen(getNameRandom());
+		tf.setAranceles(getNumRandom());
 		return tf;
 	}
 
@@ -64,7 +71,6 @@ public class FabricanteDAOTest {
 		tInvernadero.setNombre(getNameRandom());
 		tInvernadero.setSustrato(getNameRandom());
 		tInvernadero.setTipo_iluminacion(getNameRandom());
-
 		return tInvernadero;
 	}
 
@@ -116,7 +122,7 @@ public class FabricanteDAOTest {
 		sistemaRiegoDAO = FactoriaIntegracion.getInstance().getSistemaDeRiegoDAO();
 		fabricanteDAO = FactoriaIntegracion.getInstance().getFabricanteDAO();
 		invernaderoDAO = FactoriaIntegracion.getInstance().getInvernaderoDAO();
-		tieneDAO = FactoriaIntegracion.getInstance().getDaoTiene();
+		query = FactoriaQuery.getInstance().getNewQuery("ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero");
 	}
 
 	@Test
@@ -169,25 +175,200 @@ public class FabricanteDAOTest {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void testMostrarFabricante() {
 		try {
 			Transaccion trans = crearTransaccion();
 			trans.start();
 			TFabricante tf = getTFabricanteLocal();
-			Integer idSistemaDeRiego = fabricanteDAO.altaFabricante(tf);
-			tf.setId(idSistemaDeRiego);
+			tf.setId(fabricanteDAO.altaFabricante(tf));
 
 			if (!equals(tf, fabricanteDAO.mostrarFabricantePorId(tf.getId()))) {
 				trans.rollback();
 				fail("Error: mostrarFabricantePorID() tf no coincide con el mostrado");
 			}
 
-			trans.commit(); 
+			trans.commit();
 		} catch (Exception e) {
 			fail("Excepción");
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void testListarFabricantes() {
+		try {
+			Transaccion trans = crearTransaccion();
+			trans.start();
+
+			TFabricante tf1 = getTFabricanteLocal();
+			TFabricante tf2 = getTFabricanteExtranjero();
+
+			Integer idF1 = fabricanteDAO.altaFabricante(tf1);
+			tf1.setId(idF1);
+			boolean encontrado = false;
+			Integer idF2 = fabricanteDAO.altaFabricante(tf2);
+			tf2.setId(idF2);
+			boolean encontrado2 = false;
+
+			Set<TFabricante> fabricantes = fabricanteDAO.listarFabricantes();
+
+			for (TFabricante fab : fabricantes) {
+				if (fab.getId().equals(tf1.getId())) {
+					encontrado = true;
+				} else if (fab.getId().equals(tf2.getId())) {
+					encontrado2 = true;
+				}
+			}
+
+			if (!encontrado || !encontrado2) {
+				fail("Error: La lista no muestra todos los fabricantes");
+				trans.rollback();
+			}
+
+			trans.commit();
+		} catch (Exception e) {
+			fail("Excepción");
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testListarFabricantesLocales() {
+		try {
+			Transaccion trans = crearTransaccion();
+			trans.start();
+
+			TFabricante tf1 = getTFabricanteLocal();
+			TFabricante tf2 = getTFabricanteLocal();
+
+			Integer idF1 = fabricanteDAO.altaFabricante(tf1);
+			tf1.setId(idF1);
+			boolean encontrado = false;
+			Integer idF2 = fabricanteDAO.altaFabricante(tf2);
+			tf2.setId(idF2);
+			boolean encontrado2 = false;
+
+			Set<TFabricante> fabricantes = fabricanteDAO.listarFabricantes();
+
+			for (TFabricante fab : fabricantes) {
+				if (fab.getId().equals(tf1.getId())) {
+					encontrado = true;
+				} else if (fab.getId().equals(tf2.getId())) {
+					encontrado2 = true;
+				}
+			}
+
+			if (!encontrado || !encontrado2) {
+				fail("Error: La lista no muestra todos los fabricantes locales");
+				trans.rollback();
+			}
+
+			trans.commit();
+		} catch (Exception e) {
+			fail("Excepción");
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testListarFabricantesExtranjeros() {
+		try {
+			Transaccion trans = crearTransaccion();
+			trans.start();
+
+			TFabricante tf1 = getTFabricanteExtranjero();
+			TFabricante tf2 = getTFabricanteExtranjero();
+
+			Integer idF1 = fabricanteDAO.altaFabricante(tf1);
+			tf1.setId(idF1);
+			boolean encontrado = false;
+			Integer idF2 = fabricanteDAO.altaFabricante(tf2);
+			tf2.setId(idF2);
+			boolean encontrado2 = false;
+
+			Set<TFabricante> fabricantes = fabricanteDAO.listarFabricantes();
+
+			for (TFabricante fab : fabricantes) {
+				if (fab.getId().equals(tf1.getId())) {
+					encontrado = true;
+				} else if (fab.getId().equals(tf2.getId())) {
+					encontrado2 = true;
+				}
+			}
+
+			if (!encontrado || !encontrado2) {
+				fail("Error: La lista no muestra todos los fabricantes extranjeros");
+				trans.rollback();
+			}
+
+			trans.commit();
+		} catch (Exception e) {
+			fail("Excepción");
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testLeerPorCodigoFabricante() {
+		try {
+			Transaccion trans = crearTransaccion();
+			trans.start();
+			TFabricante tf = getTFabricanteLocal();
+			tf.setId(fabricanteDAO.altaFabricante(tf));
+
+			if (!equals(tf, fabricanteDAO.leerPorCodFabricante(tf.getCodFabricante()))) {
+				trans.rollback();
+				fail("Error: leerPorCodFabricante() tf no coincide con el mostrado");
+			}
+
+			trans.commit();
+		} catch (Exception e) {
+			fail("Excepción");
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero() {
+//		try {
+//			Transaccion trans = crearTransaccion();
+//			trans.start();
+//
+//			TInvernadero ti = getTInvernadero();
+//			
+//			
+//			
+//			TFabricante tf1 = getTFabricanteExtranjero();
+//			TFabricante tf2 = getTFabricanteExtranjero();
+//
+//			Integer idF1 = fabricanteDAO.altaFabricante(tf1);
+//			tf1.setId(idF1);
+//			boolean encontrado = false;
+//			Integer idF2 = fabricanteDAO.altaFabricante(tf2);
+//			tf2.setId(idF2);
+//			boolean encontrado2 = false;
+//
+//			Set<TFabricante> fabricantes = query.execute(idF2);
+//
+//			for (TFabricante fab : fabricantes) {
+//				if (fab.getId().equals(tf1.getId())) {
+//					encontrado = true;
+//				} else if (fab.getId().equals(tf2.getId())) {
+//					encontrado2 = true;
+//				}
+//			}
+//
+//			if (!encontrado || !encontrado2) {
+//				fail("Error: La lista no muestra todos los fabricantes extranjeros");
+//				trans.rollback();
+//			}
+//
+//			trans.commit();
+//		} catch (Exception e) {
+//			fail("Excepción");
+//			e.printStackTrace();
+//		}
 	}
 }
