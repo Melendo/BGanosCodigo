@@ -270,12 +270,13 @@ public class FabricanteSAImp implements FabricanteSA {
 				Query q = fq.getNewQuery("ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero");
 				
 				listaFab = (Set<TFabricante>) q.execute(id);
-				
+				t.commit();
 			} else { // el invernadero no existe
 				t.rollback();
 				return null;
 			}
 
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

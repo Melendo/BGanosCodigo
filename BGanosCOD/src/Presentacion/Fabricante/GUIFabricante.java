@@ -99,7 +99,7 @@ public class GUIFabricante extends JFrame implements IGUI {
 		});
 
 		// Listar
-		bListar = ComponentsBuilder.createButton("Listar Fabricantes", 100, 250, 185, 100);
+		bListar = ComponentsBuilder.createButton("Listar", 100, 250, 185, 100);
 		bListar.setVisible(true);
 		this.add(bListar);
 		bListar.addActionListener(a -> {
@@ -110,7 +110,7 @@ public class GUIFabricante extends JFrame implements IGUI {
 		});
 
 		// Listar local
-		bListarLocal = ComponentsBuilder.createButton("Listar Fabricantes Locales", 300, 250, 185, 100);
+		bListarLocal = ComponentsBuilder.createButton("Listar Locales", 300, 250, 185, 100);
 		bListarLocal.setVisible(true);
 		this.add(bListarLocal);
 		bListarLocal.addActionListener(a -> {
@@ -120,7 +120,7 @@ public class GUIFabricante extends JFrame implements IGUI {
 		});
 
 		// Listar extranjero
-		bListarExtranjero = ComponentsBuilder.createButton("Listar Fabricantes Extranjeros", 500, 250, 185, 100);
+		bListarExtranjero = ComponentsBuilder.createButton("Listar Extranjeros", 500, 250, 185, 100);
 		bListarExtranjero.setVisible(true);
 		this.add(bListarExtranjero);
 		bListarExtranjero.addActionListener(a -> {
@@ -129,17 +129,18 @@ public class GUIFabricante extends JFrame implements IGUI {
 			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_FABRICANTES_EXTRANJEROS));
 
 		});
-		
+
 		// Query
-				bListarExtranjero = ComponentsBuilder.createButton("Listar Fabricantes Por Invernadero", 700, 250, 185, 100);
-				bListarExtranjero.setVisible(true);
-				this.add(bListarExtranjero);
-				bListarExtranjero.addActionListener(a -> {
+		bListarExtranjero = ComponentsBuilder.createButton("Listar Por Invernadero", 700, 250, 185, 100);
+		bListarExtranjero.setVisible(true);
+		this.add(bListarExtranjero);
+		bListarExtranjero.addActionListener(a -> {
 
-					this.setVisible(false);
-					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_VISTA));
+			this.setVisible(false);
+			ApplicationController.getInstance().manageRequest(
+					new Context(Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_VISTA));
 
-				});
+		});
 
 		// Atras
 		bAtras = ComponentsBuilder.createBackButton();
