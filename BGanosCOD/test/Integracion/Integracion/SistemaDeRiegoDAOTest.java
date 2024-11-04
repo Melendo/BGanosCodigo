@@ -57,7 +57,7 @@ public class SistemaDeRiegoDAOTest {
 		tFabricanteLocal.setActivo(true);
 		tFabricanteLocal.setCodFabricante(getNameRandom());
 		tFabricanteLocal.setNombre(getNameRandom());
-		tFabricanteLocal.setTelefono(getNameRandom());
+		tFabricanteLocal.setTelefono("111222333");
 		tFabricanteLocal.setImpuesto(getNumRandom());
 		tFabricanteLocal.setSubvencion(getNumRandom());
 		

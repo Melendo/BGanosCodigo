@@ -45,6 +45,7 @@ public class FabricanteSAImp implements FabricanteSA {
 
 			if (tfa == null) { // no existe por lo que le damos de alta
 				ret = fd.altaFabricante(fabricante);
+				fabricante.setId(ret);
 				t.commit();
 			} else if (!tfa.getActivo()) { // esta desactivado, lo activamos
 				fabricante.setActivo(true);

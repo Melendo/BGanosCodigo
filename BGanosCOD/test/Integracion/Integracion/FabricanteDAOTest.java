@@ -30,8 +30,9 @@ public class FabricanteDAOTest {
 	private static SistemaDeRiegoDAO sistemaRiegoDAO;
 	private static FabricanteDAO fabricanteDAO;
 	private static InvernaderoDAO invernaderoDAO;
+	private static TieneDAO tieneDAO;
 	private static Query query;
-	
+
 	private boolean equals(TFabricante t1, TFabricante t2) {
 		if (t1 == null || t2 == null)
 			return false;
@@ -40,7 +41,6 @@ public class FabricanteDAOTest {
 				&& t1.getActivo().equals(t2.getActivo());
 	}
 
-	// Crear un sistema de riego con valores predeterminados
 	private TFabricante getTFabricanteLocal() {
 		TFabricanteLocal tf = new TFabricanteLocal();
 		tf.setActivo(true);
@@ -74,10 +74,16 @@ public class FabricanteDAOTest {
 		return tInvernadero;
 	}
 
-	private TSistemaDeRiego getTSistemaDeRiego() {
-		int idFabricante = fabricanteDAO.altaFabricante(getTFabricanteLocal());
+	private TSistemaDeRiego getTSistemaDeRiego(int idFabricante) {
 		return new TSistemaDeRiego(getNumRandom(), getNameRandom(), getNumRandom(), getNumRandom(), getNumRandom(),
 				true, idFabricante);
+	}
+
+	private TTiene getTTiene(int idSistRiego, int idInvernadero) {
+		TTiene tTiene = new TTiene();
+		tTiene.setId_Invernadero(idInvernadero);
+		tTiene.setId_SistemasDeRiego(idSistRiego);
+		return tTiene;
 	}
 
 	private String getNameRandom() {
@@ -122,6 +128,7 @@ public class FabricanteDAOTest {
 		sistemaRiegoDAO = FactoriaIntegracion.getInstance().getSistemaDeRiegoDAO();
 		fabricanteDAO = FactoriaIntegracion.getInstance().getFabricanteDAO();
 		invernaderoDAO = FactoriaIntegracion.getInstance().getInvernaderoDAO();
+		tieneDAO = FactoriaIntegracion.getInstance().getDaoTiene();
 		query = FactoriaQuery.getInstance().getNewQuery("ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero");
 	}
 
@@ -136,7 +143,6 @@ public class FabricanteDAOTest {
 			}
 			trans.commit();
 		} catch (Exception e) {
-
 			fail("Excepción");
 			e.printStackTrace();
 		}
@@ -160,12 +166,12 @@ public class FabricanteDAOTest {
 	}
 
 	@Test
-	public void testBajaSistemaDeRiego() {
+	public void testBajaFabricante() {
 		try {
 			Transaccion trans = crearTransaccion();
 			trans.start();
 			TFabricante tf = getTFabricanteExtranjero();
-			if (fabricanteDAO.bajaFabricante(fabricanteDAO.altaFabricante(tf)) < 0) {
+			if (fabricanteDAO.bajaFabricante(fabricanteDAO.bajaFabricante(tf.getId())) < 0) {
 				trans.rollback();
 				fail("Error: bajaFabricante() debería devolver un entero positivo");
 			}
@@ -330,45 +336,59 @@ public class FabricanteDAOTest {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero() {
-//		try {
-//			Transaccion trans = crearTransaccion();
-//			trans.start();
-//
-//			TInvernadero ti = getTInvernadero();
-//			
-//			
-//			
-//			TFabricante tf1 = getTFabricanteExtranjero();
-//			TFabricante tf2 = getTFabricanteExtranjero();
-//
-//			Integer idF1 = fabricanteDAO.altaFabricante(tf1);
-//			tf1.setId(idF1);
-//			boolean encontrado = false;
-//			Integer idF2 = fabricanteDAO.altaFabricante(tf2);
-//			tf2.setId(idF2);
-//			boolean encontrado2 = false;
-//
-//			Set<TFabricante> fabricantes = query.execute(idF2);
-//
-//			for (TFabricante fab : fabricantes) {
-//				if (fab.getId().equals(tf1.getId())) {
-//					encontrado = true;
-//				} else if (fab.getId().equals(tf2.getId())) {
-//					encontrado2 = true;
-//				}
-//			}
-//
-//			if (!encontrado || !encontrado2) {
-//				fail("Error: La lista no muestra todos los fabricantes extranjeros");
-//				trans.rollback();
-//			}
-//
-//			trans.commit();
-//		} catch (Exception e) {
-//			fail("Excepción");
-//			e.printStackTrace();
-//		}
+		try {
+			Transaccion t = crearTransaccion();
+			t.start();
+
+			TFabricante tf1 = getTFabricanteExtranjero();
+			TFabricante tf2 = getTFabricanteLocal();
+
+			Integer idF1 = fabricanteDAO.altaFabricante(tf1);
+			tf1.setId(idF1);
+			Integer idF2 = fabricanteDAO.altaFabricante(tf2);
+			tf2.setId(idF2);
+
+			TInvernadero ti = getTInvernadero();
+			int idInv = invernaderoDAO.altaInvernadero(ti);
+
+			TSistemaDeRiego si1 = getTSistemaDeRiego(idF1);
+			int idSist1 = sistemaRiegoDAO.altaSistemaDeRiego(si1);
+
+			TSistemaDeRiego si2 = getTSistemaDeRiego(idF2);
+			int idSist2 = sistemaRiegoDAO.altaSistemaDeRiego(si2);
+
+			tieneDAO.altaTiene(getTTiene(idSist1, idInv));
+
+			tieneDAO.altaTiene(getTTiene(idSist2, idInv));
+
+			boolean encontrado = false;
+			boolean encontrado2 = false;
+			t.commit();
+
+			t = crearTransaccion();
+			t.start();
+			Set<TFabricante> fabricantes = (Set<TFabricante>) query.execute(idInv);
+			t.commit();
+			
+			for (TFabricante fab : fabricantes) {
+				if (fab.getId().equals(tf1.getId())) {
+					encontrado = true;
+				} else if (fab.getId().equals(tf2.getId())) {
+					encontrado2 = true;
+				}
+			}
+
+			if (!encontrado || !encontrado2) {
+				fail("Error: La lista no muestra todos los fabricantes extranjeros");
+				t.rollback();
+			}
+
+		} catch (Exception e) {
+			fail("Excepción");
+			e.printStackTrace();
+		}
 	}
 }

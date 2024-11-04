@@ -8,7 +8,7 @@ import Integracion.Transaction.TransaccionManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import Negocio.Fabricante.TFabricante;
 import Negocio.Fabricante.TFabricanteExtranjero;
@@ -19,7 +19,7 @@ public class ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero implem
 	@Override
 	public Object execute(Object object) {
 		Integer id = (Integer) object;
-		Set<TFabricante> lFabricantes = new HashSet<TFabricante>();
+		Set<TFabricante> lFabricantes = new LinkedHashSet<TFabricante>();
 
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
