@@ -108,14 +108,14 @@ public class GUIMostrarFabricantePorID extends JFrame implements IGUI {
 		if (context.getEvento() == Evento.MOSTRAR_FABRICANTE_POR_ID_OK) {
 			TFabricante tf = (TFabricante) context.getDatos();
 
-			String texto = "ID: " + tf.getId() + ", Nombre: " + tf.getNombre() + ", Potencia de Riego: "
-					+ tf.getCodFabricante() + ", Cantidad de Agua: " + tf.getTelefono() + ", Activo: "
-					+ (tf.getActivo() ? "Sí" : "No")
+			String texto = "ID: " + tf.getId() + "\nNombre: " + tf.getNombre() + "\nCodigo de Fabricante: "
+					+ tf.getCodFabricante() + "\nTeléfono: " + tf.getTelefono()
 					+ (tf instanceof TFabricanteLocal
-							? (", Impuestos:" + ((TFabricanteLocal) tf).getImpuesto() + ", Subvenciones:"
+							? ("\nImpuestos: " + ((TFabricanteLocal) tf).getImpuesto() + "\nSubvenciones: "
 									+ ((TFabricanteLocal) tf).getSubvencion())
-							: (", Pais de origen:" + ((TFabricanteExtranjero) tf).getPaisDeOrigen() + ", Aranceles:"
-									+ ((TFabricanteExtranjero) tf).getAranceles()));
+							: ("\nPais de origen: " + ((TFabricanteExtranjero) tf).getPaisDeOrigen() + "\nAranceles: "
+									+ ((TFabricanteExtranjero) tf).getAranceles()))
+					+ "\nActivo: " + (tf.getActivo() ? "Sí" : "No");
 
 			JOptionPane.showMessageDialog(this, texto, "Fabricante", JOptionPane.INFORMATION_MESSAGE);
 		} else if (context.getEvento() == Evento.MOSTRAR_FABRICANTE_POR_ID_KO) {
@@ -123,6 +123,6 @@ public class GUIMostrarFabricantePorID extends JFrame implements IGUI {
 					"No existe sistema de riego con ID: " + ((TFabricante) context.getDatos()).getId(), "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 	}
 }
