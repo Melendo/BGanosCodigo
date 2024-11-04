@@ -1,4 +1,4 @@
-package Integracion.SistemaDeRiego;
+package Integracion;
 
 
 
@@ -15,6 +15,7 @@ import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
 import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Invernadero.TieneDAO;
+import Integracion.SistemaDeRiego.SistemaDeRiegoDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 import Negocio.Fabricante.TFabricante;

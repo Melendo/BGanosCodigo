@@ -1,4 +1,4 @@
-package Negocio.SistemaDeRiego;
+package Negocio;
 
 import static org.junit.Assert.*;
 
@@ -15,6 +15,8 @@ import Negocio.Fabricante.TFabricanteLocal;
 import Negocio.FactoriaNegocio.FactoriaNegocio;
 import Negocio.Invernadero.InvernaderoSA;
 import Negocio.Invernadero.TInvernadero;
+import Negocio.SistemaDeRiego.SistemaDeRiegoSA;
+import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
 
 public class SistemaDeRiegoSATest {

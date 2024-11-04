@@ -20,6 +20,14 @@ public class TInvernadero {
 		this.sustrato = sustrato;
 		this.tipo_iluminacion = tipo_iluminacion;
 	}
+	
+	public TInvernadero(Integer id, String nombre, String sustrato, String tipo_iluminacion, Boolean activo) {
+		this.id = id;
+		this.nombre = nombre;
+		this.sustrato = sustrato;
+		this.tipo_iluminacion = tipo_iluminacion;
+		this.activo = activo;
+	}
 
 	public TInvernadero() {
 
