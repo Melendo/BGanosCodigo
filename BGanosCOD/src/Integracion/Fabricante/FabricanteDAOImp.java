@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import Integracion.Transaction.Transaccion;
@@ -134,7 +134,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 	}
 
 	public Set<TFabricante> listarFabricantes() {
-		Set<TFabricante> lFabricantes = new HashSet<>();
+		Set<TFabricante> lFabricantes = new LinkedHashSet<>();
 
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
@@ -185,7 +185,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 	}
 
 	public Set<TFabricante> listarFabricantesExtranjeros() {
-		Set<TFabricante> lFabricantes = new HashSet<>();
+		Set<TFabricante> lFabricantes = new LinkedHashSet<>();
 
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
@@ -221,7 +221,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 	}
 
 	public Set<TFabricante> listarFabricantesLocales() {
-		Set<TFabricante> lFabricantes = new HashSet<>();
+		Set<TFabricante> lFabricantes = new LinkedHashSet<>();
 
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();

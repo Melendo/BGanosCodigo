@@ -193,7 +193,7 @@ public class GUIModificarFabricante extends JFrame implements IGUI {
 					((TFabricanteExtranjero) fabricante).setPaisDeOrigen(textPaisOrigen.getText());
 				}
 				fabricante.setId(Integer.parseInt(textId.getText()));
-				fabricante.setActivo(true);
+//				fabricante.setActivo(true);
 				fabricante.setCodFabricante(textCodFabricante.getText());
 				fabricante.setNombre(textNombre.getText());
 				fabricante.setTelefono(textTelefono.getText());

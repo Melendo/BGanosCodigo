@@ -88,12 +88,12 @@ public class GUIBajaEntrada extends JFrame implements IGUI {
 
 				try {
 					int id = Integer.parseInt(textID.getText());
-					GUIBajaEntrada.this.setVisible(false);
 					ApplicationController.getInstance()
 							.manageRequest(new Context(Evento.BAJA_ENTRADA, !textID.getText().isEmpty() ? id : 0));
 
 				} catch (Exception ex) {
-					// TODO
+					JOptionPane.showMessageDialog(GUIBajaEntrada.this, "Error en el formato de los datos", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -123,6 +123,8 @@ public class GUIBajaEntrada extends JFrame implements IGUI {
 		if (context.getEvento() == Evento.BAJA_ENTRADA_OK) {
 			JOptionPane.showMessageDialog(this, "Entrada dada de baja correctamente con id " + res, "Exito",
 					JOptionPane.INFORMATION_MESSAGE);
+			GUIBajaEntrada.this.setVisible(false);
+			ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
 
 		} else if (context.getEvento() == Evento.BAJA_ENTRADA_KO) {
 			switch (res) {
