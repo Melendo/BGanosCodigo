@@ -142,6 +142,7 @@ public class FabricanteSAImp implements FabricanteSA {
 				ret = -5;
 				t.rollback();
 			} else { // lo modificamos
+				fabricante.setActivo(tfa.getActivo());
 				ret = fd.modificarFabricante(fabricante);
 				t.commit();
 			}
