@@ -113,10 +113,16 @@ public class InvernaderoSAImp implements InvernaderoSA {
 				FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 
 				InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
-				TInvernadero nuevoInvernadero = daoInvernadero.mostrarInvernaderoPorID(invernadero.getId());
-				if (nuevoInvernadero != null) {
-					if (nuevoInvernadero.isActivo()) {
-						if (daoInvernadero.mostrarInvernaderoPorNombre(invernadero.getNombre()) == null) {
+				TInvernadero existeInvernadero = daoInvernadero.mostrarInvernaderoPorID(invernadero.getId());
+				if (existeInvernadero != null) {
+					if (existeInvernadero.isActivo()) {
+						TInvernadero existeInvernaderoNombre = daoInvernadero
+								.mostrarInvernaderoPorNombre(invernadero.getNombre());
+						if (existeInvernaderoNombre == null) {
+							exito = daoInvernadero.modificarInvernadero(invernadero);
+							t.commit();
+						} else if (existeInvernaderoNombre != null
+								&& existeInvernaderoNombre.getId() == existeInvernadero.getId()) {
 							exito = daoInvernadero.modificarInvernadero(invernadero);
 							t.commit();
 						} else {
@@ -334,7 +340,7 @@ public class InvernaderoSAImp implements InvernaderoSA {
 			TransaccionManager transaction = TransaccionManager.getInstance();
 			t = transaction.newTransaccion();
 			t.start();
-			
+
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 
 			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
