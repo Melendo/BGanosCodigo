@@ -133,7 +133,7 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 		
 		switch(context.getEvento()) {
 		case Evento.LISTAR_PLANTAS_POR_TIPO_KO:
-			GUIMSG.showMessage("No existe plantas del tipo seleccionado", "LISTAR PLANTAS", true);
+			GUIMSG.showMessage("No existe plantas del tipo seleccionado", "LISTAR PLANTAS POR TIPO", true);
 			break;
 		case  Evento.LISTAR_PLANTAS_POR_TIPO_OK:
 			

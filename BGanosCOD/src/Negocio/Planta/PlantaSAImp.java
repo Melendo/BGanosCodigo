@@ -60,7 +60,6 @@ public class PlantaSAImp implements PlantaSA {
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 
 			PlantaDAO dao = f.getPlantaDAO();
-			
 
 			TPlanta p = dao.mostrarPorId(id);
 			
@@ -92,17 +91,25 @@ public class PlantaSAImp implements PlantaSA {
 			t = transaction.newTransaccion();
 			t.start();
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
+			InvernaderoDAO daoinv = f.getInvernaderoDAO();
+			
+			TInvernadero inv = daoinv.mostrarInvernaderoPorID(planta.get_id_invernadero());
+			
+			if(inv == null){
+				exito = -2;
+				
+			}
+			else{
 
 			PlantaDAO dao = f.getPlantaDAO();
 			
 
 			exito = dao.modificarPlanta(planta);
 			
-	
+			}
 				
-				
-				if(exito > -1) {t.commit();}
-				else {t.rollback();}
+			if(exito > -1) {t.commit();}
+			else {t.rollback();}
 			
 			
 		
@@ -156,7 +163,6 @@ public class PlantaSAImp implements PlantaSA {
 
 			PlantaDAO dao = f.getPlantaDAO();
 			
-
 			p = dao.mostrarPorId(id);
 			
 			if(p == null ) {
@@ -227,7 +233,13 @@ public class PlantaSAImp implements PlantaSA {
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 
 			PlantaDAO dao = f.getPlantaDAO();
+			InvernaderoDAO daoinv = f.getInvernaderoDAO();
+			TInvernadero inv = daoinv.mostrarInvernaderoPorID(id_invernadero);
 			
+			if(inv == null){
+				t.rollback();
+				return null;
+			}
 
 			p = dao.MostrarPorInvernadero(id_invernadero);
 			
@@ -236,9 +248,7 @@ public class PlantaSAImp implements PlantaSA {
 				
 			}
 			else {
-			
 				t.commit();
-				
 			}
 
 
