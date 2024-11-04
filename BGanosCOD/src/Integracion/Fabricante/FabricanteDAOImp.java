@@ -117,7 +117,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 
 			if (fabricante instanceof TFabricanteExtranjero) {
 				s = c.prepareStatement(
-						"UPDATE fabricante_extranjero SET aranceles=?, pais_origen=?, WHERE id_fabricante=?");
+						"UPDATE fabricante_extranjero SET aranceles=?, pais_origen=? WHERE id_fabricante=?");
 				s.setInt(1, ((TFabricanteExtranjero) fabricante).getAranceles());
 				s.setString(2, ((TFabricanteExtranjero) fabricante).getPaisDeOrigen());
 				s.setInt(3, fabricante.getId());
@@ -128,6 +128,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 
 			return fabricante.getId();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return -1;
 		}
 	}
@@ -156,7 +157,8 @@ public class FabricanteDAOImp implements FabricanteDAO {
 					tLocal.setSubvencion(r.getInt("subvenciones"));
 					tLocal.setTelefono(r.getString("telefono"));
 
-					lFabricantes.add(tLocal);
+					if (r.getBoolean("activo"))
+						lFabricantes.add(tLocal);
 				} else {
 					TFabricanteExtranjero tExtranjero = new TFabricanteExtranjero();
 					tExtranjero.setActivo(r.getBoolean("activo"));
@@ -167,7 +169,8 @@ public class FabricanteDAOImp implements FabricanteDAO {
 					tExtranjero.setPaisDeOrigen(r.getString("pais_origen"));
 					tExtranjero.setTelefono(r.getString("telefono"));
 
-					lFabricantes.add(tExtranjero);
+					if (r.getBoolean("activo"))
+						lFabricantes.add(tExtranjero);
 				}
 			}
 
@@ -194,16 +197,17 @@ public class FabricanteDAOImp implements FabricanteDAO {
 
 			while (r.next()) {
 
-				TFabricanteExtranjero tLocal = new TFabricanteExtranjero();
-				tLocal.setActivo(r.getBoolean("activo"));
-				tLocal.setCodFabricante(r.getString("cod_fabricante"));
-				tLocal.setId(r.getInt("id"));
-				tLocal.setAranceles(r.getInt("aranceles"));
-				tLocal.setNombre(r.getString("nombre"));
-				tLocal.setPaisDeOrigen(r.getString("pais_origen"));
-				tLocal.setTelefono(r.getString("telefono"));
+				TFabricanteExtranjero tExtranjero = new TFabricanteExtranjero();
+				tExtranjero.setActivo(r.getBoolean("activo"));
+				tExtranjero.setCodFabricante(r.getString("cod_fabricante"));
+				tExtranjero.setId(r.getInt("id"));
+				tExtranjero.setAranceles(r.getInt("aranceles"));
+				tExtranjero.setNombre(r.getString("nombre"));
+				tExtranjero.setPaisDeOrigen(r.getString("pais_origen"));
+				tExtranjero.setTelefono(r.getString("telefono"));
 
-				lFabricantes.add(tLocal);
+				if (r.getBoolean("activo"))
+					lFabricantes.add(tExtranjero);
 			}
 
 			r.close();
@@ -237,8 +241,8 @@ public class FabricanteDAOImp implements FabricanteDAO {
 				tLocal.setNombre(r.getString("nombre"));
 				tLocal.setSubvencion(r.getInt("impuestos"));
 				tLocal.setTelefono(r.getString("telefono"));
-
-				lFabricantes.add(tLocal);
+				if (r.getBoolean("activo"))
+					lFabricantes.add(tLocal);
 			}
 
 			r.close();

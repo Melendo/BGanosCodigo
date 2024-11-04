@@ -23,8 +23,9 @@ public class ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero implem
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
-			PreparedStatement s = c.prepareStatement(
-					"SELECT F.* FROM fabricante F JOIN sistemas_riego S ON F.id = S.id_fabricante JOIN sistemas_riego_de_invernadero SJI ON S.id = SJI.id_sistema_riego WHERE SJI.id_invernadero = ?");
+			PreparedStatement s = c.prepareStatement("SELECT F.* FROM fabricante F "
+					+ "JOIN sistemas_riego S ON F.id = S.id_fabricante "
+					+ "JOIN sistemas_riego_de_invernadero SJI ON S.id = SJI.id_sistema_riego WHERE SJI.id_invernadero = ?");
 
 			s.setInt(1, id);
 

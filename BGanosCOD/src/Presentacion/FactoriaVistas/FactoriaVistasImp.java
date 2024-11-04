@@ -125,7 +125,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
                     vistaActual = new GUIListarFabricantesExtranjeros((Set<TFabricante>) contexto.getDatos()); 
                     return vistaActual;
                 case Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO_VISTA:
-                    vistaActual = new GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero((Set<TFabricante>) contexto.getDatos()); 
+                    vistaActual = new GUIListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero(); 
                     return vistaActual;
                 case Evento.LISTAR_FABRICANTES_VISTA:
                     vistaActual = new GUIListarFabricantes((Set<TFabricante>) contexto.getDatos()); 
