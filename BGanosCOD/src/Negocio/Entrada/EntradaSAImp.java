@@ -21,7 +21,7 @@ public class EntradaSAImp implements EntradaSA {
 		// comprobaciones del formato de los datos
 
 		// comprobamos si en el alta hay campos vacíos
-		if (entrada.getIdInvernadero() == 0 || entrada.getFecha().equals(null) || entrada.getPrecio() == 0
+		if (entrada == null || entrada.getIdInvernadero() == 0 || entrada.getFecha().equals(null) || entrada.getPrecio() == 0
 				|| entrada.getStock() == 0) {
 			return -3; // enviamos error de que no se pueden dejar campos vacíos en el alta
 		}
