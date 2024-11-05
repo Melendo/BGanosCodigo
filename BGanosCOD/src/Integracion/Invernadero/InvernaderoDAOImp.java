@@ -79,12 +79,13 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c.prepareStatement(
-					"UPDATE invernadero SET nombre = ?, sustrato = ?, tipo_iluminacion = ?, activo = 1 where id = ?");
+					"UPDATE invernadero SET nombre = ?, sustrato = ?, tipo_iluminacion = ?, activo = ? where id = ?");
 
 			statement.setString(1, invernadero.getNombre());
 			statement.setString(2, invernadero.getSustrato());
 			statement.setString(3, invernadero.getTipo_iluminacion());
-			statement.setInt(4, invernadero.getId());
+			statement.setBoolean(4, invernadero.isActivo());
+			statement.setInt(5, invernadero.getId());
 
 			exito = statement.executeUpdate();
 
