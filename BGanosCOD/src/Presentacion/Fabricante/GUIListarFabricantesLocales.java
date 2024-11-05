@@ -53,7 +53,8 @@ public class GUIListarFabricantesLocales extends JFrame implements IGUI {
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
 		// Tabla
-		String[] nombreColumnas = { "ID", "Nombre", "Cod. Fabricante", "Teléfono", "Subvenciones", "Impuesto"};
+		String[] nombreColumnas = { "ID", "Nombre", "Cod. Fabricante", "Teléfono", "Subvenciones", "Impuesto",
+				"Activo" };
 		String[][] tablaDatos = new String[listaFabricantes.size()][nombreColumnas.length];
 
 		int i = 0;
@@ -64,6 +65,7 @@ public class GUIListarFabricantesLocales extends JFrame implements IGUI {
 			tablaDatos[i][3] = sistema.getTelefono();
 			tablaDatos[i][4] = ((TFabricanteLocal) sistema).getSubvencion().toString();
 			tablaDatos[i][5] = ((TFabricanteLocal) sistema).getImpuesto().toString();
+			tablaDatos[i][6] = sistema.getActivo() ? "Sí" : "No";
 			i++;
 		}
 

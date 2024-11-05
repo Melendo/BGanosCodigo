@@ -11,6 +11,7 @@ import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 import Negocio.Invernadero.TInvernadero;
+import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
 public class FabricanteSAImp implements FabricanteSA {
 
@@ -76,18 +77,28 @@ public class FabricanteSAImp implements FabricanteSA {
 			FabricanteDAO fd = fi.getFabricanteDAO();
 			TFabricante tf = fd.mostrarFabricantePorId(idFabricante);
 
-			if (tf != null) {
-				if (tf.getActivo()) {
-					ret = fd.bajaFabricante(idFabricante);
-					t.commit();
-				} else {
-					ret = -2; // No esta activo
-					t.rollback();
-				}
-			} else {
-				ret = -3; // No existe
+			if (tf == null) {
 				t.rollback();
+				return -3;
 			}
+			if (!tf.getActivo())
+				return -2;
+
+			Set<TSistemaDeRiego> lSist = fi.getSistemaDeRiegoDAO().listarSistemaDeRiegoPorFabricante(idFabricante);
+			boolean check = true;
+
+			for (TSistemaDeRiego si : lSist)
+				if (si.getActivo())
+					check = false;
+
+			if (!check) {
+				t.rollback();
+				return -4;
+			}
+
+			ret = fd.bajaFabricante(idFabricante); 
+			t.commit();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -270,7 +281,7 @@ public class FabricanteSAImp implements FabricanteSA {
 			if (ti != null) { // el invernadero existe
 				FactoriaQuery fq = FactoriaQuery.getInstance();
 				Query q = fq.getNewQuery("ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero");
-				
+
 				listaFab = (Set<TFabricante>) q.execute(id);
 				t.commit();
 			} else { // el invernadero no existe
@@ -278,7 +289,6 @@ public class FabricanteSAImp implements FabricanteSA {
 				return null;
 			}
 
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

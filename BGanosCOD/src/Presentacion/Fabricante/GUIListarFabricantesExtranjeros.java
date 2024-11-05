@@ -53,7 +53,7 @@ public class GUIListarFabricantesExtranjeros extends JFrame implements IGUI {
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
 		// Tabla
-		String[] nombreColumnas = { "ID", "Nombre", "Cod. Fabricante", "Teléfono", "Aranceles", "Pais de Origen"};
+		String[] nombreColumnas = { "ID", "Nombre", "Cod. Fabricante", "Teléfono", "Aranceles", "Pais de Origen", "Activo"};
 		String[][] tablaDatos = new String[listaFabricantes.size()][nombreColumnas.length];
 
 		int i = 0;
@@ -64,6 +64,7 @@ public class GUIListarFabricantesExtranjeros extends JFrame implements IGUI {
 			tablaDatos[i][3] = sistema.getTelefono();
 			tablaDatos[i][4] = ((TFabricanteExtranjero)sistema).getAranceles().toString();
 			tablaDatos[i][5] = ((TFabricanteExtranjero)sistema).getPaisDeOrigen();
+			tablaDatos[i][6] = sistema.getActivo() ? "Sí" : "No";
 			i++;
 		}
 
