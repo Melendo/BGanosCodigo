@@ -217,7 +217,7 @@ public class EntradaDAOImp implements EntradaDAO {
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM entrada WHERE fecha = ? AND id = ?");
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM entrada WHERE fecha = ? AND id_invernadero = ?");
 			ps.setDate(1, fecha);
 			ps.setInt(2, idInvernadero);
 			

@@ -191,6 +191,10 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 						JOptionPane.ERROR_MESSAGE);
 				break;
 				
+			case -48:
+				JOptionPane.showMessageDialog(this, "Error: ya existe una entrada con dicha fecha asociada a un invernadero", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+				
 			case -50:
 				JOptionPane.showMessageDialog(this, "Error: ya existe la entrada con dicha fecha", "Error", JOptionPane.ERROR_MESSAGE);
 				break;

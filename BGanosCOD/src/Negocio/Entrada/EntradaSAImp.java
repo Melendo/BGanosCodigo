@@ -21,8 +21,8 @@ public class EntradaSAImp implements EntradaSA {
 		// comprobaciones del formato de los datos
 
 		// comprobamos si en el alta hay campos vacíos
-		if (entrada == null || entrada.getIdInvernadero() == 0 || entrada.getFecha().equals(null) || entrada.getPrecio() == 0
-				|| entrada.getStock() == 0) {
+		if (entrada == null || entrada.getIdInvernadero() == 0 || entrada.getFecha().equals(null)
+				|| entrada.getPrecio() == 0 || entrada.getStock() == 0) {
 			return -3; // enviamos error de que no se pueden dejar campos vacíos en el alta
 		}
 
@@ -41,11 +41,17 @@ public class EntradaSAImp implements EntradaSA {
 
 				if (invernadero.isActivo()) {
 					EntradaDAO entradaDao = f.getEntradaDAO();
-					TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha(), entrada.getIdInvernadero());
+					TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha(),
+							entrada.getIdInvernadero());
 
 					if (entradaUnica == null) {
 						exito = entradaDao.altaEntrada(entrada);
 						t.commit();
+
+					} else if (entradaUnica.getActivo()) { // si la entrada unica encontada está activa no puede activarse
+						exito = -48;
+						t.rollback();
+						
 
 					} else if (!entradaUnica.getActivo()) { // si es falso, se reactiva
 						entrada.setId(entradaUnica.getId());
@@ -137,7 +143,8 @@ public class EntradaSAImp implements EntradaSA {
 					if (invernadero != null) {
 
 						if (invernadero.isActivo()) {
-							TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha(), entrada.getIdInvernadero());
+							TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha(),
+									entrada.getIdInvernadero());
 
 							if (entradaUnica == null) {
 								exito = entradaDao.modificarEntrada(entrada);
