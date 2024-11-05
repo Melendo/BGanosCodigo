@@ -10,6 +10,7 @@ import Integracion.Planta.PlantaDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 import Negocio.Invernadero.TInvernadero;
+import Presentacion.Controller.GUIMSG;
 
 public class PlantaSAImp implements PlantaSA {
 
@@ -29,15 +30,18 @@ public class PlantaSAImp implements PlantaSA {
 			
 			TInvernadero inv = daoinv.mostrarInvernaderoPorID(planta.get_id_invernadero());
 			
-			if(inv == null || !inv.isActivo()){
+			
+			
+			if(inv == null ){
 				
 				exito = -1;
 				t.rollback();
 			} 
 			else{
-			
-			
-			exito = dao.altaPlanta(planta);
+				
+				
+				if(!inv.isActivo()){exito = -3;} 
+				else {exito = dao.altaPlanta(planta);} 
 			
 			if(exito>-1) {t.commit();}
 			else {t.rollback();}
@@ -46,6 +50,7 @@ public class PlantaSAImp implements PlantaSA {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			
 		}
 		return exito;
 	}

@@ -172,28 +172,26 @@ public class GUIAltaPlanta extends JFrame implements IGUI {
  			@Override
  			public void actionPerformed(ActionEvent e) {
  				GUIAltaPlanta.this.setVisible(false);
- 				int tipo = 1;
+ 				Integer tipo = 1;
  				try {
  					
  					String nombre = textNombre.getText();
  					String nombreCientifico = textNombreCientifico.getText();
- 					int idInvernadero = Integer.parseInt(textinvernadero.getText());
+ 					Integer idInvernadero = Integer.parseInt(textinvernadero.getText());
  			
- 					
- 					
 	 					if(tipoPlanta.getSelectedItem() == "Frutal") {
-	 						
 	 						
 	 						String fruta = textnombreFruta.getText();
 	 						String mad = textmaduracion.getText();
 	 						tipo = 0;
 	 						
-	 						if(fruta.isEmpty()||mad.isEmpty()||nombre.isEmpty()||nombreCientifico.isEmpty()) GUIMSG.showMessage("Rellene los campos", "ALTA PLANTA", true);
+	 						if(fruta.isEmpty()||mad.isEmpty()||nombre.isEmpty()||nombreCientifico.isEmpty()) 
+	 							GUIMSG.showMessage("Rellene los campos", "ALTA PLANTA", true);
 	 						
 	 						else{
-	 						TPlantaFrutal frutal = new TPlantaFrutal(nombre, nombreCientifico,tipo, idInvernadero, fruta, mad);
+	 							TPlantaFrutal frutal = new TPlantaFrutal(nombre, nombreCientifico,tipo, idInvernadero, fruta, mad);
 	 						
-	 						ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PLANTA,frutal));
+	 							ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PLANTA,frutal));
 	 						}
 	 						
 	 					}else if (tipoPlanta.getSelectedItem() == "No Frutal") {
@@ -201,15 +199,15 @@ public class GUIAltaPlanta extends JFrame implements IGUI {
 	 						String hoja = texthoja.getText();
 	 						if(hoja.isEmpty()||nombre.isEmpty()||nombreCientifico.isEmpty()) GUIMSG.showMessage("Rellene los campos", "ALTA PLANTA", true);
 	 						else{
-	 						TPlantaNoFrutal NOfrutal = new TPlantaNoFrutal(nombre, nombreCientifico,tipo, idInvernadero, hoja);
+	 							TPlantaNoFrutal NOfrutal = new TPlantaNoFrutal(nombre, nombreCientifico,tipo, idInvernadero, hoja);
 	 						
-	 						ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PLANTA,NOfrutal));
+	 							ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PLANTA, NOfrutal));
 	 						}
 	 						
 	 					}
  					
  				} catch (Exception e1) {
- 					GUIMSG.showMessage("Datos con formato incorrecto", "ALTA PLANTA", true);
+ 					GUIMSG.showMessage(e1.getLocalizedMessage(), "ALTA PLANTA", true);
  				}
  			}
  		});
@@ -221,7 +219,7 @@ public class GUIAltaPlanta extends JFrame implements IGUI {
 		
 		switch(context.getEvento()) {
 		case Evento.ALTA_PLANTA_OK:
-			GUIMSG.showMessage("Planta dado de alta con ID: " + ((TPlanta) context.getDatos()).get_id(), "ALTA PLANTA", false);
+			GUIMSG.showMessage("Planta dado de alta con ID: " + context.getDatos(), "ALTA PLANTA", false);
 			break;
 		case  Evento.ALTA_PLANTA_KO:
 			GUIMSG.showMessage("No se pudo dar de alta a la planta", "ALTA PLANTA", true);
