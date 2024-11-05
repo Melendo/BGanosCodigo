@@ -31,6 +31,8 @@ public class SistemaDeRiegoDAOTest {
 	private static InvernaderoDAO invernaderoDAO;
 	private static TieneDAO tieneDAO;
 	
+	
+	
     // Comparar dos objetos TSistemaDeRiego
     private boolean equals(TSistemaDeRiego s1, TSistemaDeRiego s2) {
         if (s1 == null || s2 == null) {
@@ -115,6 +117,8 @@ public class SistemaDeRiegoDAOTest {
 		invernaderoDAO = FactoriaIntegracion.getInstance().getInvernaderoDAO();
 		tieneDAO = FactoriaIntegracion.getInstance().getDaoTiene();
 	}
+	
+	
 
 	@Test
 	public void testAltaSistemaDeRiego() {
@@ -125,7 +129,7 @@ public class SistemaDeRiegoDAOTest {
 			Integer idSistemaDeRiego = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
 			if (idSistemaDeRiego < 0) {
 				trans.rollback();
-				fail("Error: altaSistemaDeRiego() deber�a retornar ID > 0");
+				fail("Error: altaSistemaDeRiego() deberia retornar ID > 0");
 			}
 			trans.commit(); 
 		} catch (Exception e) {
@@ -145,7 +149,7 @@ public class SistemaDeRiegoDAOTest {
 			Integer result = sistemaRiegoDAO.bajaSistemaDeRiego(idSistemaDeRiego);
 			if (result < 0) {
 				trans.rollback();
-				fail("Error: bajaSistemaDeRiego() deber�a retornar un n�mero positivo");
+				fail("Error: bajaSistemaDeRiego() deberia retornar un n�mero positivo");
 			}
 			trans.commit(); 
 		} catch (Exception e) {
