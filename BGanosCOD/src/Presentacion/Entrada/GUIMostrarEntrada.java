@@ -3,20 +3,19 @@ package Presentacion.Entrada;
 
 import javax.swing.JFrame;
 
-import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -43,47 +42,51 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 	public GUIMostrarEntrada() {
 		super("Mostar entrada");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-		int ancho = 430;
-		int alto = 330;
+		int ancho = 600;
+		int alto = 400;
 		int x = (pantalla.width - ancho) / 2;
 		int y = (pantalla.height - alto) / 2;
 		this.setBounds(x, y, ancho, alto);
-		this.setLayout(null);
+		//this.setLayout(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initGUI();
 	}
 
 	public void initGUI() {
+		
+        // Panel principal con GridBagLayout para mayor control sobre la alineacion y el centrado
+        mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 10, 10, 10); // Margenes entre los componentes
+        this.setContentPane(mainPanel);
 
-		mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		this.setContentPane(mainPanel);
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+		// Título
+        gbc.gridwidth = 2; // Toma dos columnas para el titulo
+        JLabel msgIntro = new JLabel("Introduzca el ID de la entrada a mostrar", JLabel.CENTER);
+        mainPanel.add(msgIntro, gbc);
+        
+        // Resetear para los campos
+        gbc.gridwidth = 1;
+        gbc.gridy = 1;
+        
+        // Campo para el id de la entrada
+        textIdEntrada = new JLabel("ID: ");
+        gbc.gridx = 0; // Columna 0
+        mainPanel.add(textIdEntrada, gbc);
+        id = new JTextField(20);
+        gbc.gridx = 1; // Columna 1
+        mainPanel.add(id, gbc);
 
-		JLabel msgIntroIDCabecera = ComponentsBuilder
-				.createLabel("Introduzca el ID de la entrada que quiere que se muestre ", 1, 10, 80, 20, Color.BLACK);
-		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
-		mainPanel.add(msgIntroIDCabecera);
-
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
-
-		JPanel panelID = new JPanel();
-		mainPanel.add(panelID);
-
-		textIdEntrada = ComponentsBuilder.createLabel("ID entrada: ", 10, 100, 80, 20, Color.BLACK);
-		panelID.add(textIdEntrada);
-
-		id = new JTextField();
-		id.setPreferredSize(new Dimension(250, 30));
-
-		id.setEditable(true);
-		panelID.add(id);
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
-
-		JPanel panelBotones = new JPanel();
-		mainPanel.add(panelBotones);
-
+        // Panel de botones
+        JPanel panelBotones = new JPanel();
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.gridwidth = 2; // Los botones ocuparon dos columnas
+        gbc.anchor = GridBagConstraints.CENTER; // Centrar los botones
+        mainPanel.add(panelBotones, gbc);
+		
 		// Boton de aceptar
 		botonAceptar = new JButton("Aceptar");
 		botonAceptar.setBounds(75, 50, 100, 100);

@@ -3,6 +3,7 @@ package Integracion;
 import static org.junit.Assert.fail;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Collection;
@@ -230,12 +231,6 @@ public class EntradaDAOTest {
 			// System.out.println(idEntrada);
 			TEntrada e2 = daoEntrada.mostrarEntrada(idEntrada);
 
-//			 System.out.println(""+ e1.getId() +","+ e1.getIdInvernadero()+ ","+
-//			 e1.getFecha()+", "+e1.getPrecio() + ","+ e1.getStock());
-//			
-//			 System.out.println(""+ e2.getId() +","+ e2.getIdInvernadero()+ ","+
-//			 e2.getFecha()+", "+e2.getPrecio() + ","+ e2.getStock());
-
 			if (!equals(e1, e2)) {
 				fail("No se ha leido correctamente la entrada");
 			}
@@ -347,6 +342,67 @@ public class EntradaDAOTest {
 			
 
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void G_leer_por_fecha_unica() {
+
+		EntradaDAO daoEntrada = FactoriaIntegracion.getInstance().getEntradaDAO();
+		InvernaderoDAO daoInvernadero = FactoriaIntegracion.getInstance().getInvernaderoDAO();
+		Transaccion t;
+		t = crearTransaccion();
+
+		try {
+			t.start();
+
+			Connection c = (Connection) t.getResource();
+
+			// Desactivar las comprobaciones de claves foráneas, luego las vuelvo a activar,
+			// solo para poder truncar todas las tablas implicadas
+			Statement statement = c.createStatement();
+			statement.execute("SET FOREIGN_KEY_CHECKS = 0");
+
+			PreparedStatement ps1 = c.prepareStatement("TRUNCATE linea_factura");
+			ps1.executeUpdate();
+			PreparedStatement ps3 = c.prepareStatement("TRUNCATE factura");
+			ps3.executeUpdate();
+			PreparedStatement ps = c.prepareStatement("TRUNCATE entrada");
+			ps.executeUpdate();
+			PreparedStatement ps2 = c.prepareStatement("TRUNCATE invernadero");
+			ps2.executeUpdate();
+
+			ps1.close();
+			ps3.close();
+			ps.close();
+			ps2.close();
+
+			// Volver a activar las comprobaciones de claves foráneas
+			statement.execute("SET FOREIGN_KEY_CHECKS = 1");
+			statement.close(); // Cerrar el Statement
+
+			// id, sustrato, nombre, tipo iluminación, activo
+			TInvernadero inv = new TInvernadero(1, "inv1", "abono", "artificial", true);
+			Integer idInv = daoInvernadero.altaInvernadero(inv);
+
+			// id, fecha, precio, stock, idinvernadero, activo
+			Date date = java.sql.Date.valueOf("2012-12-12");
+			TEntrada e1 = new TEntrada(1, date, 12.0f, 12, idInv, true);
+			daoEntrada.altaEntrada(e1);
+			TEntrada entrada = daoEntrada.leerPorFechaUnica(date, idInv);
+
+//			System.out.println(e1.getId() +",   "+ e1.getFecha()+ ",   " +e1.getIdInvernadero()+ ",   " +e1.getPrecio()+ ",   " +e1.getStock()+ ",   " +e1.getActivo());
+//			System.out.println(entrada.getId() +",   "+ entrada.getFecha()+ ",   " +entrada.getIdInvernadero()+ ",   " +entrada.getPrecio()+ ",   " +entrada.getStock()+ ",   " +entrada.getActivo());
+//			
+			if (entrada.equals(e1)) {
+				fail("No se ha leido correctamente por id de invernadero y fecha");
+			}
+
+			t.commit();
+		}
+
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

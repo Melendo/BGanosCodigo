@@ -31,7 +31,7 @@ public class MainView extends JFrame implements IGUI {
         super("BGanos - Gestión de Módulos");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int frameWidth = 1000;
-        int frameHeight = 650;
+        int frameHeight = 550;
         int posX = (screenSize.width - frameWidth) / 2;
         int posY = (screenSize.height - frameHeight) / 2;
         this.setBounds(posX, posY, frameWidth, frameHeight);

@@ -10,8 +10,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import Integracion.Planta.PlantaDAO;
-import Negocio.Entrada.TEntrada;
 import Negocio.FactoriaNegocio.FactoriaNegocio;
 import Negocio.Invernadero.TInvernadero;
 import Negocio.Planta.PlantaSA;

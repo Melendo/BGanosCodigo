@@ -34,7 +34,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 		super("BGANOS");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 1000;
-		int alto = 525;
+		int alto = 650;
 		int x = (pantalla.width - ancho) / 2;
 		int y = (pantalla.height - alto) / 2;
 		this.setBounds(x, y, ancho, alto);
@@ -52,7 +52,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 		this.add(label);
 		
 		//ALTA PLANTA
-		bAltaPlanta = ComponentsBuilder.createButton("Alta Planta", 100, 100, 185, 100);
+		bAltaPlanta = ComponentsBuilder.createButton("Alta Planta", 125, 100, 225, 100);
 		bAltaPlanta.addActionListener(new ActionListener() {
 					
 			@Override
@@ -65,7 +65,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 		this.add(bAltaPlanta);
 		
 		//BAJA PLANTA
-		bBajaPlanta = ComponentsBuilder.createButton("Baja Planta", 350, 100, 185, 100);
+		bBajaPlanta = ComponentsBuilder.createButton("Baja Planta", 375, 100, 225, 100);
 		bBajaPlanta.addActionListener(new ActionListener() {
 			
 			@Override
@@ -78,7 +78,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 		this.add(bBajaPlanta);
 		
 		//MODIFICAR PLANTA
-		bModificarPlanta = ComponentsBuilder.createButton("Modificar Planta", 600, 100, 185, 100);
+		bModificarPlanta = ComponentsBuilder.createButton("Modificar Planta", 625, 100, 225, 100);
 		bModificarPlanta.addActionListener(new ActionListener() {
 			
 			@Override
@@ -91,7 +91,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 		this.add(bModificarPlanta);
 		
 		//MOSTRAR PLANTA POR ID
-		bMostrarPlantaPorId = ComponentsBuilder.createButton("Mostar Planta Por Id", 100, 250, 185, 100);
+		bMostrarPlantaPorId = ComponentsBuilder.createButton("Mostar Planta Por Id", 125, 250, 225, 100);
 		bMostrarPlantaPorId.addActionListener(new ActionListener() {
 			
 			@Override
@@ -104,7 +104,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 		this.add(bMostrarPlantaPorId);
 		
 		//LISTAR PLANTAS
-		bListarPlantas = ComponentsBuilder.createButton("Listar Plantas", 350, 250, 185, 100);
+		bListarPlantas = ComponentsBuilder.createButton("Listar Plantas", 375, 250, 225, 100);
 		bListarPlantas.addActionListener(new ActionListener() {
 			
 			@Override
@@ -117,7 +117,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 		this.add(bListarPlantas);
 		
 		//LISTAR PLANTAS POR TIPO
-		bListarPlantasPorTipo = ComponentsBuilder.createButton("Listar Plantas Por Tipo", 600, 250, 185, 100);
+		bListarPlantasPorTipo = ComponentsBuilder.createButton("Listar Plantas Por Tipo", 625, 250, 225, 100);
 		bListarPlantasPorTipo.addActionListener(new ActionListener() {
 			
 			@Override
@@ -130,7 +130,7 @@ public class GUIPlanta extends JFrame implements IGUI {
 		this.add(bListarPlantasPorTipo);
 		
 		//LISTAR PLANTAS POR INVERNADERO
-		bListarPlantasPorInvernadero = ComponentsBuilder.createButton("Listar Plantas Por Invernadero", 100, 400, 185, 100);
+		bListarPlantasPorInvernadero = ComponentsBuilder.createButton("Listar Plantas Por Invernadero", 125, 400, 225, 100);
 		bListarPlantasPorInvernadero.addActionListener(new ActionListener() {
 			
 			@Override
