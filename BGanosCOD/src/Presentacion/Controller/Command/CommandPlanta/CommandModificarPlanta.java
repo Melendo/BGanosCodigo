@@ -17,7 +17,7 @@ public class CommandModificarPlanta implements Command {
 			
 			if(p != null){return new Context(Evento.MODIFICAR_PLANTA_VISTA, p);}
 			else{
-				return new Context(Evento.MODIFICAR_PLANTA_KO, null);
+				return new Context(Evento.MODIFICAR_PLANTA_KO, -3);
 			}
 		}
 		else{

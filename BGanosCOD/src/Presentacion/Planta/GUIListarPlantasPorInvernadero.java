@@ -53,12 +53,6 @@ public class GUIListarPlantasPorInvernadero extends JFrame implements IGUI {
 		initGUI();
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public void initGUI() {
 		
 		JPanel mainPanel = new JPanel();
@@ -117,7 +111,7 @@ public class GUIListarPlantasPorInvernadero extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		switch(context.getEvento()) {
 		case Evento.LISTAR_PLANTAS_DE_INVERNADERO_KO:
-			GUIMSG.showMessage("No existe plantas en el invernadero seleccionado", "LISTAR PLANTAS POR INVERNADERO", true);
+			GUIMSG.showMessage("No existe plantas en el invernadero seleccionado o el invernadero seleccionado no existe", "LISTAR PLANTAS POR INVERNADERO", true);
 			break;
 		case  Evento.LISTAR_PLANTAS_DE_INVERNADERO_OK:
 			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_VISTA,context.getDatos()));

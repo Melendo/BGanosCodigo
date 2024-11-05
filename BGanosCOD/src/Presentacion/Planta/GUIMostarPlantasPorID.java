@@ -22,6 +22,11 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import Negocio.Planta.TPlanta;
+import Negocio.Planta.TPlantaFrutal;
+import Negocio.Planta.TPlantaNoFrutal;
+
 import javax.swing.JPanel;
 
 public class GUIMostarPlantasPorID extends JFrame implements IGUI {
@@ -80,9 +85,7 @@ public class GUIMostarPlantasPorID extends JFrame implements IGUI {
  				
  				
  				try {
- 				
- 					
- 					int idtmp = Integer.parseInt(textID.getText());
+					int idtmp = Integer.parseInt(textID.getText());
  						
 					ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_PLANTA_POR_ID,idtmp));
 					setVisible(false);
@@ -102,9 +105,13 @@ public class GUIMostarPlantasPorID extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		switch(context.getEvento()) {
 		case Evento.MOSTRAR_PLANTA_POR_ID_KO:
-			GUIMSG.showMessage("No se encontro la planta", "MOSTRAR PLANTA", true);
+			GUIMSG.showMessage("Planta no registrada", "MOSTRAR PLANTA", true);
 			break;
 		case  Evento.MOSTRAR_PLANTA_POR_ID_OK:
+			if((TPlanta) context.getDatos() instanceof TPlantaFrutal ){
+				GUIMSG.showMessage(context.getDatos().toString(), "MOSTRAR PLANTA", false);
+			}
+			else if((TPlanta) context.getDatos() instanceof TPlantaNoFrutal )
 			GUIMSG.showMessage(context.getDatos().toString(), "MOSTRAR PLANTA", false);
 			break;
 		default:

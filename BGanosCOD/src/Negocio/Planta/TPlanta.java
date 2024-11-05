@@ -2,12 +2,12 @@ package Negocio.Planta;
 
 public class TPlanta {
 
-	private String nombre_cientifico;
-	private String nombre;
-	private Integer id;
-	private Boolean activo;
-	private Integer tipo;
-	private Integer id_invernadero;
+	protected String nombre_cientifico;
+	protected String nombre;
+	protected Integer id;
+	protected Boolean activo;
+	protected Integer tipo;
+	protected Integer id_invernadero;
 	
 	TPlanta( String nombre,String nombre_cientifico, Integer tipo, Integer id_invernadero ){
 		this.nombre= nombre;
