@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import Integracion.Entrada.EntradaDAO;
-import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
 import Integracion.Factura.FacturaDAO;
 import Integracion.Factura.LineaFacturaDAO;
@@ -16,86 +15,76 @@ public class FacturaSAImp implements FacturaSA {
 
 	public Integer cerrarFactura(TCarrito carrito) {
 		TransaccionManager tm = TransaccionManager.getInstance();
-		try 
-		{
+		try {
 			Transaccion t = tm.newTransaccion();
 			t.start();
 			FactoriaIntegracion fDAO = FactoriaIntegracion.getInstance();
-			if(!carrito.getLineasFactura().isEmpty())
-			{
+			if(!carrito.getLineasFactura().isEmpty()) {
 				EntradaDAO daoEntrada = fDAO.getEntradaDAO();
 				float precio_total = 0;
-				for(TLineaFactura lineaFact : carrito.getLineasFactura())
-				{
+				for(TLineaFactura lineaFact : carrito.getLineasFactura()) {
 					TEntrada entrada = daoEntrada.mostrarEntrada(lineaFact.getidEntrada());
-					if(entrada != null)
-					{
-						if(entrada.getActivo())
-						{
-							if(lineaFact.getCantidad() <= entrada.getStock())
-							{
+					if(entrada != null) {
+						if(entrada.getActivo()) {
+							if(lineaFact.getCantidad() <= entrada.getStock()) {
+								//Calculamos el stock y el precio total
 								entrada.setStock(entrada.getStock() - lineaFact.getCantidad());
 								daoEntrada.modificarEntrada(entrada);
-								//Calculamos el precio de la linea Factura y actualizamos en la linea Factura
 								float precio_lineaF = lineaFact.getCantidad() * entrada.getPrecio();
 								lineaFact.setPrecio(precio_lineaF);
 								precio_total = precio_total +precio_lineaF ;
-							}
-							else
-							{
+							} 
+							else {
+								//No hay Stock suficiente
 								t.rollback();
-								return -1;
+								return -2;
 							}
-								
-						}
-						else
-						{
+						} 
+						else {
+							//La entrada está dada de baja
 							t.rollback();
-							return -1;
+							return -2;
 						}
-					}
-					else
-					{
+					} 
+					else {
+						//La entrada no existe
 						t.rollback();
-						return -1;
+						return -2;
 					}
 				}
 				FacturaDAO daoFactura = fDAO.getFacturaDAO();
 				TFactura factura = carrito.getFactura();
 				factura.setPrecioTotal(precio_total);
 				int id = daoFactura.cerrarFactura(factura);
-				if(id > 0)
-				{
+				if(id > 0) {
 					LineaFacturaDAO daoLF = fDAO.getDAOLineaFactura();
-					for(TLineaFactura lf : carrito.getLineasFactura())
-					{
+					for(TLineaFactura lf : carrito.getLineasFactura()) {
 						lf.setidFactura(id);
 						int r = daoLF.crearLineaFactura(lf);
-						if(r < 0)
-						{
+						if(r < 0) {
+							//Fallo al crear la linea de facturación
 							t.rollback();
-							return -1;
+							return -3;
 						}
 					}
 				}
-				else
-				{
+				else {
+					//Error al cerrar factura
 					t.rollback();
 					return -1;
 				}
 				t.commit();
 				return id;
 			}
-			else
-			{
+			else {
+				//Carrito vacio
 				t.rollback();
-				return -1;
+				return -2;
 			}
-		} 
-		catch (Exception e) 
-		{
+		} catch (Exception e) {
+			//Error desconocido
 			e.printStackTrace();
-			return -1; 
+			return -3; 
 		}
 	}
 
@@ -109,7 +98,7 @@ public class FacturaSAImp implements FacturaSA {
 			FactoriaIntegracion fDAO = FactoriaIntegracion.getInstance();
 			FacturaDAO daoFactura = fDAO.getFacturaDAO();
 			TFactura facturaBD = daoFactura.mostrarFactura(id);
-			if(facturaBD != null){
+			if(facturaBD != null) {
 				facturaEntradas.settFactura(facturaBD);
 				
 				Set<TLineaFactura> lineasfacturaBD = fDAO.getDAOLineaFactura().mostrarLineaFacturaPorFactura(id);				
@@ -119,14 +108,18 @@ public class FacturaSAImp implements FacturaSA {
 					
 				}
 				t.commit();
-			}else{
-				factura.setid(-1);
+			}
+			else {
+				factura.setid(-2);
 				facturaEntradas.settFactura(factura);
 				t.rollback();
 			}			
 			
-		}catch(Exception e){
+		} catch(Exception e) {
+			//Error desconocido
 			e.printStackTrace();
+			factura.setid(-2);
+			facturaEntradas.settFactura(factura);
 		}
 		return facturaEntradas;
 	}
