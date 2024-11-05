@@ -27,6 +27,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import Negocio.Planta.TPlanta;
 import Negocio.Planta.TPlantaFrutal;
 import Negocio.Planta.TPlantaNoFrutal;
 
@@ -34,9 +35,6 @@ import javax.swing.JPanel;
 
 public class GUIAltaPlanta extends JFrame implements IGUI {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public GUIAltaPlanta() {
@@ -103,30 +101,30 @@ public class GUIAltaPlanta extends JFrame implements IGUI {
  		JTextField textNombre = new JTextField(25);
  		panelnombre.add(textNombre);
  	
- 		JLabel labelnombrecientifico = ComponentsBuilder.createLabel("Nombre Cientifico ", 10, 100, 80, 20,Color.BLACK);
+ 		JLabel labelnombrecientifico = ComponentsBuilder.createLabel("Nombre Cientifico: ", 10, 100, 80, 20,Color.BLACK);
  		panelnombreCientifico.add(labelnombrecientifico);
  		JTextField textNombreCientifico = new JTextField(25);
  		panelnombreCientifico.add(textNombreCientifico);
  		
  		
- 		JLabel labelinvernadero = ComponentsBuilder.createLabel("Id del invernadero ", 10, 100, 80, 20,Color.BLACK);
+ 		JLabel labelinvernadero = ComponentsBuilder.createLabel("Id del invernadero: ", 10, 100, 80, 20,Color.BLACK);
  		panelinvernadero.add(labelinvernadero);
  		JTextField textinvernadero = new JTextField(25);
  		panelinvernadero.add(textinvernadero);
  		
  		
- 		JLabel labelnombreFruta = ComponentsBuilder.createLabel("Nombre de la fruta ", 10, 100, 80, 20,Color.BLACK);
+ 		JLabel labelnombreFruta = ComponentsBuilder.createLabel("Nombre de la fruta: ", 10, 100, 80, 20,Color.BLACK);
  		panelnombreFruta.add(labelnombreFruta);
  		JTextField textnombreFruta = new JTextField(25);
  		panelnombreFruta.add(textnombreFruta);
  		
  		
- 		JLabel labelmaduracion = ComponentsBuilder.createLabel("Maduracion ", 10, 100, 80, 20,Color.BLACK);
+ 		JLabel labelmaduracion = ComponentsBuilder.createLabel("Maduracion: ", 10, 100, 80, 20,Color.BLACK);
  		panelmaduracion.add(labelmaduracion);
  		JTextField textmaduracion = new JTextField(25);
  		panelmaduracion.add(textmaduracion);
  		
- 		JLabel labelhoja = ComponentsBuilder.createLabel("hoja de la planta ", 10, 100, 80, 20,Color.BLACK);
+ 		JLabel labelhoja = ComponentsBuilder.createLabel("Hoja de la planta: ", 10, 100, 80, 20,Color.BLACK);
  		panelhoja.add(labelhoja);
  		JTextField texthoja = new JTextField(25);
  		panelhoja.add(texthoja);
@@ -180,24 +178,36 @@ public class GUIAltaPlanta extends JFrame implements IGUI {
  					String nombre = textNombre.getText();
  					String nombreCientifico = textNombreCientifico.getText();
  					int idInvernadero = Integer.parseInt(textinvernadero.getText());
+ 			
  					
  					
- 					if(tipoPlanta.getSelectedItem() == "Frutal") {
- 						String fruta = textnombreFruta.getText();
- 						String mad = textmaduracion.getText();
- 						tipo = 0;
- 						
- 						TPlantaFrutal frutal = new TPlantaFrutal(nombre, nombreCientifico,tipo, idInvernadero, fruta, mad);
- 						
- 						ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PLANTA,frutal));
- 					}else if (tipoPlanta.getSelectedItem() == "No Frutal") {
- 						String hoja = texthoja.getText();
- 						
- 						TPlantaNoFrutal NOfrutal = new TPlantaNoFrutal(nombre, nombreCientifico,tipo, idInvernadero, hoja);
- 						
- 						ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PLANTA,NOfrutal));
- 						
- 					}
+	 					if(tipoPlanta.getSelectedItem() == "Frutal") {
+	 						
+	 						
+	 						String fruta = textnombreFruta.getText();
+	 						String mad = textmaduracion.getText();
+	 						tipo = 0;
+	 						
+	 						if(fruta.isEmpty()||mad.isEmpty()||nombre.isEmpty()||nombreCientifico.isEmpty()) GUIMSG.showMessage("Rellene los campos", "ALTA PLANTA", true);
+	 						
+	 						else{
+	 						TPlantaFrutal frutal = new TPlantaFrutal(nombre, nombreCientifico,tipo, idInvernadero, fruta, mad);
+	 						
+	 						ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PLANTA,frutal));
+	 						}
+	 						
+	 					}else if (tipoPlanta.getSelectedItem() == "No Frutal") {
+	 						
+	 						String hoja = texthoja.getText();
+	 						if(hoja.isEmpty()||nombre.isEmpty()||nombreCientifico.isEmpty()) GUIMSG.showMessage("Rellene los campos", "ALTA PLANTA", true);
+	 						else{
+	 						TPlantaNoFrutal NOfrutal = new TPlantaNoFrutal(nombre, nombreCientifico,tipo, idInvernadero, hoja);
+	 						
+	 						ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PLANTA,NOfrutal));
+	 						}
+	 						
+	 					}
+ 					
  				} catch (Exception e1) {
  					GUIMSG.showMessage("Datos con formato incorrecto", "ALTA PLANTA", true);
  				}
@@ -211,7 +221,7 @@ public class GUIAltaPlanta extends JFrame implements IGUI {
 		
 		switch(context.getEvento()) {
 		case Evento.ALTA_PLANTA_OK:
-			GUIMSG.showMessage("Planta dado de alta con ID: " + context.getDatos().toString(), "ALTA PLANTA", false);
+			GUIMSG.showMessage("Planta dado de alta con ID: " + ((TPlanta) context.getDatos()).get_id(), "ALTA PLANTA", false);
 			break;
 		case  Evento.ALTA_PLANTA_KO:
 			GUIMSG.showMessage("No se pudo dar de alta a la planta", "ALTA PLANTA", true);

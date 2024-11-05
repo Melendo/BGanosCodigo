@@ -32,4 +32,24 @@ public class TPlantaFrutal extends TPlanta {
 	public void set_maduracion(String maduracion) {
 		this.maduracion = maduracion;
 	}
+	
+	public String toString() {
+		String tmp,tip = "Frutal", estado = "Si";
+		if(!activo){estado = "No";}
+		
+		if(tipo == 1){tip = "No " + tip;}
+		tmp = "Informacion de la Planta: " + "\n" +
+		"Id: " + id + "\n" +
+		"Nombre: " + nombre + "\n" +
+		"Nombre cientifico: " + nombre_cientifico + "\n" +
+		"Tipo: " + tip + "\n" +
+		"Id del Invernadero: " + id_invernadero +  "\n" +
+		"Activo: " + estado + "\n" + 
+		"Nombre de la fruta: " + this.nombre_fruta + "\n" +
+		"Maduracion: " + this.maduracion + "\n";
+
+		
+			return tmp;
+	}
+	
 }

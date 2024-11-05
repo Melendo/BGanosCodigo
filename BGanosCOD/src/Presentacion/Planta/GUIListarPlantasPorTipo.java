@@ -5,6 +5,7 @@ package Presentacion.Planta;
 
 import javax.swing.JFrame;
 
+
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.GUIMSG;
@@ -19,31 +20,20 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.Set;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JTextField;
-
 import Negocio.Planta.TPlanta;
 
 import javax.swing.JPanel;
 
 public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 
-	
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-
-	
 	String seleccion = "";
 
 	public GUIListarPlantasPorTipo(Set<TPlanta> datos) {
@@ -133,7 +123,7 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 		
 		switch(context.getEvento()) {
 		case Evento.LISTAR_PLANTAS_POR_TIPO_KO:
-			GUIMSG.showMessage("No existe plantas del tipo seleccionado", "LISTAR PLANTAS", true);
+			GUIMSG.showMessage("No existe plantas del tipo seleccionado", "LISTAR PLANTAS POR TIPO", true);
 			break;
 		case  Evento.LISTAR_PLANTAS_POR_TIPO_OK:
 			

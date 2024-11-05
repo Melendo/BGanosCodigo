@@ -346,8 +346,8 @@ public class SistemaDeRiegoDAOTest {
 	        TSistemaDeRiego sistRiego = getTSistemaDeRiego();
 	        String nombre = sistRiego.getNombre();
 
-	        Integer idEspecie = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
-	        sistRiego.setId(idEspecie);
+	        Integer idSisRiego = sistemaRiegoDAO.altaSistemaDeRiego(sistRiego);
+	        sistRiego.setId(idSisRiego);
 	        
 	        if (!equals(sistRiego, sistemaRiegoDAO.leerPorNombreUnico(nombre))) {
 				trans.rollback();

@@ -79,6 +79,7 @@ public class GUIModificarPlanta extends JFrame implements IGUI {
 	    JPanel panelnombreFruta = new JPanel();
 	    JPanel panelmaduracion = new JPanel();
 	    JPanel panelhoja = new JPanel();
+	    JPanel panelActivo = new JPanel();
 	    
 
 	    mainPanel.add(panelID);
@@ -91,6 +92,7 @@ public class GUIModificarPlanta extends JFrame implements IGUI {
 	    mainPanel.add(panelnombreFruta);
  		mainPanel.add(panelmaduracion);
  		mainPanel.add(panelhoja);
+ 		 mainPanel.add(panelActivo);
  		
  		JLabel labelID = ComponentsBuilder.createLabel("ID: ", 10, 100, 80, 20,Color.BLACK);
  		panelID.add(labelID);
@@ -107,43 +109,52 @@ public class GUIModificarPlanta extends JFrame implements IGUI {
  		JTextField textNombre = new JTextField(25);
  		panelnombre.add(textNombre);
  	
- 		JLabel labelnombrecientifico = ComponentsBuilder.createLabel("Nombre Cientifico ", 10, 100, 80, 20,Color.BLACK);
+ 		JLabel labelnombrecientifico = ComponentsBuilder.createLabel("Nombre Cientifico: ", 10, 100, 80, 20,Color.BLACK);
  		panelnombreCientifico.add(labelnombrecientifico);
  		JTextField textNombreCientifico = new JTextField(25);
  		panelnombreCientifico.add(textNombreCientifico);
  		
  		
- 		JLabel labelinvernadero = ComponentsBuilder.createLabel("Id del invernadero ", 10, 100, 80, 20,Color.BLACK);
+ 		JLabel labelinvernadero = ComponentsBuilder.createLabel("Id del invernadero: ", 10, 100, 80, 20,Color.BLACK);
  		panelinvernadero.add(labelinvernadero);
  		JTextField textinvernadero = new JTextField(25);
  		panelinvernadero.add(textinvernadero);
  		
  		
- 		JLabel labelnombreFruta = ComponentsBuilder.createLabel("Nombre de la fruta ", 10, 100, 80, 20,Color.BLACK);
+ 		
+ 		JLabel labelTPlanta = ComponentsBuilder.createLabel("Estado: ", 10, 100, 80, 20,Color.BLACK);
+ 		panelActivo.add(labelTPlanta);
+
+ 		JComboBox<String> tipoPlanta = new JComboBox<String>();
+ 		tipoPlanta.addItem("Activo");
+ 		tipoPlanta.addItem("No Activo");
+ 		tipoPlanta.setPreferredSize(new Dimension(250, 25));
+ 		panelActivo.add(tipoPlanta);
+ 		
+ 		JLabel labelnombreFruta = ComponentsBuilder.createLabel("Nombre de la fruta: ", 10, 100, 80, 20,Color.BLACK);
  		panelnombreFruta.add(labelnombreFruta);
  		JTextField textnombreFruta = new JTextField(25);
  		panelnombreFruta.add(textnombreFruta);
  		
  		
- 		JLabel labelmaduracion = ComponentsBuilder.createLabel("Maduracion ", 10, 100, 80, 20,Color.BLACK);
+ 		JLabel labelmaduracion = ComponentsBuilder.createLabel("Maduracion: ", 10, 100, 80, 20,Color.BLACK);
  		panelmaduracion.add(labelmaduracion);
  		JTextField textmaduracion = new JTextField(25);
  		panelmaduracion.add(textmaduracion);
  		
- 		JLabel labelhoja = ComponentsBuilder.createLabel("hoja de la planta ", 10, 100, 80, 20,Color.BLACK);
+ 		JLabel labelhoja = ComponentsBuilder.createLabel("Hoja de la planta ", 10, 100, 80, 20,Color.BLACK);
  		panelhoja.add(labelhoja);
  		JTextField texthoja = new JTextField(25);
  		panelhoja.add(texthoja);
-
-		
-	
+ 		
+ 		
 		
 		//PANEL DE LOS BOTONES
  		JPanel panelBotones = new JPanel();
  		mainPanel.add(panelBotones);
  		
  		//BOTON DE ACEPTAR
- 		JButton botonAceptar = new JButton("Aceptar");
+ 		JButton botonAceptar = new JButton("Modificar");
  		JButton botonBuscar = new JButton("Buscar");
  		
  		
@@ -182,19 +193,46 @@ public class GUIModificarPlanta extends JFrame implements IGUI {
  		
  					int idInvernadero = Integer.parseInt(textinvernadero.getText());
  					planta.set_id_invernadero(idInvernadero);
- 					
- 					if(planta instanceof TPlantaFrutal){
- 						((TPlantaFrutal) planta).set_maduracion(textmaduracion.getText());
- 						((TPlantaFrutal) planta).set_nombre_fruta(textnombreFruta.getText());
+ 
+ 					if(tipoPlanta.getSelectedIndex() == 0)
+ 						planta.setActivo(true);
+ 					else
+ 						planta.setActivo(false);
+	 					
+	 						
+	 					
+	 					if(planta instanceof TPlantaFrutal){
+	 						((TPlantaFrutal) planta).set_maduracion(textmaduracion.getText());
+	 						((TPlantaFrutal) planta).set_nombre_fruta(textnombreFruta.getText());
+	 						
+	 						if(((TPlantaFrutal) planta).get_maduracion().isEmpty()||((TPlantaFrutal) planta).get_nombre_fruta().isEmpty()
+	 							|| planta.get_nombre().isEmpty() || planta.get_nombre_cientifico().isEmpty()){
+	 	 						GUIMSG.showMessage("Rellene los campos", "MODIFICAR PLANTA", true);
+	 	 					}
+	 						else{
+	 							
+	 							ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_PLANTA,planta));
+							setVisible(false);
+	 					}
+	 		
+	 						
+	 					}
+	 					else{
+	 		
+	 						((TPlantaNoFrutal) planta).set_tipo_hoja(texthoja.getText());
+	 						
+	 						if(((TPlantaNoFrutal) planta).get_tipo_hoja().isEmpty()
+	 								||planta.get_nombre().isEmpty() || planta.get_nombre_cientifico().isEmpty()){
+	 	 						GUIMSG.showMessage("Rellene los campos", "MODIFICAR PLANTA", true);
+	 	 					}
+	 						else{
+	 							
+	 							ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_PLANTA,planta));
+							setVisible(false);
+	 					}
+	
+
  					}
- 					else{
- 		
- 						((TPlantaNoFrutal) planta).set_tipo_hoja(texthoja.getText());
- 					}
- 				
- 					
-					ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_PLANTA,planta));
-					setVisible(false);
 				
  				} catch (Exception e1) {
  					GUIMSG.showMessage("Formato incorrecto", "MOSTRAR PLANTA", true);
@@ -202,14 +240,11 @@ public class GUIModificarPlanta extends JFrame implements IGUI {
  			}
  		});
  		
- 		
- 		
- 		
- 		
+ 	
  		
 	    
 		if(planta == null){
-			
+			tipoPlanta.setEnabled(false);
 			texttipo.setEnabled(false);
 			textNombre.setEnabled(false);
 			textNombreCientifico.setEnabled(false);
@@ -219,6 +254,7 @@ public class GUIModificarPlanta extends JFrame implements IGUI {
 			texthoja.setEnabled(false);
 			botonAceptar.setEnabled(false);
 			
+			
 		}
 		else{
 			textID.setText(""+planta.get_id());
@@ -226,7 +262,7 @@ public class GUIModificarPlanta extends JFrame implements IGUI {
 			textNombreCientifico.setText(planta.get_nombre_cientifico());
 			textinvernadero.setText(""+planta.get_id_invernadero());
 			
-			
+			tipoPlanta.setEnabled(true);
 			textID.setEnabled(false);
 			texttipo.setEnabled(false);
 			textNombre.setEnabled(true);
@@ -234,6 +270,9 @@ public class GUIModificarPlanta extends JFrame implements IGUI {
 			textinvernadero.setEnabled(true);
 			botonAceptar.setEnabled(true);
 			botonBuscar.setEnabled(false);
+			if(!planta.getActivo())
+				tipoPlanta.setSelectedIndex(1);
+	
 		
 			
 			if(planta instanceof TPlantaFrutal){
@@ -264,13 +303,19 @@ public class GUIModificarPlanta extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		switch(context.getEvento()) {
 		case Evento.MODIFICAR_PLANTA_OK:
-			GUIMSG.showMessage("Se realizo la modificacion correctamente", "LISTAR PLANTAS", false);
+			GUIMSG.showMessage("Se realizo la modificacion correctamente", "MODIFICAR PLANTA", false);
 			break;
 		case  Evento.MODIFICAR_PLANTA_KO:
-			GUIMSG.showMessage("No se pudo realizar la modificacion", "MODIFICAR PLANTAS", true);
+			if((int) context.getDatos() == -2){
+				GUIMSG.showMessage("Invernadero incorrecto", "MODIFICAR PLANTA", true);
+			}
+			else if((int) context.getDatos() == -3)
+				GUIMSG.showMessage("No se encontro la planta", "MODIFICAR PLANTA", true);
+			else
+			GUIMSG.showMessage("No se pudo realizar la modificacion", "MODIFICAR PLANTA", true);
 			break;
 		default:
-			GUIMSG.showMessage("ERROR INESPERADO", "LISTAR PLANTAS", true);
+			GUIMSG.showMessage("ERROR INESPERADO", "MODIFICAR PLANTA", true);
 			break;
 		
 	}

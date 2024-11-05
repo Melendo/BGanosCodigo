@@ -21,7 +21,7 @@ public class EntradaSAImp implements EntradaSA {
 		// comprobaciones del formato de los datos
 
 		// comprobamos si en el alta hay campos vacíos
-		if (entrada.getIdInvernadero() == 0 || entrada.getFecha().equals(null) || entrada.getPrecio() == 0
+		if (entrada == null || entrada.getIdInvernadero() == 0 || entrada.getFecha().equals(null) || entrada.getPrecio() == 0
 				|| entrada.getStock() == 0) {
 			return -3; // enviamos error de que no se pueden dejar campos vacíos en el alta
 		}
@@ -41,7 +41,7 @@ public class EntradaSAImp implements EntradaSA {
 
 				if (invernadero.isActivo()) {
 					EntradaDAO entradaDao = f.getEntradaDAO();
-					TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha());
+					TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha(), entrada.getIdInvernadero());
 
 					if (entradaUnica == null) {
 						exito = entradaDao.altaEntrada(entrada);
@@ -54,10 +54,12 @@ public class EntradaSAImp implements EntradaSA {
 
 					} else {
 						exito = -50; // Error: ya existe la entrada
+						t.rollback();
 					}
 
 				} else {
 					exito = -21; // Error: el id de invernadero no está activo
+					t.rollback();
 				}
 
 			} else {
@@ -135,7 +137,7 @@ public class EntradaSAImp implements EntradaSA {
 					if (invernadero != null) {
 
 						if (invernadero.isActivo()) {
-							TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha());
+							TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha(), entrada.getIdInvernadero());
 
 							if (entradaUnica == null) {
 								exito = entradaDao.modificarEntrada(entrada);
@@ -170,6 +172,7 @@ public class EntradaSAImp implements EntradaSA {
 
 			} else {
 				exito = -51; // Error: el id es de una entrada que no existe
+				t.rollback();
 			}
 
 		} catch (Exception e) {

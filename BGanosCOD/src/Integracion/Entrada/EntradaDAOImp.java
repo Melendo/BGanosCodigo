@@ -211,7 +211,7 @@ public class EntradaDAOImp implements EntradaDAO {
 
 	// TODO nueva función
 	@Override
-	public TEntrada leerPorFechaUnica(Date fecha) {
+	public TEntrada leerPorFechaUnica(Date fecha, Integer idInvernadero) {
 		
 		TEntrada entrada = null;
 		
@@ -221,7 +221,7 @@ public class EntradaDAOImp implements EntradaDAO {
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM entrada WHERE fecha = ?");
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM entrada WHERE fecha = ? AND id = ?");
 			ps.setDate(1, fecha);
 			
 			ResultSet rs = ps.executeQuery();

@@ -22,4 +22,22 @@ public class TPlantaNoFrutal extends TPlanta {
 	public void set_tipo_hoja(String tipo_hoja) {
 		this.tipo_hoja = tipo_hoja;
 	}
+	
+	public String toString() {
+		String tmp,tip = "Frutal", estado = "Si";
+		if(!activo){estado = "No";}
+		
+		if(tipo == 1){tip = "No " + tip;}
+		tmp = "Informacion de la Planta: " + "\n" +
+		"Id: " + id + "\n" +
+		"Nombre: " + nombre + "\n" +
+		"Nombre cientifico: " + nombre_cientifico + "\n" +
+		"Tipo: " + tip + "\n" +
+		"Id del Invernadero: " + id_invernadero +  "\n" +
+		"Activo: " + estado + "\n" + 
+		"Tipo de la hoja: " + this.tipo_hoja + "\n";
+
+		
+			return tmp;
+	}
 }

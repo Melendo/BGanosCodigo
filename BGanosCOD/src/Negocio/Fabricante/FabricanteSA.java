@@ -3,7 +3,7 @@ package Negocio.Fabricante;
 import java.util.Set;
 
 public interface FabricanteSA {
-	public Integer altaFabricante(TFabricante animal);
+	public Integer altaFabricante(TFabricante fabricante);
 
 	public Integer bajaFabricante(Integer idFabricante);
 
