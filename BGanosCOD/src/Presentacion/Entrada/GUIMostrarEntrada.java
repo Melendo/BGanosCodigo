@@ -8,7 +8,6 @@ import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.SistemaDeRiego.GUIMostrarSistemaDeRiegoPorID;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,13 +28,17 @@ import javax.swing.JPanel;
 
 public class GUIMostrarEntrada extends JFrame implements IGUI {
 
-	private JButton jButton;
+	private static final long serialVersionUID = 1L;
 
-	private JLabel jLabel;
+	private JButton botonAceptar;
+	
+	private JButton botonCancelar;
 
-	private JTextField jTextField;
+	private JLabel textIdEntrada;
 
-	private JPanel jPanel;
+	private JTextField id;
+
+	private JPanel mainPanel;
 
 	public GUIMostrarEntrada() {
 		super("Mostar entrada");
@@ -53,7 +56,7 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 
 	public void initGUI() {
 
-		JPanel mainPanel = new JPanel();
+		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
@@ -68,10 +71,10 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 		JPanel panelID = new JPanel();
 		mainPanel.add(panelID);
 
-		JLabel textIdEntrada = ComponentsBuilder.createLabel("ID entrada: ", 10, 100, 80, 20, Color.BLACK);
+		textIdEntrada = ComponentsBuilder.createLabel("ID entrada: ", 10, 100, 80, 20, Color.BLACK);
 		panelID.add(textIdEntrada);
 
-		JTextField id = new JTextField();
+		id = new JTextField();
 		id.setPreferredSize(new Dimension(250, 30));
 
 		id.setEditable(true);
@@ -82,7 +85,7 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 		mainPanel.add(panelBotones);
 
 		// Boton de aceptar
-		JButton botonAceptar = new JButton("Aceptar");
+		botonAceptar = new JButton("Aceptar");
 		botonAceptar.setBounds(75, 50, 100, 100);
 
 		botonAceptar.addActionListener(new ActionListener() {
@@ -109,7 +112,7 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 		panelBotones.add(botonAceptar);
 
 		// Boton de cancelar
-		JButton botonCancelar = new JButton("Cancelar");
+		botonCancelar = new JButton("Cancelar");
 		botonCancelar.setBounds(200, 50, 100, 100);
 
 		botonCancelar.addActionListener(new ActionListener() {

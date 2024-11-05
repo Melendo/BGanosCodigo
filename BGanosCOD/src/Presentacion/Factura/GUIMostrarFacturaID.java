@@ -31,9 +31,7 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -42,6 +40,8 @@ import javax.swing.JButton;
 
 public class GUIMostrarFacturaID extends JFrame implements IGUI {
 	
+	private static final long serialVersionUID = 1L;
+
 	private JTable tablaDatos;
 	
 	private JLabel mensajeFactura;
@@ -183,7 +183,7 @@ public class GUIMostrarFacturaID extends JFrame implements IGUI {
                 JOptionPane.showMessageDialog(this, "Datos incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             default:
-                JOptionPane.showMessageDialog(this, "Error desconocido al cerrar la factura.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error desconocido al mostrar la factura.", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             }
         }

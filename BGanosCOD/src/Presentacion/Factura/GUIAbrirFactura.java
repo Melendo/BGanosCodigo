@@ -7,20 +7,15 @@ import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import Negocio.Factura.TCarrito;
-import Negocio.Factura.TFactura;
 import Negocio.Factura.TLineaFactura;
 
 import java.util.HashSet;
-import java.util.Set;
 
-import javax.swing.JButton;
 
 public class GUIAbrirFactura extends JFrame implements IGUI {
+
+	private static final long serialVersionUID = 1L;
 
 	public GUIAbrirFactura() {
 		initGUI();

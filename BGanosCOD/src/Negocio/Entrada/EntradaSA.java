@@ -6,7 +6,6 @@ public interface EntradaSA {
 
 	public Integer altaEntrada(TEntrada entrada);
 
-	// TODO cambié el TEntrada de baja por Integer
 	public Integer bajaEntrada(Integer id);
 
 	public Set<TEntrada> listarEntrada();

@@ -120,6 +120,10 @@ public class GUIBajaFabricante extends JFrame implements IGUI {
 				JOptionPane.showMessageDialog(this, "El fabricante especificado no existe.", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
+			case -4:
+				JOptionPane.showMessageDialog(this, "No puedes dar de baja a un fabricante con Sistemas de Riego asociados.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
 			default:
 				JOptionPane.showMessageDialog(this, "Error desconocido al dar de baja el fabricante.", "Error",
 						JOptionPane.ERROR_MESSAGE);

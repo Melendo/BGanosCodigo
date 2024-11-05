@@ -14,7 +14,6 @@ import Presentacion.FactoriaVistas.Evento;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
@@ -22,7 +21,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -38,9 +36,9 @@ public class GUILIstarEntradasPorInvernadero extends JFrame implements IGUI {
 
 	private static final long serialVersionUID = 1L;
 
-	private JLabel jLabel;
+	private JLabel labelInvernadero;
 
-	private JButton jButton;
+	private JButton botonBuscar;
 
 	private JTextField fieldInvernadero;
 
@@ -75,7 +73,7 @@ public class GUILIstarEntradasPorInvernadero extends JFrame implements IGUI {
         mainPanel.add(panelCentro);
 
         // Campo de entrada para el invernadero
-        JLabel labelInvernadero = new JLabel("Ingrese el id del invernadero:");
+        labelInvernadero = new JLabel("Ingrese el id del invernadero:");
         panelCentro.add(labelInvernadero);
         
         fieldInvernadero = new JTextField();
@@ -83,7 +81,7 @@ public class GUILIstarEntradasPorInvernadero extends JFrame implements IGUI {
         panelCentro.add(fieldInvernadero);
 
         // Boton Buscar
-        JButton botonBuscar = new JButton("Buscar");
+        botonBuscar = new JButton("Buscar");
         botonBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -134,11 +132,6 @@ public class GUILIstarEntradasPorInvernadero extends JFrame implements IGUI {
 		}catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Ingrese un numero valido para el ID de invernadero", "Error", JOptionPane.ERROR_MESSAGE);
         }
-	}
-
-	// TODO, esta constructora no estaba
-	public GUILIstarEntradasPorInvernadero(Set<TEntrada> datos) {
-		
 	}
 
 	@Override

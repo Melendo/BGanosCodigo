@@ -9,7 +9,6 @@ import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.SistemaDeRiego.GUIBajaSistemaDeRiego;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -27,6 +26,7 @@ import javax.swing.JPanel;
 
 public class GUIBajaInvernadero extends JFrame implements IGUI {
 
+	private static final long serialVersionUID = 1L;
 	private JTextField textId;
 
 	public GUIBajaInvernadero() {

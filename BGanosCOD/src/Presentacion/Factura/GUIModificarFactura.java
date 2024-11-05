@@ -23,7 +23,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
@@ -33,6 +32,8 @@ import javax.swing.JButton;
 
 public class GUIModificarFactura extends JFrame implements IGUI {
 	
+	private static final long serialVersionUID = 1L;
+
 	public GUIModificarFactura() throws HeadlessException {
 		super("Modificar Factura");
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -149,7 +150,7 @@ public class GUIModificarFactura extends JFrame implements IGUI {
                 JOptionPane.showMessageDialog(this, "Datos incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             default:
-                JOptionPane.showMessageDialog(this, "Error desconocido al cerrar la factura.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error desconocido al modificar la factura.", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             }
         }

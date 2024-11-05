@@ -206,7 +206,6 @@ public class EntradaDAOImp implements EntradaDAO {
 		return entradas;
 	}
 
-	// TODO nueva función
 	@Override
 	public TEntrada leerPorFechaUnica(Date fecha, Integer idInvernadero) {
 		

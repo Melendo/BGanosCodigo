@@ -29,13 +29,15 @@ public class GUIBajaEntrada extends JFrame implements IGUI {
 
 	private static final long serialVersionUID = 1L;
 
-	private JButton jButton;
+	private JButton botonAceptar;
+	
+	private JButton botonCancelar;
 
-	private JLabel jLabel;
+	private JLabel labelID;
 
-	private JTextField jTextField;
+	private JTextField textID;
 
-	private JPanel jPanel;
+	private JPanel mainPanel;
 
 	public GUIBajaEntrada() {
 		super("Baja entrada");
@@ -53,7 +55,7 @@ public class GUIBajaEntrada extends JFrame implements IGUI {
 	public void initGUI() {
 
 		// Panel principal
-		JPanel mainPanel = new JPanel();
+		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);
 
@@ -66,11 +68,11 @@ public class GUIBajaEntrada extends JFrame implements IGUI {
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
 		// Campo para introducir el ID de la entrada
-		JLabel labelID = new JLabel("ID de la entrada:");
+		labelID = new JLabel("ID de la entrada:");
 		labelID.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(labelID);
 
-		JTextField textID = new JTextField(20);
+		textID = new JTextField(20);
 		textID.setMaximumSize(textID.getPreferredSize());
 		mainPanel.add(textID);
 
@@ -81,7 +83,7 @@ public class GUIBajaEntrada extends JFrame implements IGUI {
 		mainPanel.add(panelBotones);
 
 		// BOTON ACEPTAR (PROCESAR LA BAJA)
-		JButton botonAceptar = new JButton("Aceptar");
+		botonAceptar = new JButton("Aceptar");
 		botonAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -100,7 +102,7 @@ public class GUIBajaEntrada extends JFrame implements IGUI {
 		panelBotones.add(botonAceptar);
 
 		// BOTON CANCELAR
-		JButton botonCancelar = new JButton("Cancelar");
+		botonCancelar = new JButton("Cancelar");
 		botonCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

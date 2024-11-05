@@ -10,7 +10,6 @@ import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.SistemaDeRiego.GUIListarSistemaDeRiegoDelInvernadero;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,7 +26,6 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import Negocio.Invernadero.TInvernadero;
-import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -35,6 +33,7 @@ import javax.swing.JTable;
 
 public class GUIListarInvernaderoPorSR extends JFrame implements IGUI {
 
+	private static final long serialVersionUID = 1L;
 	private JTextField idText;
 	private JPanel mainPanel;
 	private JTable tabla;

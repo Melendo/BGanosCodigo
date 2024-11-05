@@ -42,7 +42,7 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 			PreparedStatement statement = c.prepareStatement("DELETE FROM linea_factura WHERE id_factura = ? AND id_entrada = ?", Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, idFactura);
 			statement.setInt(2, idEntrada);
-			int affectedRows = statement.executeUpdate();
+			//int affectedRows = statement.executeUpdate();
 			
 			statement = c.prepareStatement("SELECT * FROM linea_factura WHERE id_factura = ? AND id_entrada = ? FOR UPDATE", Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, idFactura);

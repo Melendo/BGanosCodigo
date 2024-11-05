@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package Presentacion.Invernadero;
 
 import java.awt.Color;
@@ -186,9 +184,5 @@ public class GUIInvernadero extends JFrame implements IGUI {
 	}
 
 	public void actualizar(Context context) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
 	}
 }

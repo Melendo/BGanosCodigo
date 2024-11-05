@@ -30,13 +30,15 @@ import Negocio.Entrada.TEntrada;
 
 public class GUIModificarEntrada extends JFrame implements IGUI {
 
-	private JButton jButton;
+	private static final long serialVersionUID = 1L;
 
-	private JPanel jPanel;
+	private JButton botonAceptar;
+	
+	private JButton botonCancelar;
 
-	private JLabel jLabel;
+	private JPanel mainPanel;
 
-	private JTextField jTextField;
+	private JLabel msgIntroIDCabecera;
 
 	public GUIModificarEntrada() {
 		super("Modificar entrada");
@@ -54,13 +56,13 @@ public class GUIModificarEntrada extends JFrame implements IGUI {
 
 	public void initGUI() {
 		// Panel principal
-		JPanel mainPanel = new JPanel();
+		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-		JLabel msgIntroIDCabecera = ComponentsBuilder
+		msgIntroIDCabecera = ComponentsBuilder
 				.createLabel("Introduzca los datos de la entrada que desea modificar", 1, 10, 80, 20, Color.BLACK);
 		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(msgIntroIDCabecera);
@@ -126,7 +128,7 @@ public class GUIModificarEntrada extends JFrame implements IGUI {
 		JPanel panelBotones = new JPanel();
 		mainPanel.add(panelBotones);
 
-		JButton botonAceptar = new JButton("Aceptar");
+		botonAceptar = new JButton("Aceptar");
 		botonAceptar.setBounds(75, 50, 100, 100);
 
 		botonAceptar.addActionListener(new ActionListener() {
@@ -160,7 +162,7 @@ public class GUIModificarEntrada extends JFrame implements IGUI {
 
 		panelBotones.add(botonAceptar);
 		
-	    JButton botonCancelar = new JButton("Cancelar");
+	    botonCancelar = new JButton("Cancelar");
 	    botonCancelar.addActionListener(new ActionListener() {
 
 	        @Override

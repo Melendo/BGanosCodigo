@@ -17,7 +17,8 @@ import Presentacion.FactoriaVistas.Evento;
 
 public class MainView extends JFrame implements IGUI {
 
-    // Definici�n de los botones
+    private static final long serialVersionUID = 1L;
+	// Definici�n de los botones
     private JButton buttonEntrada;
     private JButton buttonFabricante;
     private JButton buttonInvernadero;

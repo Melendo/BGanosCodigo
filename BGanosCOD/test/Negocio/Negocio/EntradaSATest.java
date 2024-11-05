@@ -182,10 +182,10 @@ public class EntradaSATest {
 
 			// creo 2 entradas
 			int idEnt1 = entradaSA.altaEntrada(getTEntrada(idInv1));
-			TEntrada entrada1 = entradaSA.mostrarEntrada(idEnt1);
+			//TEntrada entrada1 = entradaSA.mostrarEntrada(idEnt1);
 	
 			int idEnt2 = entradaSA.altaEntrada(getTEntrada(idInv2));
-			TEntrada entrada2 = entradaSA.mostrarEntrada(idEnt2);
+			//TEntrada entrada2 = entradaSA.mostrarEntrada(idEnt2);
 	
 			Set<TEntrada> entradas = entradaSA.listarEntrada();
 			
@@ -217,10 +217,10 @@ public class EntradaSATest {
 
 			// creo 2 entradas asociadas al mismo invernadero
 			int idEnt1 = entradaSA.altaEntrada(getTEntrada(idInv));
-			TEntrada entrada1 = entradaSA.mostrarEntrada(idEnt1);
+			//TEntrada entrada1 = entradaSA.mostrarEntrada(idEnt1);
 	
 			int idEnt2 = entradaSA.altaEntrada(getTEntrada(idInv));
-			TEntrada entrada2 = entradaSA.mostrarEntrada(idEnt2);
+			//TEntrada entrada2 = entradaSA.mostrarEntrada(idEnt2);
 	
 			Set<TEntrada> entradas = entradaSA.listarEntradasPorInvernadero(idInv);
 			

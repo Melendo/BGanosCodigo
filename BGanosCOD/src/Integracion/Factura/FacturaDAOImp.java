@@ -10,7 +10,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import Integracion.Transaction.Transaccion;
@@ -66,7 +66,7 @@ public class FacturaDAOImp implements FacturaDAO {
 	}
 
 	public Set<TFactura> listarFactura() {
-		Set<TFactura> facturas = new HashSet<TFactura>();
+		Set<TFactura> facturas = new LinkedHashSet<TFactura>();
 		try
 		{
 		Transaccion t = TransaccionManager.getInstance().getTransaccion();

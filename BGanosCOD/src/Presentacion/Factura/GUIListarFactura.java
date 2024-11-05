@@ -11,9 +11,6 @@ import Presentacion.FactoriaVistas.Evento;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 import Negocio.Factura.TFactura;
 
@@ -31,13 +28,11 @@ import javax.swing.JButton;
 
 public class GUIListarFactura extends JFrame implements IGUI {
 
-	private JPanel jPanel;
+	private static final long serialVersionUID = 1L;
 
-	private JLabel jLabel;
+	private JPanel mainPanel;
 
-	private JTextField jTextField;
-
-	private JButton jButton;
+	private JButton botonCancelar;
 
 	public GUIListarFactura(Set<TFactura> datos) {
 		super("Listar Todas las Facturas");
@@ -54,7 +49,7 @@ public class GUIListarFactura extends JFrame implements IGUI {
 	}
 
 	public void initGUI(Set<TFactura> datos) {
-		JPanel mainPanel = new JPanel();
+		mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         this.setContentPane(mainPanel);
 
@@ -68,7 +63,7 @@ public class GUIListarFactura extends JFrame implements IGUI {
         JPanel panelBotones = new JPanel();
         mainPanel.add(panelBotones);
 
-        JButton botonCancelar = new JButton("Cancelar");
+        botonCancelar = new JButton("Cancelar");
         botonCancelar.setBounds(200, 50, 100, 100);
         botonCancelar.addActionListener(new ActionListener() {
             @Override
@@ -83,7 +78,6 @@ public class GUIListarFactura extends JFrame implements IGUI {
         List<String[]> datosColumnas = new ArrayList<String[]>();
         
 
-        int i = 0;
         for (TFactura factura : datos) {
         	String[] datosFila = new String[4];
         	datosFila[0] = factura.getid().toString();
@@ -94,7 +88,6 @@ public class GUIListarFactura extends JFrame implements IGUI {
             	activo = "Si";
             datosFila[3] = activo;
 			datosColumnas.add(datosFila);
-			i++;
         }
         
         JTable tabla = ComponentsBuilder.createTable(datos.size(), 4, nombreColumnas, datosColumnas.toArray(new String[][] {}));
@@ -109,23 +102,5 @@ public class GUIListarFactura extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		/*int resultado = (int) context.getDatos();
-        if (context.getEvento() == Evento.LISTAR_FACTURAS_OK) {
-        	
-            JOptionPane.showMessageDialog(this, "Factura creada correctamente con id: " + resultado , "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } else if (context.getEvento() == Evento.LISTAR_FACTURAS_KO) {
-        	
-            switch (resultado) {
-            case -1:
-                JOptionPane.showMessageDialog(this, "Se ha producido un error interno", "Error", JOptionPane.ERROR_MESSAGE);
-                break;
-            case -2:
-                JOptionPane.showMessageDialog(this, "Datos incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
-                break;
-            default:
-                JOptionPane.showMessageDialog(this, "Error desconocido al cerrar la factura.", "Error", JOptionPane.ERROR_MESSAGE);
-                break;
-            }
-        }*/
 	}
 }

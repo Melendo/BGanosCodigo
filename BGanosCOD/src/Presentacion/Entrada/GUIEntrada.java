@@ -18,9 +18,9 @@ import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
-// TODO añadí un extends JFrame, no estaba, mirarlo en modelo
 public class GUIEntrada extends JFrame implements IGUI {
 
+	private static final long serialVersionUID = 1L;
 	private JButton bAltaEntrada;
 	private JButton bBajaEntrada;
 	private JButton bModificarEntrada;

@@ -39,6 +39,7 @@ import javax.swing.JButton;
 
 public class GUICerrarFactura extends JFrame implements IGUI {
 	
+	private static final long serialVersionUID = 1L;
 	private TCarrito tCarrito;
 	
 	public GUICerrarFactura(TCarrito Carrito) {
@@ -236,13 +237,11 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 		String[] nombreColumnas = { "Id Entrada", "Cantidad" };
 		List<String[]> datosColumnas = new ArrayList<String[]>();
 		
-		int i = 0;
 		for (TLineaFactura t : LineasFactura) {
 			String[] datos = new String[2];
 			datos[0] = t.getidEntrada().toString();
 			datos[1] = t.getCantidad().toString();
 			datosColumnas.add(datos);
-			i++;
 		}
 		
 		JTable tabla = ComponentsBuilder.createTable(LineasFactura.size(), 2, nombreColumnas, datosColumnas.toArray(new String[][] {}));

@@ -1,7 +1,6 @@
 package Presentacion.Controller.Command.CommandFabricante;
 
 import Negocio.Fabricante.TFabricante;
-import Negocio.Fabricante.TFabricanteLocal;
 import Negocio.FactoriaNegocio.FactoriaNegocio;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;

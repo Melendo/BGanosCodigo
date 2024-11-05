@@ -29,9 +29,9 @@ import javax.swing.JButton;
 
 public class GUIDevolverFactura extends JFrame implements IGUI {
 	
+	private static final long serialVersionUID = 1L;
 	private JTextField idFacturaField;
     private JTextField idEntradaField;
-    private JTextField cantidadField;
 	
 	public GUIDevolverFactura() {
 		super("Devolver Factura");
@@ -80,19 +80,6 @@ public class GUIDevolverFactura extends JFrame implements IGUI {
 
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Cantidad a Devolver
-        JPanel panelCantidad = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        mainPanel.add(panelCantidad);
-
-        JLabel labelCantidad = ComponentsBuilder.createLabel("Cantidad a Devolver: ", 10, 10, 150, 20, Color.BLACK);
-        panelCantidad.add(labelCantidad);
-
-        cantidadField = new JTextField();
-        cantidadField.setPreferredSize(new Dimension(250, 30));
-        panelCantidad.add(cantidadField);
-
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-
         // Botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER));
         mainPanel.add(panelBotones);
@@ -107,12 +94,10 @@ public class GUIDevolverFactura extends JFrame implements IGUI {
                 try {
                     int idFactura = Integer.parseInt(idFacturaField.getText());
                     int idEntrada = Integer.parseInt(idEntradaField.getText());
-                    int cantidad = Integer.parseInt(cantidadField.getText());
 
                     TLineaFactura lf = new TLineaFactura();
                     lf.setidFactura(idFactura);
                     lf.setidEntrada(idEntrada);
-                    lf.setCantidad(cantidad);
                     
                     ApplicationController.getInstance().manageRequest(new Context(Evento.DEVOLVER_FACTURA, lf));
                 } catch (NumberFormatException ex) {

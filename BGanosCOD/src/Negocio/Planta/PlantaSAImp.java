@@ -10,7 +10,6 @@ import Integracion.Planta.PlantaDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 import Negocio.Invernadero.TInvernadero;
-import Presentacion.Controller.GUIMSG;
 
 public class PlantaSAImp implements PlantaSA {
 

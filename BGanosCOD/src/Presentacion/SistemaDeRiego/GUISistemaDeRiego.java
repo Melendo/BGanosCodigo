@@ -158,7 +158,6 @@ public class GUISistemaDeRiego extends JFrame implements IGUI {
 
   
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import Integracion.Entrada.EntradaDAO;
-import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
 import Integracion.Factura.FacturaDAO;
 import Integracion.Factura.LineaFacturaDAO;
@@ -16,86 +15,76 @@ public class FacturaSAImp implements FacturaSA {
 
 	public Integer cerrarFactura(TCarrito carrito) {
 		TransaccionManager tm = TransaccionManager.getInstance();
-		try 
-		{
+		try {
 			Transaccion t = tm.newTransaccion();
 			t.start();
 			FactoriaIntegracion fDAO = FactoriaIntegracion.getInstance();
-			if(!carrito.getLineasFactura().isEmpty())
-			{
+			if(!carrito.getLineasFactura().isEmpty()) {
 				EntradaDAO daoEntrada = fDAO.getEntradaDAO();
 				float precio_total = 0;
-				for(TLineaFactura lineaFact : carrito.getLineasFactura())
-				{
+				for(TLineaFactura lineaFact : carrito.getLineasFactura()) {
 					TEntrada entrada = daoEntrada.mostrarEntrada(lineaFact.getidEntrada());
-					if(entrada != null)
-					{
-						if(entrada.getActivo())
-						{
-							if(lineaFact.getCantidad() <= entrada.getStock())
-							{
+					if(entrada != null) {
+						if(entrada.getActivo()) {
+							if(lineaFact.getCantidad() <= entrada.getStock()) {
+								//Calculamos el stock y el precio total
 								entrada.setStock(entrada.getStock() - lineaFact.getCantidad());
 								daoEntrada.modificarEntrada(entrada);
-								//Calculamos el precio de la linea Factura y actualizamos en la linea Factura
 								float precio_lineaF = lineaFact.getCantidad() * entrada.getPrecio();
 								lineaFact.setPrecio(precio_lineaF);
 								precio_total = precio_total +precio_lineaF ;
-							}
-							else
-							{
+							} 
+							else {
+								//No hay Stock suficiente
 								t.rollback();
-								return -1;
+								return -2;
 							}
-								
-						}
-						else
-						{
+						} 
+						else {
+							//La entrada está dada de baja
 							t.rollback();
-							return -1;
+							return -2;
 						}
-					}
-					else
-					{
+					} 
+					else {
+						//La entrada no existe
 						t.rollback();
-						return -1;
+						return -2;
 					}
 				}
 				FacturaDAO daoFactura = fDAO.getFacturaDAO();
 				TFactura factura = carrito.getFactura();
 				factura.setPrecioTotal(precio_total);
 				int id = daoFactura.cerrarFactura(factura);
-				if(id > 0)
-				{
+				if(id > 0) {
 					LineaFacturaDAO daoLF = fDAO.getDAOLineaFactura();
-					for(TLineaFactura lf : carrito.getLineasFactura())
-					{
+					for(TLineaFactura lf : carrito.getLineasFactura()) {
 						lf.setidFactura(id);
 						int r = daoLF.crearLineaFactura(lf);
-						if(r < 0)
-						{
+						if(r < 0) {
+							//Fallo al crear la linea de facturación
 							t.rollback();
-							return -1;
+							return -3;
 						}
 					}
 				}
-				else
-				{
+				else {
+					//Error al cerrar factura
 					t.rollback();
 					return -1;
 				}
 				t.commit();
 				return id;
 			}
-			else
-			{
+			else {
+				//Carrito vacio
 				t.rollback();
-				return -1;
+				return -2;
 			}
-		} 
-		catch (Exception e) 
-		{
+		} catch (Exception e) {
+			//Error desconocido
 			e.printStackTrace();
-			return -1; 
+			return -3; 
 		}
 	}
 
@@ -109,7 +98,7 @@ public class FacturaSAImp implements FacturaSA {
 			FactoriaIntegracion fDAO = FactoriaIntegracion.getInstance();
 			FacturaDAO daoFactura = fDAO.getFacturaDAO();
 			TFactura facturaBD = daoFactura.mostrarFactura(id);
-			if(facturaBD != null){
+			if(facturaBD != null) {
 				facturaEntradas.settFactura(facturaBD);
 				
 				Set<TLineaFactura> lineasfacturaBD = fDAO.getDAOLineaFactura().mostrarLineaFacturaPorFactura(id);				
@@ -119,14 +108,18 @@ public class FacturaSAImp implements FacturaSA {
 					
 				}
 				t.commit();
-			}else{
-				factura.setid(-1);
+			}
+			else {
+				factura.setid(-2);
 				facturaEntradas.settFactura(factura);
 				t.rollback();
 			}			
 			
-		}catch(Exception e){
+		} catch(Exception e) {
+			//Error desconocido
 			e.printStackTrace();
+			factura.setid(-2);
+			facturaEntradas.settFactura(factura);
 		}
 		return facturaEntradas;
 	}
@@ -153,8 +146,7 @@ public class FacturaSAImp implements FacturaSA {
 
 	public Integer modificarFactura(TFactura tfactura) {
 		int r = -1;
-		try 
-		{
+		try {
 			FactoriaIntegracion fIntegracion = FactoriaIntegracion.getInstance();
 			FacturaDAO daoFactura = fIntegracion.getFacturaDAO();
 			TransaccionManager tm = TransaccionManager.getInstance();
@@ -192,71 +184,47 @@ public class FacturaSAImp implements FacturaSA {
 		TransaccionManager tm = TransaccionManager.getInstance();
 		FactoriaIntegracion fDAO = FactoriaIntegracion.getInstance();
 		int r = -1;
-		try 
-		{
+		try {
 			Transaccion t = tm.newTransaccion();
 			t.start();
 			FacturaDAO daoFactura = fDAO.getFacturaDAO();
 			TFactura factura = daoFactura.mostrarFactura(tlineaFactura.getidFactura());
-			if(factura != null)
-			{
-				if(factura.getActivo())
-				{	
-					EntradaDAO daoEntrada = fDAO.getEntradaDAO();
-					TEntrada entrada = daoEntrada.mostrarEntrada(tlineaFactura.getidEntrada());
-					if(entrada != null)
-					{
-						LineaFacturaDAO daoLF = fDAO.getDAOLineaFactura();
-						TLineaFactura lf = daoLF.mostrarLineaFactura(tlineaFactura.getidFactura(), tlineaFactura.getidEntrada());
-						if(lf != null)
-						{
-							if(lf.getCantidad() < tlineaFactura.getCantidad()){
-								t.rollback();
-								return -75; 
-							}
-							if(!entrada.getActivo())
-								entrada.setActivo(true);
-							entrada.setStock(entrada.getStock() + tlineaFactura.getCantidad());
-							r = daoEntrada.modificarEntrada(entrada);
-							if(r < 0)
-							{
-								t.rollback();
-								return -68;
-							}
-							factura.setPrecioTotal(factura.getPrecioTotal() - (tlineaFactura.getCantidad() * entrada.getPrecio()));
-							if(factura.getPrecioTotal() == 0)
-								factura.setActivo(false);
-							r = daoFactura.modificarFactura(factura);
-							if(r < 0)
-							{
-								t.rollback();
-								return -67;
-							}
-							lf.setCantidad(lf.getCantidad() - tlineaFactura.getCantidad());
-							lf.setPrecio(lf.getPrecio() - ((tlineaFactura.getCantidad() * entrada.getPrecio())));
-							r = daoLF.modificarLineaFactura(lf);
-							if(r < 0)
-							{
-								t.rollback();
-								return -1;
-							}
-							if(lf.getCantidad() == 0) {
-								TLineaFactura baja = daoLF.bajaLineaFactura(lf.getidFactura(), lf.getidEntrada());
-								r = baja == null ? 1 : -1;
-							}
-							if(r < 0)
-							{
-								t.rollback();
-								return -1;
-							}
-							t.commit();
-							return r;
+			if(factura != null && factura.getActivo()){
+				EntradaDAO daoEntrada = fDAO.getEntradaDAO();
+				TEntrada entrada = daoEntrada.mostrarEntrada(tlineaFactura.getidEntrada());
+				if(entrada != null){
+					LineaFacturaDAO daoLF = fDAO.getDAOLineaFactura();
+					TLineaFactura lf = daoLF.mostrarLineaFactura(tlineaFactura.getidFactura(), tlineaFactura.getidEntrada());
+					if(lf != null){
+						if(!entrada.getActivo()){
+							t.rollback();
+							return -1;
 						}
-						else
+						entrada.setStock(entrada.getStock() + lf.getCantidad());
+						r = daoEntrada.modificarEntrada(entrada);
+						if(r < 0)
 						{
 							t.rollback();
 							return -1;
 						}
+						factura.setPrecioTotal(factura.getPrecioTotal() - (lf.getCantidad() * entrada.getPrecio()));
+						if(factura.getPrecioTotal() == 0)
+							factura.setActivo(false);
+						r = daoFactura.modificarFactura(factura);
+						if(r < 0)
+						{
+							t.rollback();
+							return -1;
+						}
+						TLineaFactura baja = daoLF.bajaLineaFactura(lf.getidFactura(), lf.getidEntrada());	
+						r = baja == null ? 1 : -1;
+						if(r < 0)
+						{
+							t.rollback();
+							return -1;
+						}
+						t.commit();
+						return r;
 					}
 					else
 					{
@@ -264,16 +232,15 @@ public class FacturaSAImp implements FacturaSA {
 						return -1;
 					}
 				}
-				else
-				{
+				else{
 					t.rollback();
 					return -1;
 				}
 			}
-			else
-			{
+			else{
+				//Factura no existe o ya está dada de baja
 				t.rollback();
-				return -1;
+				return -2;
 			}
 		} 
 		catch (Exception e) 
