@@ -40,7 +40,7 @@ public class GUIFactura extends JFrame implements IGUI {
 		this.setLayout(null);
 		jpanel = new JPanel();
 		this.setResizable(false);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initGUI();
 		this.setVisible(true);
 	}
