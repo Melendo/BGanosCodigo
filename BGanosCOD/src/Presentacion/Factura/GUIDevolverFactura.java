@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Factura;
 
 import javax.swing.JFrame;
@@ -30,12 +27,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
 public class GUIDevolverFactura extends JFrame implements IGUI {
 	
 	private JTextField idFacturaField;
@@ -145,13 +136,7 @@ public class GUIDevolverFactura extends JFrame implements IGUI {
         this.setVisible(true);
         this.setResizable(true);
 	}
-
-	/** 
-	* (non-Javadoc)
-	* @see IGUI#actualizar(Context context)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
-
+	
 	@Override
 	public void actualizar(Context context) {
 		

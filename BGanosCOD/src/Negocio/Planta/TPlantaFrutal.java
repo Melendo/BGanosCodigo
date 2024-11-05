@@ -14,7 +14,6 @@ public class TPlantaFrutal extends TPlanta {
 	}
 	
 	public TPlantaFrutal() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String get_nombre_fruta() {

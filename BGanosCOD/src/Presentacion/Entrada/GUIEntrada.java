@@ -120,7 +120,6 @@ public class GUIEntrada extends JFrame implements IGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GUIEntrada.this.setVisible(false);
-				// TODO ??qué no es la vista
 				ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_ENTRADAS, tEntrada));
 			}
 

@@ -1,13 +1,8 @@
-/**
- * 
- */
 package Integracion.Factura;
 
-import Negocio.Factura.TFactura;
 import Negocio.Factura.TLineaFactura;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -16,18 +11,8 @@ import java.util.Set;
 
 import Integracion.Transaction.TransaccionManager;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
 public class LineaFacturaDAOImp implements LineaFacturaDAO {
-	/** 
-	* (non-Javadoc)
-	* @see LineaFacturaDAO#crearLineaFactura(TLineaFactura lineaFactura)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	public Integer crearLineaFactura(TLineaFactura lineaFactura) {
 		try {
 			Connection c = (Connection) TransaccionManager.getInstance().getTransaccion().getResource();
@@ -50,11 +35,6 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 		}
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see LineaFacturaDAO#bajaLineaFactura(Integer idFactura, Integer idEntrada)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public TLineaFactura bajaLineaFactura(Integer idFactura, Integer idEntrada) {
 		TLineaFactura lineaFactura = null;
 		try {
@@ -87,11 +67,6 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 		return lineaFactura;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see LineaFacturaDAO#modificarLineaFactura(TLineaFactura tlineaFactura)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Integer modificarLineaFactura(TLineaFactura tlineaFactura) {
 		try {
 			Connection c = (Connection) TransaccionManager.getInstance().getTransaccion().getResource();
@@ -114,11 +89,6 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 		}
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see LineaFacturaDAO#mostrarLineaFactura(Integer idFactura, Integer idEntrada)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public TLineaFactura mostrarLineaFactura(Integer idFactura, Integer idEntrada) {
 		TLineaFactura lineafactura = null;
 		try {
@@ -143,11 +113,6 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 		return lineafactura;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see LineaFacturaDAO#listarLineasDeFacturas()
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Set<TLineaFactura> listarLineasDeFacturas() {
 		Set<TLineaFactura> lineasfactura = null;
 
@@ -179,11 +144,6 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 		return lineasfactura;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see LineaFacturaDAO#mostrarLineaFacturaPorFactura(Integer idFactura)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Set<TLineaFactura> mostrarLineaFacturaPorFactura(Integer idFactura) {
 		Set<TLineaFactura> lineasfactura = null;
 

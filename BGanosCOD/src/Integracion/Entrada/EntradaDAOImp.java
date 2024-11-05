@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Integracion.Entrada;
 
 import Negocio.Entrada.TEntrada;
