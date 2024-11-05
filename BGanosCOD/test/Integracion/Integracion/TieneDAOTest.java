@@ -13,7 +13,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
-import Integracion.Invernadero.InvernaderoDAO;
 import Integracion.Invernadero.TieneDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
@@ -25,7 +24,6 @@ import Negocio.SistemaDeRiego.TSistemaDeRiego;
 
 public class TieneDAOTest {
 
-	private static InvernaderoDAO invernaderoDAO;
 	private static TieneDAO tieneDAO;
 
 	private static Transaccion t = crearTransaccion();
@@ -52,13 +50,7 @@ public class TieneDAOTest {
 	@BeforeClass
 	public static void setUp() throws Exception {
 		t.start();
-
 		tieneDAO = FactoriaIntegracion.getInstance().getDaoTiene();
-		try {
-
-		} catch (Exception e) {
-
-		}
 	}
 
 	@AfterClass
@@ -98,7 +90,6 @@ public class TieneDAOTest {
 		fabricante.setCodFabricante("CodTieneTest1");
 		fabricante.setTelefono("111222333");
 
-		
 		Connection c1 = (Connection) t.getResource();
 		PreparedStatement statement1 = c1.prepareStatement(
 				"INSERT INTO fabricante(cod_fabricante, nombre, telefono, activo) VALUES (?, ?, ?, ?)",
@@ -119,14 +110,13 @@ public class TieneDAOTest {
 
 		result1.close();
 		statement1.close();
-		
+
 		TSistemaDeRiego sisRiego = new TSistemaDeRiego();
 		sisRiego.setNombre("SisRiegoTieneTest1");
 		sisRiego.setPotenciaRiego(1);
 		sisRiego.setFrecuencia(10);
 		sisRiego.setCantidad_agua(10);
 
-		
 		int id_sr = 0;
 
 		Connection c2 = (Connection) t.getResource();
@@ -139,7 +129,7 @@ public class TieneDAOTest {
 		statement2.setInt(4, sisRiego.getFrecuencia());
 		statement2.setInt(5, sisRiego.getCantidad_agua());
 		statement2.setBoolean(6, true);
-		
+
 		statement2.executeUpdate();
 
 		ResultSet result2 = statement2.getGeneratedKeys();
@@ -155,8 +145,7 @@ public class TieneDAOTest {
 		TTiene tiene = new TTiene();
 		tiene.setId_Invernadero(id_inv);
 		tiene.setId_SistemasDeRiego(id_sr);
-		
-		
+
 		Integer exito = tieneDAO.vincularInvernaderoConSisRiego(tiene);
 
 		// Verifica que el ID retornado sea válido
@@ -195,7 +184,6 @@ public class TieneDAOTest {
 		fabricante.setCodFabricante("CodTieneTest2");
 		fabricante.setTelefono("111222333");
 
-		
 		Connection c1 = (Connection) t.getResource();
 		PreparedStatement statement1 = c1.prepareStatement(
 				"INSERT INTO fabricante(cod_fabricante, nombre, telefono, activo) VALUES (?, ?, ?, ?)",
@@ -216,14 +204,13 @@ public class TieneDAOTest {
 
 		result1.close();
 		statement1.close();
-		
+
 		TSistemaDeRiego sisRiego = new TSistemaDeRiego();
 		sisRiego.setNombre("SisRiegoTieneTest2");
 		sisRiego.setPotenciaRiego(1);
 		sisRiego.setFrecuencia(10);
 		sisRiego.setCantidad_agua(10);
 
-		
 		int id_sr = 0;
 
 		Connection c2 = (Connection) t.getResource();
@@ -236,7 +223,7 @@ public class TieneDAOTest {
 		statement2.setInt(4, sisRiego.getFrecuencia());
 		statement2.setInt(5, sisRiego.getCantidad_agua());
 		statement2.setBoolean(6, true);
-		
+
 		statement2.executeUpdate();
 
 		ResultSet result2 = statement2.getGeneratedKeys();
@@ -252,18 +239,16 @@ public class TieneDAOTest {
 		TTiene tiene = new TTiene();
 		tiene.setId_Invernadero(id_inv);
 		tiene.setId_SistemasDeRiego(id_sr);
-		
+
 		Connection c3 = (Connection) t.getResource();
 		PreparedStatement statement3 = c3.prepareStatement(
 				"INSERT INTO sistemas_riego_de_invernadero(id_invernadero, id_sistema_riego) VALUES (?, ?)",
 				Statement.RETURN_GENERATED_KEYS);
 		statement3.setInt(1, id_inv);
 		statement3.setInt(2, id_sr);
-		
-		
+
 		statement3.executeUpdate();
 
-		
 		statement3.close();
 
 		Integer exito = tieneDAO.desvincularInvernaderoConSisRiego(tiene);
@@ -304,7 +289,6 @@ public class TieneDAOTest {
 		fabricante.setCodFabricante("CodTieneTest3");
 		fabricante.setTelefono("111222333");
 
-		
 		Connection c1 = (Connection) t.getResource();
 		PreparedStatement statement1 = c1.prepareStatement(
 				"INSERT INTO fabricante(cod_fabricante, nombre, telefono, activo) VALUES (?, ?, ?, ?)",
@@ -325,14 +309,13 @@ public class TieneDAOTest {
 
 		result1.close();
 		statement1.close();
-		
+
 		TSistemaDeRiego sisRiego = new TSistemaDeRiego();
 		sisRiego.setNombre("SisRiegoTieneTest3");
 		sisRiego.setPotenciaRiego(1);
 		sisRiego.setFrecuencia(10);
 		sisRiego.setCantidad_agua(10);
 
-		
 		int id_sr = 0;
 
 		Connection c2 = (Connection) t.getResource();
@@ -345,7 +328,7 @@ public class TieneDAOTest {
 		statement2.setInt(4, sisRiego.getFrecuencia());
 		statement2.setInt(5, sisRiego.getCantidad_agua());
 		statement2.setBoolean(6, true);
-		
+
 		statement2.executeUpdate();
 
 		ResultSet result2 = statement2.getGeneratedKeys();
@@ -361,18 +344,16 @@ public class TieneDAOTest {
 		TTiene tiene = new TTiene();
 		tiene.setId_Invernadero(id_inv);
 		tiene.setId_SistemasDeRiego(id_sr);
-		
+
 		Connection c3 = (Connection) t.getResource();
 		PreparedStatement statement3 = c3.prepareStatement(
 				"INSERT INTO sistemas_riego_de_invernadero(id_invernadero, id_sistema_riego) VALUES (?, ?)",
 				Statement.RETURN_GENERATED_KEYS);
 		statement3.setInt(1, id_inv);
 		statement3.setInt(2, id_sr);
-		
-		
+
 		statement3.executeUpdate();
 
-		
 		statement3.close();
 
 		Set<TTiene> lista = tieneDAO.listarTiene();
@@ -412,7 +393,6 @@ public class TieneDAOTest {
 		fabricante.setCodFabricante("CodTieneTest4");
 		fabricante.setTelefono("111222333");
 
-		
 		Connection c1 = (Connection) t.getResource();
 		PreparedStatement statement1 = c1.prepareStatement(
 				"INSERT INTO fabricante(cod_fabricante, nombre, telefono, activo) VALUES (?, ?, ?, ?)",
@@ -433,14 +413,13 @@ public class TieneDAOTest {
 
 		result1.close();
 		statement1.close();
-		
+
 		TSistemaDeRiego sisRiego = new TSistemaDeRiego();
 		sisRiego.setNombre("SisRiegoTieneTest4");
 		sisRiego.setPotenciaRiego(1);
 		sisRiego.setFrecuencia(10);
 		sisRiego.setCantidad_agua(10);
 
-		
 		int id_sr = 0;
 
 		Connection c2 = (Connection) t.getResource();
@@ -453,7 +432,7 @@ public class TieneDAOTest {
 		statement2.setInt(4, sisRiego.getFrecuencia());
 		statement2.setInt(5, sisRiego.getCantidad_agua());
 		statement2.setBoolean(6, true);
-		
+
 		statement2.executeUpdate();
 
 		ResultSet result2 = statement2.getGeneratedKeys();
@@ -469,25 +448,23 @@ public class TieneDAOTest {
 		TTiene tiene = new TTiene();
 		tiene.setId_Invernadero(id_inv);
 		tiene.setId_SistemasDeRiego(id_sr);
-		
+
 		Connection c3 = (Connection) t.getResource();
 		PreparedStatement statement3 = c3.prepareStatement(
 				"INSERT INTO sistemas_riego_de_invernadero(id_invernadero, id_sistema_riego) VALUES (?, ?)",
 				Statement.RETURN_GENERATED_KEYS);
 		statement3.setInt(1, id_inv);
 		statement3.setInt(2, id_sr);
-		
-		
+
 		statement3.executeUpdate();
 
-		
 		statement3.close();
 
 		TTiene exito = tieneDAO.mostrarTiene(tiene);
 		// Verifica que el ID retornado sea válido
 		assertTrue("El ID debe ser mayor que 0", equals(tiene, exito));
 	}
-	
+
 	@Test
 	public void testListarTienePorInvernadero() throws Exception {
 
@@ -519,7 +496,6 @@ public class TieneDAOTest {
 		fabricante.setCodFabricante("CodTieneTest5");
 		fabricante.setTelefono("111222333");
 
-		
 		Connection c1 = (Connection) t.getResource();
 		PreparedStatement statement1 = c1.prepareStatement(
 				"INSERT INTO fabricante(cod_fabricante, nombre, telefono, activo) VALUES (?, ?, ?, ?)",
@@ -540,14 +516,13 @@ public class TieneDAOTest {
 
 		result1.close();
 		statement1.close();
-		
+
 		TSistemaDeRiego sisRiego = new TSistemaDeRiego();
 		sisRiego.setNombre("SisRiegoTieneTest5");
 		sisRiego.setPotenciaRiego(1);
 		sisRiego.setFrecuencia(10);
 		sisRiego.setCantidad_agua(10);
 
-		
 		int id_sr = 0;
 
 		Connection c2 = (Connection) t.getResource();
@@ -560,7 +535,7 @@ public class TieneDAOTest {
 		statement2.setInt(4, sisRiego.getFrecuencia());
 		statement2.setInt(5, sisRiego.getCantidad_agua());
 		statement2.setBoolean(6, true);
-		
+
 		statement2.executeUpdate();
 
 		ResultSet result2 = statement2.getGeneratedKeys();
@@ -576,18 +551,16 @@ public class TieneDAOTest {
 		TTiene tiene = new TTiene();
 		tiene.setId_Invernadero(id_inv);
 		tiene.setId_SistemasDeRiego(id_sr);
-		
+
 		Connection c3 = (Connection) t.getResource();
 		PreparedStatement statement3 = c3.prepareStatement(
 				"INSERT INTO sistemas_riego_de_invernadero(id_invernadero, id_sistema_riego) VALUES (?, ?)",
 				Statement.RETURN_GENERATED_KEYS);
 		statement3.setInt(1, id_inv);
 		statement3.setInt(2, id_sr);
-		
-		
+
 		statement3.executeUpdate();
 
-		
 		statement3.close();
 
 		Set<TTiene> lista = tieneDAO.mostrarTienePorInvernadero(id_inv);
@@ -595,7 +568,7 @@ public class TieneDAOTest {
 		assertTrue("El ID debe ser mayor que 0", lista.size() > 0);
 
 	}
-	
+
 	@Test
 	public void testListarTienePorSistemaDeRiego() throws Exception {
 
@@ -627,7 +600,6 @@ public class TieneDAOTest {
 		fabricante.setCodFabricante("CodTieneTest6");
 		fabricante.setTelefono("111222333");
 
-		
 		Connection c1 = (Connection) t.getResource();
 		PreparedStatement statement1 = c1.prepareStatement(
 				"INSERT INTO fabricante(cod_fabricante, nombre, telefono, activo) VALUES (?, ?, ?, ?)",
@@ -648,14 +620,13 @@ public class TieneDAOTest {
 
 		result1.close();
 		statement1.close();
-		
+
 		TSistemaDeRiego sisRiego = new TSistemaDeRiego();
 		sisRiego.setNombre("SisRiegoTieneTest6");
 		sisRiego.setPotenciaRiego(1);
 		sisRiego.setFrecuencia(10);
 		sisRiego.setCantidad_agua(10);
 
-		
 		int id_sr = 0;
 
 		Connection c2 = (Connection) t.getResource();
@@ -668,7 +639,7 @@ public class TieneDAOTest {
 		statement2.setInt(4, sisRiego.getFrecuencia());
 		statement2.setInt(5, sisRiego.getCantidad_agua());
 		statement2.setBoolean(6, true);
-		
+
 		statement2.executeUpdate();
 
 		ResultSet result2 = statement2.getGeneratedKeys();
@@ -684,18 +655,16 @@ public class TieneDAOTest {
 		TTiene tiene = new TTiene();
 		tiene.setId_Invernadero(id_inv);
 		tiene.setId_SistemasDeRiego(id_sr);
-		
+
 		Connection c3 = (Connection) t.getResource();
 		PreparedStatement statement3 = c3.prepareStatement(
 				"INSERT INTO sistemas_riego_de_invernadero(id_invernadero, id_sistema_riego) VALUES (?, ?)",
 				Statement.RETURN_GENERATED_KEYS);
 		statement3.setInt(1, id_inv);
 		statement3.setInt(2, id_sr);
-		
-		
+
 		statement3.executeUpdate();
 
-		
 		statement3.close();
 
 		Set<TTiene> lista = tieneDAO.mostrarTienePorSisRiego(id_sr);

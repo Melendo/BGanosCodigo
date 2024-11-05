@@ -12,13 +12,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import Integracion.Entrada.EntradaDAO;
-import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
 import Integracion.Invernadero.InvernaderoDAO;
-import Integracion.Invernadero.TieneDAO;
-import Integracion.Planta.PlantaDAO;
-import Integracion.SistemaDeRiego.SistemaDeRiegoDAO;
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 import Negocio.Fabricante.TFabricante;
@@ -29,11 +24,6 @@ import Negocio.SistemaDeRiego.TSistemaDeRiego;
 public class InvernaderoDAOTest {
 
 	private static InvernaderoDAO invernaderoDAO;
-	private static SistemaDeRiegoDAO sistemaRiegoDAO;
-	private static FabricanteDAO fabricanteDAO;
-	private static TieneDAO tieneDAO;
-	private static PlantaDAO plantaDAO;
-	private static EntradaDAO entradaDAO;
 
 	private static Transaccion t = crearTransaccion();
 
@@ -61,14 +51,6 @@ public class InvernaderoDAOTest {
 	public static void setUp() throws Exception {
 		t.start();
 		invernaderoDAO = FactoriaIntegracion.getInstance().getInvernaderoDAO();
-		fabricanteDAO = FactoriaIntegracion.getInstance().getFabricanteDAO();
-		sistemaRiegoDAO = FactoriaIntegracion.getInstance().getSistemaDeRiegoDAO();
-		tieneDAO = FactoriaIntegracion.getInstance().getDaoTiene();
-		try {
-
-		} catch (Exception e) {
-
-		}
 	}
 
 	@AfterClass
@@ -284,7 +266,6 @@ public class InvernaderoDAOTest {
 		fabricante.setCodFabricante("CodTest1");
 		fabricante.setTelefono("111222333");
 
-		
 		Connection c1 = (Connection) t.getResource();
 		PreparedStatement statement1 = c1.prepareStatement(
 				"INSERT INTO fabricante(cod_fabricante, nombre, telefono, activo) VALUES (?, ?, ?, ?)",
@@ -305,14 +286,13 @@ public class InvernaderoDAOTest {
 
 		result1.close();
 		statement1.close();
-		
+
 		TSistemaDeRiego sisRiego = new TSistemaDeRiego();
 		sisRiego.setNombre("SisRiegoTest1");
 		sisRiego.setPotenciaRiego(1);
 		sisRiego.setFrecuencia(10);
 		sisRiego.setCantidad_agua(10);
 
-		
 		int id_sr = 0;
 
 		Connection c2 = (Connection) t.getResource();
@@ -325,7 +305,7 @@ public class InvernaderoDAOTest {
 		statement2.setInt(4, sisRiego.getFrecuencia());
 		statement2.setInt(5, sisRiego.getCantidad_agua());
 		statement2.setBoolean(6, true);
-		
+
 		statement2.executeUpdate();
 
 		ResultSet result2 = statement2.getGeneratedKeys();
@@ -341,25 +321,22 @@ public class InvernaderoDAOTest {
 		TTiene tiene = new TTiene();
 		tiene.setId_Invernadero(id_inv);
 		tiene.setId_SistemasDeRiego(id_sr);
-		
+
 		Connection c3 = (Connection) t.getResource();
 		PreparedStatement statement3 = c3.prepareStatement(
 				"INSERT INTO sistemas_riego_de_invernadero(id_invernadero, id_sistema_riego) VALUES (?, ?)",
 				Statement.RETURN_GENERATED_KEYS);
 		statement3.setInt(1, id_inv);
 		statement3.setInt(2, id_sr);
-		
-		
+
 		statement3.executeUpdate();
 
-		
 		statement3.close();
-		
+
 		Set<TInvernadero> lista = invernaderoDAO.listarInvernaderoPorSR(id_sr);
 
 		// Verifica que el ID retornado sea válido
 		assertTrue("El ID debe ser mayor que 0", lista.size() > 0);
-		
 
 	}
 }
