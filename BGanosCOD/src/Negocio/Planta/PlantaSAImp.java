@@ -63,15 +63,22 @@ public class PlantaSAImp implements PlantaSA {
 
 			TPlanta p = dao.mostrarPorId(id);
 			
-			if(p == null || !p.getActivo()) {
+			if(p == null) {
 				t.rollback();
 				exito = -2;
+				
 			}
 			else {
-				exito = dao.bajaPlanta(id);
 				
 				
-				if(exito>-1) {t.commit();}
+				if(!p.getActivo()) {
+					exito = -3;
+				}
+				else{
+					exito = dao.bajaPlanta(id);
+				}
+				
+				if(exito >-1) {t.commit();}
 				else {t.rollback();}
 			}
 			

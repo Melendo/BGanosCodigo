@@ -194,23 +194,52 @@ public class GUIModificarPlanta extends JFrame implements IGUI {
  					int idInvernadero = Integer.parseInt(textinvernadero.getText());
  					planta.set_id_invernadero(idInvernadero);
  					
- 					if(tipoPlanta.getSelectedIndex() == 0)
- 						planta.setActivo(true);
- 					else
- 						planta.setActivo(false);
- 					
- 					if(planta instanceof TPlantaFrutal){
- 						((TPlantaFrutal) planta).set_maduracion(textmaduracion.getText());
- 						((TPlantaFrutal) planta).set_nombre_fruta(textnombreFruta.getText());
+ 					if(planta.get_nombre().isEmpty() || planta.get_nombre_cientifico().isEmpty()){
+ 						GUIMSG.showMessage("Rellene los campos", "MODIFICAR PLANTA", true);
  					}
  					else{
- 		
- 						((TPlantaNoFrutal) planta).set_tipo_hoja(texthoja.getText());
- 					}
- 				
  					
-					ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_PLANTA,planta));
-					setVisible(false);
+ 					
+ 					
+	 					if(tipoPlanta.getSelectedIndex() == 0)
+	 						planta.setActivo(true);
+	 					else
+	 						planta.setActivo(false);
+	 					
+	 						
+	 					
+	 					if(planta instanceof TPlantaFrutal){
+	 						((TPlantaFrutal) planta).set_maduracion(textmaduracion.getText());
+	 						((TPlantaFrutal) planta).set_nombre_fruta(textnombreFruta.getText());
+	 						
+	 						if(((TPlantaFrutal) planta).get_maduracion().isEmpty()||((TPlantaFrutal) planta).get_nombre_fruta().isEmpty()){
+	 	 						GUIMSG.showMessage("Rellene los campos", "MODIFICAR PLANTA", true);
+	 	 					}
+	 						else{
+	 							
+	 							ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_PLANTA,planta));
+							setVisible(false);
+	 					}
+	 		
+	 						
+	 					}
+	 					else{
+	 		
+	 						((TPlantaNoFrutal) planta).set_tipo_hoja(texthoja.getText());
+	 						
+	 						if(((TPlantaNoFrutal) planta).get_tipo_hoja().isEmpty()){
+	 	 						GUIMSG.showMessage("Rellene los campos", "MODIFICAR PLANTA", true);
+	 	 					}
+	 						else{
+	 							
+	 							ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_PLANTA,planta));
+							setVisible(false);
+	 					}
+		 				
+	 					}
+	 				
+
+ 					}
 				
  				} catch (Exception e1) {
  					GUIMSG.showMessage("Formato incorrecto", "MOSTRAR PLANTA", true);

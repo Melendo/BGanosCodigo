@@ -107,7 +107,7 @@ public class GUIMostarPlantasPorID extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		switch(context.getEvento()) {
 		case Evento.MOSTRAR_PLANTA_POR_ID_KO:
-			GUIMSG.showMessage("No se encontro la planta", "MOSTRAR PLANTA", true);
+			GUIMSG.showMessage("Planta no registrada", "MOSTRAR PLANTA", true);
 			break;
 		case  Evento.MOSTRAR_PLANTA_POR_ID_OK:
 			if((TPlanta) context.getDatos() instanceof TPlantaFrutal ){
