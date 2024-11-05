@@ -79,6 +79,7 @@ public class GUIListarPlantas extends JFrame implements IGUI {
 	
 
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void actualizar(Context context) {
 		switch(context.getEvento()) {

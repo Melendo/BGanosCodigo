@@ -9,7 +9,6 @@ import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.SistemaDeRiego.GUIAltaSistemaDeRiego;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;

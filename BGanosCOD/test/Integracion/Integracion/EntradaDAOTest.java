@@ -3,12 +3,8 @@ package Integracion;
 import static org.junit.Assert.fail;
 
 import java.sql.Connection;
-import java.sql.Date;
-//import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
@@ -87,7 +83,6 @@ public class EntradaDAOTest {
 			statement.execute("SET FOREIGN_KEY_CHECKS = 1");
 			statement.close(); // Cerrar el Statement
 
-			// TODO construir nueva constructora
 			// id, sustrato, nombre, tipo iluminación, activo
 			TInvernadero inv = new TInvernadero(1, "inv1", "abono", "artificial", true);
 			inv.setId(daoInvernadero.altaInvernadero(inv));

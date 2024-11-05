@@ -91,7 +91,6 @@ public class GUIListarInvernadero extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
 
 	}
 }

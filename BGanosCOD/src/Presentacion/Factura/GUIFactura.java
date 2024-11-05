@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Negocio.Factura.TCarrito;
-import Negocio.Factura.TFactura;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
@@ -21,6 +20,7 @@ import Presentacion.FactoriaVistas.Evento;
 
 public class GUIFactura extends JFrame implements IGUI {
 	
+	private static final long serialVersionUID = 1L;
 	private JButton botonAbrirFactura;
 	private JButton botonDevolverFactura;
 	private JButton botonModificarFactura;
@@ -28,8 +28,6 @@ public class GUIFactura extends JFrame implements IGUI {
 	private JButton botonListarFacturas;
 	private JButton botonVolver;
 	private JPanel jpanel;
-
-	private TFactura tFactura;
 	
 	public GUIFactura(){
 		super("Factura");

@@ -30,13 +30,15 @@ import Negocio.Entrada.TEntrada;
 
 public class GUIAltaEntrada extends JFrame implements IGUI {
 
-	private JButton jButton;
+	private static final long serialVersionUID = 1L;
 
-	private JLabel jLabel;
+	private JButton botonAceptar;
+	
+	private JButton botonCancelar;
 
-	private JTextField jTextField;
+	private JLabel msgIntroIDCabecera;
 
-	private JPanel jPanel;
+	private JPanel mainPanel;
 
 	public GUIAltaEntrada() {
 		super("Alta entrada");
@@ -53,13 +55,13 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 	}
 
 	public void initGUI() {
-		JPanel mainPanel = new JPanel();
+		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-		JLabel msgIntroIDCabecera = ComponentsBuilder
+		msgIntroIDCabecera = ComponentsBuilder
 				.createLabel("Introduzca los datos de la Entrada que desea dar de alta", 1, 10, 80, 20, Color.BLACK);
 		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(msgIntroIDCabecera);
@@ -115,7 +117,7 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 		mainPanel.add(panelBotones);
 
 		// BOTON ACEPTAR (GUARDAR LOS DATOS DEL ALTA)
-		JButton botonAceptar = new JButton("Aceptar");
+		botonAceptar = new JButton("Aceptar");
 		botonAceptar.addActionListener(new ActionListener() {
 
 			@Override
@@ -148,7 +150,7 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 		panelBotones.add(botonAceptar);
 
 		// BOTON CANCELAR
-		JButton botonCancelar = new JButton("Cancelar");
+		botonCancelar = new JButton("Cancelar");
 		botonCancelar.addActionListener(new ActionListener() {
 
 			@Override

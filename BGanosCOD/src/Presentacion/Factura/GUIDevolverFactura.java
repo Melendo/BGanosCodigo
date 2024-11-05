@@ -29,6 +29,7 @@ import javax.swing.JButton;
 
 public class GUIDevolverFactura extends JFrame implements IGUI {
 	
+	private static final long serialVersionUID = 1L;
 	private JTextField idFacturaField;
     private JTextField idEntradaField;
     private JTextField cantidadField;

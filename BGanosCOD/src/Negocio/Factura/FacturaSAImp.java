@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import Integracion.Entrada.EntradaDAO;
-import Integracion.Fabricante.FabricanteDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
 import Integracion.Factura.FacturaDAO;
 import Integracion.Factura.LineaFacturaDAO;

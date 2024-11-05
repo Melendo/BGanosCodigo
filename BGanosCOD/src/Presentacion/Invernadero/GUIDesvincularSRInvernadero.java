@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 
 public class GUIDesvincularSRInvernadero extends JFrame implements IGUI {
 
+	private static final long serialVersionUID = 1L;
 	private JTextField textId_Invernadero;
 	private JTextField textId_SisRiego;
 
