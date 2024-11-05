@@ -45,7 +45,7 @@ public class GUIEntrada extends JFrame implements IGUI {
 		this.setLayout(null);
 		panel = new JPanel();
 		this.setResizable(false);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initGUI();
 		this.setVisible(true);
 
