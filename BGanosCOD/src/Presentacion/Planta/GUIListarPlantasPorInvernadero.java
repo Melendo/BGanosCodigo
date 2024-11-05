@@ -53,12 +53,6 @@ public class GUIListarPlantasPorInvernadero extends JFrame implements IGUI {
 		initGUI();
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public void initGUI() {
 		
 		JPanel mainPanel = new JPanel();

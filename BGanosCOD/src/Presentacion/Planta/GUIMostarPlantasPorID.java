@@ -85,9 +85,7 @@ public class GUIMostarPlantasPorID extends JFrame implements IGUI {
  				
  				
  				try {
- 				
- 					
- 					int idtmp = Integer.parseInt(textID.getText());
+					int idtmp = Integer.parseInt(textID.getText());
  						
 					ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_PLANTA_POR_ID,idtmp));
 					setVisible(false);
