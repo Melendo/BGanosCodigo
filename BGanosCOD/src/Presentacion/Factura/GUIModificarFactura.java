@@ -87,7 +87,7 @@ public class GUIModificarFactura extends JFrame implements IGUI {
         fechaCompra.setEditable(true);
         panelFechaCompra.add(fechaCompra);
         
-        JLabel labelFechaCompraHelper = ComponentsBuilder.createLabel("Formato: dia/mes/año", 10, 100, 200, 20, Color.BLACK);
+        JLabel labelFechaCompraHelper = ComponentsBuilder.createLabel("Formato: dd/MM/yyyy", 10, 100, 200, 20, Color.BLACK);
         panelFechaCompra.add(labelFechaCompraHelper);
 
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
