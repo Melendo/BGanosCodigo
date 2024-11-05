@@ -131,6 +131,7 @@ public class InvernaderoDAOTest {
 
 		TInvernadero invernaderoModificado = new TInvernadero("InvModificarTest", "Tierra", "LED");
 		invernaderoModificado.setId(id_modificar);
+		invernaderoModificado.setActivo(true);
 		// Llama a la función altaInvernadero
 		Integer resultado = invernaderoDAO.modificarInvernadero(invernaderoModificado);
 
