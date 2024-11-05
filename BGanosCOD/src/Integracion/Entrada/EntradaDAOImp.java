@@ -223,6 +223,7 @@ public class EntradaDAOImp implements EntradaDAO {
 
 			PreparedStatement ps = c.prepareStatement("SELECT * FROM entrada WHERE fecha = ? AND id = ?");
 			ps.setDate(1, fecha);
+			ps.setInt(2, idInvernadero);
 			
 			ResultSet rs = ps.executeQuery();
 			

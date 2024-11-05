@@ -228,7 +228,7 @@ public class FabricanteDAOImp implements FabricanteDAO {
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 
-			PreparedStatement s = c.prepareStatement("SELECT * FROM fabricante_Local AS e "
+			PreparedStatement s = c.prepareStatement("SELECT * FROM fabricante_local AS e "
 					+ "LEFT JOIN fabricante AS ez ON e.id_fabricante = ez.id FOR UPDATE");
 			ResultSet r = s.executeQuery();
 
