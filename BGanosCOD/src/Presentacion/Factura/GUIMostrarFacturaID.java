@@ -153,7 +153,8 @@ public class GUIMostrarFacturaID extends JFrame implements IGUI {
         	DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             
             TFactura factura = resultado.gettFactura();
-            String datosFactura = "Precio total: " + factura.getPrecioTotal() + "; Fecha de compra: " + df.format(factura.getFechaCompra());
+            String activo = factura.getActivo() ? "Si" : "No";
+            String datosFactura = "Precio total: " + factura.getPrecioTotal() + "; Fecha de compra: " + df.format(factura.getFechaCompra() + "; Activo: " + activo);
             
             mensajeFactura.setText(datosFactura); // Actualiza el mensaje sin crear un nuevo JLabel
             
