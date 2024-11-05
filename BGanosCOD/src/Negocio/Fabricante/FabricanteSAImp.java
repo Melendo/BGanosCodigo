@@ -48,10 +48,16 @@ public class FabricanteSAImp implements FabricanteSA {
 				ret = fd.altaFabricante(fabricante);
 				fabricante.setId(ret);
 				t.commit();
+			} else if (tfa instanceof TFabricanteExtranjero && fabricante instanceof TFabricanteLocal) {
+				ret = -6;
+				t.rollback();
+			} else if (fabricante instanceof TFabricanteExtranjero && tfa instanceof TFabricanteLocal) {
+				ret = -5;
+				t.rollback();
 			} else if (!tfa.getActivo()) { // esta desactivado, lo activamos
 				fabricante.setActivo(true);
 				fabricante.setId(tfa.getId());
-				ret = fd.modificarFabricante(fabricante);
+				ret = modificarFabricante(fabricante);
 				t.commit();
 			} else { // ya existe y esta activado
 				ret = -3;
@@ -134,25 +140,18 @@ public class FabricanteSAImp implements FabricanteSA {
 			FactoriaIntegracion fi = FactoriaIntegracion.getInstance();
 			FabricanteDAO fd = fi.getFabricanteDAO();
 			TFabricante tfa = fd.mostrarFabricantePorId(fabricante.getId());
+			TFabricante tfa2 = fd.leerPorCodFabricante(fabricante.getCodFabricante());
 
 			if (tfa == null) { // no existe
 				ret = -3;
 				t.rollback();
-			} else if (tfa instanceof TFabricanteExtranjero && fabricante instanceof TFabricanteLocal) { // el de la BD
-																											// es local
-																											// y
-																											// intentamos
-																											// que se
-																											// extranjero
+			} else if (tfa2 != null && !tfa.getId().equals(tfa2.getId())) {
+				ret = -7;
+				t.rollback();
+			} else if (tfa instanceof TFabricanteExtranjero && fabricante instanceof TFabricanteLocal) {
 				ret = -4;
 				t.rollback();
-			} else if (fabricante instanceof TFabricanteExtranjero && tfa instanceof TFabricanteLocal) { // el de la BD
-																											// es
-																											// extranjero
-																											// y
-																											// intentamos
-																											// que se
-																											// local
+			} else if (fabricante instanceof TFabricanteExtranjero && tfa instanceof TFabricanteLocal) {
 				ret = -5;
 				t.rollback();
 			} else { // lo modificamos
@@ -301,4 +300,5 @@ public class FabricanteSAImp implements FabricanteSA {
 	private boolean comprobarTelefono(String telefono) {
 		return telefono.matches("\\d{9}");
 	}
+
 }
