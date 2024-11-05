@@ -70,7 +70,7 @@ public class TieneDAOImp implements TieneDAO {
 			TransaccionManager tManager = TransaccionManager.getInstance();
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
-			PreparedStatement statement = c.prepareStatement("SELECT * FROM sistema_riego_de_invernadero FOR UPDATE");
+			PreparedStatement statement = c.prepareStatement("SELECT * FROM sistemas_riego_de_invernadero FOR UPDATE");
 
 			ResultSet result = statement.executeQuery();
 
