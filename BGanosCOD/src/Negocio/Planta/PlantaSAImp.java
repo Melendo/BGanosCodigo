@@ -107,7 +107,7 @@ public class PlantaSAImp implements PlantaSA {
 			
 			TInvernadero inv = daoinv.mostrarInvernaderoPorID(planta.get_id_invernadero());
 			
-			if(inv == null){
+			if(inv == null || !inv.isActivo()){
 				exito = -2;
 				
 			}

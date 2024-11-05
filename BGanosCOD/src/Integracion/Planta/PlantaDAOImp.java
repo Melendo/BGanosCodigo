@@ -186,7 +186,7 @@ public class PlantaDAOImp implements PlantaDAO {
 				
 				
 			}else if( planta instanceof TPlantaNoFrutal) {
-				s = c.prepareStatement("UPDATE planta SET tipo_hoja = ? WHERE id = ?");
+				s = c.prepareStatement("UPDATE planta_no_frutal SET tipo_hoja = ? WHERE id = ?");
 				s.setString(1, ((TPlantaNoFrutal)planta).get_tipo_hoja());
 				s.setInt(2, planta.get_id());
 				
