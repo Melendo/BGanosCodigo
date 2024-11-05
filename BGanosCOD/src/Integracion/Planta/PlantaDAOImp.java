@@ -19,6 +19,7 @@ public class PlantaDAOImp implements PlantaDAO {
 	@Override
 	public Integer altaPlanta(TPlanta planta) {
 		try {
+		
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
