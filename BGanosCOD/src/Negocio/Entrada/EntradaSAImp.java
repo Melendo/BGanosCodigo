@@ -41,7 +41,7 @@ public class EntradaSAImp implements EntradaSA {
 
 				if (invernadero.isActivo()) {
 					EntradaDAO entradaDao = f.getEntradaDAO();
-					TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha());
+					TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha(), entrada.getIdInvernadero());
 
 					if (entradaUnica == null) {
 						exito = entradaDao.altaEntrada(entrada);
@@ -54,10 +54,12 @@ public class EntradaSAImp implements EntradaSA {
 
 					} else {
 						exito = -50; // Error: ya existe la entrada
+						t.rollback();
 					}
 
 				} else {
 					exito = -21; // Error: el id de invernadero no está activo
+					t.rollback();
 				}
 
 			} else {
@@ -135,7 +137,7 @@ public class EntradaSAImp implements EntradaSA {
 					if (invernadero != null) {
 
 						if (invernadero.isActivo()) {
-							TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha());
+							TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha(), entrada.getIdInvernadero());
 
 							if (entradaUnica == null) {
 								exito = entradaDao.modificarEntrada(entrada);
@@ -170,6 +172,7 @@ public class EntradaSAImp implements EntradaSA {
 
 			} else {
 				exito = -51; // Error: el id es de una entrada que no existe
+				t.rollback();
 			}
 
 		} catch (Exception e) {
