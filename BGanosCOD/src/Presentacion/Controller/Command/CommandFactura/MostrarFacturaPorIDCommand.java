@@ -13,7 +13,7 @@ public class MostrarFacturaPorIDCommand implements Command {
 		TFacturaConEntradas res = FactoriaNegocio.getInstance().getFacturaSA().mostrarFacturaPorID((Integer)datos);
 		TFactura factura = res.gettFactura();
 		if (factura.getid() <= 0)
-			return new Context(Evento.MOSTRAR_FACTURA_POR_ID_KO,factura);
+			return new Context(Evento.MOSTRAR_FACTURA_POR_ID_KO,res);
 		else
 			return new Context(Evento.MOSTRAR_FACTURA_POR_ID_OK,res);
 	}
