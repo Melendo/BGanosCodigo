@@ -60,9 +60,9 @@ public class FacturaSATest {
 		TInvernadero invernadero = new TInvernadero();
 		Random rand = new Random();
 		invernadero.setActivo(true);
-		invernadero.setNombre("test" + rand.nextInt(0, 999));
-		invernadero.setSustrato("test" + rand.nextInt(0, 999));
-		invernadero.setTipo_iluminacion("test" + rand.nextInt(0, 999));
+		invernadero.setNombre("test" + rand.nextInt(999));
+		invernadero.setSustrato("test" + rand.nextInt(999));
+		invernadero.setTipo_iluminacion("test" + rand.nextInt(999));
 		
 		return invernadero;
 		
