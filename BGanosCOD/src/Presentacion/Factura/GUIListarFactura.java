@@ -109,23 +109,5 @@ public class GUIListarFactura extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		/*int resultado = (int) context.getDatos();
-        if (context.getEvento() == Evento.LISTAR_FACTURAS_OK) {
-        	
-            JOptionPane.showMessageDialog(this, "Factura creada correctamente con id: " + resultado , "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } else if (context.getEvento() == Evento.LISTAR_FACTURAS_KO) {
-        	
-            switch (resultado) {
-            case -1:
-                JOptionPane.showMessageDialog(this, "Se ha producido un error interno", "Error", JOptionPane.ERROR_MESSAGE);
-                break;
-            case -2:
-                JOptionPane.showMessageDialog(this, "Datos incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
-                break;
-            default:
-                JOptionPane.showMessageDialog(this, "Error desconocido al cerrar la factura.", "Error", JOptionPane.ERROR_MESSAGE);
-                break;
-            }
-        }*/
 	}
 }

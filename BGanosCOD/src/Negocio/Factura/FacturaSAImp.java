@@ -146,8 +146,7 @@ public class FacturaSAImp implements FacturaSA {
 
 	public Integer modificarFactura(TFactura tfactura) {
 		int r = -1;
-		try 
-		{
+		try {
 			FactoriaIntegracion fIntegracion = FactoriaIntegracion.getInstance();
 			FacturaDAO daoFactura = fIntegracion.getFacturaDAO();
 			TransaccionManager tm = TransaccionManager.getInstance();
@@ -185,71 +184,47 @@ public class FacturaSAImp implements FacturaSA {
 		TransaccionManager tm = TransaccionManager.getInstance();
 		FactoriaIntegracion fDAO = FactoriaIntegracion.getInstance();
 		int r = -1;
-		try 
-		{
+		try {
 			Transaccion t = tm.newTransaccion();
 			t.start();
 			FacturaDAO daoFactura = fDAO.getFacturaDAO();
 			TFactura factura = daoFactura.mostrarFactura(tlineaFactura.getidFactura());
-			if(factura != null)
-			{
-				if(factura.getActivo())
-				{	
-					EntradaDAO daoEntrada = fDAO.getEntradaDAO();
-					TEntrada entrada = daoEntrada.mostrarEntrada(tlineaFactura.getidEntrada());
-					if(entrada != null)
-					{
-						LineaFacturaDAO daoLF = fDAO.getDAOLineaFactura();
-						TLineaFactura lf = daoLF.mostrarLineaFactura(tlineaFactura.getidFactura(), tlineaFactura.getidEntrada());
-						if(lf != null)
-						{
-							if(lf.getCantidad() < tlineaFactura.getCantidad()){
-								t.rollback();
-								return -75; 
-							}
-							if(!entrada.getActivo())
-								entrada.setActivo(true);
-							entrada.setStock(entrada.getStock() + tlineaFactura.getCantidad());
-							r = daoEntrada.modificarEntrada(entrada);
-							if(r < 0)
-							{
-								t.rollback();
-								return -68;
-							}
-							factura.setPrecioTotal(factura.getPrecioTotal() - (tlineaFactura.getCantidad() * entrada.getPrecio()));
-							if(factura.getPrecioTotal() == 0)
-								factura.setActivo(false);
-							r = daoFactura.modificarFactura(factura);
-							if(r < 0)
-							{
-								t.rollback();
-								return -67;
-							}
-							lf.setCantidad(lf.getCantidad() - tlineaFactura.getCantidad());
-							lf.setPrecio(lf.getPrecio() - ((tlineaFactura.getCantidad() * entrada.getPrecio())));
-							r = daoLF.modificarLineaFactura(lf);
-							if(r < 0)
-							{
-								t.rollback();
-								return -1;
-							}
-							if(lf.getCantidad() == 0) {
-								TLineaFactura baja = daoLF.bajaLineaFactura(lf.getidFactura(), lf.getidEntrada());
-								r = baja == null ? 1 : -1;
-							}
-							if(r < 0)
-							{
-								t.rollback();
-								return -1;
-							}
-							t.commit();
-							return r;
+			if(factura != null && factura.getActivo()){
+				EntradaDAO daoEntrada = fDAO.getEntradaDAO();
+				TEntrada entrada = daoEntrada.mostrarEntrada(tlineaFactura.getidEntrada());
+				if(entrada != null){
+					LineaFacturaDAO daoLF = fDAO.getDAOLineaFactura();
+					TLineaFactura lf = daoLF.mostrarLineaFactura(tlineaFactura.getidFactura(), tlineaFactura.getidEntrada());
+					if(lf != null){
+						if(!entrada.getActivo()){
+							t.rollback();
+							return -1;
 						}
-						else
+						entrada.setStock(entrada.getStock() + lf.getCantidad());
+						r = daoEntrada.modificarEntrada(entrada);
+						if(r < 0)
 						{
 							t.rollback();
 							return -1;
 						}
+						factura.setPrecioTotal(factura.getPrecioTotal() - (lf.getCantidad() * entrada.getPrecio()));
+						if(factura.getPrecioTotal() == 0)
+							factura.setActivo(false);
+						r = daoFactura.modificarFactura(factura);
+						if(r < 0)
+						{
+							t.rollback();
+							return -1;
+						}
+						TLineaFactura baja = daoLF.bajaLineaFactura(lf.getidFactura(), lf.getidEntrada());	
+						r = baja == null ? 1 : -1;
+						if(r < 0)
+						{
+							t.rollback();
+							return -1;
+						}
+						t.commit();
+						return r;
 					}
 					else
 					{
@@ -257,16 +232,15 @@ public class FacturaSAImp implements FacturaSA {
 						return -1;
 					}
 				}
-				else
-				{
+				else{
 					t.rollback();
 					return -1;
 				}
 			}
-			else
-			{
+			else{
+				//Factura no existe o ya está dada de baja
 				t.rollback();
-				return -1;
+				return -2;
 			}
 		} 
 		catch (Exception e) 

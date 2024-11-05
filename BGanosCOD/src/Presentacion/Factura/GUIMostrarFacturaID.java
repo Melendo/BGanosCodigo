@@ -183,7 +183,7 @@ public class GUIMostrarFacturaID extends JFrame implements IGUI {
                 JOptionPane.showMessageDialog(this, "Datos incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             default:
-                JOptionPane.showMessageDialog(this, "Error desconocido al cerrar la factura.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error desconocido al mostrar la factura.", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             }
         }
