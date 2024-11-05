@@ -36,12 +36,7 @@ import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
+
 public class GUICerrarFactura extends JFrame implements IGUI {
 	
 	private TCarrito tCarrito;
@@ -61,11 +56,6 @@ public class GUICerrarFactura extends JFrame implements IGUI {
         initGUI();
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public void initGUI() {
 		TFactura factura = new TFactura();
     	JPanel mainPanel = new JPanel();
@@ -290,12 +280,6 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 		this.setVisible(true);
 		this.setResizable(true);
 	}
-
-	/** 
-	* (non-Javadoc)
-	* @see IGUI#actualizar(Context context)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 
 	@Override
 	public void actualizar(Context context) {

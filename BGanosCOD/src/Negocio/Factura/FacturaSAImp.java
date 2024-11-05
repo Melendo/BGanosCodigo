@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Negocio.Factura;
 
 import java.util.HashSet;
@@ -15,18 +12,8 @@ import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 import Negocio.Entrada.TEntrada;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
 public class FacturaSAImp implements FacturaSA {
-	/** 
-	* (non-Javadoc)
-	* @see FacturaSA#cerrarFactura(TCarrito carrito)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	public Integer cerrarFactura(TCarrito carrito) {
 		TransaccionManager tm = TransaccionManager.getInstance();
 		try 
@@ -112,11 +99,6 @@ public class FacturaSAImp implements FacturaSA {
 		}
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see FacturaSA#mostrarFacturaPorID(Integer id)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public TFacturaConEntradas mostrarFacturaPorID(Integer id) {
 		TFacturaConEntradas facturaEntradas = new TFacturaConEntradas();		
 		TFactura factura = new TFactura();
@@ -149,11 +131,6 @@ public class FacturaSAImp implements FacturaSA {
 		return facturaEntradas;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see FacturaSA#listarFacturas()
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Set<TFactura> listarFacturas() {
 		Set<TFactura> facturas = new HashSet<>();
         try {
@@ -174,11 +151,6 @@ public class FacturaSAImp implements FacturaSA {
 		return facturas;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see FacturaSA#modificarFactura(TFactura tfactura)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Integer modificarFactura(TFactura tfactura) {
 		int r = -1;
 		try 
@@ -216,11 +188,6 @@ public class FacturaSAImp implements FacturaSA {
 		return r;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see FacturaSA#devolverFactura(TLineaFactura tlineaFactura)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Integer devolverFactura(TLineaFactura tlineaFactura) {
 		TransaccionManager tm = TransaccionManager.getInstance();
 		FactoriaIntegracion fDAO = FactoriaIntegracion.getInstance();

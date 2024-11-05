@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Factura;
 
 import java.awt.Color;
@@ -22,12 +19,6 @@ import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
 public class GUIFactura extends JFrame implements IGUI {
 	
 	private JButton botonAbrirFactura;
@@ -152,7 +143,6 @@ public class GUIFactura extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
 		
 	}
 }

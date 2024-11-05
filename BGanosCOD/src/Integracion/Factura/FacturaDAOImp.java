@@ -10,25 +10,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
 
 import Integracion.Transaction.Transaccion;
 import Integracion.Transaction.TransaccionManager;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
 public class FacturaDAOImp implements FacturaDAO {
-	/** 
-	* (non-Javadoc)
-	* @see FacturaDAO#cerrarFactura(TFactura tfactura)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	public Integer cerrarFactura(TFactura tfactura) {
 		TransaccionManager tManager = TransaccionManager.getInstance();
 		int exito = -1;
@@ -50,11 +39,6 @@ public class FacturaDAOImp implements FacturaDAO {
 		return exito;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see FacturaDAO#mostrarFactura(Integer id)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public TFactura mostrarFactura(Integer id) {
 		TFactura factura = null;
 		try 
@@ -81,11 +65,6 @@ public class FacturaDAOImp implements FacturaDAO {
 		return factura;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see FacturaDAO#listarFactura()
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Set<TFactura> listarFactura() {
 		Set<TFactura> facturas = new HashSet<TFactura>();
 		try
@@ -113,11 +92,6 @@ public class FacturaDAOImp implements FacturaDAO {
 		return facturas;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see FacturaDAO#modificarFactura(TFactura tfactura)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Integer modificarFactura(TFactura tfactura) {
 		int exito = -1;
 		try {
@@ -142,11 +116,6 @@ public class FacturaDAOImp implements FacturaDAO {
         	return exito;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see FacturaDAO#devolverFactura(Integer id)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public Integer devolverFactura(Integer id) {
 		int exito = -1;
 		try 

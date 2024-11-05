@@ -12,7 +12,6 @@ public class TPlantaNoFrutal extends TPlanta {
 	}
 	
 	public TPlantaNoFrutal() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String get_tipo_hoja() {

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Integracion.Entrada;
 
 import Negocio.Entrada.TEntrada;
@@ -16,7 +13,6 @@ public interface EntradaDAO {
 
 	public Set<TEntrada> listarEntradas();
 
-	// TODO preguntar si puedo poner el throws Exception
 	public Integer modificarEntrada(TEntrada entrada);
 
 	public TEntrada mostrarEntrada(Integer id);

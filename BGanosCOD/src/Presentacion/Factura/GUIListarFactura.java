@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Factura;
 
 import javax.swing.JFrame;
@@ -32,36 +29,14 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
 public class GUIListarFactura extends JFrame implements IGUI {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	private JPanel jPanel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
+
 	private JButton jButton;
 
 	public GUIListarFactura(Set<TFactura> datos) {
@@ -78,11 +53,6 @@ public class GUIListarFactura extends JFrame implements IGUI {
         initGUI(datos);
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 	public void initGUI(Set<TFactura> datos) {
 		JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -136,12 +106,6 @@ public class GUIListarFactura extends JFrame implements IGUI {
         this.setVisible(true);
         this.setResizable(true);
 	}
-
-	/** 
-	* (non-Javadoc)
-	* @see IGUI#actualizar(Context context)
-	* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	*/
 
 	@Override
 	public void actualizar(Context context) {
