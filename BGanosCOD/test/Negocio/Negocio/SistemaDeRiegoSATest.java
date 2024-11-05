@@ -43,7 +43,7 @@ public class SistemaDeRiegoSATest {
 		tFabricanteLocal.setActivo(true);
 		tFabricanteLocal.setCodFabricante(getNameRandom());
 		tFabricanteLocal.setNombre(getNameRandom());
-		tFabricanteLocal.setTelefono(getNameRandom());
+		tFabricanteLocal.setTelefono("664112233");
 		tFabricanteLocal.setImpuesto(getNumRandom());
 		tFabricanteLocal.setSubvencion(getNumRandom());
 		
@@ -101,7 +101,7 @@ public class SistemaDeRiegoSATest {
 		try {
 			TFabricante fabricante = getTFabricante();
 			int idFabricante = fabricanteSA.altaFabricante(fabricante);
-			fabricante.setActivo(false);
+			fabricanteSA.bajaFabricante(idFabricante);
 			TSistemaDeRiego tSistemaRiego = getTSistemaDeRiego();
 			tSistemaRiego.setIdFabricante(idFabricante);
 			int idSistemaRiego = sistRiegoSA.altaSisRiego(tSistemaRiego);
@@ -185,9 +185,9 @@ public class SistemaDeRiegoSATest {
 	public void modificarSistemaDeRiego(){
 		try{
 			TSistemaDeRiego tSistemaRiego = getTSistemaDeRiego();
-			@SuppressWarnings("unused")
 			int idSistemaRiego = sistRiegoSA.altaSisRiego(tSistemaRiego);
 			tSistemaRiego.setCantidad_agua(getNumRandom());
+			tSistemaRiego.setId(idSistemaRiego);
 			int res = sistRiegoSA.modificarSisRiego(tSistemaRiego);
 			if(res < 0){
 				fail("Error al Modificar " + res );	
@@ -287,6 +287,7 @@ public class SistemaDeRiegoSATest {
 	        Integer idInvernadero = invernaderoSA.altaInvernadero(tInvernadero);  
 	        
 	        invernaderoSA.vincularSRInvernadero(idSistemaDeRiego, idInvernadero);
+	        invernaderoSA.vincularSRInvernadero(idSistemaDeRiego2, idInvernadero);
 	        
 	        Set<TSistemaDeRiego> sistRiegoInvernadero = sistRiegoSA.listarSisRiegoDelInvernadero(idInvernadero);
 
