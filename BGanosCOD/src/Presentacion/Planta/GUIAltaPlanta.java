@@ -27,7 +27,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-import Negocio.Planta.TPlanta;
 import Negocio.Planta.TPlantaFrutal;
 import Negocio.Planta.TPlantaNoFrutal;
 
