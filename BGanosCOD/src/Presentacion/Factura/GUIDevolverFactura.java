@@ -31,7 +31,6 @@ public class GUIDevolverFactura extends JFrame implements IGUI {
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField idFacturaField;
-    private JTextField idEntradaField;
 	
 	public GUIDevolverFactura() {
 		super("Devolver Factura");
@@ -67,19 +66,6 @@ public class GUIDevolverFactura extends JFrame implements IGUI {
 
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // ID del Entrada
-        JPanel panelIDEntrada = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        mainPanel.add(panelIDEntrada);
-
-        JLabel labelIDEntrada = ComponentsBuilder.createLabel("ID Entrada: ", 10, 10, 80, 20, Color.BLACK);
-        panelIDEntrada.add(labelIDEntrada);
-
-        idEntradaField = new JTextField();
-        idEntradaField.setPreferredSize(new Dimension(250, 30));
-        panelIDEntrada.add(idEntradaField);
-
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-
         // Botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER));
         mainPanel.add(panelBotones);
@@ -93,11 +79,9 @@ public class GUIDevolverFactura extends JFrame implements IGUI {
 
                 try {
                     int idFactura = Integer.parseInt(idFacturaField.getText());
-                    int idEntrada = Integer.parseInt(idEntradaField.getText());
 
                     TLineaFactura lf = new TLineaFactura();
                     lf.setidFactura(idFactura);
-                    lf.setidEntrada(idEntrada);
                     
                     ApplicationController.getInstance().manageRequest(new Context(Evento.DEVOLVER_FACTURA, lf));
                 } catch (NumberFormatException ex) {
@@ -128,7 +112,7 @@ public class GUIDevolverFactura extends JFrame implements IGUI {
 		int resultado = (int) context.getDatos();
         if (context.getEvento() == Evento.DEVOLVER_FACTURA_OK) {
         	
-            JOptionPane.showMessageDialog(this, "Factura devuelta correctamente" + resultado , "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Factura devuelta correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } else if (context.getEvento() == Evento.DEVOLVER_FACTURA_KO) {
         	
             switch (resultado) {

@@ -190,51 +190,48 @@ public class FacturaSAImp implements FacturaSA {
 			FacturaDAO daoFactura = fDAO.getFacturaDAO();
 			TFactura factura = daoFactura.mostrarFactura(tlineaFactura.getidFactura());
 			if(factura != null && factura.getActivo()){
-				EntradaDAO daoEntrada = fDAO.getEntradaDAO();
-				TEntrada entrada = daoEntrada.mostrarEntrada(tlineaFactura.getidEntrada());
-				if(entrada != null){
-					LineaFacturaDAO daoLF = fDAO.getDAOLineaFactura();
-					TLineaFactura lf = daoLF.mostrarLineaFactura(tlineaFactura.getidFactura(), tlineaFactura.getidEntrada());
-					if(lf != null){
-						if(!entrada.getActivo()){
-							t.rollback();
-							return -1;
+				
+				Set<TLineaFactura> lineasfacturaBD = fDAO.getDAOLineaFactura().mostrarLineaFacturaPorFactura(factura.getid());				
+				
+				for (TLineaFactura tLineaFacturaABorrar : lineasfacturaBD) {
+					
+					EntradaDAO daoEntrada = fDAO.getEntradaDAO();
+					TEntrada entrada = daoEntrada.mostrarEntrada(tLineaFacturaABorrar.getidEntrada());
+					if(entrada != null){
+						LineaFacturaDAO daoLF = fDAO.getDAOLineaFactura();
+						TLineaFactura lf = daoLF.mostrarLineaFactura(tlineaFactura.getidFactura(), entrada.getId());
+						if(lf != null){
+							if(!entrada.getActivo()){
+								t.rollback();
+								return -1;
+							}
+							entrada.setStock(entrada.getStock() + lf.getCantidad());
+							r = daoEntrada.modificarEntrada(entrada);
+							if(r < 0)
+							{
+								t.rollback();
+								return -1;
+							}
+							TLineaFactura baja = daoLF.bajaLineaFactura(lf.getidFactura(), lf.getidEntrada());	
+							r = baja == null ? 1 : -1;
+							if(r < 0)
+							{
+								t.rollback();
+								return -1;
+							}
 						}
-						entrada.setStock(entrada.getStock() + lf.getCantidad());
-						r = daoEntrada.modificarEntrada(entrada);
-						if(r < 0)
-						{
-							t.rollback();
-							return -1;
-						}
-						factura.setPrecioTotal(factura.getPrecioTotal() - (lf.getCantidad() * entrada.getPrecio()));
-						if(factura.getPrecioTotal() == 0)
-							factura.setActivo(false);
-						r = daoFactura.modificarFactura(factura);
-						if(r < 0)
-						{
-							t.rollback();
-							return -1;
-						}
-						TLineaFactura baja = daoLF.bajaLineaFactura(lf.getidFactura(), lf.getidEntrada());	
-						r = baja == null ? 1 : -1;
-						if(r < 0)
-						{
-							t.rollback();
-							return -1;
-						}
-						t.commit();
-						return r;
-					}
-					else
-					{
-						t.rollback();
-						return -1;
+						
 					}
 				}
-				else{
+				
+				r = daoFactura.devolverFactura(factura.getid());
+				if(r < 0)
+				{
 					t.rollback();
 					return -1;
+				} else {
+					t.commit();
+					return 1;
 				}
 			}
 			else{

@@ -149,7 +149,7 @@ public class LineaFacturaDAOImp implements LineaFacturaDAO {
 
 		try {
 			Connection c = (Connection) TransaccionManager.getInstance().getTransaccion().getResource();
-			PreparedStatement statement = c.prepareStatement("SELECT * FROM linea_factura WHERE id_factura = ? FOR UPDATE", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement statement = c.prepareStatement("SELECT id_factura, id_entrada, cantidad, precio FROM linea_factura WHERE id_factura = ? FOR UPDATE", Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, idFactura);
 			ResultSet result = statement.executeQuery();
 			lineasfactura = new HashSet<TLineaFactura>();

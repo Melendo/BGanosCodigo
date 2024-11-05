@@ -123,7 +123,7 @@ public class FacturaDAOImp implements FacturaDAO {
 			Transaccion t = TransaccionManager.getInstance().getTransaccion();
 			Connection c = (Connection) t.getResource();
 			Statement s = c.createStatement();
-			exito = s.executeUpdate("UPDATE factura SET precio_total = 0 WHERE id = " + id+";");
+			exito = s.executeUpdate("UPDATE factura SET activo = 0 WHERE id = " + id+";");
 		} 
 		catch (Exception e) 
 		{
