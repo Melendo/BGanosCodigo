@@ -81,8 +81,10 @@ public class FabricanteSAImp implements FabricanteSA {
 				t.rollback();
 				return -3;
 			}
-			if (!tf.getActivo())
+			if (!tf.getActivo()) {
+				t.rollback();
 				return -2;
+			}
 
 			Set<TSistemaDeRiego> lSist = fi.getSistemaDeRiegoDAO().listarSistemaDeRiegoPorFabricante(idFabricante);
 			boolean check = true;
@@ -96,9 +98,9 @@ public class FabricanteSAImp implements FabricanteSA {
 				return -4;
 			}
 
-			ret = fd.bajaFabricante(idFabricante); 
+			ret = fd.bajaFabricante(idFabricante);
 			t.commit();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
