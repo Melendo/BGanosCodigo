@@ -169,7 +169,7 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c
-					.prepareStatement("SELECT * FROM invernadero WHERE activo = 1 ORDER BY id ASC FOR UPDATE");
+					.prepareStatement("SELECT * FROM invernadero FOR UPDATE");
 
 			ResultSet result = statement.executeQuery();
 
@@ -199,7 +199,7 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c.prepareStatement("SELECT inv.* " + "FROM sistemas_riego_de_invernadero sri "
 					+ "JOIN invernadero inv ON sri.id_invernadero = inv.id "
-					+ "WHERE sri.id_sistema_riego = ? AND inv.activo = 1  " + "ORDER BY id ASC");
+					+ "WHERE sri.id_sistema_riego = ? ");
 
 			statement.setInt(1, id_sistema_de_riego);
 			ResultSet result = statement.executeQuery();

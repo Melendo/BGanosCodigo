@@ -137,24 +137,21 @@ public class InvernaderoSAImp implements InvernaderoSA {
 				InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
 				TInvernadero existeInvernadero = daoInvernadero.mostrarInvernaderoPorID(invernadero.getId());
 				if (existeInvernadero != null) {
-					if (existeInvernadero.isActivo()) {
-						TInvernadero existeInvernaderoNombre = daoInvernadero
-								.mostrarInvernaderoPorNombre(invernadero.getNombre());
-						if (existeInvernaderoNombre == null) {
-							exito = daoInvernadero.modificarInvernadero(invernadero);
-							t.commit();
-						} else if (existeInvernaderoNombre != null
-								&& existeInvernaderoNombre.getId() == existeInvernadero.getId()) {
-							exito = daoInvernadero.modificarInvernadero(invernadero);
-							t.commit();
-						} else {
-							exito = -25;
-							t.rollback();
-						}
+					invernadero.setActivo(existeInvernadero.isActivo());
+					TInvernadero existeInvernaderoNombre = daoInvernadero
+							.mostrarInvernaderoPorNombre(invernadero.getNombre());
+					if (existeInvernaderoNombre == null) {
+						exito = daoInvernadero.modificarInvernadero(invernadero);
+						t.commit();
+					} else if (existeInvernaderoNombre != null
+							&& existeInvernaderoNombre.getId() == existeInvernadero.getId()) {
+						exito = daoInvernadero.modificarInvernadero(invernadero);
+						t.commit();
 					} else {
-						exito = -24;
+						exito = -25;
 						t.rollback();
 					}
+
 				} else {
 
 					exito = -23;
@@ -222,7 +219,7 @@ public class InvernaderoSAImp implements InvernaderoSA {
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 			InvernaderoDAO daoInvernadero = f.getInvernaderoDAO();
 			TInvernadero invernaderoExiste = daoInvernadero.mostrarInvernaderoPorID(id);
-			if (invernaderoExiste != null && invernaderoExiste.isActivo()) {
+			if (invernaderoExiste != null) {
 				invernadero = invernaderoExiste;
 				t.commit();
 			} else {
