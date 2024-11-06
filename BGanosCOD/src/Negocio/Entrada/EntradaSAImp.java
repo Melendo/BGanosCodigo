@@ -152,9 +152,13 @@ public class EntradaSAImp implements EntradaSA {
 
 							} else if (!entradaUnica.getActivo()) { // Comprobamos si esa entrada que ya tiene los
 																	// mismos datos esta dada de baja
-								exito = -53;
+								exito = -53; // la entrada ya existe con la misma fecha y está inactiva
 								t.rollback();
 
+							} else if(entradaUnica.getId() == entrada.getId()) {	
+								exito = entradaDao.modificarEntrada(entrada);
+								t.commit();
+								
 							} else {
 //								exito = entradaDao.modificarEntrada(entrada);
 //								t.commit();
