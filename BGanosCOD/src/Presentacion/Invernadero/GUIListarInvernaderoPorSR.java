@@ -81,7 +81,7 @@ public class GUIListarInvernaderoPorSR extends JFrame implements IGUI {
 		panelCentro.add(botonBuscar);
 
 		// Tabla
-		String[] nombreColumnas = { "ID", "Nombre", "Sustrato", "Tipo de Iluminacion" };
+		String[] nombreColumnas = { "ID", "Nombre", "Sustrato", "Tipo de Iluminacion", "Activo" };
 		tabla = ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, null);
 		JScrollPane scroll = new JScrollPane(tabla);
 		scroll.setPreferredSize(new Dimension(750, 250));
@@ -130,13 +130,14 @@ public class GUIListarInvernaderoPorSR extends JFrame implements IGUI {
 			String[][] datos = new String[invernaderos.size()][7];
 			int i = 0;
 			for (TInvernadero invernadero : invernaderos) {
+				String activo = invernadero.isActivo() ? "Si" : "No";
 				datos[i++] = new String[] { String.valueOf(invernadero.getId()), invernadero.getNombre(),
-						invernadero.getSustrato(), invernadero.getTipo_iluminacion(),
+						invernadero.getSustrato(), invernadero.getTipo_iluminacion(), activo
 
 				};
 			}
 			tabla.setModel(new javax.swing.table.DefaultTableModel(datos,
-					new String[] { "ID", "Nombre", "Sustrato", "Tipo de Iluminacion" }));
+					new String[] { "ID", "Nombre", "Sustrato", "Tipo de Iluminacion", "Activo" }));
 			ComponentsBuilder.adjustColumnWidths(tabla);
 		} else if (context.getEvento() == Evento.LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO_KO) {
 			JOptionPane.showMessageDialog(this, "Error al listar los Invernaderosd e un Sistema de Riego.", "Error",

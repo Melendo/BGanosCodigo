@@ -87,7 +87,7 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 		mainPanel.add(panelCantidad);
 
 		JLabel cantidad = new JLabel("Cantidad a Añadir:");
-		cantidad.setPreferredSize(new Dimension(100, 60));
+		cantidad.setPreferredSize(new Dimension(120, 60));
 		panelCantidad.add(cantidad);
 
 		JTextField cantidadtxt = new JTextField();
@@ -134,7 +134,7 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 					}
 					
 				} catch (Exception ex) {
-	    			ApplicationController.getInstance().manageRequest(new Context (Evento.CERRAR_FACTURA_KO, -2));
+					JOptionPane.showMessageDialog(GUICerrarFactura.this, "Los datos no son correctos", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
@@ -165,7 +165,7 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 		mainPanel.add(panelCantidadOut);
 
 		JLabel cantidadOut = new JLabel("Cantidad a Quitar:");
-		cantidadOut.setPreferredSize(new Dimension(100, 60));
+		cantidadOut.setPreferredSize(new Dimension(120, 60));
 		panelCantidadOut.add(cantidadOut);
 
 		JTextField cantidadOuttxt = new JTextField();
@@ -225,7 +225,7 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 					}
 
 				} catch (Exception ex) {
-	    			ApplicationController.getInstance().manageRequest(new Context (Evento.CERRAR_FACTURA_KO, -3));
+					JOptionPane.showMessageDialog(GUICerrarFactura.this, "Los datos no son correctos", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}

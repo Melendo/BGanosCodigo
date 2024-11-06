@@ -70,7 +70,7 @@ public class TieneDAOImp implements TieneDAO {
 			TransaccionManager tManager = TransaccionManager.getInstance();
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
-			PreparedStatement statement = c.prepareStatement("SELECT * FROM sistema_riego_de_invernadero FOR UPDATE");
+			PreparedStatement statement = c.prepareStatement("SELECT * FROM sistemas_riego_de_invernadero FOR UPDATE");
 
 			ResultSet result = statement.executeQuery();
 
@@ -105,7 +105,7 @@ public class TieneDAOImp implements TieneDAO {
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c
-					.prepareStatement("SELECT * FROM sistema_riego_de_invernadero WHERE id_invernadero = ? FOR UPDATE");
+					.prepareStatement("SELECT * FROM sistemas_riego_de_invernadero WHERE id_invernadero = ? FOR UPDATE");
 			statement.setInt(1, idInvernadero);
 
 			ResultSet result = statement.executeQuery();
@@ -133,7 +133,7 @@ public class TieneDAOImp implements TieneDAO {
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c.prepareStatement(
-					"SELECT * FROM sistema_riego_de_invernadero WHERE id_sistema_riego = ? FOR UPDATE");
+					"SELECT * FROM sistemas_riego_de_invernadero WHERE id_sistema_riego = ? FOR UPDATE");
 			statement.setInt(1, idSisRiego);
 
 			ResultSet result = statement.executeQuery();

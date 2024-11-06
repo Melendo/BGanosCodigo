@@ -63,6 +63,7 @@ public class GUIDevolverFactura extends JFrame implements IGUI {
         idFacturaField = new JTextField();
         idFacturaField.setPreferredSize(new Dimension(250, 30));
         panelIDFactura.add(idFacturaField);
+        
 
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
@@ -85,7 +86,7 @@ public class GUIDevolverFactura extends JFrame implements IGUI {
                     
                     ApplicationController.getInstance().manageRequest(new Context(Evento.DEVOLVER_FACTURA, lf));
                 } catch (NumberFormatException ex) {
-	    			ApplicationController.getInstance().manageRequest(new Context (Evento.DEVOLVER_FACTURA_KO, -3));
+	    			JOptionPane.showMessageDialog(GUIDevolverFactura.this, "Los datos no son correctos", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

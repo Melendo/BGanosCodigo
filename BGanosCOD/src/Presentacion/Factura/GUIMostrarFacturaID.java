@@ -118,7 +118,7 @@ public class GUIMostrarFacturaID extends JFrame implements IGUI {
                     		!id.getText().isEmpty()? id_Factura: 0));
 
                 } catch (Exception ex) {
-	    			ApplicationController.getInstance().manageRequest(new Context (Evento.MOSTRAR_FACTURA_POR_ID_KO, -3));
+                	JOptionPane.showMessageDialog(GUIMostrarFacturaID.this, "Los datos no son correctos", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
             }
@@ -153,7 +153,9 @@ public class GUIMostrarFacturaID extends JFrame implements IGUI {
         	DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             
             TFactura factura = resultado.gettFactura();
-            String datosFactura = "Precio total: " + factura.getPrecioTotal() + "; Fecha de compra: " + df.format(factura.getFechaCompra());
+            String activo = factura.getActivo() ? "Si" : "No";
+            String fecha = df.format(factura.getFechaCompra());
+            String datosFactura = "Precio total: " + factura.getPrecioTotal() + "; Fecha de compra: " + fecha + "; Activo: " + activo;
             
             mensajeFactura.setText(datosFactura); // Actualiza el mensaje sin crear un nuevo JLabel
             

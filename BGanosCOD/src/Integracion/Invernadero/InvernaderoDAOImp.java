@@ -79,12 +79,13 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c.prepareStatement(
-					"UPDATE invernadero SET nombre = ?, sustrato = ?, tipo_iluminacion = ?, activo = 1 where id = ?");
+					"UPDATE invernadero SET nombre = ?, sustrato = ?, tipo_iluminacion = ?, activo = ? where id = ?");
 
 			statement.setString(1, invernadero.getNombre());
 			statement.setString(2, invernadero.getSustrato());
 			statement.setString(3, invernadero.getTipo_iluminacion());
-			statement.setInt(4, invernadero.getId());
+			statement.setBoolean(4, invernadero.isActivo());
+			statement.setInt(5, invernadero.getId());
 
 			exito = statement.executeUpdate();
 
@@ -168,7 +169,7 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c
-					.prepareStatement("SELECT * FROM invernadero WHERE activo = 1 ORDER BY id ASC FOR UPDATE");
+					.prepareStatement("SELECT * FROM invernadero FOR UPDATE");
 
 			ResultSet result = statement.executeQuery();
 
@@ -198,7 +199,7 @@ public class InvernaderoDAOImp implements InvernaderoDAO {
 			Connection c = (Connection) t.getResource();
 			PreparedStatement statement = c.prepareStatement("SELECT inv.* " + "FROM sistemas_riego_de_invernadero sri "
 					+ "JOIN invernadero inv ON sri.id_invernadero = inv.id "
-					+ "WHERE sri.id_sistema_riego = ? AND inv.activo = 1  " + "ORDER BY id ASC");
+					+ "WHERE sri.id_sistema_riego = ? ");
 
 			statement.setInt(1, id_sistema_de_riego);
 			ResultSet result = statement.executeQuery();

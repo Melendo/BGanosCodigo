@@ -117,8 +117,9 @@ public class GUIMostrarInvernaderoPorID extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		if (context.getEvento() == Evento.MOSTRAR_INVERNADERO_POR_ID_OK) {
 			TInvernadero invernadero = (TInvernadero) context.getDatos();
-			String texto = "ID: " + invernadero.getId() + ", Nombre: " + invernadero.getNombre() + ", Sustrato: "
-					+ invernadero.getSustrato() + ", Tipo de Iluminacion: " + invernadero.getTipo_iluminacion();
+			String texto = "ID: " + invernadero.getId() + "\nNombre: " + invernadero.getNombre() + "\nSustrato: "
+					+ invernadero.getSustrato() + "\nTipo de Iluminacion: " + invernadero.getTipo_iluminacion()
+					+ "\nActivo: " + invernadero.isActivo();
 
 			JOptionPane.showMessageDialog(this, texto, "Invernadero", JOptionPane.INFORMATION_MESSAGE);
 			this.setVisible(false);

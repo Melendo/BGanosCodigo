@@ -86,6 +86,9 @@ public class GUIModificarFactura extends JFrame implements IGUI {
         fechaCompra.setPreferredSize(new Dimension(250, 30));
         fechaCompra.setEditable(true);
         panelFechaCompra.add(fechaCompra);
+        
+        JLabel labelFechaCompraHelper = ComponentsBuilder.createLabel("Formato: dd/MM/yyyy", 10, 100, 200, 20, Color.BLACK);
+        panelFechaCompra.add(labelFechaCompraHelper);
 
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
@@ -110,7 +113,7 @@ public class GUIModificarFactura extends JFrame implements IGUI {
                     factura.setFechaCompra(fecha);
                     ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_FACTURA, factura));
                 } catch (Exception ex) {
-	    			ApplicationController.getInstance().manageRequest(new Context (Evento.MODIFICAR_FACTURA_KO, -3));
+                	JOptionPane.showMessageDialog(GUIModificarFactura.this, "Los datos no son correctos", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
             }

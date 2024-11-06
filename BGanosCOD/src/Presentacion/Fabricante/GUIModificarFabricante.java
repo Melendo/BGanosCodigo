@@ -246,6 +246,9 @@ public class GUIModificarFabricante extends JFrame implements IGUI {
 			case -6:
 				JOptionPane.showMessageDialog(this, "Telefono invalido.", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
+			case -7:
+				JOptionPane.showMessageDialog(this, "Ya existe un fabricante con ese código.", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
 			default:
 				JOptionPane.showMessageDialog(this, "Error desconocido al modificar el fabricante.", "Error",
 						JOptionPane.ERROR_MESSAGE);

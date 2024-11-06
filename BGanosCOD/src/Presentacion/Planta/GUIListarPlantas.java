@@ -71,7 +71,7 @@ public class GUIListarPlantas extends JFrame implements IGUI {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension frame = new Dimension((int) dims_frame.getWidth(), (int) dims_frame.getHeight());
 		
-		this.setPreferredSize(new Dimension(400, 400));
+		this.setPreferredSize(new Dimension(950, 400));
 		this.setLocation(dim.width / 2 - frame.getSize().width / 2 - 200, dim.height / 2 - frame.getSize().height / 2 - 200);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.pack();

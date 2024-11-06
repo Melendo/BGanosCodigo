@@ -49,7 +49,7 @@ public class GUIListarPlantasPorInvernadero extends JFrame implements IGUI {
 		this.setBounds(x, y, ancho, alto);
 		this.setLayout(null);
 		this.setResizable(false);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initGUI();
 	}
 

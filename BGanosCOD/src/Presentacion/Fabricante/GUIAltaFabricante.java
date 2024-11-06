@@ -231,6 +231,14 @@ public class GUIAltaFabricante extends JFrame implements IGUI {
 			case -4:
 				JOptionPane.showMessageDialog(this, "Telefono invalido.", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
+			case -5:
+				JOptionPane.showMessageDialog(this, "El fabricante que estas intentando modificar es local.",
+						"Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			case -6:
+				JOptionPane.showMessageDialog(this, "El fabricante que estas intentando modificar es extranjero.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
 			default:
 				JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta el fabricante.", "Error",
 						JOptionPane.ERROR_MESSAGE);
