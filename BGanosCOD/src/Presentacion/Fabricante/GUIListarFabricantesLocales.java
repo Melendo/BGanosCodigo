@@ -27,11 +27,8 @@ import javax.swing.JOptionPane;
 @SuppressWarnings("serial")
 public class GUIListarFabricantesLocales extends JFrame implements IGUI {
 
-	Set<TFabricante> listaFabricantes;
-
 	public GUIListarFabricantesLocales(Set<TFabricante> listaFabricantes) {
 		super("Mostrar Fabricantes Extranjeros");
-		this.listaFabricantes = listaFabricantes;
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 800;
 		int alto = 400;
@@ -41,11 +38,11 @@ public class GUIListarFabricantesLocales extends JFrame implements IGUI {
 		this.setLayout(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		initGUI();
+		initGUI(listaFabricantes);
 
 	}
 
-	public void initGUI() {
+	public void initGUI(Set<TFabricante> listaFabricantes) {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);

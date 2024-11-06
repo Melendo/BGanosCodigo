@@ -23,12 +23,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class GUIListarPlantas extends JFrame implements IGUI {
-
-	Set<TPlanta> lista;
 	
 	public GUIListarPlantas(Set<TPlanta> plantas) {
 		
-		this.initGUI();
+		this.initGUI(plantas);
 		int tmp = Evento.LISTAR_PLANTAS_OK ;
 		if(plantas == null || plantas.isEmpty()) {tmp = Evento.LISTAR_PLANTAS_KO;}
 		
@@ -43,7 +41,7 @@ public class GUIListarPlantas extends JFrame implements IGUI {
 	private JTable table;
 	private DefaultTableModel model;
 
-	public void initGUI() {
+	public void initGUI(Set<TPlanta> lista) {
     	this.setTitle("LISTAR PLANTAS");
     	this.setVisible(false);
     	// MAIN PANEL
