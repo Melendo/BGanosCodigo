@@ -118,7 +118,7 @@ public class GUIMostrarFacturaID extends JFrame implements IGUI {
                     		!id.getText().isEmpty()? id_Factura: 0));
 
                 } catch (Exception ex) {
-	    			ApplicationController.getInstance().manageRequest(new Context (Evento.MOSTRAR_FACTURA_POR_ID_KO, -3));
+                	JOptionPane.showMessageDialog(GUIMostrarFacturaID.this, "Los datos no son correctos", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
             }

@@ -113,7 +113,7 @@ public class GUIModificarFactura extends JFrame implements IGUI {
                     factura.setFechaCompra(fecha);
                     ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_FACTURA, factura));
                 } catch (Exception ex) {
-	    			ApplicationController.getInstance().manageRequest(new Context (Evento.MODIFICAR_FACTURA_KO, -3));
+                	JOptionPane.showMessageDialog(GUIModificarFactura.this, "Los datos no son correctos", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
             }
