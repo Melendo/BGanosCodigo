@@ -326,7 +326,6 @@ public class InvernaderoSATest {
 		sisRiego.setId(id_sr);
 
 		Integer exito = invernaderoSA.vincularSRInvernadero(id_sr, id_inv);
-		System.out.println(exito);
 		assertTrue("(Vincular Sistema de Riego a Invernadero Bien) El exito debe ser mayor que 0", exito > 0);
 
 		Transaccion t = crearTransaccion();
@@ -398,7 +397,6 @@ public class InvernaderoSATest {
 		invernaderoSA.vincularSRInvernadero(id_sr, id_inv);
 
 		Integer exito = invernaderoSA.desvincularSRInvernadero(id_sr, id_inv);
-		System.out.println(exito);
 		assertTrue("(Desvincular Sistema de Riego de Invernadero Bien) El exito debe ser mayor que 0", exito > 0);
 
 		Transaccion t = crearTransaccion();
