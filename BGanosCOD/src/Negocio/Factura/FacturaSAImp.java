@@ -136,7 +136,6 @@ public class FacturaSAImp implements FacturaSA {
 			for(TFactura factura : facturasBuscar){
 				facturas.add(factura);
 			}
-			facturasBuscar = null; //Liberamos memoria
 			t.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
