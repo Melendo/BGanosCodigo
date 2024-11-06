@@ -207,7 +207,7 @@ public class EntradaDAOImp implements EntradaDAO {
 	}
 
 	@Override
-	public TEntrada leerPorFechaUnica(Date fecha, Integer idInvernadero) {
+	public TEntrada leerPorIDInvernaderoYFecha(Date fecha, Integer idInvernadero) {
 		
 		TEntrada entrada = null;
 		

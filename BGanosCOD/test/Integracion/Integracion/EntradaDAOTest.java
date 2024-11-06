@@ -390,7 +390,7 @@ public class EntradaDAOTest {
 			Date date = java.sql.Date.valueOf("2012-12-12");
 			TEntrada e1 = new TEntrada(1, date, 12.0f, 12, idInv, true);
 			daoEntrada.altaEntrada(e1);
-			TEntrada entrada = daoEntrada.leerPorFechaUnica(date, idInv);
+			TEntrada entrada = daoEntrada.leerPorIDInvernaderoYFecha(date, idInv);
 
 //			System.out.println(e1.getId() +",   "+ e1.getFecha()+ ",   " +e1.getIdInvernadero()+ ",   " +e1.getPrecio()+ ",   " +e1.getStock()+ ",   " +e1.getActivo());
 //			System.out.println(entrada.getId() +",   "+ entrada.getFecha()+ ",   " +entrada.getIdInvernadero()+ ",   " +entrada.getPrecio()+ ",   " +entrada.getStock()+ ",   " +entrada.getActivo());

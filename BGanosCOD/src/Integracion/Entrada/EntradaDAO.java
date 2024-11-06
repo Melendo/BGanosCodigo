@@ -19,5 +19,5 @@ public interface EntradaDAO {
 
 	public Set<TEntrada> listarEntradasPorInvernadero(Integer idInvernadero);
 	
-	public TEntrada leerPorFechaUnica(Date fecha, Integer idInvernadero);
+	public TEntrada leerPorIDInvernaderoYFecha(Date fecha, Integer idInvernadero);
 }

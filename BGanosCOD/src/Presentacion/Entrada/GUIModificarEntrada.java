@@ -203,10 +203,10 @@ public class GUIModificarEntrada extends JFrame implements IGUI {
 				JOptionPane.showMessageDialog(this, "Error: el id de invernadero no existe", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
-//				
-//			case -50:
-//				JOptionPane.showMessageDialog(this, "Error: ya existe la entrada con dicha fecha", "Error", JOptionPane.ERROR_MESSAGE);
-//				break;
+				
+			case -50:
+				JOptionPane.showMessageDialog(this, "Error: ya existe una entrada con dicha fecha y nº de invernadero", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
 				
 			case -51:
 				JOptionPane.showMessageDialog(this, "Error: id de una entrada que no existe", "Error", JOptionPane.ERROR_MESSAGE);
