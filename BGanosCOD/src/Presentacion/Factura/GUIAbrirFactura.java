@@ -1,6 +1,7 @@
 package Presentacion.Factura;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
@@ -30,6 +31,23 @@ public class GUIAbrirFactura extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		
+		int resultado = (int) context.getDatos();
+        if (context.getEvento() == Evento.CERRAR_FACTURA_OK) {
+        	
+            JOptionPane.showMessageDialog(this, "Factura creada correctamente con id: " + resultado , "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } else if (context.getEvento() == Evento.CERRAR_FACTURA_KO) {
+        	
+            switch (resultado) {
+            case -1:
+                JOptionPane.showMessageDialog(this, "Se ha producido un error interno", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            case -2:
+                JOptionPane.showMessageDialog(this, "Datos incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Error desconocido al cerrar la factura.", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            }
+        }
 	}
 }

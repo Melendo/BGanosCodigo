@@ -109,7 +109,7 @@ public class GUICerrarFactura extends JFrame implements IGUI {
 				try {
 					
 					if(id.getText().isEmpty() || cantidadtxt.getText().isEmpty()){
-		    			ApplicationController.getInstance().manageRequest(new Context (Evento.ABRIR_FACTURA_KO, -2));
+						JOptionPane.showMessageDialog(GUICerrarFactura.this, "no se han rellenado todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					else{
 						int idEntrada = Integer.parseInt(id.getText());

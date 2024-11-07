@@ -35,7 +35,7 @@ public class GUIAltaFabricante extends JFrame implements IGUI {
 	private JTextField textSubvenciones;
 	private JTextField textPaisOrigen;
 	private JTextField textAranceles;
-	private Boolean tLocal;
+	private Boolean tLocal = false;
 
 	public GUIAltaFabricante() {
 		super("Alta Fabricante");
