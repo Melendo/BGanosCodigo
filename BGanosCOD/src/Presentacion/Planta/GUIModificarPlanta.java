@@ -61,7 +61,7 @@ public class GUIModificarPlanta extends JFrame implements IGUI {
 	    this.setVisible(true);
 	    mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 	    
-	    JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("", 1, 10, 80, 20, Color.BLACK);
+	    JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("MODIFICAR PLANTA", 1, 10, 80, 20, Color.BLACK);
 	    msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
 	    mainPanel.add(msgIntroIDCabecera);
 

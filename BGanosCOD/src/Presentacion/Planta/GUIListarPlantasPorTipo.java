@@ -40,7 +40,7 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 		super("Listar Plantas Por Tipo");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 1000;
-		int alto = 525;
+		int alto = 300;
 		int x = (pantalla.width - ancho) / 2;
 		int y = (pantalla.height - alto) / 2;
 		this.setBounds(x, y, ancho, alto);
@@ -59,7 +59,7 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 	    this.setVisible(true);
 	    mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 	    
-	    JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("Seleccione el tipo de planta que desea", 1, 10, 80, 20, Color.BLACK);
+	    JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("Seleccione el tipo de planta que desee", 1, 10, 80, 20, Color.BLACK);
 	    msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
 	    mainPanel.add(msgIntroIDCabecera);
 	    

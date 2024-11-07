@@ -57,7 +57,7 @@ public class GUIAltaPlanta extends JFrame implements IGUI {
 	    this.setVisible(true);
 	    mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 	    
-	    JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("Seleccione el tipo de planta que desea dar de alta", 1, 10, 80, 20, Color.BLACK);
+	    JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("ALTA PLANTA", 1, 10, 80, 20, Color.BLACK);
 	    msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
 	    mainPanel.add(msgIntroIDCabecera);
 

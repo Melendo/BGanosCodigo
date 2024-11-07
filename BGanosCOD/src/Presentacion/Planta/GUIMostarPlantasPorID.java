@@ -37,7 +37,7 @@ public class GUIMostarPlantasPorID extends JFrame implements IGUI {
 		super("Mostrar Planta Por ID");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 1000;
-		int alto = 525;
+		int alto = 300;
 		int x = (pantalla.width - ancho) / 2;
 		int y = (pantalla.height - alto) / 2;
 		this.setBounds(x, y, ancho, alto);
