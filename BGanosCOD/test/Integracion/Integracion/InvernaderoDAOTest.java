@@ -56,7 +56,6 @@ public class InvernaderoDAOTest {
 	@AfterClass
 	public static void tearDown() throws Exception {
 		t.rollback();
-		t.cerrarConnection();
 	}
 
 	@Test
@@ -64,9 +63,7 @@ public class InvernaderoDAOTest {
 
 		TInvernadero invernadero = new TInvernadero("InvAltaTest", "Tierra", "LED");
 
-
 		Integer resultado = invernaderoDAO.altaInvernadero(invernadero);
-
 
 		assertTrue("El ID debe ser mayor que 0", resultado > 0);
 
@@ -98,7 +95,6 @@ public class InvernaderoDAOTest {
 		statement.close();
 
 		Integer resultado = invernaderoDAO.bajaInvernadero(id_baja);
-
 
 		assertTrue("El ID debe ser mayor que 0", resultado > 0);
 
@@ -134,7 +130,6 @@ public class InvernaderoDAOTest {
 		invernaderoModificado.setActivo(true);
 
 		Integer resultado = invernaderoDAO.modificarInvernadero(invernaderoModificado);
-
 
 		assertTrue("El ID debe ser mayor que 0", resultado > 0);
 
@@ -204,7 +199,6 @@ public class InvernaderoDAOTest {
 		String nombre_mostrar = invernadero.getNombre();
 
 		TInvernadero invernaderoLeido = invernaderoDAO.mostrarInvernaderoPorNombre(nombre_mostrar);
-
 
 		assertTrue("Invernadero e InvernaderoLeido deben ser Iguales", equals(invernadero, invernaderoLeido));
 
@@ -314,7 +308,6 @@ public class InvernaderoDAOTest {
 		result2.close();
 		statement2.close();
 
-
 		TTiene tiene = new TTiene();
 		tiene.setId_Invernadero(id_inv);
 		tiene.setId_SistemasDeRiego(id_sr);
@@ -331,7 +324,6 @@ public class InvernaderoDAOTest {
 		statement3.close();
 
 		Set<TInvernadero> lista = invernaderoDAO.listarInvernaderoPorSR(id_sr);
-
 
 		assertTrue("La Lista debe contener al menos 1 Invernadero", lista.size() > 0);
 

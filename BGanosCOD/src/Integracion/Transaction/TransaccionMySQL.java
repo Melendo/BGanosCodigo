@@ -30,11 +30,8 @@ public class TransaccionMySQL implements Transaccion {
 			String user = prop.getProperty(DB_USER_PROP);
 			String password = prop.getProperty(DB_PASSWORD_PROP);
 
-			String connectionString = "jdbc:mysql://" + host + ":" + port + "/" + db + 
-                    "?user=" + user + 
-                    "&password=" + password + 
-                    "&useSSL=false" + 
-                    "&serverTimezone=Europe/Madrid";
+			String connectionString = "jdbc:mysql://" + host + ":" + port + "/" + db + "?user=" + user + "&password="
+					+ password + "&useSSL=false" + "&serverTimezone=Europe/Madrid";
 
 			conexion = DriverManager.getConnection(connectionString);
 
@@ -67,7 +64,4 @@ public class TransaccionMySQL implements Transaccion {
 		return conexion;
 	}
 
-	public void cerrarConnection() throws Exception {
-		conexion.close();
-	}
 }

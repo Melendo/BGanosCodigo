@@ -50,7 +50,6 @@ public class InvernaderoSATest {
 		invernaderoSA = FactoriaNegocio.getInstance().getInvernaderoSA();
 	}
 
-
 	@Test
 	public void testAltaInvernadero() throws Exception {
 		TInvernadero invernadero = new TInvernadero("InvAltaTest", "Tierra", "LED");
@@ -76,7 +75,6 @@ public class InvernaderoSATest {
 		statement.close();
 
 		t.commit();
-		t.cerrarConnection();
 
 	}
 
@@ -105,7 +103,6 @@ public class InvernaderoSATest {
 		statement.close();
 
 		t.commit();
-		t.cerrarConnection();
 
 	}
 
@@ -143,7 +140,6 @@ public class InvernaderoSATest {
 		statement.close();
 
 		t.commit();
-		t.cerrarConnection();
 
 	}
 
@@ -166,7 +162,6 @@ public class InvernaderoSATest {
 		statement.close();
 
 		t.commit();
-		t.cerrarConnection();
 
 	}
 
@@ -190,7 +185,6 @@ public class InvernaderoSATest {
 		statement.close();
 
 		t.commit();
-		t.cerrarConnection();
 
 		TInvernadero invernaderoNoExiste = invernaderoSA.mostrarInvernaderoPorID(invernadero.getId());
 		assertTrue("(Mostrar Por ID Mal) El id del invernadero debe ser igual a -1", invernaderoNoExiste.getId() == -1);
@@ -216,7 +210,6 @@ public class InvernaderoSATest {
 		statement.close();
 
 		t.commit();
-		t.cerrarConnection();
 
 		TInvernadero invernaderoNoExiste = invernaderoSA.mostrarInvernaderoPorNombre(invernadero.getNombre());
 		assertTrue("(Mostrar Por Nombre Mal) El id del invernadero debe ser igual a -1",
@@ -286,7 +279,6 @@ public class InvernaderoSATest {
 		statement.close();
 
 		t.commit();
-		t.cerrarConnection();
 
 		Set<TInvernadero> invernaderosMal = (Set<TInvernadero>) invernaderoSA.listarInvernaderoPorSR(sisRiego.getId());
 		assertTrue("(Listar Por Sistema de Riego Bien) El size debe ser distinto 0",
@@ -356,7 +348,6 @@ public class InvernaderoSATest {
 		statement.close();
 
 		t.commit();
-		t.cerrarConnection();
 
 		Integer fallo = invernaderoSA.vincularSRInvernadero(id_sr, id_inv);
 		assertTrue("(Vincular Sistema de Riego a Invernadero Mal) El exito debe ser menor que 0", fallo < 0);
@@ -427,7 +418,6 @@ public class InvernaderoSATest {
 		statement.close();
 
 		t.commit();
-		t.cerrarConnection();
 
 		Integer fallo = invernaderoSA.vincularSRInvernadero(id_sr, id_inv);
 		assertTrue("(Desvincular Sistema de Riego de Invernadero Mal) El exito debe ser menor que 0", fallo < 0);
@@ -455,7 +445,6 @@ public class InvernaderoSATest {
 		statement.close();
 
 		t.commit();
-		t.cerrarConnection();
 
 	}
 }
