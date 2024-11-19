@@ -13,32 +13,9 @@ import Negocio.Factura.TLineaFactura;
 
 import java.util.HashSet;
 
+
 public class GUIAbrirFactura extends JFrame implements IGUI {
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JPanel jPanel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JButton jButton;
 	private static final long serialVersionUID = 1L;
 
 	public GUIAbrirFactura() {
@@ -49,31 +26,28 @@ public class GUIAbrirFactura extends JFrame implements IGUI {
 
 		TCarrito carrito = new TCarrito();
 		carrito.setLineaFactura(new HashSet<TLineaFactura>());
-		ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_FACTURA_VISTA, carrito));
+        ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_FACTURA_VISTA, carrito));
 	}
 
 	@Override
 	public void actualizar(Context context) {
 		int resultado = (int) context.getDatos();
-		if (context.getEvento() == Evento.CERRAR_FACTURA_OK) {
-
-			JOptionPane.showMessageDialog(this, "Factura creada correctamente con id: " + resultado, "Éxito",
-					JOptionPane.INFORMATION_MESSAGE);
-		} else if (context.getEvento() == Evento.CERRAR_FACTURA_KO) {
-
-			switch (resultado) {
-			case -1:
-				JOptionPane.showMessageDialog(this, "Se ha producido un error interno", "Error",
-						JOptionPane.ERROR_MESSAGE);
-				break;
-			case -2:
-				JOptionPane.showMessageDialog(this, "Datos incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
-				break;
-			default:
-				JOptionPane.showMessageDialog(this, "Error desconocido al cerrar la factura.", "Error",
-						JOptionPane.ERROR_MESSAGE);
-				break;
-			}
-		}
+        if (context.getEvento() == Evento.CERRAR_FACTURA_OK) {
+        	
+            JOptionPane.showMessageDialog(this, "Factura creada correctamente con id: " + resultado , "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } else if (context.getEvento() == Evento.CERRAR_FACTURA_KO) {
+        	
+            switch (resultado) {
+            case -1:
+                JOptionPane.showMessageDialog(this, "Se ha producido un error interno", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            case -2:
+                JOptionPane.showMessageDialog(this, "Datos incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Error desconocido al cerrar la factura.", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            }
+        }
 	}
 }

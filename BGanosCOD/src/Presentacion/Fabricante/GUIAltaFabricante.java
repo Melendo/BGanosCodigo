@@ -28,50 +28,6 @@ import javax.swing.JOptionPane;
 @SuppressWarnings("serial")
 public class GUIAltaFabricante extends JFrame implements IGUI {
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JButton jButton;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JPanel jPanel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JPanel jFrame;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JLabel jLabel;
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param fabricante
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public void initGUI(TFabricante... fabricante) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
 	private JTextField textNombre;
 	private JTextField textCodFabricante;
 	private JTextField textTelefono;
@@ -276,12 +232,12 @@ public class GUIAltaFabricante extends JFrame implements IGUI {
 				JOptionPane.showMessageDialog(this, "Telefono invalido.", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
 			case -5:
-				JOptionPane.showMessageDialog(this, "El fabricante que estas intentando modificar es local.", "Error",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "El fabricante que estas intentando modificar es local.",
+						"Error", JOptionPane.ERROR_MESSAGE);
 				break;
 			case -6:
-				JOptionPane.showMessageDialog(this, "El fabricante que estas intentando modificar es extranjero.",
-						"Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "El fabricante que estas intentando modificar es extranjero.", "Error",
+						JOptionPane.ERROR_MESSAGE);
 				break;
 			default:
 				JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta el fabricante.", "Error",

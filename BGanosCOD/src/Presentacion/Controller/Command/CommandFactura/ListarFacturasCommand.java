@@ -12,6 +12,6 @@ public class ListarFacturasCommand implements Command {
 
 	public Context execute(Object datos) {
 		Set<TFactura> res = FactoriaNegocio.getInstance().getFacturaSA().listarFacturas();
-		return new Context(Evento.LISTAR_FACTURAS_VISTA, res);
+		 return new Context(Evento.LISTAR_FACTURAS_VISTA, res);
 	}
 }

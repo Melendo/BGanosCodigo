@@ -26,30 +26,6 @@ import javax.swing.JPanel;
 
 public class GUIDesvincularSRInvernadero extends JFrame implements IGUI {
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JButton jButton;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JPanel jPanel;
 	private static final long serialVersionUID = 1L;
 	private JTextField textId_Invernadero;
 	private JTextField textId_SisRiego;
@@ -130,8 +106,8 @@ public class GUIDesvincularSRInvernadero extends JFrame implements IGUI {
 					ApplicationController.getInstance()
 							.manageRequest(new Context(Evento.DESVINCULAR_SISTEMA_RIEGO_DE_INVERNADERO, tiene));
 				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(GUIDesvincularSRInvernadero.this,
-							"Error en el formato del ID o campos vacios", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(GUIDesvincularSRInvernadero.this, "Error en el formato del ID o campos vacios",
+							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

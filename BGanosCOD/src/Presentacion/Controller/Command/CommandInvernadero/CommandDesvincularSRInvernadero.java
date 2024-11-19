@@ -7,7 +7,7 @@ import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
 public class CommandDesvincularSRInvernadero implements Command {
-
+	
 	public Context execute(Object datos) {
 		TTiene tiene = (TTiene) datos;
 		int resultado = FactoriaNegocio.getInstance().getInvernaderoSA()

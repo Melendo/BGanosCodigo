@@ -26,38 +26,10 @@ import javax.swing.JPanel;
 
 public class GUIMostrarEntrada extends JFrame implements IGUI {
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JButton jButton;
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JLabel jLabel;
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JTextField jTextField;
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JPanel jPanel;
-
 	private static final long serialVersionUID = 1L;
 
 	private JButton botonAceptar;
-
+	
 	private JButton botonCancelar;
 
 	private JLabel textIdEntrada;
@@ -81,39 +53,39 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 	}
 
 	public void initGUI() {
-
-		// Panel principal con GridBagLayout para mayor control sobre la alineacion y el centrado
-		mainPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = new Insets(10, 10, 10, 10); // Margenes entre los componentes
-		this.setContentPane(mainPanel);
+		
+        // Panel principal con GridBagLayout para mayor control sobre la alineacion y el centrado
+        mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 10, 10, 10); // Margenes entre los componentes
+        this.setContentPane(mainPanel);
 
 		// Título
-		gbc.gridwidth = 2; // Toma dos columnas para el titulo
-		JLabel msgIntro = new JLabel("Introduzca el ID de la entrada a mostrar", JLabel.CENTER);
-		mainPanel.add(msgIntro, gbc);
+        gbc.gridwidth = 2; // Toma dos columnas para el titulo
+        JLabel msgIntro = new JLabel("Introduzca el ID de la entrada a mostrar", JLabel.CENTER);
+        mainPanel.add(msgIntro, gbc);
+        
+        // Resetear para los campos
+        gbc.gridwidth = 1;
+        gbc.gridy = 1;
+        
+        // Campo para el id de la entrada
+        textIdEntrada = new JLabel("ID: ");
+        gbc.gridx = 0; // Columna 0
+        mainPanel.add(textIdEntrada, gbc);
+        id = new JTextField(20);
+        gbc.gridx = 1; // Columna 1
+        mainPanel.add(id, gbc);
 
-		// Resetear para los campos
-		gbc.gridwidth = 1;
-		gbc.gridy = 1;
-
-		// Campo para el id de la entrada
-		textIdEntrada = new JLabel("ID: ");
-		gbc.gridx = 0; // Columna 0
-		mainPanel.add(textIdEntrada, gbc);
-		id = new JTextField(20);
-		gbc.gridx = 1; // Columna 1
-		mainPanel.add(id, gbc);
-
-		// Panel de botones
-		JPanel panelBotones = new JPanel();
-		gbc.gridx = 0;
-		gbc.gridy = 6;
-		gbc.gridwidth = 2; // Los botones ocuparon dos columnas
-		gbc.anchor = GridBagConstraints.CENTER; // Centrar los botones
-		mainPanel.add(panelBotones, gbc);
-
+        // Panel de botones
+        JPanel panelBotones = new JPanel();
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.gridwidth = 2; // Los botones ocuparon dos columnas
+        gbc.anchor = GridBagConstraints.CENTER; // Centrar los botones
+        mainPanel.add(panelBotones, gbc);
+		
 		// Boton de aceptar
 		botonAceptar = new JButton("Aceptar");
 		botonAceptar.setBounds(75, 50, 100, 100);
@@ -178,10 +150,11 @@ public class GUIMostrarEntrada extends JFrame implements IGUI {
 			JOptionPane.showMessageDialog(this, "No existe entrada con ID: " + ((TEntrada) context.getDatos()).getId(),
 					"Error", JOptionPane.ERROR_MESSAGE);
 
-			this.setVisible(false);
-			ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_ENTRADA_POR_ID_VISTA, null));
+			 this.setVisible(false);
+			 ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_ENTRADA_POR_ID_VISTA, null));
 
 		}
+
 
 	}
 }

@@ -27,38 +27,10 @@ import Negocio.Entrada.TEntrada;
 
 public class GUIAltaEntrada extends JFrame implements IGUI {
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JButton jButton;
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JLabel jLabel;
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JTextField jTextField;
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JPanel jPanel;
-
 	private static final long serialVersionUID = 1L;
 
 	private JButton botonAceptar;
-
+	
 	private JButton botonCancelar;
 
 	private JLabel msgIntroIDCabecera;
@@ -86,8 +58,8 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-		msgIntroIDCabecera = ComponentsBuilder.createLabel("Introduzca los datos de la Entrada que desea dar de alta",
-				1, 10, 80, 20, Color.BLACK);
+		msgIntroIDCabecera = ComponentsBuilder
+				.createLabel("Introduzca los datos de la Entrada que desea dar de alta", 1, 10, 80, 20, Color.BLACK);
 		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(msgIntroIDCabecera);
 
@@ -205,28 +177,25 @@ public class GUIAltaEntrada extends JFrame implements IGUI {
 		} else if (context.getEvento() == Evento.ALTA_ENTRADA_KO) {
 
 			switch (res) {
-
+				
 			case -21:
 				JOptionPane.showMessageDialog(this, "Error: el id de invernadero no está activo", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
-
+				
 			case -20:
 				JOptionPane.showMessageDialog(this, "Error: el id de invernadero no existe", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
-
+				
 			case -48:
-				JOptionPane.showMessageDialog(this,
-						"Error: ya existe una entrada con dicha fecha asociada a un invernadero", "Error",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error: ya existe una entrada con dicha fecha asociada a un invernadero", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
-
+				
 			case -50:
-				JOptionPane.showMessageDialog(this, "Error: ya existe la entrada con dicha fecha", "Error",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error: ya existe la entrada con dicha fecha", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
-
+				
 			default:
 				JOptionPane.showMessageDialog(this, "Error desconocido", "Error", JOptionPane.ERROR_MESSAGE);
 				break;

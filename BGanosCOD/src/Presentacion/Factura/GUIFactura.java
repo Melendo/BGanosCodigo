@@ -19,7 +19,7 @@ import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
 public class GUIFactura extends JFrame implements IGUI {
-
+	
 	private static final long serialVersionUID = 1L;
 	private JButton botonAbrirFactura;
 	private JButton botonDevolverFactura;
@@ -28,8 +28,8 @@ public class GUIFactura extends JFrame implements IGUI {
 	private JButton botonListarFacturas;
 	private JButton botonVolver;
 	private JPanel jpanel;
-
-	public GUIFactura() {
+	
+	public GUIFactura(){
 		super("Factura");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 1000;
@@ -44,11 +44,11 @@ public class GUIFactura extends JFrame implements IGUI {
 		initGUI();
 		this.setVisible(true);
 	}
-
+	
 	public void initGUI() {
 		JLabel label = ComponentsBuilder.createLabel("Factura", 250, 30, 500, 50, Color.BLACK);
 		this.add(label);
-
+		
 		//ABRIR Factura
 		botonAbrirFactura = ComponentsBuilder.createButton("Abrir Factura", 100, 100, 185, 100);
 		botonAbrirFactura.addActionListener(new ActionListener() {
@@ -63,7 +63,7 @@ public class GUIFactura extends JFrame implements IGUI {
 		});
 		botonAbrirFactura.setVisible(true);
 		this.add(botonAbrirFactura);
-
+		
 		//Devolver Factura
 		botonDevolverFactura = ComponentsBuilder.createButton("Devolver Factura", 300, 100, 185, 100);
 		botonDevolverFactura.addActionListener(new ActionListener() {
@@ -77,7 +77,7 @@ public class GUIFactura extends JFrame implements IGUI {
 		});
 		botonDevolverFactura.setVisible(true);
 		this.add(botonDevolverFactura);
-
+		
 		//MODIFICAR Factura
 		botonModificarFactura = ComponentsBuilder.createButton("Modificar Factura", 500, 100, 185, 100);
 		botonModificarFactura.addActionListener(new ActionListener() {
@@ -91,7 +91,7 @@ public class GUIFactura extends JFrame implements IGUI {
 		});
 		botonModificarFactura.setVisible(true);
 		this.add(botonModificarFactura);
-
+		
 		//MOSTRAR Factura
 		botonMostrarFactura = ComponentsBuilder.createButton("Mostrar Factura", 700, 100, 185, 100);
 		botonMostrarFactura.addActionListener(new ActionListener() {
@@ -99,14 +99,13 @@ public class GUIFactura extends JFrame implements IGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GUIFactura.this.setVisible(false);
-				ApplicationController.getInstance()
-						.manageRequest(new Context(Evento.MOSTRAR_FACTURA_POR_ID_VISTA, null));
+				ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_FACTURA_POR_ID_VISTA, null));
 			}
 
 		});
 		botonMostrarFactura.setVisible(true);
 		this.add(botonMostrarFactura);
-
+		
 		//LISTAR Facturas
 		botonListarFacturas = ComponentsBuilder.createButton("Listar Facturas", 100, 250, 185, 100);
 		botonListarFacturas.addActionListener(new ActionListener() {
@@ -120,7 +119,7 @@ public class GUIFactura extends JFrame implements IGUI {
 		});
 		botonListarFacturas.setVisible(true);
 		this.add(botonListarFacturas);
-
+		
 		//BACK BUTTON
 		botonVolver = ComponentsBuilder.createBackButton();
 		botonVolver.addActionListener(new ActionListener() {
@@ -128,19 +127,20 @@ public class GUIFactura extends JFrame implements IGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GUIFactura.this.setVisible(false);
-				ApplicationController.getInstance().manageRequest(new Context(Evento.VISTA_PRINCIPAL, null));
+				ApplicationController.getInstance().manageRequest(new Context(Evento.VISTA_PRINCIPAL,null));
 				dispose();
 			}
 		});
 		botonVolver.setVisible(true);
 		this.add(botonVolver);
-
+		
 		getContentPane().add(jpanel);
+
 
 	}
 
 	@Override
 	public void actualizar(Context context) {
-
+		
 	}
 }

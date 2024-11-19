@@ -27,38 +27,10 @@ import Negocio.Entrada.TEntrada;
 
 public class GUIModificarEntrada extends JFrame implements IGUI {
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JButton jButton;
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JPanel jPanel;
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JLabel jLabel;
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JTextField jTextField;
-
 	private static final long serialVersionUID = 1L;
 
 	private JButton botonAceptar;
-
+	
 	private JButton botonCancelar;
 
 	private JPanel mainPanel;
@@ -87,8 +59,8 @@ public class GUIModificarEntrada extends JFrame implements IGUI {
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-		msgIntroIDCabecera = ComponentsBuilder.createLabel("Introduzca los datos de la entrada que desea modificar", 1,
-				10, 80, 20, Color.BLACK);
+		msgIntroIDCabecera = ComponentsBuilder
+				.createLabel("Introduzca los datos de la entrada que desea modificar", 1, 10, 80, 20, Color.BLACK);
 		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(msgIntroIDCabecera);
 
@@ -186,26 +158,26 @@ public class GUIModificarEntrada extends JFrame implements IGUI {
 		});
 
 		panelBotones.add(botonAceptar);
+		
+	    botonCancelar = new JButton("Cancelar");
+	    botonCancelar.addActionListener(new ActionListener() {
 
-		botonCancelar = new JButton("Cancelar");
-		botonCancelar.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            GUIModificarEntrada.this.setVisible(false);
+	            ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
+	        }
+	    });
+	    panelBotones.add(botonCancelar);
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				GUIModificarEntrada.this.setVisible(false);
-				ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
-			}
-		});
-		panelBotones.add(botonCancelar);
-
-		this.setVisible(true);
-		this.setResizable(true);
-
+	    this.setVisible(true);
+	    this.setResizable(true);
+		
 	}
 
 	@Override
 	public void actualizar(Context context) {
-
+		
 		int res = (int) context.getDatos();
 
 		if (context.getEvento() == Evento.MODIFICAR_ENTRADA_OK) {
@@ -214,40 +186,37 @@ public class GUIModificarEntrada extends JFrame implements IGUI {
 			GUIModificarEntrada.this.setVisible(false);
 			ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
 
+
 		} else if (context.getEvento() == Evento.MODIFICAR_ENTRADA_KO) {
 
 			switch (res) {
-
+				
 			case -21:
 				JOptionPane.showMessageDialog(this, "Error: el id de invernadero no está activo", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
-
+				
 			case -20:
 				JOptionPane.showMessageDialog(this, "Error: el id de invernadero no existe", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
-
+				
 			case -50:
-				JOptionPane.showMessageDialog(this, "Error: ya existe una entrada con dicha fecha y nº de invernadero",
-						"Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error: ya existe una entrada con dicha fecha y nº de invernadero", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
-
+				
 			case -51:
-				JOptionPane.showMessageDialog(this, "Error: id de una entrada que no existe", "Error",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error: id de una entrada que no existe", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
-
+				
 			case -52:
-				JOptionPane.showMessageDialog(this, "Error: id de una entrada inactiva", "Error",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error: id de una entrada inactiva", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
-
+				
 			case -53:
-				JOptionPane.showMessageDialog(this, "Error: la entrada ya existe con la misma fecha y está inactiva",
-						"Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error: la entrada ya existe con la misma fecha y está inactiva", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
-
+				
 			default:
 				JOptionPane.showMessageDialog(this, "Error desconocido", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
