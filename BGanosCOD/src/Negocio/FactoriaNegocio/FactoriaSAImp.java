@@ -13,7 +13,6 @@ import Negocio.Planta.PlantaSAImp;
 import Negocio.SistemaDeRiego.SistemaDeRiegoSA;
 import Negocio.SistemaDeRiego.SistemaDeRiegoSAImp;
 
-
 public class FactoriaSAImp extends FactoriaNegocio {
 
 	public EntradaSA getEntradaSA() {

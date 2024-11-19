@@ -17,7 +17,7 @@ public class TInvernadero {
 		this.sustrato = sustrato;
 		this.tipo_iluminacion = tipo_iluminacion;
 	}
-	
+
 	public TInvernadero(Integer id, String nombre, String sustrato, String tipo_iluminacion, Boolean activo) {
 		this.id = id;
 		this.nombre = nombre;
@@ -68,6 +68,46 @@ public class TInvernadero {
 
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
+	}
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Integer getID() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param ID
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Void setID(String ID) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public String toString() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
 	}
 
 }

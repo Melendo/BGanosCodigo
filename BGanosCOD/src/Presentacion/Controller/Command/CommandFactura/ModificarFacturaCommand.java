@@ -9,11 +9,11 @@ import Presentacion.FactoriaVistas.Evento;
 public class ModificarFacturaCommand implements Command {
 
 	public Context execute(Object datos) {
-		int res = FactoriaNegocio.getInstance().getFacturaSA().modificarFactura((TFactura)datos);
-		if(res > -1){
-			return new Context(Evento.MODIFICAR_FACTURA_OK,res);
-		}else {
-			return new Context(Evento.MODIFICAR_FACTURA_KO,res);
+		int res = FactoriaNegocio.getInstance().getFacturaSA().modificarFactura((TFactura) datos);
+		if (res > -1) {
+			return new Context(Evento.MODIFICAR_FACTURA_OK, res);
+		} else {
+			return new Context(Evento.MODIFICAR_FACTURA_KO, res);
 		}
 	}
 }

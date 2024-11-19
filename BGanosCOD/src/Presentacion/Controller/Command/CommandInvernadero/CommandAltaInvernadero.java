@@ -10,8 +10,8 @@ public class CommandAltaInvernadero implements Command {
 
 	public Context execute(Object datos) {
 
-		 int resultado = FactoriaNegocio.getInstance().getInvernaderoSA().altaInvernadero((TInvernadero) datos);
-		
+		int resultado = FactoriaNegocio.getInstance().getInvernaderoSA().altaInvernadero((TInvernadero) datos);
+
 		if (resultado > -1) {
 			return new Context(Evento.ALTA_INVERNADERO_OK, resultado);
 		} else {

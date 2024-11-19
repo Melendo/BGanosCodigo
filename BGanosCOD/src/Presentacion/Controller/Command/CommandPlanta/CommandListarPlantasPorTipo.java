@@ -12,15 +12,15 @@ import Presentacion.FactoriaVistas.Evento;
 public class CommandListarPlantasPorTipo implements Command {
 
 	public Context execute(Object datos) {
-		Set<TPlanta> res =  new HashSet<>() ;
+		Set<TPlanta> res = new HashSet<>();
 
-			res = FactoriaNegocio.getInstance().getPlantaSA().listarPlantasPorTipo((String)datos);
+		res = FactoriaNegocio.getInstance().getPlantaSA().listarPlantasPorTipo((String) datos);
 
-		
-	if(res == null || res.isEmpty()){return new Context(Evento.LISTAR_PLANTAS_POR_TIPO_KO, null);}
-	else{
-		return new Context(Evento.LISTAR_PLANTAS_POR_TIPO_OK,res);
+		if (res == null || res.isEmpty()) {
+			return new Context(Evento.LISTAR_PLANTAS_POR_TIPO_KO, null);
+		} else {
+			return new Context(Evento.LISTAR_PLANTAS_POR_TIPO_OK, res);
+		}
 	}
-	}
-	
+
 }

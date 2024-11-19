@@ -51,108 +51,103 @@ public class CommandFactoryImp extends CommandFactory {
 		switch (event) {
 		// Eventos de Factura
 		case Evento.ABRIR_FACTURA:
-		    return new AbrirFacturaCommand();
+			return new AbrirFacturaCommand();
 		case Evento.CERRAR_FACTURA:
-		    return new CerrarFacturaCommand();
+			return new CerrarFacturaCommand();
 		case Evento.MODIFICAR_FACTURA:
-		    return new ModificarFacturaCommand();
+			return new ModificarFacturaCommand();
 		case Evento.MOSTRAR_FACTURA_POR_ID:
-		    return new MostrarFacturaPorIDCommand();
+			return new MostrarFacturaPorIDCommand();
 		case Evento.LISTAR_FACTURAS:
-		    return new ListarFacturasCommand();
+			return new ListarFacturasCommand();
 		case Evento.DEVOLVER_FACTURA:
-		    return new DevolverFacturaCommand();
+			return new DevolverFacturaCommand();
 
-		    
 		// Eventos de Entrada
 		case Evento.ALTA_ENTRADA:
-		    return new CommandAltaEntrada();
+			return new CommandAltaEntrada();
 		case Evento.BAJA_ENTRADA:
-		    return new CommandBajaEntrada();
+			return new CommandBajaEntrada();
 		case Evento.MODIFICAR_ENTRADA:
-		    return new CommandModificarEntrada();
+			return new CommandModificarEntrada();
 		case Evento.MOSTRAR_ENTRADA_POR_ID:
-		    return new CommandMostrarEntrada();
+			return new CommandMostrarEntrada();
 		case Evento.LISTAR_ENTRADAS:
-		    return new CommandListarEntrada();
+			return new CommandListarEntrada();
 		case Evento.LISTAR_ENTRADAS_POR_INVERNADERO:
 			return new CommandListarEntradasPorInvernadero();
-	
 
 		// Eventos de Fabricante
 		case Evento.ALTA_FABRICANTE:
-		    return new CommandAltaFabricante();
+			return new CommandAltaFabricante();
 		case Evento.BAJA_FABRICANTE:
-		    return new CommandGUIBajaFabricante();
+			return new CommandGUIBajaFabricante();
 		case Evento.MODIFICAR_FABRICANTE:
-		    return new CommandModificarFabricante();
+			return new CommandModificarFabricante();
 		case Evento.LISTAR_FABRICANTES:
-		    return new CommandListarFabricantes();
+			return new CommandListarFabricantes();
 		case Evento.MOSTRAR_FABRICANTE_POR_ID:
-		    return new CommandMostrarFabricantePorId();
-//		case Evento.LISTAR_FABRICANTES_POR_NOMBRE:
-//		    return new CommandListarFabricantePorNombre();
+			return new CommandMostrarFabricantePorId();
+		//		case Evento.LISTAR_FABRICANTES_POR_NOMBRE:
+		//		    return new CommandListarFabricantePorNombre();
 		case Evento.LISTAR_FABRICANTES_LOCALES:
-		    return new CommandListarFabricantesLocales();
+			return new CommandListarFabricantesLocales();
 		case Evento.LISTAR_FABRICANTES_EXTRANJEROS:
-		    return new CommandListarFabricantesExtranjeros();
+			return new CommandListarFabricantesExtranjeros();
 		case Evento.LISTAR_INFORMACION_FABRICANTES_DE_SISTEMA_DE_RIEGO_DE_UN_INVERNADERO:
 			return new CommandListarInformacionFabricanteDeSistemaDeRiegoDeUnInvernadero();
-		  
-			
+
 		// Eventos de Invernadero
 		case Evento.ALTA_INVERNADERO:
-		    return new CommandAltaInvernadero();
+			return new CommandAltaInvernadero();
 		case Evento.BAJA_INVERNADERO:
-		    return new CommandBajaInvernadero();
+			return new CommandBajaInvernadero();
 		case Evento.MODIFICAR_INVERNADERO:
-		    return new CommandModificarInvernadero();
+			return new CommandModificarInvernadero();
 		case Evento.LISTAR_INVERNADEROS:
-		    return new CommandListarInvernadero();
+			return new CommandListarInvernadero();
 		case Evento.MOSTRAR_INVERNADERO_POR_ID:
-		    return new CommandMostrarInvernaderoPorID();
+			return new CommandMostrarInvernaderoPorID();
 		case Evento.LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO:
-		    return new CommandListarInvernaderoPorSR();
+			return new CommandListarInvernaderoPorSR();
 		case Evento.VINCULAR_SISTEMA_RIEGO_A_INVERNADERO:
-		    return new CommandVincularSRInvernadero();
+			return new CommandVincularSRInvernadero();
 		case Evento.DESVINCULAR_SISTEMA_RIEGO_DE_INVERNADERO:
-		    return new CommandDesvincularSRInvernadero();
+			return new CommandDesvincularSRInvernadero();
 		case Evento.CALCULAR_LAS_3_FECHAS_MAS_VENDIDAS_DE_UN_INVERNADERO:
 			return new CommandCalcularLas3FechasMasVendidasDeUnInvernadero();
 
-			
 		// Eventos de Planta
 		case Evento.ALTA_PLANTA:
-		    return new CommandAltaPlanta();
+			return new CommandAltaPlanta();
 		case Evento.BAJA_PLANTA:
-		    return new CommandBajaPlanta();
+			return new CommandBajaPlanta();
 		case Evento.MODIFICAR_PLANTA:
-		    return new CommandModificarPlanta();
+			return new CommandModificarPlanta();
 		case Evento.LISTAR_PLANTAS:
-		    return new CommandListarPlanta();
+			return new CommandListarPlanta();
 		case Evento.MOSTRAR_PLANTA_POR_ID:
-		    return new CommandMostarPlantaPorId();
+			return new CommandMostarPlantaPorId();
 		case Evento.LISTAR_PLANTAS_POR_TIPO:
-		    return new CommandListarPlantasPorTipo();
+			return new CommandListarPlantasPorTipo();
 		case Evento.LISTAR_PLANTAS_DE_INVERNADERO:
-		    return new CommandListarPlantasPorInvernadero();
+			return new CommandListarPlantasPorInvernadero();
 
-		    
 		// Eventos de Sistema de Riego
 		case Evento.ALTA_SISTEMA_RIEGO:
-		    return new CommandAltaSistemaDeRiego();
+			return new CommandAltaSistemaDeRiego();
 		case Evento.BAJA_SISTEMA_RIEGO:
-		    return new CommandBajaSistemaDeRiego();
+			return new CommandBajaSistemaDeRiego();
 		case Evento.MODIFICAR_SISTEMA_RIEGO:
-		    return new CommandModificarSistemaDeRiego();
+			return new CommandModificarSistemaDeRiego();
 		case Evento.MOSTRAR_SISTEMA_RIEGO_POR_ID:
-		    return new CommandMostrarSistemasDeRiegoPorId();
+			return new CommandMostrarSistemasDeRiegoPorId();
 		case Evento.LISTAR_SISTEMAS_RIEGO_DE_INVERNADERO:
-		    return new CommandMostrarSistemaDeRiegoDelInvernadero();
+			return new CommandMostrarSistemaDeRiegoDelInvernadero();
 		case Evento.LISTAR_SISTEMAS_RIEGO_POR_FABRICANTE:
-		    return new CommandMostrarSistemaDeRiegoPorFabricante();
+			return new CommandMostrarSistemaDeRiegoPorFabricante();
 		case Evento.LISTAR_SISTEMAS_RIEGO:
-		    return new CommandMostrarSistemasDeRiego();
+			return new CommandMostrarSistemasDeRiego();
 
 		}
 		return null;

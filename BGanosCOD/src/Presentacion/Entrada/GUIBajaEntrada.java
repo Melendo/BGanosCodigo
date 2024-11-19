@@ -24,10 +24,38 @@ import javax.swing.JPanel;
 
 public class GUIBajaEntrada extends JFrame implements IGUI {
 
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JButton jButton;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JLabel jLabel;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JTextField jTextField;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JPanel jPanel;
+
 	private static final long serialVersionUID = 1L;
 
 	private JButton botonAceptar;
-	
+
 	private JButton botonCancelar;
 
 	private JLabel labelID;
@@ -132,10 +160,9 @@ public class GUIBajaEntrada extends JFrame implements IGUI {
 				JOptionPane.showMessageDialog(this, "Error: la entrada ya está inactiva", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
-				
+
 			case -51:
-				JOptionPane.showMessageDialog(this, "Error: la entrada no existe", "Error",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error: la entrada no existe", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
 
 			default:

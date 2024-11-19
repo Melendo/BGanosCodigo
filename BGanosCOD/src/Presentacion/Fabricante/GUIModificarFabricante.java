@@ -26,6 +26,36 @@ import java.awt.Toolkit;
 @SuppressWarnings("serial")
 public class GUIModificarFabricante extends JFrame implements IGUI {
 
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JButton jButton;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JTextField jTextField;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JPanel jPanel;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JFrame jFrame;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JLabel jLabel;
 	private JTextField textId;
 	private JTextField textNombre;
 	private JTextField textCodFabricante;
@@ -193,7 +223,7 @@ public class GUIModificarFabricante extends JFrame implements IGUI {
 					((TFabricanteExtranjero) fabricante).setPaisDeOrigen(textPaisOrigen.getText());
 				}
 				fabricante.setId(Integer.parseInt(textId.getText()));
-//				fabricante.setActivo(true);
+				//				fabricante.setActivo(true);
 				fabricante.setCodFabricante(textCodFabricante.getText());
 				fabricante.setNombre(textNombre.getText());
 				fabricante.setTelefono(textTelefono.getText());
@@ -247,7 +277,8 @@ public class GUIModificarFabricante extends JFrame implements IGUI {
 				JOptionPane.showMessageDialog(this, "Telefono invalido.", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
 			case -7:
-				JOptionPane.showMessageDialog(this, "Ya existe un fabricante con ese código.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Ya existe un fabricante con ese código.", "Error",
+						JOptionPane.ERROR_MESSAGE);
 				break;
 			default:
 				JOptionPane.showMessageDialog(this, "Error desconocido al modificar el fabricante.", "Error",

@@ -27,6 +27,47 @@ import javax.swing.JOptionPane;
 
 public class GUIListarEntradas extends JFrame implements IGUI {
 
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JButton jButton;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JPanel jPanel;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JTextField jTextField;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JLabel jLabel;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param entrada
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public void initGUI(TEntrada... entrada) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+
+		// end-user-code
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private JButton botonCancelar;
@@ -47,9 +88,8 @@ public class GUIListarEntradas extends JFrame implements IGUI {
 		initGUI((Set<TEntrada>) listaEntradas);
 	}
 
-	
 	private void initGUI(Set<TEntrada> listaEntradas) {
-		
+
 		// Panel principal
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -58,8 +98,8 @@ public class GUIListarEntradas extends JFrame implements IGUI {
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
 
 		// Tabla
-		String[] nombreColumnas = { "ID","Fecha","Precio","Stock","Activo", "Id Invernadero" };
-        String[][] tablaDatos = new String[listaEntradas.size()][nombreColumnas.length];
+		String[] nombreColumnas = { "ID", "Fecha", "Precio", "Stock", "Activo", "Id Invernadero" };
+		String[][] tablaDatos = new String[listaEntradas.size()][nombreColumnas.length];
 
 		int i = 0;
 		for (TEntrada t : listaEntradas) {
@@ -72,40 +112,40 @@ public class GUIListarEntradas extends JFrame implements IGUI {
 
 			i++;
 		}
-		
-        JTable tabla =  ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, tablaDatos); 
-        JScrollPane scroll = new JScrollPane(tabla);
-        scroll.setPreferredSize(new Dimension(750, 250)); 
-        mainPanel.add(scroll);
-		
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Panel de botones
-        JPanel panelBotones = new JPanel();
-        mainPanel.add(panelBotones);
+		JTable tabla = ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, tablaDatos);
+		JScrollPane scroll = new JScrollPane(tabla);
+		scroll.setPreferredSize(new Dimension(750, 250));
+		mainPanel.add(scroll);
 
-        botonCancelar = new JButton("Cancelar");
-        botonCancelar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	GUIListarEntradas.this.setVisible(false);
-            	ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
-            }
-        });
-        panelBotones.add(botonCancelar);
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        this.setVisible(true);
-        this.setResizable(true);	
-		
+		// Panel de botones
+		JPanel panelBotones = new JPanel();
+		mainPanel.add(panelBotones);
+
+		botonCancelar = new JButton("Cancelar");
+		botonCancelar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIListarEntradas.this.setVisible(false);
+				ApplicationController.getInstance().manageRequest(new Context(Evento.ENTRADA_VISTA, null));
+			}
+		});
+		panelBotones.add(botonCancelar);
+
+		this.setVisible(true);
+		this.setResizable(true);
+
 	}
-
 
 	@Override
 	public void actualizar(Context context) {
-		if(context.getEvento() == Evento.LISTAR_ENTRADA_OK) {
-            JOptionPane.showMessageDialog(this, "Entradas listadas correctamente", "exito", JOptionPane.INFORMATION_MESSAGE);
-		} else if(context.getEvento() == Evento.LISTAR_ENTRADA_KO) {
-            JOptionPane.showMessageDialog(this, "Error al listar entradas", "Error", JOptionPane.INFORMATION_MESSAGE);
+		if (context.getEvento() == Evento.LISTAR_ENTRADA_OK) {
+			JOptionPane.showMessageDialog(this, "Entradas listadas correctamente", "exito",
+					JOptionPane.INFORMATION_MESSAGE);
+		} else if (context.getEvento() == Evento.LISTAR_ENTRADA_KO) {
+			JOptionPane.showMessageDialog(this, "Error al listar entradas", "Error", JOptionPane.INFORMATION_MESSAGE);
 
 		}
 

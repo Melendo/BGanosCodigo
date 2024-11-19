@@ -28,6 +28,30 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class GUIVincularSRInvernadero extends JFrame implements IGUI {
 
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JLabel jLabel;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JButton jButton;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JTextField jTextField;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JPanel jPanel;
 	private JTextField textId_Invernadero;
 	private JTextField textId_SisRiego;
 
@@ -79,7 +103,7 @@ public class GUIVincularSRInvernadero extends JFrame implements IGUI {
 		textId_SisRiego = new JTextField(20);
 		gbc.gridx = 1; // Columna 1
 		mainPanel.add(textId_SisRiego, gbc);
-		
+
 		// Panel de botones
 		JPanel panelBotones = new JPanel();
 		gbc.gridx = 0;
@@ -96,19 +120,19 @@ public class GUIVincularSRInvernadero extends JFrame implements IGUI {
 				try {
 					String idTexto1 = textId_Invernadero.getText();
 					Integer idInvernadero = idTexto1 != null ? Integer.parseInt(idTexto1) : 0;
-					
+
 					String idTexto2 = textId_SisRiego.getText();
 					Integer idSisRiego = idTexto2 != null ? Integer.parseInt(idTexto2) : 0;
 
 					TTiene tiene = new TTiene();
 					tiene.setId_Invernadero(idInvernadero);
 					tiene.setId_SistemasDeRiego(idSisRiego);
-					
+
 					ApplicationController.getInstance()
 							.manageRequest(new Context(Evento.VINCULAR_SISTEMA_RIEGO_A_INVERNADERO, tiene));
 				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(GUIVincularSRInvernadero.this, "Error en el formato del ID o campos vacios", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(GUIVincularSRInvernadero.this,
+							"Error en el formato del ID o campos vacios", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -133,8 +157,8 @@ public class GUIVincularSRInvernadero extends JFrame implements IGUI {
 		int resultado = (int) context.getDatos();
 		if (context.getEvento() == Evento.VINCULAR_SISTEMA_RIEGO_A_INVERNADERO_OK) {
 
-			JOptionPane.showMessageDialog(this, "Invernadero y Sistema de riego se han vinculados correctamente", "Exito",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Invernadero y Sistema de riego se han vinculados correctamente",
+					"Exito", JOptionPane.INFORMATION_MESSAGE);
 		} else if (context.getEvento() == Evento.VINCULAR_SISTEMA_RIEGO_A_INVERNADERO_KO) {
 
 			switch (resultado) {

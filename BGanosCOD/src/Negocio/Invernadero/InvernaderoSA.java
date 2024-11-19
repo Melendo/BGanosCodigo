@@ -29,9 +29,18 @@ public interface InvernaderoSA {
 	//
 	public Integer vincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero);
 
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public String listarTresFechasEntradasVendidasInvernadero(Integer id);
+
 	//
 	public Integer desvincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero);
-	
-	public Collection<Date> calcularLasTresFechasMasVendidasDeUnInvernadero (Integer id_invernadero);
+
+	public Collection<Date> calcularLasTresFechasMasVendidasDeUnInvernadero(Integer id_invernadero);
 
 }

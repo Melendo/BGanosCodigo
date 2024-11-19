@@ -12,17 +12,16 @@ import Presentacion.FactoriaVistas.Evento;
 public class CommandListarPlantasPorInvernadero implements Command {
 
 	public Context execute(Object datos) {
-		Set<TPlanta> res = new HashSet<> ();
+		Set<TPlanta> res = new HashSet<>();
 
-			res = FactoriaNegocio.getInstance().getPlantaSA().listarPlantasPorInvernadero((Integer)datos);
+		res = FactoriaNegocio.getInstance().getPlantaSA().listarPlantasPorInvernadero((Integer) datos);
 
-			if(res == null || res.isEmpty()){
-				return new Context(Evento.LISTAR_PLANTAS_DE_INVERNADERO_KO, null);
-			}
-			else{
-				
-				return new Context(Evento.LISTAR_PLANTAS_DE_INVERNADERO_OK,res);
-			}
+		if (res == null || res.isEmpty()) {
+			return new Context(Evento.LISTAR_PLANTAS_DE_INVERNADERO_KO, null);
+		} else {
+
+			return new Context(Evento.LISTAR_PLANTAS_DE_INVERNADERO_OK, res);
+		}
 
 	}
 }

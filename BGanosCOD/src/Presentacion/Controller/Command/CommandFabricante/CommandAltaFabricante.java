@@ -10,10 +10,10 @@ public class CommandAltaFabricante implements Command {
 
 	public Context execute(Object datos) {
 		int ret = FactoriaNegocio.getInstance().getFabricanteSA().altaFabricante((TFabricante) datos);
-		if(ret > -1){
-			return new Context(Evento.ALTA_FABRICANTE_OK,ret);
-		}else {
-			return new Context(Evento.ALTA_FABRICANTE_KO,ret);
+		if (ret > -1) {
+			return new Context(Evento.ALTA_FABRICANTE_OK, ret);
+		} else {
+			return new Context(Evento.ALTA_FABRICANTE_KO, ret);
 		}
 	}
 }

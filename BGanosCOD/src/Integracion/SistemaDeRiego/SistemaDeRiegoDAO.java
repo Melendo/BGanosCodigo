@@ -12,11 +12,11 @@ public interface SistemaDeRiegoDAO {
 	public Integer modificarSistemaDeRiego(TSistemaDeRiego sistemaDeRiego);
 
 	public TSistemaDeRiego mostrarSistemaDeRiegoPorID(Integer id);
-	
+
 	public Set<TSistemaDeRiego> listarSistemaDeRiegoPorFabricante(Integer idFabricante);
 
 	public Set<TSistemaDeRiego> listarSistemaDeRiego();
-	
+
 	public Set<TSistemaDeRiego> listarSistemaDeRiegoInvernadero(Integer idInvernadero);
 
 	public TSistemaDeRiego leerPorNombreUnico(String nombre);

@@ -6,7 +6,7 @@ import java.util.Set;
 public interface PlantaDAO {
 
 	public Integer altaPlanta(TPlanta planta);
-	
+
 	public Integer bajaPlanta(Integer id);
 
 	public Set<TPlanta> listarPlantas();

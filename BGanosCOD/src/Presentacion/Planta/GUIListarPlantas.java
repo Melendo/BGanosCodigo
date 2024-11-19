@@ -20,113 +20,161 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class GUIListarPlantas extends JFrame implements IGUI {
-	
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JLabel jLabel;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JButton jButton;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JTextField jTextField;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JPanel jPanel;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param planta
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public void initGUI(TPlanta... planta) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+
+		// end-user-code
+	}
+
 	public GUIListarPlantas(Set<TPlanta> plantas) {
-		
+
 		this.initGUI(plantas);
-		int tmp = Evento.LISTAR_PLANTAS_OK ;
-		if(plantas == null || plantas.isEmpty()) {tmp = Evento.LISTAR_PLANTAS_KO;}
-		
+		int tmp = Evento.LISTAR_PLANTAS_OK;
+		if (plantas == null || plantas.isEmpty()) {
+			tmp = Evento.LISTAR_PLANTAS_KO;
+		}
+
 		Context context = new Context(tmp, plantas);
 		this.actualizar(context);
 	}
 
 	private static final long serialVersionUID = 1L;
-	
-	private static final String headers[] = {"ID", "Nombre", "N.Cientifico", "ID Invernadero", "Tipo", "N.Fruta", "Maduracion", "Hoja"};
-	
+
+	private static final String headers[] = { "ID", "Nombre", "N.Cientifico", "ID Invernadero", "Tipo", "N.Fruta",
+			"Maduracion", "Hoja" };
+
 	private JTable table;
 	private DefaultTableModel model;
 
 	public void initGUI(Set<TPlanta> lista) {
-    	this.setTitle("LISTAR PLANTAS");
-    	this.setVisible(false);
-    	// MAIN PANEL
-    	JPanel mainPanel = new JPanel(new BorderLayout());
-    	this.setContentPane(mainPanel);
-    	
+		this.setTitle("LISTAR PLANTAS");
+		this.setVisible(false);
+		// MAIN PANEL
+		JPanel mainPanel = new JPanel(new BorderLayout());
+		this.setContentPane(mainPanel);
+
 		// TABLE MODEL
-    	this.model = new DefaultTableModel() {
+		this.model = new DefaultTableModel() {
 			private static final long serialVersionUID = 1L;
+
 			@Override
-    		public boolean isCellEditable(int row, int col) { return false; }
-    	};
-    	this.model.setColumnCount(0);
-    	for (String s : headers)
-    		this.model.addColumn(s);
-    	
-    	// MAIN TABLE
-    	this.table = new JTable(this.model);
-  
+			public boolean isCellEditable(int row, int col) {
+				return false;
+			}
+		};
+		this.model.setColumnCount(0);
+		for (String s : headers)
+			this.model.addColumn(s);
+
+		// MAIN TABLE
+		this.table = new JTable(this.model);
+
 		// BUTTONS PANEL
-	
+
 		mainPanel.add(new JScrollPane(this.table), BorderLayout.CENTER);
-		
+
 		Dimension dims_frame = this.getContentPane().getSize();
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension frame = new Dimension((int) dims_frame.getWidth(), (int) dims_frame.getHeight());
-		
+
 		this.setPreferredSize(new Dimension(950, 400));
-		this.setLocation(dim.width / 2 - frame.getSize().width / 2 - 200, dim.height / 2 - frame.getSize().height / 2 - 200);
+		this.setLocation(dim.width / 2 - frame.getSize().width / 2 - 200,
+				dim.height / 2 - frame.getSize().height / 2 - 200);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.pack();
 	}
-	
-
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void actualizar(Context context) {
-		switch(context.getEvento()) {
+		switch (context.getEvento()) {
 		case Evento.LISTAR_PLANTAS_KO:
 			this.setVisible(false);
 			GUIMSG.showMessage("No hay plantas", "LISTAR PLANTAS", true);
 			break;
-		case  Evento.LISTAR_PLANTAS_OK:
-		
+		case Evento.LISTAR_PLANTAS_OK:
+
 			this.model.setRowCount(0);
-			
+
 			for (TPlanta tp : ((Set<TPlanta>) context.getDatos())) {
-				String id = "" + tp.get_id(), nombre = tp.get_nombre(), cientifico = "" + tp.get_nombre_cientifico(), invernadero = "" + tp.get_id_invernadero();
-				String fruta = "",mad = "", hoja = ""; 
+				String id = "" + tp.get_id(), nombre = tp.get_nombre(), cientifico = "" + tp.get_nombre_cientifico(),
+						invernadero = "" + tp.get_id_invernadero();
+				String fruta = "", mad = "", hoja = "";
 				String tip = "Frutal";
-				if(tp.get_tipo() == 1){tip = "No Frutal";}
-				
-				if(tp instanceof TPlantaFrutal){
-					fruta = "" + ((TPlantaFrutal)tp).get_nombre_fruta();
-					mad = "" + ((TPlantaFrutal)tp).get_maduracion();
+				if (tp.get_tipo() == 1) {
+					tip = "No Frutal";
 				}
-				else{
-					
-					hoja = "" + ((TPlantaNoFrutal)tp).get_tipo_hoja();
+
+				if (tp instanceof TPlantaFrutal) {
+					fruta = "" + ((TPlantaFrutal) tp).get_nombre_fruta();
+					mad = "" + ((TPlantaFrutal) tp).get_maduracion();
+				} else {
+
+					hoja = "" + ((TPlantaNoFrutal) tp).get_tipo_hoja();
 				}
-							
+
 				if (tp.getActivo()) {
 					id = this.toBold(id);
 					nombre = this.toBold(nombre);
 					cientifico = this.toBold(cientifico);
 					invernadero = this.toBold(invernadero);
-					fruta =  this.toBold(fruta);
-					mad  =  this.toBold(mad);
-					hoja  =  this.toBold(hoja);
-					tip  =  this.toBold(tip);
+					fruta = this.toBold(fruta);
+					mad = this.toBold(mad);
+					hoja = this.toBold(hoja);
+					tip = this.toBold(tip);
 					DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 					renderer.setFont(renderer.getFont().deriveFont(Font.BOLD));
 					table.getColumnModel().getColumn(1).setCellRenderer(renderer);
 				}
-				this.model.addRow(new Object[] {id, nombre, cientifico, invernadero, tip,fruta, mad, hoja});
+				this.model.addRow(new Object[] { id, nombre, cientifico, invernadero, tip, fruta, mad, hoja });
 			}
 			this.setVisible(true);
-			
+
 			break;
 		default:
 			GUIMSG.showMessage("ERROR INESPERADO", "LISTAR PLANTAS", true);
 			break;
-		
+
+		}
 	}
-	}
-	
+
 	private String toBold(String s) {
-    	return "<html><b>" + s + "</b></html>";
-    }
+		return "<html><b>" + s + "</b></html>";
+	}
 }

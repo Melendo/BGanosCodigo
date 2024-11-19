@@ -14,11 +14,11 @@ public class CommandListarInvernaderoPorSR implements Command {
 		Set<TInvernadero> resultado = (Set<TInvernadero>) FactoriaNegocio.getInstance().getInvernaderoSA()
 				.listarInvernaderoPorSR((Integer) datos);
 		if (resultado.size() == 1) {
-			if(resultado.iterator().next().getId() == -1) {
+			if (resultado.iterator().next().getId() == -1) {
 				return new Context(Evento.LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO_KO, resultado);
 			}
 		}
 		return new Context(Evento.LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO_OK, resultado);
-		
+
 	}
 }

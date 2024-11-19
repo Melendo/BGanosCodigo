@@ -5,7 +5,7 @@ import java.util.Date;
 public class TEntrada {
 
 	private Integer id;
-	
+
 	private Integer idInvernadero;
 
 	private Date fecha;
@@ -15,8 +15,7 @@ public class TEntrada {
 	private Integer stock_entradas;
 
 	private Boolean activo;
-	
-	
+
 	public TEntrada(Integer id, Date fecha, Float precio, Integer stock, Integer idInvernadero, Boolean activo) {
 		this.id = id;
 		this.fecha = fecha;
@@ -25,7 +24,7 @@ public class TEntrada {
 		this.idInvernadero = idInvernadero;
 		this.activo = activo;
 	}
-	
+
 	public TEntrada(Date fecha, Float precio, Integer stock, Integer idInvernadero, Boolean activo) {
 		this.fecha = fecha;
 		this.precio = precio;
@@ -33,20 +32,20 @@ public class TEntrada {
 		this.idInvernadero = idInvernadero;
 		this.activo = activo;
 	}
-	
+
 	public TEntrada() {
-//		this.id = -1;
-//		this.fecha = null;
-//		this.precio = 0.0f; // el 0.0f es para que interprete que es float
-//		this.stock_entradas = 0;
-//		this.idInvernadero = -1;
-//		this.activo = false;
+		//		this.id = -1;
+		//		this.fecha = null;
+		//		this.precio = 0.0f; // el 0.0f es para que interprete que es float
+		//		this.stock_entradas = 0;
+		//		this.idInvernadero = -1;
+		//		this.activo = false;
 	}
 
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public Integer getIdInvernadero() {
 		return idInvernadero;
 	}
@@ -70,7 +69,7 @@ public class TEntrada {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public void setIdInvernadero(Integer idInvernadero) {
 		this.idInvernadero = idInvernadero;
 	}

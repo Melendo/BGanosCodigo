@@ -24,6 +24,36 @@ import javax.swing.JOptionPane;
 @SuppressWarnings("serial")
 public class GUIBajaFabricante extends JFrame implements IGUI {
 
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JButton jButton;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JTextField jTextField;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JPanel jPanel;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JFrame jFrame;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JLabel jLabel;
 	private JTextField textId;
 
 	public GUIBajaFabricante() {
@@ -121,7 +151,8 @@ public class GUIBajaFabricante extends JFrame implements IGUI {
 						JOptionPane.ERROR_MESSAGE);
 				break;
 			case -4:
-				JOptionPane.showMessageDialog(this, "No puedes dar de baja a un fabricante con Sistemas de Riego asociados.", "Error",
+				JOptionPane.showMessageDialog(this,
+						"No puedes dar de baja a un fabricante con Sistemas de Riego asociados.", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
 			default:

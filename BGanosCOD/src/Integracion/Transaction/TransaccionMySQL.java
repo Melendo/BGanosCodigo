@@ -42,6 +42,18 @@ public class TransaccionMySQL implements Transaccion {
 		}
 	}
 
+	/** 
+	* (non-Javadoc)
+	* @see Transaccion#cerrarConnection()
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Void cerrarConnection() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+
 	public void start() throws Exception {
 		conexion.setAutoCommit(false);
 	}

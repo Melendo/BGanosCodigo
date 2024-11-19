@@ -33,7 +33,7 @@ public class TFactura {
 	}
 
 	public void setFechaCompra(Date fechaCompra) {
-		this.fechaCompra=fechaCompra;
+		this.fechaCompra = fechaCompra;
 	}
 
 	public boolean getActivo() {

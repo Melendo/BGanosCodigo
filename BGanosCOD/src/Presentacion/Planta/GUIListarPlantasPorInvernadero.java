@@ -27,9 +27,32 @@ import Negocio.Planta.TPlanta;
 
 import javax.swing.JPanel;
 
-
 public class GUIListarPlantasPorInvernadero extends JFrame implements IGUI {
 
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JLabel jLabel;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JButton jButton;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JTextField jTextField;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JPanel jPanel;
 	private static final long serialVersionUID = 1L;
 
 	public GUIListarPlantasPorInvernadero(Set<TPlanta> datos) {
@@ -47,74 +70,75 @@ public class GUIListarPlantasPorInvernadero extends JFrame implements IGUI {
 	}
 
 	public void initGUI() {
-		
-		JPanel mainPanel = new JPanel();
-	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-	    this.setContentPane(mainPanel);
-	    this.setVisible(true);
-	    mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-	    
-	    JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("Seleccione el invernadero", 1, 10, 80, 20, Color.BLACK);
-	    msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
-	    mainPanel.add(msgIntroIDCabecera);
-		
-	    mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
-	    
-	    //PANEL DE TIPO DE LA PLANTA
-	    JPanel panelinvernadero = new JPanel();
-	    mainPanel.add(panelinvernadero);
-	    
- 		JLabel labelID = ComponentsBuilder.createLabel("ID del invernadero: ", 10, 100, 80, 20,Color.BLACK);
- 		panelinvernadero.add(labelID);
- 		JTextField textID = new JTextField(25);
- 		panelinvernadero.add(textID);
-	    
- 		//PANEL DE LOS BOTONES
- 		JPanel panelBotones = new JPanel();
- 		mainPanel.add(panelBotones);
- 		
-		//BOTON DE ACEPTAR
- 		JButton botonAceptar = new JButton("Aceptar");
- 		
- 		
- 		botonAceptar.addActionListener(new ActionListener() {
- 			
- 			@Override
- 			public void actionPerformed(ActionEvent e) {
- 				setVisible(false);
- 				
- 				try {
- 					
- 					int id = Integer.parseInt(textID.getText());
- 	
 
-                    ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_DE_INVERNADERO,id));
-                
- 			
- 				} catch (Exception e1) {
- 					GUIMSG.showMessage("Formato incorrecto", "LISTAR PLANTAS POR INVERNADERO", true);
- 				}
- 			}
- 		});
- 		
- 		panelBotones.add(botonAceptar);
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		this.setContentPane(mainPanel);
+		this.setVisible(true);
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+		JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("Seleccione el invernadero", 1, 10, 80, 20,
+				Color.BLACK);
+		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
+		mainPanel.add(msgIntroIDCabecera);
+
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
+
+		//PANEL DE TIPO DE LA PLANTA
+		JPanel panelinvernadero = new JPanel();
+		mainPanel.add(panelinvernadero);
+
+		JLabel labelID = ComponentsBuilder.createLabel("ID del invernadero: ", 10, 100, 80, 20, Color.BLACK);
+		panelinvernadero.add(labelID);
+		JTextField textID = new JTextField(25);
+		panelinvernadero.add(textID);
+
+		//PANEL DE LOS BOTONES
+		JPanel panelBotones = new JPanel();
+		mainPanel.add(panelBotones);
+
+		//BOTON DE ACEPTAR
+		JButton botonAceptar = new JButton("Aceptar");
+
+		botonAceptar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+
+				try {
+
+					int id = Integer.parseInt(textID.getText());
+
+					ApplicationController.getInstance()
+							.manageRequest(new Context(Evento.LISTAR_PLANTAS_DE_INVERNADERO, id));
+
+				} catch (Exception e1) {
+					GUIMSG.showMessage("Formato incorrecto", "LISTAR PLANTAS POR INVERNADERO", true);
+				}
+			}
+		});
+
+		panelBotones.add(botonAceptar);
 	}
 
 	@Override
 	public void actualizar(Context context) {
-		switch(context.getEvento()) {
+		switch (context.getEvento()) {
 		case Evento.LISTAR_PLANTAS_DE_INVERNADERO_KO:
-			GUIMSG.showMessage("No existe plantas en el invernadero seleccionado o el invernadero seleccionado no existe", "LISTAR PLANTAS POR INVERNADERO", true);
+			GUIMSG.showMessage(
+					"No existe plantas en el invernadero seleccionado o el invernadero seleccionado no existe",
+					"LISTAR PLANTAS POR INVERNADERO", true);
 			break;
-		case  Evento.LISTAR_PLANTAS_DE_INVERNADERO_OK:
-			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_VISTA,context.getDatos()));
+		case Evento.LISTAR_PLANTAS_DE_INVERNADERO_OK:
+			ApplicationController.getInstance()
+					.manageRequest(new Context(Evento.LISTAR_PLANTAS_VISTA, context.getDatos()));
 			break;
 		default:
 			GUIMSG.showMessage("ERROR INESPERADO", "LISTAR PLANTAS POR INVERNADERO", true);
 			break;
-		
-	}
 
-		
+		}
+
 	}
 }

@@ -22,34 +22,34 @@ public class PlantaSAImp implements PlantaSA {
 			t.start();
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 
-			
 			InvernaderoDAO daoinv = f.getInvernaderoDAO();
 			PlantaDAO dao = f.getPlantaDAO();
-			
-			
+
 			TInvernadero inv = daoinv.mostrarInvernaderoPorID(planta.get_id_invernadero());
-			
-			
-			
-			if(inv == null ){
-				
+
+			if (inv == null) {
+
 				exito = -1;
 				t.rollback();
-			} 
-			else{
-				
-				
-				if(!inv.isActivo()){exito = -3;} 
-				else {exito = dao.altaPlanta(planta);} 
-			
-			if(exito>-1) {t.commit();}
-			else {t.rollback();}
-			
-			} 
+			} else {
+
+				if (!inv.isActivo()) {
+					exito = -3;
+				} else {
+					exito = dao.altaPlanta(planta);
+				}
+
+				if (exito > -1) {
+					t.commit();
+				} else {
+					t.rollback();
+				}
+
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 		}
 		return exito;
 	}
@@ -66,27 +66,25 @@ public class PlantaSAImp implements PlantaSA {
 			PlantaDAO dao = f.getPlantaDAO();
 
 			TPlanta p = dao.mostrarPorId(id);
-			
-			if(p == null) {
+
+			if (p == null) {
 				t.rollback();
 				exito = -2;
-				
-			}
-			else {
-				
-				
-				if(!p.getActivo()) {
+
+			} else {
+
+				if (!p.getActivo()) {
 					exito = -3;
-				}
-				else{
+				} else {
 					exito = dao.bajaPlanta(id);
 				}
-				
-				if(exito >-1) {t.commit();}
-				else {t.rollback();}
+
+				if (exito > -1) {
+					t.commit();
+				} else {
+					t.rollback();
+				}
 			}
-			
-		
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,7 +92,7 @@ public class PlantaSAImp implements PlantaSA {
 		return exito;
 	}
 
-	public Integer modificarPlanta(TPlanta planta)  {
+	public Integer modificarPlanta(TPlanta planta) {
 		int exito = -1;
 		Transaccion t = null;
 		try {
@@ -103,27 +101,25 @@ public class PlantaSAImp implements PlantaSA {
 			t.start();
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 			InvernaderoDAO daoinv = f.getInvernaderoDAO();
-			
+
 			TInvernadero inv = daoinv.mostrarInvernaderoPorID(planta.get_id_invernadero());
-			
-			if(inv == null || !inv.isActivo()){
+
+			if (inv == null || !inv.isActivo()) {
 				exito = -2;
-				
-			}
-			else{
 
-			PlantaDAO dao = f.getPlantaDAO();
-			
+			} else {
 
-			exito = dao.modificarPlanta(planta);
-			
+				PlantaDAO dao = f.getPlantaDAO();
+
+				exito = dao.modificarPlanta(planta);
+
 			}
-				
-			if(exito > -1) {t.commit();}
-			else {t.rollback();}
-			
-			
-		
+
+			if (exito > -1) {
+				t.commit();
+			} else {
+				t.rollback();
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -131,7 +127,7 @@ public class PlantaSAImp implements PlantaSA {
 		return exito;
 	}
 
-	public Set<TPlanta> listarPlanta()  {
+	public Set<TPlanta> listarPlanta() {
 		Transaccion t = null;
 		Set<TPlanta> p = new HashSet<>();
 		try {
@@ -141,26 +137,24 @@ public class PlantaSAImp implements PlantaSA {
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 
 			PlantaDAO dao = f.getPlantaDAO();
-			
-			 p = dao.listarPlantas();
-		
-			if(p == null ) {
-				t.rollback();
-				
-			}
-			else {
-			
-				t.commit();
-				
-			}
 
+			p = dao.listarPlantas();
+
+			if (p == null) {
+				t.rollback();
+
+			} else {
+
+				t.commit();
+
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return p;
-		
+
 	}
 
 	public TPlanta mostrarPlantaPorId(Integer id) {
@@ -173,31 +167,38 @@ public class PlantaSAImp implements PlantaSA {
 			FactoriaIntegracion f = FactoriaIntegracion.getInstance();
 
 			PlantaDAO dao = f.getPlantaDAO();
-			
+
 			p = dao.mostrarPorId(id);
-			
-			if(p == null ) {
+
+			if (p == null) {
 				t.rollback();
-				
-			}
-			else {
-			
-				
+
+			} else {
+
 				t.commit();
-				
+
 			}
-			
-		
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return p;
 	}
 
-	public Set<TPlanta> listarPlantasPorTipo(String tipo)  {
+	/** 
+	* (non-Javadoc)
+	* @see PlantaSA#listarPlantasPorTipo(Integer tipo)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Set listarPlantasPorTipo(Integer tipo) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+
+	public Set<TPlanta> listarPlantasPorTipo(String tipo) {
 		Transaccion t = null;
 		Set<TPlanta> p = new HashSet<>();
 		try {
@@ -208,28 +209,24 @@ public class PlantaSAImp implements PlantaSA {
 
 			PlantaDAO dao = f.getPlantaDAO();
 			int tip = 1;
-			if(tipo == "Frutal")  {tip = 0;}
-			
+			if (tipo == "Frutal") {
+				tip = 0;
+			}
+
 			p = dao.mostrarPorTipo(tip);
-	
-			
-			if(p == null ) {
+
+			if (p == null) {
 				t.rollback();
-				
-			}
-			else {
-			
+
+			} else {
+
 				t.commit();
-				
+
 			}
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		
 
 		return p;
 	}
@@ -246,28 +243,25 @@ public class PlantaSAImp implements PlantaSA {
 			PlantaDAO dao = f.getPlantaDAO();
 			InvernaderoDAO daoinv = f.getInvernaderoDAO();
 			TInvernadero inv = daoinv.mostrarInvernaderoPorID(id_invernadero);
-			
-			if(inv == null){
+
+			if (inv == null) {
 				t.rollback();
 				return null;
 			}
 
 			p = dao.MostrarPorInvernadero(id_invernadero);
-			
-			if(p == null ) {
+
+			if (p == null) {
 				t.rollback();
-				
-			}
-			else {
+
+			} else {
 				t.commit();
 			}
-
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-	
+
 		return p;
 	}
 }

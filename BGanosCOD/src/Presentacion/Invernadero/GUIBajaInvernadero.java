@@ -23,6 +23,30 @@ import javax.swing.JPanel;
 
 public class GUIBajaInvernadero extends JFrame implements IGUI {
 
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JButton jButton;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JLabel jLabel;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JTextField jTextField;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JPanel jPanel;
 	private static final long serialVersionUID = 1L;
 	private JTextField textId;
 
@@ -110,8 +134,8 @@ public class GUIBajaInvernadero extends JFrame implements IGUI {
 		int resultado = (int) context.getDatos();
 		if (context.getEvento() == Evento.BAJA_INVERNADERO_OK) {
 
-			JOptionPane.showMessageDialog(this, "Invernadero con id " + resultado + " dado de baja correctamente", "Exito",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Invernadero con id " + resultado + " dado de baja correctamente",
+					"Exito", JOptionPane.INFORMATION_MESSAGE);
 		} else if (context.getEvento() == Evento.BAJA_INVERNADERO_KO) {
 
 			switch (resultado) {

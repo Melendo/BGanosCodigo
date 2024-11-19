@@ -2,7 +2,6 @@ package Presentacion.Planta;
 
 import javax.swing.JFrame;
 
-
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.GUIMSG;
@@ -29,6 +28,34 @@ import javax.swing.JPanel;
 
 public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JLabel jLabel;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JButton jButton;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JTextField jTextField;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private JPanel jPanel;
+
 	private static final long serialVersionUID = 1L;
 
 	String seleccion = "";
@@ -47,91 +74,89 @@ public class GUIListarPlantasPorTipo extends JFrame implements IGUI {
 		initGUI();
 	}
 
-
 	public void initGUI() {
-		
+
 		JPanel mainPanel = new JPanel();
-	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-	    this.setContentPane(mainPanel);
-	    this.setVisible(true);
-	    mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-	    
-	    JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("Seleccione el tipo de planta que desea", 1, 10, 80, 20, Color.BLACK);
-	    msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
-	    mainPanel.add(msgIntroIDCabecera);
-	    
-	    mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
-	    
-	    //PANEL DE TIPO DE LA PLANTA
-	    JPanel paneltipo = new JPanel();
-	    
-	    mainPanel.add(paneltipo);
-	    
-	    JLabel labelTPlanta = ComponentsBuilder.createLabel("Tipo de planta: ", 10, 100, 80, 20,Color.BLACK);
- 		paneltipo.add(labelTPlanta);
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		this.setContentPane(mainPanel);
+		this.setVisible(true);
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
- 		JComboBox<String> tipoPlanta = new JComboBox<String>();
- 		tipoPlanta.addItem("Frutal");
- 		tipoPlanta.addItem("No Frutal");
- 		tipoPlanta.setPreferredSize(new Dimension(250, 25));
- 		paneltipo.add(tipoPlanta);
- 		
- 		//PANEL DE LOS BOTONES
- 		JPanel panelBotones = new JPanel();
- 		mainPanel.add(panelBotones);
- 		
- 		//BOTON DE ACEPTAR
- 		JButton botonAceptar = new JButton("Aceptar");
- 		
- 		
- 		botonAceptar.addActionListener(new ActionListener() {
- 			
- 			@Override
- 			public void actionPerformed(ActionEvent e) {
- 				setVisible(false);
- 				
- 				try {
- 					
- 					String selected = (String) tipoPlanta.getSelectedItem();
- 					
-                    if (selected.equals("Frutal")) {
-             
-                    	ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_POR_TIPO,"Frutal"));
-                    } 
-                    else {
+		JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("Seleccione el tipo de planta que desea", 1, 10, 80,
+				20, Color.BLACK);
+		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
+		mainPanel.add(msgIntroIDCabecera);
 
-                    	ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_POR_TIPO,"No Frutal"));
-                    }
- 			
- 				} catch (Exception e1) {
- 					
- 				}
- 			}
- 		});
- 		
- 		panelBotones.add(botonAceptar);
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
+
+		//PANEL DE TIPO DE LA PLANTA
+		JPanel paneltipo = new JPanel();
+
+		mainPanel.add(paneltipo);
+
+		JLabel labelTPlanta = ComponentsBuilder.createLabel("Tipo de planta: ", 10, 100, 80, 20, Color.BLACK);
+		paneltipo.add(labelTPlanta);
+
+		JComboBox<String> tipoPlanta = new JComboBox<String>();
+		tipoPlanta.addItem("Frutal");
+		tipoPlanta.addItem("No Frutal");
+		tipoPlanta.setPreferredSize(new Dimension(250, 25));
+		paneltipo.add(tipoPlanta);
+
+		//PANEL DE LOS BOTONES
+		JPanel panelBotones = new JPanel();
+		mainPanel.add(panelBotones);
+
+		//BOTON DE ACEPTAR
+		JButton botonAceptar = new JButton("Aceptar");
+
+		botonAceptar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+
+				try {
+
+					String selected = (String) tipoPlanta.getSelectedItem();
+
+					if (selected.equals("Frutal")) {
+
+						ApplicationController.getInstance()
+								.manageRequest(new Context(Evento.LISTAR_PLANTAS_POR_TIPO, "Frutal"));
+					} else {
+
+						ApplicationController.getInstance()
+								.manageRequest(new Context(Evento.LISTAR_PLANTAS_POR_TIPO, "No Frutal"));
+					}
+
+				} catch (Exception e1) {
+
+				}
+			}
+		});
+
+		panelBotones.add(botonAceptar);
 
 	}
 
-
-
 	@Override
 	public void actualizar(Context context) {
-		
-		switch(context.getEvento()) {
+
+		switch (context.getEvento()) {
 		case Evento.LISTAR_PLANTAS_POR_TIPO_KO:
 			GUIMSG.showMessage("No existe plantas del tipo seleccionado", "LISTAR PLANTAS POR TIPO", true);
 			break;
-		case  Evento.LISTAR_PLANTAS_POR_TIPO_OK:
-			
-			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PLANTAS_VISTA,context.getDatos()));
+		case Evento.LISTAR_PLANTAS_POR_TIPO_OK:
+
+			ApplicationController.getInstance()
+					.manageRequest(new Context(Evento.LISTAR_PLANTAS_VISTA, context.getDatos()));
 			break;
 		default:
 			GUIMSG.showMessage("ERROR INESPERADO", "LISTAR PLANTAS POR TIPO", true);
 			break;
-		
+
+		}
 	}
-	}
-		
-	
+
 }

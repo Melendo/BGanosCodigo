@@ -10,10 +10,10 @@ public class CommandModificarFabricante implements Command {
 
 	public Context execute(Object datos) {
 		int ret = FactoriaNegocio.getInstance().getFabricanteSA().modificarFabricante((TFabricante) datos);
-		if(ret > -1){
-			return new Context(Evento.MODIFICAR_FABRICANTE_OK,ret);
-		}else {
-			return new Context(Evento.MODIFICAR_FABRICANTE_KO,ret);
+		if (ret > -1) {
+			return new Context(Evento.MODIFICAR_FABRICANTE_OK, ret);
+		} else {
+			return new Context(Evento.MODIFICAR_FABRICANTE_KO, ret);
 		}
 	}
 }
