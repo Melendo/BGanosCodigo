@@ -4,6 +4,7 @@
 package Presentacion.ProveedorJPA;
 
 import javax.swing.JFrame;
+import Presentacion.Controller.Command.Context;
 import Presentacion.Controller.IGUI;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
