@@ -1,7 +1,3 @@
-
-/**
- * 
- */
 package Negocio.Invernadero;
 
 import java.sql.Date;

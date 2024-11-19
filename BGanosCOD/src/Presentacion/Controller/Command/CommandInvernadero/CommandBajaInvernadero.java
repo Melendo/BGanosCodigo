@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Controller.Command.CommandInvernadero;
 
 import Negocio.FactoriaNegocio.FactoriaNegocio;

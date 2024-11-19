@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Factura;
 
 import javax.swing.JFrame;

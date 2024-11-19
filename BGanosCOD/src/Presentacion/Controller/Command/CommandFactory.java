@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Controller.Command;
 
 public abstract class CommandFactory {

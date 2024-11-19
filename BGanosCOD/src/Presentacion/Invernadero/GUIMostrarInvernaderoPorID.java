@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Invernadero;
 
 import javax.swing.JFrame;

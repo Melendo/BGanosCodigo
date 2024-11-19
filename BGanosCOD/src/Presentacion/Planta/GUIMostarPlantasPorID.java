@@ -1,4 +1,3 @@
-
 package Presentacion.Planta;
 
 import javax.swing.JFrame;

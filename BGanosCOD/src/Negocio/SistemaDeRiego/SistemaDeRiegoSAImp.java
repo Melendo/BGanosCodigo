@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Negocio.SistemaDeRiego;
 
 import java.util.LinkedHashSet;

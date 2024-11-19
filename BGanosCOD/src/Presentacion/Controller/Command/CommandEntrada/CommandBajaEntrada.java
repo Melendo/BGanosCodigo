@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Controller.Command.CommandEntrada;
 
 import Negocio.FactoriaNegocio.FactoriaNegocio;

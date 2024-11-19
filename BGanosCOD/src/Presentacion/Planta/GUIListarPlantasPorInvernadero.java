@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Planta;
 
 import javax.swing.JFrame;
@@ -33,10 +30,6 @@ import javax.swing.JPanel;
 
 public class GUIListarPlantasPorInvernadero extends JFrame implements IGUI {
 
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public GUIListarPlantasPorInvernadero(Set<TPlanta> datos) {

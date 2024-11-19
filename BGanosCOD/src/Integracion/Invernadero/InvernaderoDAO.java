@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Integracion.Invernadero;
 
 import Negocio.Invernadero.TInvernadero;

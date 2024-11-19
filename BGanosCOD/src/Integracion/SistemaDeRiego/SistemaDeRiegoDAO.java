@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Integracion.SistemaDeRiego;
 
 import Negocio.SistemaDeRiego.TSistemaDeRiego;

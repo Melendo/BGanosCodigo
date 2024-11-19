@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Negocio.Entrada;
 
 import java.sql.Date;

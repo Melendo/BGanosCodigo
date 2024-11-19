@@ -1,4 +1,3 @@
-
 package Negocio.FactoriaNegocio;
 
 import Negocio.Entrada.EntradaSA;

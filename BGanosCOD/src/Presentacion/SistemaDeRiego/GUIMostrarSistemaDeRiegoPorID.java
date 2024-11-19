@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.SistemaDeRiego;
 
 import javax.swing.JFrame;

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Negocio.Invernadero;
 
 public class TTiene {
