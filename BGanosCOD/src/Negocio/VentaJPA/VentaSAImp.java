@@ -5,6 +5,8 @@ package Negocio.VentaJPA;
 
 import java.util.Set;
 
+import Negocio.ProductoJPA.TProducto;
+
 /** 
 * <!-- begin-UML-doc -->
 * <!-- end-UML-doc -->
@@ -89,7 +91,7 @@ public class VentaSAImp implements VentaSA {
 	* @see VentaSA#añadirProducto(Integer idProducto)
 	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
 	*/
-	public tProducto añadirProducto(Integer idProducto) {
+	public TProducto añadirProducto(Integer idProducto) {
 		// begin-user-code
 		// TODO Auto-generated method stub
 		return null;

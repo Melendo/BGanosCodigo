@@ -1,7 +1,6 @@
-/**
- * 
- */
 package Negocio.VentaJPA;
+
+import java.sql.Date;
 
 /** 
  * <!-- begin-UML-doc -->
