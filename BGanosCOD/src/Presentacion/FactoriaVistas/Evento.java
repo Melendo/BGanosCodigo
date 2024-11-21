@@ -361,27 +361,271 @@ public class Evento {
 	public static final int LISTAR_MARCAS = 924;
 	public static final int MODIFICAR_MARCA = 925;
 	public static final int MOSTRAR_MARCA = 926;
-	
+
 	// OKs y KOs Marca 940 - 959
-	
+
 	// Alta
 	public static final int ALTA_MARCA_OK = 941;
 	public static final int ALTA_MARCA_KO = 942;
+
 	// Baja
 	public static final int BAJA_MARCA_OK = 943;
 	public static final int BAJA_MARCA_KO = 944;
+
 	// Listar por proveedor
 	public static final int LISTAR_MARCAS_POR_PROVEEDOR_OK = 945;
 	public static final int LISTAR_MARCAS_POR_PROVEEDOR_KO = 946;
-	
+
+	// Listar
 	public static final int LISTAR_MARCAS_OK = 947;
 	public static final int LISTAR_MARCAS_KO = 948;
-	
+
+	// Modificar
 	public static final int MODIFICAR_MARCA_OK = 949;
 	public static final int MODIFICAR_MARCA_KO = 950;
-	
+
+	// Mostrar
 	public static final int MOSTRAR_MARCA_OK = 951;
 	public static final int MOSTRAR_MARCA_KO = 952;
-	
 
+	// Producto 1000 - 1099
+
+	// Vistas Producto 1000 - 1019
+
+	public static final int ALTA_PRODUCTO_VISTA = 1000;
+	public static final int ALTA_PRODUCTO_ALIMENTACION_VISTA = 1001;
+	public static final int ALTA_PRODUCTO_SOUVENIRS_VISTA = 1002;
+	public static final int BAJA_PRODUCTO_VISTA = 1003;
+	public static final int LISTAR_PRODUCTOS_VISTA = 1004;
+	public static final int LISTAR_PRODUCTOS_POR_MARCA_VISTA = 1005;
+	public static final int LISTAR_PRODUCTOS_POR_TIPO_VISTA = 1006;
+	public static final int LISTAR_PRODUCTOS_POR_VENTA_VISTA = 1007;
+	public static final int MODIFICAR_PRODUCTO_VISTA = 1008;
+	public static final int MOSTRAR_PRODUCTO_POR_ID_VISTA = 1009;
+
+	// Funciones Producto 1020 - 1029
+
+	public static final int ALTA_PRODUCTO = 1020;
+	public static final int ALTA_PRODUCTO_ALIMENTACION = 1021;
+	public static final int ALTA_PRODUCTO_SOUVENIRS = 1022;
+	public static final int BAJA_PRODUCTO = 1023;
+	public static final int LISTAR_PRODUCTOS = 1024;
+	public static final int LISTAR_PRODUCTOS_POR_MARCA = 1025;
+	public static final int LISTAR_PRODUCTOS_POR_TIPO = 1026;
+	public static final int LISTAR_PRODUCTOS_POR_VENTA = 1027;
+	public static final int MODIFICAR_PRODUCTO = 1028;
+	public static final int MOSTRAR_PRODUCTO_POR_ID = 1029;
+
+	// OKs y KOs Producto 1040
+
+	// Alta
+	public static final int ALTA_PRODUCTO_OK = 1040;
+	public static final int ALTA_PRODUCTO_KO = 1041;
+
+	// Alta Alimentacion
+	public static final int ALTA_PRODUCTO_ALIMENTACION_OK = 1042;
+	public static final int ALTA_PRODUCTO_ALIMENTACION_KO = 1043;
+
+	// Alta Souveniers
+	public static final int ALTA_PRODUCTO_SOUVENIRS_OK = 1044;
+	public static final int ALTA_PRODUCTO_SOUVENIRS_KO = 1045;
+
+	// Baja
+	public static final int BAJA_PRODUCTO_OK = 1046;
+	public static final int BAJA_PRODUCTO_KO = 1047;
+
+	// Listar
+	public static final int LISTAR_PRODUCTOS_OK = 1048;
+	public static final int LISTAR_PRODUCTOS_KO = 1049;
+
+	// Listar por marca
+	public static final int LISTAR_PRODUCTOS_POR_MARCA_OK = 1050;
+	public static final int LISTAR_PRODUCTOS_POR_MARCA_KO = 1051;
+
+	// Listar por tipo
+	public static final int LISTAR_PRODUCTOS_POR_TIPO_OK = 1052;
+	public static final int LISTAR_PRODUCTOS_POR_TIPO_KO = 1053;
+
+	// Listar por venta
+	public static final int LISTAR_PRODUCTOS_POR_VENTA_OK = 1054;
+	public static final int LISTAR_PRODUCTOS_POR_VENTA_KO = 1055;
+
+	// Modificar
+	public static final int MODIFICAR_PRODUCTO_OK = 1056;
+	public static final int MODIFICAR_PRODUCTO_KO = 1057;
+
+	// Mostrar
+	public static final int MOSTRAR_PRODUCTO_POR_ID_OK = 1058;
+	public static final int MOSTRAR_PRODUCTO_POR_ID_KO = 1059;
+
+	// Proveedor 1100 - 1199
+
+	// Vistas Proveedor 1100 - 1119
+
+	public static final int ALTA_PORVEEDOR_VISTA = 1100;
+	public static final int BAJA_PROVEEDOR_VISTA = 1101;
+	public static final int DESVINCULAR_MARCA_PROVEEDOR_VISTA = 1102;
+	public static final int LISTAR_PROVEEDORES_VISTA = 1103;
+	public static final int LISTAR_PROVEEDORES_DE_MARCA_VISTA = 1104;
+	public static final int MODIFICAR_PROVEEDORES_VISTA = 1105;
+	public static final int MOSTRAR_PROVEEDORES_POR_ID_VISTA = 1106;
+	public static final int SVINCULAR_MARCA_PROVEEDOR_VISTA = 1107;
+
+	// Funciones Proveedor 1120 - 1139
+
+	public static final int ALTA_PORVEEDOR = 1120;
+	public static final int BAJA_PROVEEDOR = 1121;
+	public static final int DESVINCULAR_MARCA_PROVEEDOR = 1122;
+	public static final int LISTAR_PROVEEDORES = 1123;
+	public static final int LISTAR_PROVEEDORES_DE_MARCA = 1124;
+	public static final int MODIFICAR_PROVEEDORES = 1125;
+	public static final int MOSTRAR_PROVEEDORES_POR_ID = 1126;
+	public static final int VINCULAR_MARCA_PROVEEDOR = 1127;
+
+	// KOs y OKs Proveedor 1140 - 1159
+
+	// Alta
+	public static final int ALTA_PORVEEDOR_OK = 1120;
+	public static final int ALTA_PORVEEDOR_KO = 1120;
+
+	// Baja
+	public static final int BAJA_PROVEEDOR_OK = 1121;
+	public static final int BAJA_PROVEEDOR_KO = 1121;
+
+	// Desvincular
+	public static final int DESVINCULAR_MARCA_PROVEEDOR_OK = 1122;
+	public static final int DESVINCULAR_MARCA_PROVEEDOR_KO = 1122;
+
+	// Vincular
+	public static final int LISTAR_PROVEEDORES_OK = 1123;
+	public static final int LISTAR_PROVEEDORES_KO = 1123;
+
+	// Listar por marca
+	public static final int LISTAR_PROVEEDORES_DE_MARCA_OK = 1124;
+	public static final int LISTAR_PROVEEDORES_DE_MARCA_KO = 1124;
+
+	// Modificar
+	public static final int MODIFICAR_PROVEEDORES_OK = 1125;
+	public static final int MODIFICAR_PROVEEDORES_KO = 1125;
+
+	// Mostrar
+	public static final int MOSTRAR_PROVEEDORES_POR_ID_OK = 1126;
+	public static final int MOSTRAR_PROVEEDORES_POR_ID_KO = 1126;
+
+	// Vincular
+	public static final int VINCULAR_MARCA_PROVEEDOR_OK = 1127;
+	public static final int VINCULAR_MARCA_PROVEEDOR_KO = 1127;
+
+	// Turno 1200 - 1299
+
+	// Vistas Turno 1200 - 1219
+	public static final int TURNO_VISTA = 1200;
+	public static final int ALTA_TURNO_VISTA = 1201;
+	public static final int BAJA_TURNO_VISTA = 1202;
+	public static final int LISTAR_TURNO_VISTA = 1203;
+	public static final int MODIFICAR_TURNO_VISTA = 1204;
+	public static final int MOSTRAR_TURNO_VISTA = 1205;
+	public static final int OBTENER_NOMINA_DE_TURNO_VISTA = 1206;
+
+	// Funciones Turno 1220 - 1249
+	public static final int ALTA_TURNO = 1220;
+	public static final int BAJA_TURNO = 1221;
+	public static final int LISTAR_TURNO = 1222;
+	public static final int MODIFICAR_TURNO = 1223;
+	public static final int MOSTRAR_TURNO = 1224;
+	public static final int OBTENER_NOMINA_DE_TURNO = 1225;
+
+	// OKs y KOs Turno 1250 - 1299
+
+	// Alta
+	public static final int ALTA_TURNO_OK = 1250;
+	public static final int ALTA_TURNO_KO = 1251;
+
+	// Baja
+	public static final int BAJA_TURNO_OK = 1252;
+	public static final int BAJA_TURNO_KO = 1253;
+
+	// Listar
+	public static final int LISTAR_TURNO_OK = 1254;
+	public static final int LISTAR_TURNO_KO = 1255;
+
+	// Modificar
+	public static final int MODIFICAR_TURNO_OK = 1256;
+	public static final int MODIFICAR_TURNO_KO = 1257;
+
+	// Mostrar turno por id
+	public static final int MOSTRAR_TURNO_OK = 1258;
+	public static final int MOSTRAR_TURNO_KO = 1259;
+
+	// Obtener nómina de turno
+	public static final int OBTENER_NOMINA_DE_TURNO_OK = 1260;
+	public static final int OBTENER_NOMINA_DE_TURNO_KO = 1261;
+
+	// Venta 1300 - 1399
+
+	// Vistas Venta 1300 - 1319
+	public static final int VENTA_VISTA = 1301;
+	public static final int ALTA_VENTA_VISTA = 1302;
+	public static final int ANIADIR_PRODUCTO_VISTA = 1302;
+	public static final int BAJA_VENTA_VISTA = 1303;
+	public static final int DEVOLVER_VENTA_VISTA = 1304;
+	public static final int LISTAR_VENTAS_VISTA = 1305;
+	public static final int MODIFICAR_VENTAS_VISTA = 1306;
+	public static final int MOSTRAR_VENTA_POR_ID_VISTA = 1307;
+	public static final int PROCESAR_VENTA_VISTA = 1308;
+	public static final int QUITAR_PRODUCTO_VISTA = 1309;
+	public static final int VENTAS_POR_EMPLEADO_DE_CAJA_VISTA = 1310;
+
+	// Funciones Venta 1320 - 1349
+	public static final int ALTA_VENTA = 1320;
+	public static final int ANIADIR_PRODUCTO = 1321;
+	public static final int BAJA_VENTA = 1322;
+	public static final int DEVOLVER_VENTA = 1323;
+	public static final int LISTAR_VENTAS = 1324;
+	public static final int MODIFICAR_VENTAS = 1325;
+	public static final int MOSTRAR_VENTA_POR_ID = 1326;
+	public static final int PROCESAR_VENTA = 1327;
+	public static final int QUITAR_PRODUCTO = 1328;
+	public static final int VENTAS_POR_EMPLEADO_DE_CAJA = 1329;
+
+	// OKs y KOs Venta 1350 - 1399
+	// alta
+	public static final int ALTA_VENTA_OK = 1350;
+	public static final int ALTA_VENTA_KO = 1351;
+
+	// aniadir producto
+	public static final int ANIADIR_PRODUCTO_OK = 1352;
+	public static final int ANIADIR_PRODUCTO_KO = 1353;
+
+	// baja
+	public static final int BAJA_VENTA_OK = 1354;
+	public static final int BAJA_VENTA_KO = 1355;
+
+	// devolver venta
+	public static final int DEVOLVER_VENTA_OK = 1356;
+	public static final int DEVOLVER_VENTA_KO = 1357;
+
+	// listar
+	public static final int LISTAR_VENTAS_OK = 1358;
+	public static final int LISTAR_VENTAS_KO = 1359;
+
+	// modficar
+	public static final int MODIFICAR_VENTAS_OK = 1360;
+	public static final int MODIFICAR_VENTAS_KO = 1361;
+
+	// mostrar por id
+	public static final int MOSTRAR_VENTA_POR_ID_OK = 1362;
+	public static final int MOSTRAR_VENTA_POR_ID_KO = 1363;
+
+	// procesar
+	public static final int PROCESAR_VENTA_OK = 1364;
+	public static final int PROCESAR_VENTA_KO = 1365;
+
+	// quitar producto
+	public static final int QUITAR_PRODUCTO_OK = 1366;
+	public static final int QUITAR_PRODUCTO_KO = 1367;
+
+	// ventas por empleado de caja
+	public static final int VENTAS_POR_EMPLEADO_DE_CAJA_OK = 1368;
+	public static final int VENTAS_POR_EMPLEADO_DE_CAJA_KO = 1369;
 }
