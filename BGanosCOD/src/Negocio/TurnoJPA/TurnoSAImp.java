@@ -1,86 +1,101 @@
-/**
- * 
- */
 package Negocio.TurnoJPA;
 
 import java.util.Set;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+
+import Negocio.EMFSingleton.EMFSingleton;
+
 public class TurnoSAImp implements TurnoSA {
-	/** 
-	* (non-Javadoc)
-	* @see TurnoSA#altaTurno(TTurno turno)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
+	/*  Lista de retorno
+	 *  -4 datos incorrectos
+	 *  -3 error en la transacción
+	 *  -2 Turno existe y está activo
+	 *  -1 Error de Base de datos
+	 */
 	public Integer altaTurno(TTurno turno) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		
+		Integer id = -1;
+		boolean success = false;
+		Turno turnoExistente = null;
+		Turno nuevoTurno = null;
+				
+        if (!validarHorario(turno.getHorario()))
+            return -4;
+        
+
+        EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+
+		TypedQuery<Turno> query = em.createNamedQuery("Negocio.TurnoJPA.Turno.findByhorario", Turno.class);
+		query.setParameter("nombre", turno.getHorario());
+
+        try {
+        	turnoExistente = query.getSingleResult();     
+        } catch (Exception e) {
+        	return -1;
+        }
+        
+        if(turnoExistente != null) {
+        	if(!turnoExistente.isActivo()) {
+        		turnoExistente.transferToEntity(turno);
+                id = turnoExistente.getId();
+                transaction.commit();
+                em.close();
+                return id;
+        	} else {
+        		transaction.rollback();   
+                em.close();
+        		return -2;
+        	}
+        } else {
+        	nuevoTurno = new Turno();
+        	nuevoTurno.transferToEntity(turno);
+            em.persist(nuevoTurno);
+            success = true;
+        }
+        
+        try {
+        	transaction.commit();
+        	if(success)
+        		id = nuevoTurno.getId();
+        }
+        catch(Exception e){
+        	transaction.rollback();
+        	return -3;
+        }
+        
+        em.close();
+        return id;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see TurnoSA#bajaTurno(Integer idTurno)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Integer bajaTurno(Integer idTurno) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see TurnoSA#modificarTurno(TTurno turno)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Integer modificarTurno(TTurno turno) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see TurnoSA#mostrarTurno(Integer idTurno)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public TTurno mostrarTurno(Integer idTurno) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see TurnoSA#listarTurnos()
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Set<TTurno> listarTurnos() {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see TurnoSA#obtenerNominaDelTurno(Integer idTurno)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Float obtenerNominaDelTurno(Integer idTurno) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
+	}
+	
+	//------ Métodos auxiliares ------//
+	
+	private boolean validarHorario(String horario) {
+		return horario != null && !horario.isEmpty();
 	}
 }

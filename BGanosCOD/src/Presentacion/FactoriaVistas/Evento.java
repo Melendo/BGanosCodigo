@@ -353,6 +353,7 @@ public class Evento {
 	public static final int LISTAR_MARCAS_VISTA = 904;
 	public static final int MODIFICAR_MARCA_VISTA = 905;
 	public static final int MOSTRAR_MARCA_VISTA = 906;
+	public static final int MARCA_VISTA = 907;
 
 	// Funciones Marca 920 - 939
 	public static final int ALTA_MARCA = 920;
@@ -402,6 +403,7 @@ public class Evento {
 	public static final int LISTAR_PRODUCTOS_POR_VENTA_VISTA = 1007;
 	public static final int MODIFICAR_PRODUCTO_VISTA = 1008;
 	public static final int MOSTRAR_PRODUCTO_POR_ID_VISTA = 1009;
+	public static final int PRODUCTO_VISTA = 1010;
 
 	// Funciones Producto 1020 - 1029
 
@@ -470,6 +472,8 @@ public class Evento {
 	public static final int MODIFICAR_PROVEEDORES_VISTA = 1105;
 	public static final int MOSTRAR_PROVEEDORES_POR_ID_VISTA = 1106;
 	public static final int SVINCULAR_MARCA_PROVEEDOR_VISTA = 1107;
+	public static final int PROVEEDOR_VISTA = 1108;
+	
 
 	// Funciones Proveedor 1120 - 1139
 
