@@ -7,7 +7,7 @@ public abstract class EMFSingleton {
 
 	private static EMFSingleton instance;
 
-	public EMFSingleton getInstance() {
+	public synchronized static EMFSingleton getInstance() {
 		if (instance == null)
 			instance = new EMFSingletonImp(Persistence.createEntityManagerFactory("BGanosJPA"));
 		return instance;

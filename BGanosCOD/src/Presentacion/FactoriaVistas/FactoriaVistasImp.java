@@ -52,6 +52,13 @@ import Presentacion.SistemaDeRiego.GUIListarSistemasDeRiego;
 import Presentacion.SistemaDeRiego.GUIModificarSistemaDeRiego;
 import Presentacion.SistemaDeRiego.GUIMostrarSistemaDeRiegoPorID;
 import Presentacion.SistemaDeRiego.GUISistemaDeRiego;
+import Presentacion.TurnoJPA.GUIAltaTurno;
+import Presentacion.TurnoJPA.GUIBajaTurno;
+import Presentacion.TurnoJPA.GUIListarTurnos;
+import Presentacion.TurnoJPA.GUIModificarTurno;
+import Presentacion.TurnoJPA.GUIMostrarTurno;
+import Presentacion.TurnoJPA.GUIObtenerNominaDeTurno;
+import Presentacion.TurnoJPA.GUITurno;
 
 import java.util.Set;
 
@@ -62,6 +69,7 @@ import Negocio.Factura.TFactura;
 import Negocio.Invernadero.TInvernadero;
 import Negocio.Planta.TPlanta;
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
+import Negocio.TurnoJPA.TTurno;
 
 public class FactoriaVistasImp extends FactoriaVistas {
     IGUI vistaActual = null;
@@ -249,6 +257,33 @@ public class FactoriaVistasImp extends FactoriaVistas {
                 case Evento.LISTAR_SISTEMAS_RIEGO_POR_FABRICANTE_VISTA:
                     vistaActual = new GUIListarSistemaDeRiegoPorFabricante(); 
                     return vistaActual;
+                    
+                    
+                    
+                    
+//                  Vistas Turno JPA
+                case Evento.TURNO_VISTA:
+                    vistaActual = new GUITurno(); 
+                    return vistaActual;
+                case Evento.ALTA_TURNO_VISTA:
+                    vistaActual = new GUIAltaTurno(); 
+                    return vistaActual;
+                case Evento.BAJA_TURNO_VISTA:
+                    vistaActual = new GUIBajaTurno(); 
+                    return vistaActual;
+                case Evento.MODIFICAR_TURNO_VISTA:
+                    vistaActual = new GUIModificarTurno(); 
+                    return vistaActual;
+                case Evento.MOSTRAR_TURNO_VISTA:
+                    vistaActual = new GUIMostrarTurno(); 
+                    return vistaActual;
+                case Evento.LISTAR_TURNO_VISTA:
+                    //vistaActual = new GUIListarTurnos((Set<TTurno>) contexto.getDatos()); 
+                    return vistaActual;
+                case Evento.OBTENER_NOMINA_DE_TURNO_VISTA:
+                    vistaActual = new GUIObtenerNominaDeTurno(); 
+                    return vistaActual;
+
 
             default:
                 return null;
