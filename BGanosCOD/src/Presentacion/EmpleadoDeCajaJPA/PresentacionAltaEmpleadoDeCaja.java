@@ -252,12 +252,12 @@ public class PresentacionAltaEmpleadoDeCaja extends JFrame implements IGUI {
 						empleado.setNombre(textNombre.getText());
 						empleado.setApellido(textApellido.getText());
 						empleado.setDNI(textDNI.getText());
-						empleado.setTelefono(Integer.parseInt(textTelefono.getText()););
+						empleado.setTelefono(Integer.parseInt(textTelefono.getText()));
 						empleado.setSueldo(Double.parseDouble(textSueldo.getText()));
 						empleado.setId_Turno(Integer.parseInt(textIdTurno.getText()));
 						
 						
-						ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_FABRICANTE, fabricante));
+						ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_EMPLEADO_DE_CAJA, empleado));
 					} catch (NumberFormatException ex) {
 						JOptionPane.showMessageDialog(PresentacionAltaEmpleadoDeCaja.this, "Error en el formato de los datos", "Error",
 								JOptionPane.ERROR_MESSAGE);
@@ -280,11 +280,40 @@ public class PresentacionAltaEmpleadoDeCaja extends JFrame implements IGUI {
 			}
 				
         
-     
+	@Override
 	public void actualizar(Context context) {
-		// begin-user-code
-		// TODO Auto-generated method stub
+		int resultado = (int) context.getDatos();
 
-		// end-user-code
+	/*	if (context.getEvento() == Evento.ALTA_EMPLEADO_DE_CAJA_OK)
+
+			JOptionPane.showMessageDialog(this, "Empleado de caja dado de alta correctamente con id: " + resultado, "Éxito",
+					JOptionPane.INFORMATION_MESSAGE);
+		else if (context.getEvento() == Evento.ALTA_EMPLEADO_DE_CAJA_KO)
+			switch (resultado) {
+			case -2:
+				JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -3:
+				JOptionPane.showMessageDialog(this, "Ya existe un empleado de caja con el mismo DNI y está activo.",
+						"Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			case -4:
+				JOptionPane.showMessageDialog(this, "Telefono invalido.", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			case -5:
+				JOptionPane.showMessageDialog(this, "El fabricante que estas intentando modificar es local.",
+						"Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			case -6:
+				JOptionPane.showMessageDialog(this, "El fabricante que estas intentando modificar es extranjero.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			default:
+				JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta el fabricante.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			}*/
+
 	}
 }
