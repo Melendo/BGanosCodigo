@@ -5,6 +5,7 @@ package Presentacion.EmpleadoDeCajaJPA;
 
 import javax.swing.JFrame;
 import Presentacion.Controller.Command.Context;
+import Presentacion.Fabricante.GUIAltaFabricante;
 import Presentacion.FactoriaVistas.Evento;
 import Presentacion.SistemaDeRiego.GUIAltaSistemaDeRiego;
 import Presentacion.Controller.ApplicationController;
@@ -22,11 +23,17 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.TextHitInfo;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-import Negocio.EmpleadoDeCajaJPA.TEmpleadoDeCaja;;
+import Negocio.EmpleadoDeCajaJPA.TEmpleadoCompleto;
+import Negocio.EmpleadoDeCajaJPA.TEmpleadoDeCaja;
+import Negocio.EmpleadoDeCajaJPA.TEmpleadoParcial;
+import Negocio.Fabricante.TFabricante;
+import Negocio.Fabricante.TFabricanteExtranjero;
+import Negocio.Fabricante.TFabricanteLocal;;
 
 public class PresentacionAltaEmpleadoDeCaja extends JFrame implements IGUI {
 
@@ -48,6 +55,10 @@ public class PresentacionAltaEmpleadoDeCaja extends JFrame implements IGUI {
 	private JTextField textIdTurno;
 	private JTextField textSueldoBase;
 	private JTextField textComplemento;
+	private JTextField textPrecioHora;
+	private JTextField textHoras;
+	
+	private Boolean tCompleto = false;
 
 	public PresentacionAltaEmpleadoDeCaja() {
 		super("Alta Empleado De Caja");
@@ -150,7 +161,7 @@ public class PresentacionAltaEmpleadoDeCaja extends JFrame implements IGUI {
         gbc.anchor = GridBagConstraints.CENTER; 
         mainPanel.add(completoParcial, gbc);
 
-        //Completo
+        //Empleado Completo
         JPanel E_Completo = new JPanel(new GridLayout(2, 2, 0, 18));
         E_Completo.setVisible(false);
 		gbc.gridx = 0;
@@ -160,64 +171,116 @@ public class PresentacionAltaEmpleadoDeCaja extends JFrame implements IGUI {
 		mainPanel.add(E_Completo, gbc);
 		
 		// SueldoBase
-		JLabel labelSueldoBase = new JLabel("Sueldo Base:");
+		JLabel labelSueldoBase = new JLabel("Sueldo Base: ");
 		E_Completo.add(labelSueldoBase);
 		textSueldoBase= new JTextField(20);
 		E_Completo.add(textSueldoBase);
 
 		// Complementos
-	    JLabel labelComplemento = new JLabel("Subvenciones:");
+	    JLabel labelComplemento = new JLabel("Subvenciones: ");
 		E_Completo.add(labelComplemento, gbc);
 		textComplemento = new JTextField(20);
 		E_Completo.add(textComplemento, gbc);
+		
+		//Empleado Parcial
+		JPanel E_parcial = new JPanel(new GridLayout(2, 2, 0, 18));
+		E_parcial.setVisible(false);
+		gbc.gridx = 0;
+		gbc.gridy = 8;
+		gbc.gridheight = 2;
+		gbc.anchor = GridBagConstraints.CENTER;
+		mainPanel.add(E_parcial, gbc);
+		
+		//Precio Hora
+		JLabel labelPrecioHora = new JLabel("Precio Hora: ");
+		E_Completo.add(labelPrecioHora);
+		textPrecioHora= new JTextField(20);
+		E_Completo.add(textPrecioHora);
+		
+		//Horas
+		JLabel labelHoras = new JLabel("Horas: ");
+		E_Completo.add(labelPrecioHora);
+		textHoras= new JTextField(20);
+		E_Completo.add(textHoras);
+		
+		
+		// Boton Empleado completo
+				JButton bCompleto = new JButton("Empleado Completo");
+				bCompleto.addActionListener(a -> {
+					tCompleto = true;
+					E_Completo.setVisible(true);
+					E_parcial.setVisible(false);
+				});
+				completoParcial.add(bCompleto);
+				
+		//Boton Empleado Parcial
+				JButton bParcial = new JButton("Empleado Parcial");
+				bParcial.addActionListener(a -> {
+					tCompleto = false;
+					E_parcial.setVisible(true);
+					E_Completo.setVisible(false);
+				});
+				completoParcial.add(bParcial); 
+				
         
+				
+				// Panel de botones aceptar/cancelar
+				JPanel okCancel = new JPanel();
+				gbc.gridx = 0;
+				gbc.gridy = 8;
+				gbc.gridwidth = 2;
+				gbc.anchor = GridBagConstraints.CENTER;
+				mainPanel.add(okCancel, gbc);
+
+				
         // Boton Aceptar
-        JButton botonAceptar = new JButton("Aceptar");
-        botonAceptar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String nombre = textNombre.getText();
-                    String apellido = textApellido.getText();
-                    String DNI = textDNI.getText();
-                    Integer telefono = Integer.parseInt(textTelefono.getText());
-                    Double sueldo=Double.parseDouble(textSueldo.getText());
-                    Integer idTurno = Integer.parseInt(textIdTurno.getText());
+				JButton botonAceptar = new JButton("Aceptar");
+				botonAceptar.addActionListener(a -> {
+					try {
+						TEmpleadoDeCaja empleado;
+						if (tCompleto) {
+							empleado = new TEmpleadoCompleto();
+							((TEmpleadoCompleto) empleado).setSueldo_Base(Double.parseDouble(textSueldoBase.getText()));
+							((TEmpleadoCompleto) empleado).setComplementos(Double.parseDouble(textComplemento.getText()));
 
-                    TEmpleadoDeCaja templeadoDeCaja = new TEmpleadoDeCaja();
-                    
-                    templeadoDeCaja.setNombre(nombre);
-                    templeadoDeCaja.setApellido(apellido);
-                    templeadoDeCaja.setDNI(DNI);
-                    templeadoDeCaja.setTelefono(telefono);
-                    templeadoDeCaja.setSueldo(sueldo);
-                    templeadoDeCaja.setId_Turno(idTurno);
-                    
-                    //Hace falta?
-                    //templeadoDeCaja.setActivo(true);
+						} else {
+							empleado = new TEmpleadoParcial();
+							((TEmpleadoParcial) empleado).setHoras(Double.parseDouble(textHoras.getText()));
+							((TEmpleadoParcial) empleado).setPrecio_h(Double.parseDouble(textPrecioHora.getText()));;
+						}
+						
+						empleado.setNombre(textNombre.getText());
+						empleado.setApellido(textApellido.getText());
+						empleado.setDNI(textDNI.getText());
+						empleado.setTelefono(Integer.parseInt(textTelefono.getText()););
+						empleado.setSueldo(Double.parseDouble(textSueldo.getText()));
+						empleado.setId_Turno(Integer.parseInt(textIdTurno.getText()));
+						
+						
+						ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_FABRICANTE, fabricante));
+					} catch (NumberFormatException ex) {
+						JOptionPane.showMessageDialog(PresentacionAltaEmpleadoDeCaja.this, "Error en el formato de los datos", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
 
-                    ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_EMPLEADO_DE_CAJA, templeadoDeCaja));
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(PresentacionAltaEmpleadoDeCaja.this, "Error en el formato de los datos", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-        panelBotones.add(botonAceptar);
+				});
+				okCancel.add(botonAceptar);
+				
+				// Boton Cancelar
+				JButton botonCancelar = new JButton("Cancelar");
+				botonCancelar.addActionListener(a -> {
+					PresentacionAltaEmpleadoDeCaja.this.setVisible(false);
+					ApplicationController.getInstance().manageRequest(new Context(Evento.EMPLEADO_DE_CAJA_VISTA, null));
+				});
+				
+				okCancel.add(botonCancelar);
+
+				setVisible(true);
+
+			}
+				
         
-     // Boton Cancelar
-        JButton botonCancelar = new JButton("Cancelar");
-        botonCancelar.addActionListener(new ActionListener() {
-        	@Override
- 	        public void actionPerformed(ActionEvent e) {
-        		PresentacionAltaEmpleadoDeCaja.this.setVisible(false);
- 	            ApplicationController.getInstance().manageRequest(new Context(Evento..ALTA_EMPLEADO_DE_CAJA, null));
- 	        }
-        });
-        panelBotones.add(botonCancelar);
-
-        this.setVisible(true);
-    }
-
+     
 	public void actualizar(Context context) {
 		// begin-user-code
 		// TODO Auto-generated method stub
