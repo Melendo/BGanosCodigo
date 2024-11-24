@@ -5,56 +5,108 @@ package Presentacion.EmpleadoDeCajaJPA;
 
 import javax.swing.JFrame;
 import Presentacion.Controller.Command.Context;
+import Presentacion.Fabricante.GUIBajaFabricante;
+import Presentacion.FactoriaVistas.Evento;
+import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
-public class PresentacionBajaEmpleadoDeCaja extends JFrame implements IGUI {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JDialog jDialog;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JPanel jPanel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JButton jButton;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JTextField jTextField;
 
-	/** 
-	* (non-Javadoc)
-	* @see IGUI#actualizar(Context context)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+public class PresentacionBajaEmpleadoDeCaja extends JFrame implements IGUI {
+	
+	private JTextField textId;
+	
+	public PresentacionBajaEmpleadoDeCaja() {
+		super("Baja Empleado de Caja");
+		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+		int ancho = 600;
+		int alto = 400;
+		int x = (pantalla.width - ancho) / 2;
+		int y = (pantalla.height - alto) / 2;
+		this.setBounds(x, y, ancho, alto);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		initGUI();
+	}
+	
+	public void initGUI() {
+		// Panel principal
+		JPanel mainPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(10, 10, 10, 10); // Margenes entre componentes
+		this.setContentPane(mainPanel);
+
+		// Titulo
+		gbc.gridwidth = 2;
+		JLabel msgIntro = new JLabel("Introduzca el ID del empleado a dar de baja", JLabel.CENTER);
+		mainPanel.add(msgIntro, gbc);
+
+		// Resetear para los campos
+		gbc.gridwidth = 1;
+		gbc.gridy = 1;
+
+		// ID del empleado
+		JLabel labelId = new JLabel("ID:");
+		gbc.gridx = 0; // Columna 0
+		mainPanel.add(labelId, gbc);
+		textId = new JTextField(20);
+		gbc.gridx = 1; // Columna 1
+		mainPanel.add(textId, gbc);
+
+		// Panel de botones
+		JPanel panelBotones = new JPanel();
+		gbc.gridx = 0;
+		gbc.gridy = 6;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.CENTER;
+		mainPanel.add(panelBotones, gbc);
+
+		// Boton Aceptar
+				JButton botonAceptar = new JButton("Aceptar");
+				botonAceptar.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							Integer idSistema = Integer.parseInt(textId.getText());
+
+							ApplicationController.getInstance().manageRequest(new Context(Evento.BAJA_EMPLEADO_DE_CAJA, idSistema));
+						} catch (NumberFormatException ex) {
+							JOptionPane.showMessageDialog(PresentacionBajaEmpleadoDeCaja.this, "Error en el formato del ID", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				});
+				panelBotones.add(botonAceptar);
+				
+				// Boton Cancelar
+				JButton botonCancelar = new JButton("Cancelar");
+				botonCancelar.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						PresentacionBajaEmpleadoDeCaja.this.setVisible(false);
+						ApplicationController.getInstance().manageRequest(new Context(Evento.EMPLEADO_DE_CAJA_VISTA, null));
+					}
+				});
+				
+				panelBotones.add(botonCancelar);
+
+				this.setVisible(true);
+			}
 	public void actualizar(Context context) {
 		// begin-user-code
 		// TODO Auto-generated method stub
