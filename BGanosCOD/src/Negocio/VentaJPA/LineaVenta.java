@@ -7,6 +7,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Version;
 import javax.persistence.NamedQueries;
 import javax.persistence.ManyToOne;
+
 import Negocio.ProductoJPA.Producto;
 
 @Entity
@@ -22,6 +23,18 @@ public class LineaVenta implements Serializable {
 	private static final long serialVersionUID = 0;
 
 	public LineaVenta() {
+	}
+	public LineaVenta(TlineaVenta tLineaVenta) {
+		id.setIdProducto(tLineaVenta.getIdProducto());
+		id.setIdVenta(tLineaVenta.getIdVenta());
+		cantidad = tLineaVenta.getCantidad();
+		precio = tLineaVenta.getPrecio();
+		//TODO
+		/*
+		 * venta =...
+		 * producto =...
+		 */
+		
 	}
 
 	@EmbeddedId
