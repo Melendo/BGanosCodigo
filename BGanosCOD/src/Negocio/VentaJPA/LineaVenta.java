@@ -24,17 +24,17 @@ public class LineaVenta implements Serializable {
 
 	public LineaVenta() {
 	}
-	public LineaVenta(TlineaVenta tLineaVenta) {
+
+	public LineaVenta(TLineaVenta tLineaVenta) {
 		id.setIdProducto(tLineaVenta.getIdProducto());
 		id.setIdVenta(tLineaVenta.getIdVenta());
 		cantidad = tLineaVenta.getCantidad();
 		precio = tLineaVenta.getPrecio();
-		//TODO
+		// TODO
 		/*
-		 * venta =...
-		 * producto =...
+		 * venta =... producto =...
 		 */
-		
+
 	}
 
 	@EmbeddedId
@@ -51,12 +51,12 @@ public class LineaVenta implements Serializable {
 	@Version
 	private Integer version;
 
-	public void transferToEntity(TlineaVenta lineaVenta) {// TODO
+	public void transferToEntity(TLineaVenta lineaVenta) {// TODO
 
 	}
 
-	public TlineaVenta entityToTransfer() {
-		TlineaVenta lineaVenta = new TlineaVenta();
+	public TLineaVenta entityToTransfer() {
+		TLineaVenta lineaVenta = new TLineaVenta();
 		lineaVenta.setCantidad(cantidad);
 		lineaVenta.setIdPoducto(id.getIdProducto());
 		lineaVenta.setIdVenta(id.getIdventa());
@@ -85,11 +85,19 @@ public class LineaVenta implements Serializable {
 		return cantidad;
 	}
 
+	public Double getPrecio() {
+		return precio;
+	}
+
 	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
 
-	public Double getPrecio() {
-		return precio;
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
+	public void setVenta(Venta venta) {
+		this.venta = venta;
 	}
 }

@@ -7,5 +7,5 @@ public class TVentaConProductos {
 
 	private Set<TProducto> tProducto;
 	private Set<TVenta> tVenta;
-	private Set<TlineaVenta> tlineaVenta;
+	private Set<TLineaVenta> tlineaVenta;
 }

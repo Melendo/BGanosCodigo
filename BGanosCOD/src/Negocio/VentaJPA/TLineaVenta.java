@@ -1,6 +1,6 @@
 package Negocio.VentaJPA;
 
-public class TlineaVenta {
+public class TLineaVenta {
 	
 	private Integer idProducto;
 	

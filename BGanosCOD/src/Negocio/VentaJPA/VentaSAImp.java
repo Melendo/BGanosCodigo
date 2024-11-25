@@ -1,136 +1,135 @@
-/**
- * 
- */
 package Negocio.VentaJPA;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.LockModeType;
+
+import Negocio.EMFSingleton.EMFSingleton;
+import Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja;
+import Negocio.ProductoJPA.Producto;
 import Negocio.ProductoJPA.TProducto;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
 public class VentaSAImp implements VentaSA {
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#altaVenta(TVenta tVenta)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	public Integer altaVenta(TVenta tVenta) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#bajaVenta(Integer id)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Integer bajaVenta(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
+
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#modificarVenta(TVenta tVenta)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Integer modificarVenta(TVenta tVenta) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
+
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#listarVentas()
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Set<TVenta> listarVentas() {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
+
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#mostrarPorId(Integer id)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public TVenta mostrarPorId(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
+
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#ventasPorEmpleadoDeCaja(Integer id)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Set<TVenta> ventasPorEmpleadoDeCaja(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
+
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#añadirProducto(Integer idProducto)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public TProducto añadirProducto(Integer idProducto) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
+
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#quitarProducto(Integer id)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Integer quitarProducto(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
+
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#devolverVenta(TlineaVenta venta)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Integer devolverVenta(TlineaVenta venta) {
-		// begin-user-code
-		// TODO Auto-generated method stub
+	public Integer devolverVenta(TLineaVenta venta) {
 		return null;
-		// end-user-code
+
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#procesarVenta(TCarrito carrito)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Integer procesarVenta(TCarrito carrito) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+
+		EmpleadoDeCaja emCaja = em.find(EmpleadoDeCaja.class, carrito.getVenta().getIdEmplado(),
+				LockModeType.OPTIMISTIC);
+
+		if (emCaja == null) {// Empleado no existe
+			et.rollback();
+			em.close();
+			return -2;
+		}
+		
+		if (!emCaja.getActivo()) {// Empledo dado de baja
+			et.rollback();
+			em.close();
+			return -3;
+		}
+
+		if (carrito.getLineaVenta().isEmpty()) {// Carrito vacio
+			et.rollback();
+			em.close();
+			return -4;
+		}
+		
+		double total = 0; // Creamos la venta
+		Venta venta = new Venta(carrito.getVenta());
+		venta.setActivo(true);
+		venta.setFecha(new Date(Calendar.getInstance().getTime().getTime()));
+		em.persist(venta);
+
+		for (TLineaVenta linV : carrito.getLineaVenta()) {
+			Producto prod = em.find(Producto.class, linV.getIdProducto());
+			if (prod == null) { // Producto no existe
+				et.rollback();
+				em.close();
+				return -5;
+			}
+			if (!prod.getActivo()) { // Producto dado de baja
+				et.rollback();
+				em.close();
+				return -6;
+			}
+			if (linV.getCantidad() > prod.getStock()) { // No hay stock suficiente
+				et.rollback();
+				em.close();
+				return -7;
+			}
+
+			prod.setStock(linV.getCantidad());
+			LineaVenta lineaVenta = new LineaVenta(linV);
+			double precio = linV.getCantidad() * prod.getPrecio();
+			lineaVenta.setProducto(prod);
+			lineaVenta.setVenta(venta);
+			lineaVenta.setPrecio(precio);
+			em.persist(lineaVenta);
+			venta.setLineaVenta(lineaVenta);
+			total += precio;
+		}
+		venta.setPrecioTotal(total);
+		try {
+			et.commit();
+			em.close();
+			return venta.getId();
+		}catch (Exception e){
+			e.printStackTrace();
+			et.rollback();
+			em.close();
+		}
+
+		return -1; // Error desconocido
 	}
 }

@@ -22,7 +22,7 @@ public interface VentaSA {
 
 	public Integer quitarProducto(Integer id);
 
-	public Integer devolverVenta(TlineaVenta venta);
+	public Integer devolverVenta(TLineaVenta venta);
 
 	public Integer procesarVenta(TCarrito carrito);
 }

@@ -1,22 +1,21 @@
-/**
- * 
- */
 package Negocio.VentaJPA;
 
 import java.util.Set;
 
-
 public class TCarrito {
 
-	private Set<TlineaVenta> tlineaVenta;
-
+	private Set<TLineaVenta> tLineaVenta;
 	private TVenta tVenta;
+	
+	public TCarrito(TVenta tVenta, Set<TLineaVenta> tLineaVenta) {
+		this.tVenta = tVenta;
+		this.tLineaVenta = tLineaVenta;
+	}
 
-
-	public TlineaVenta getLineaVenta() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	public Set<TLineaVenta> getLineaVenta() {
+		return tLineaVenta;
+	}
+	public TVenta getVenta() {
+		return tVenta;
 	}
 }

@@ -5,5 +5,11 @@ TLineaVenta
 TVenta
 TVentaConProductos
 Venta
-VEntaSA
-VentaSAImp
+VEntaSA 
+ - procesar venta X
+ - modificar venta
+ - mostrar por id
+ - listar
+ - listar por empleado
+ - devolver
+VentaSAImp X

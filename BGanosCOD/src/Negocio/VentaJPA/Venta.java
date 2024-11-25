@@ -61,17 +61,6 @@ public class Venta implements Serializable {
 		return  id;
 	}
 
-	public TVenta entityToTransfer() {
-		TVenta tVenta = new TVenta();
-		
-		tVenta.setActivo(activo);
-		tVenta.setFecha(fecha);
-		tVenta.setFormaDePago(formaPago);
-		tVenta.setId(id);
-		tVenta.setPrecioTotal(precioTotal);
-		
-		return tVenta;
-	}
 
 	public Set<LineaVenta> getLineaVenta() {
 		return lieanVenta;
@@ -80,7 +69,6 @@ public class Venta implements Serializable {
 	public EmpleadoDeCaja getEmpleadoDeCaja() {
 		return empleadoDeCaja;
 	}
-
 
 	public void tranferToEntity(TVenta venta) {
 		// begin-user-code
@@ -123,5 +111,21 @@ public class Venta implements Serializable {
 
 	public void setPrecioTotal(Double precioTotal) {
 		this.precioTotal = precioTotal;
+	}
+
+	public TVenta entityToTransfer() {
+		TVenta tVenta = new TVenta();
+		
+		tVenta.setActivo(activo);
+		tVenta.setFecha(fecha);
+		tVenta.setFormaDePago(formaPago);
+		tVenta.setId(id);
+		tVenta.setPrecioTotal(precioTotal);
+		
+		return tVenta;
+	}
+	
+	public void setLineaVenta(LineaVenta lineaVenta) {
+		this.lieanVenta.add(lineaVenta);
 	}
 }

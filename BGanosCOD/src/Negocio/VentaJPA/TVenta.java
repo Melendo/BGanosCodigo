@@ -11,8 +11,9 @@ public class TVenta {
 	private String formaPago;
 	private Date fecha;
 	private Boolean activo;
-	private TCarrito tCarrito;
-	private TVentaConProductos tVentaConProductos;
+	private Integer idEmpleado;
+//	private TCarrito tCarrito;
+//	private TVentaConProductos tVentaConProductos;
 	public Integer getId() {
 		return id;
 	}
@@ -31,6 +32,10 @@ public class TVenta {
 
 	public Boolean getActivo() {
 		return activo;
+	}
+	
+	public Integer getIdEmplado() {
+		return idEmpleado;
 	}
 
 	public void setId(Integer id) {
@@ -51,5 +56,9 @@ public class TVenta {
 
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
+	}
+	
+	public void setIdEmpleado(Integer id) {
+		idEmpleado = id;
 	}
 }
