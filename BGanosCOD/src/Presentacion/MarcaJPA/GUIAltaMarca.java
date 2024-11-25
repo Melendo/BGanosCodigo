@@ -141,6 +141,17 @@ public class GUIAltaMarca extends JFrame implements IGUI, ActionListener {
 	}
 
 	public void actualizar(Context context) {
+		int res = (int) context.getDatos();
+		
+		if(context.getEvento() == Evento.ALTA_MARCA_OK) {
+			JOptionPane.showMessageDialog(this, "Marca dada de alta correctamente con id " + res, "Exito",
+					JOptionPane.INFORMATION_MESSAGE);
+			GUIAltaMarca.this.setVisible(false);
+			ApplicationController.getInstance().manageRequest(new Context(Evento.MARCA_VISTA, null));
+
+		} else if (context.getEvento() == Evento.ALTA_MARCA_KO) {
+			// TODO
+		}
 
 	}
 

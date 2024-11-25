@@ -23,6 +23,9 @@ public class TMarca {
 		this.activo = activo;
 	}
 
+	public TMarca() {
+	}
+
 	public Integer getId() {
 		return this.id;
 	}
