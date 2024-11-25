@@ -25,12 +25,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+public class GUIBajaEmpleadoDeCaja extends JFrame implements IGUI {
 
-public class PresentacionBajaEmpleadoDeCaja extends JFrame implements IGUI {
-	
 	private JTextField textId;
-	
-	public PresentacionBajaEmpleadoDeCaja() {
+
+	public GUIBajaEmpleadoDeCaja() {
 		super("Baja Empleado de Caja");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 600;
@@ -42,7 +41,7 @@ public class PresentacionBajaEmpleadoDeCaja extends JFrame implements IGUI {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initGUI();
 	}
-	
+
 	public void initGUI() {
 		// Panel principal
 		JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -77,36 +76,38 @@ public class PresentacionBajaEmpleadoDeCaja extends JFrame implements IGUI {
 		mainPanel.add(panelBotones, gbc);
 
 		// Boton Aceptar
-				JButton botonAceptar = new JButton("Aceptar");
-				botonAceptar.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						try {
-							Integer idSistema = Integer.parseInt(textId.getText());
+		JButton botonAceptar = new JButton("Aceptar");
+		botonAceptar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Integer idSistema = Integer.parseInt(textId.getText());
 
-							ApplicationController.getInstance().manageRequest(new Context(Evento.BAJA_EMPLEADO_DE_CAJA, idSistema));
-						} catch (NumberFormatException ex) {
-							JOptionPane.showMessageDialog(PresentacionBajaEmpleadoDeCaja.this, "Error en el formato del ID", "Error",
-									JOptionPane.ERROR_MESSAGE);
-						}
-					}
-				});
-				panelBotones.add(botonAceptar);
-				
-				// Boton Cancelar
-				JButton botonCancelar = new JButton("Cancelar");
-				botonCancelar.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						PresentacionBajaEmpleadoDeCaja.this.setVisible(false);
-						ApplicationController.getInstance().manageRequest(new Context(Evento.EMPLEADO_DE_CAJA_VISTA, null));
-					}
-				});
-				
-				panelBotones.add(botonCancelar);
-
-				this.setVisible(true);
+					ApplicationController.getInstance()
+							.manageRequest(new Context(Evento.BAJA_EMPLEADO_DE_CAJA, idSistema));
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(GUIBajaEmpleadoDeCaja.this, "Error en el formato del ID", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
+		});
+		panelBotones.add(botonAceptar);
+
+		// Boton Cancelar
+		JButton botonCancelar = new JButton("Cancelar");
+		botonCancelar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIBajaEmpleadoDeCaja.this.setVisible(false);
+				ApplicationController.getInstance().manageRequest(new Context(Evento.EMPLEADO_DE_CAJA_VISTA, null));
+			}
+		});
+
+		panelBotones.add(botonCancelar);
+
+		this.setVisible(true);
+	}
+
 	public void actualizar(Context context) {
 		// begin-user-code
 		// TODO Auto-generated method stub

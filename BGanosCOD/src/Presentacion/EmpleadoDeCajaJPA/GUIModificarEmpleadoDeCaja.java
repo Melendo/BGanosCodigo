@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 * @author airam
 * @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
 */
-public class PresentacionListarEmpleadoDeCajaPorTurno extends JFrame implements IGUI {
+public class GUIModificarEmpleadoDeCaja extends JFrame implements IGUI {
 	/** 
 	* <!-- begin-UML-doc -->
 	* <!-- end-UML-doc -->
