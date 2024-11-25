@@ -2,11 +2,13 @@ package Negocio.VentaJPA;
 
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.LockModeType;
+import javax.persistence.TypedQuery;
 
 import Negocio.EMFSingleton.EMFSingleton;
 import Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja;
@@ -29,22 +31,47 @@ public class VentaSAImp implements VentaSA {
 
 	}
 
-	public Set<TVenta> listarVentas() {
+	public List<TVenta> listarVentas() {
+		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+		
+		TypedQuery<Venta> query = em.createNamedQuery("Negocio.VentaJPA.Venta.findAll", Venta.class);
+		query.setLockMode(LockModeType.OPTIMISTIC);
+		
+		List<Venta> lQuery = query.getResultList();
+		List<TVenta> lVenta = new LinkedList<TVenta>();
+
+		for (Venta v : lQuery)
+			lVenta.add(v.entityToTransfer());
+
+		em.close();
+		return lVenta;
+	}
+
+	public TVentaConProductos mostrarPorId(Integer id) {
+		
 		return null;
 
 	}
 
-	public TVenta mostrarPorId(Integer id) {
-		return null;
+	public List<TVenta> ventasPorEmpleadoDeCaja(Integer id) {
+		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+		EmpleadoDeCaja emCaja = em.find(EmpleadoDeCaja.class, id);
+		
+		TypedQuery<Venta> query = em.createNamedQuery("Negocio.VentaJPA.Venta.findByempleadoDeCaja", Venta.class);
+		query.setLockMode(LockModeType.OPTIMISTIC);
+		query.setParameter("empleadoDeCaja", emCaja);
+		
+		List<Venta> lQuery = query.getResultList();
+		List<TVenta> lVenta = new LinkedList<TVenta>();
 
+		for (Venta v : lQuery)
+			lVenta.add(v.entityToTransfer());
+
+		em.close();
+		return lVenta;
 	}
 
-	public Set<TVenta> ventasPorEmpleadoDeCaja(Integer id) {
-		return null;
-
-	}
-
-	public TProducto añadirProducto(Integer idProducto) {
+	public TProducto aniadirProducto(Integer idProducto) {
 		return null;
 
 	}
@@ -72,7 +99,7 @@ public class VentaSAImp implements VentaSA {
 			em.close();
 			return -2;
 		}
-		
+
 		if (!emCaja.getActivo()) {// Empledo dado de baja
 			et.rollback();
 			em.close();
@@ -84,14 +111,14 @@ public class VentaSAImp implements VentaSA {
 			em.close();
 			return -4;
 		}
-		
+
 		double total = 0; // Creamos la venta
 		Venta venta = new Venta(carrito.getVenta());
 		venta.setActivo(true);
 		venta.setFecha(new Date(Calendar.getInstance().getTime().getTime()));
 		em.persist(venta);
 
-		for (TLineaVenta linV : carrito.getLineaVenta()) {
+		for (TLineaVenta linV : carrito.getLineaVenta()) {// Iteramos sobre las lineas de venta
 			Producto prod = em.find(Producto.class, linV.getIdProducto());
 			if (prod == null) { // Producto no existe
 				et.rollback();
@@ -124,7 +151,7 @@ public class VentaSAImp implements VentaSA {
 			et.commit();
 			em.close();
 			return venta.getId();
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			et.rollback();
 			em.close();

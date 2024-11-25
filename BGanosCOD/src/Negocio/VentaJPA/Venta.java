@@ -61,7 +61,6 @@ public class Venta implements Serializable {
 		return  id;
 	}
 
-
 	public Set<LineaVenta> getLineaVenta() {
 		return lieanVenta;
 	}

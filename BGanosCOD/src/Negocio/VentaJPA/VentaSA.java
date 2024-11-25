@@ -1,6 +1,6 @@
 package Negocio.VentaJPA;
 
-import java.util.Set;
+import java.util.List;
 
 import Negocio.ProductoJPA.TProducto;
 
@@ -12,13 +12,13 @@ public interface VentaSA {
 
 	public Integer modificarVenta(TVenta tVenta);
 
-	public Set<TVenta> listarVentas();
+	public List<TVenta> listarVentas();
 
-	public TVenta mostrarPorId(Integer id);
+	public TVentaConProductos mostrarPorId(Integer id);
 
-	public Set<TVenta> ventasPorEmpleadoDeCaja(Integer id);
+	public List<TVenta> ventasPorEmpleadoDeCaja(Integer id);
 
-	public TProducto añadirProducto(Integer idProducto);
+	public TProducto aniadirProducto(Integer idProducto);
 
 	public Integer quitarProducto(Integer id);
 

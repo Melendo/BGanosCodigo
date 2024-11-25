@@ -9,7 +9,7 @@ VEntaSA
  - procesar venta X
  - modificar venta
  - mostrar por id
- - listar
- - listar por empleado
- - devolver
+ - listar X
+ - listar por empleado X
+ - devolver 
 VentaSAImp X
