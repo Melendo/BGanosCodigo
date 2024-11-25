@@ -3,25 +3,23 @@
  */
 package Presentacion.Controller.Command.CommandProductoJPA;
 
+import Negocio.FactoriaNegocio.FactoriaNegocio;
+import Negocio.ProductoJPA.TProducto;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
+
 public class CommandAltaProducto implements Command {
-	/** 
-	* (non-Javadoc)
-	* @see Command#execute(Object datos)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	public Context execute(Object datos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
+		
+		
+		
+		int resp = FactoriaNegocio.getInstance().getProductoJPA().altaProducto((TProducto) datos);
+	
+		
+		
 		return null;
-		// end-user-code
+		
 	}
 }

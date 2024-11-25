@@ -44,6 +44,15 @@ import Presentacion.Planta.GUIListarPlantasPorInvernadero;
 import Presentacion.Planta.GUIModificarPlanta;
 import Presentacion.Planta.GUIMostarPlantasPorID;
 import Presentacion.Planta.GUIPlanta;
+import Presentacion.ProductoJPA.GUIAltaProducto;
+import Presentacion.ProductoJPA.GUIBajaProducto;
+import Presentacion.ProductoJPA.GUIListarProducto;
+import Presentacion.ProductoJPA.GUIListarProductoPorMarca;
+import Presentacion.ProductoJPA.GUIListarProductoPorTipo;
+import Presentacion.ProductoJPA.GUIListarProductoPorVenta;
+import Presentacion.ProductoJPA.GUIModificarProducto;
+import Presentacion.ProductoJPA.GUIMostrarProductoPorId;
+import Presentacion.ProductoJPA.GUIProducto;
 import Presentacion.SistemaDeRiego.GUIAltaSistemaDeRiego;
 import Presentacion.SistemaDeRiego.GUIBajaSistemaDeRiego;
 import Presentacion.SistemaDeRiego.GUIListarSistemaDeRiegoDelInvernadero;
@@ -68,6 +77,7 @@ import Negocio.Factura.TCarrito;
 import Negocio.Factura.TFactura;
 import Negocio.Invernadero.TInvernadero;
 import Negocio.Planta.TPlanta;
+import Negocio.ProductoJPA.TProducto;
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
 import Negocio.TurnoJPA.TTurno;
 
@@ -283,6 +293,36 @@ public class FactoriaVistasImp extends FactoriaVistas {
                 case Evento.OBTENER_NOMINA_DE_TURNO_VISTA:
                     vistaActual = new GUIObtenerNominaDeTurno(); 
                     return vistaActual;
+                    
+// 					Vista Producto JPA
+                case Evento.PRODUCTO_VISTA:
+                    vistaActual = new GUIProducto();
+                    return vistaActual;
+                case Evento.ALTA_PRODUCTO_VISTA:
+                    vistaActual = new GUIAltaProducto(); 
+                    return vistaActual;
+                case Evento.BAJA_PRODUCTO_VISTA:
+                    vistaActual = new GUIBajaProducto(); 
+                    return vistaActual;
+                case Evento.MODIFICAR_PRODUCTO_VISTA:
+                    vistaActual = new GUIModificarProducto((TProducto)contexto.getDatos()); 
+                    return vistaActual;
+                case Evento.MOSTRAR_PRODUCTO_POR_ID_VISTA:
+                    vistaActual = new GUIMostrarProductoPorId();
+                    return vistaActual;
+                case Evento.LISTAR_PRODUCTOS_VISTA:
+                    vistaActual = new GUIListarProducto((Set<TProducto>) contexto.getDatos()); 
+                    return vistaActual;
+                case Evento.LISTAR_PRODUCTOS_POR_MARCA_VISTA:
+                	   vistaActual = new GUIListarProductoPorMarca((Set<TProducto>) contexto.getDatos());
+                    return vistaActual;
+                case Evento.LISTAR_PRODUCTOS_POR_TIPO_VISTA:
+                    vistaActual = new GUIListarProductoPorTipo((Set<TProducto>) contexto.getDatos()); 
+                    return vistaActual;
+                case Evento.LISTAR_PRODUCTOS_POR_VENTA_VISTA:
+                    vistaActual = new GUIListarProductoPorVenta((Set<TProducto>) contexto.getDatos());
+                    return vistaActual;
+                    
 
 
             default:

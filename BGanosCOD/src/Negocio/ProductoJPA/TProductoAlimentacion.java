@@ -10,100 +10,71 @@ package Negocio.ProductoJPA;
  * @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
  */
 public class TProductoAlimentacion extends TProducto {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private Double peso;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private Double precioKilo;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
+
+	public TProductoAlimentacion(String nombre, Double precio, Integer stock, Integer idMarca, int tipoProducto
+			,String tipo, Double peso,  Double precioKilo) {
+		super(nombre, precio, stock, idMarca, tipoProducto);
+		
+		this.peso = peso;
+		this.precioKilo = precioKilo;
+		this.tipo = tipo;
+		
+	}
+
 	private String tipo;
+	
+	private Double peso;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	private Double precioKilo;
+
 	public Double getPeso() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return peso;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	public void setPeso(Double peso) {
+		this.peso = peso;
+	}
+
 	public Double getPrecioKilo() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return precioKilo;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	public void setPrecioKilo(Double precioKilo) {
+		this.precioKilo = precioKilo;
+	}
+
 	public String getTipo() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return tipo;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Void setPeso() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
+	public String toString() {
+	
+		String estado = "Si", tip = "Alimentacion";
+		if (!activo) {
+			estado = "No";
+		}
+		if(tipoProducto == 1){
+			tip = "Souvenir";
+		}
+
+		return "Informacion del Producto: " + "\n" 
+		+ "Id: " + id + "\n" 
+		+ "Nombre: " + nombre + "\n"
+		+ "Precio: " + precio + "\n" 
+		+ "Stock: " + stock + "\n" 
+		+ "Tipo del Producto: " + tip + "\n" 
+		+ "Id de la Marca: " + idMarca + "\n" 
+		+ "Activo: " + estado + "\n"
+		+ "Tipo: " + tipo + "\n"
+		+ "Peso: " + peso + "\n"
+		+ "Precio por Kilo: " + precioKilo + "\n";
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Void setPrecioKilo() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Void setTipo() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
+
 }

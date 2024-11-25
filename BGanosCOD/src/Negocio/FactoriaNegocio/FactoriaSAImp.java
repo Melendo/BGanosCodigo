@@ -10,6 +10,8 @@ import Negocio.Invernadero.InvernaderoSA;
 import Negocio.Invernadero.InvernaderoSAImp;
 import Negocio.Planta.PlantaSA;
 import Negocio.Planta.PlantaSAImp;
+import Negocio.ProductoJPA.ProductoSA;
+import Negocio.ProductoJPA.ProductoSAImp;
 import Negocio.SistemaDeRiego.SistemaDeRiegoSA;
 import Negocio.SistemaDeRiego.SistemaDeRiegoSAImp;
 
@@ -38,4 +40,9 @@ public class FactoriaSAImp extends FactoriaNegocio {
 	public SistemaDeRiegoSA getSistemaDeRiegoSA() {
 		return new SistemaDeRiegoSAImp();
 	}
+	
+	public ProductoSA getProductoJPA() {
+		return new ProductoSAImp();
+}
+	
 }

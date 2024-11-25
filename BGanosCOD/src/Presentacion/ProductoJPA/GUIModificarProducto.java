@@ -9,6 +9,10 @@ import Presentacion.Controller.IGUI;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import Negocio.Planta.TPlanta;
+import Negocio.ProductoJPA.TProducto;
+
 import javax.swing.JPanel;
 
 /** 
@@ -42,6 +46,11 @@ public class GUIModificarProducto extends JFrame implements IGUI {
 	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
 	*/
 	private JPanel jPanel;
+
+
+	public GUIModificarProducto(TProducto datos) {
+		// TODO Auto-generated constructor stub
+	}
 
 	/** 
 	* <!-- begin-UML-doc -->

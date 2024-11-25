@@ -7,8 +7,14 @@ import javax.swing.JFrame;
 import Presentacion.Controller.Command.Context;
 import Presentacion.Controller.IGUI;
 import javax.swing.JLabel;
+
+import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import Negocio.ProductoJPA.TProducto;
+
 import javax.swing.JPanel;
 
 /** 
@@ -42,6 +48,10 @@ public class GUIListarProductoPorMarca extends JFrame implements IGUI {
 	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
 	*/
 	private JPanel jPanel;
+
+	public GUIListarProductoPorMarca(Set<TProducto> datos) {
+		// TODO Auto-generated constructor stub
+	}
 
 	/** 
 	* <!-- begin-UML-doc -->
