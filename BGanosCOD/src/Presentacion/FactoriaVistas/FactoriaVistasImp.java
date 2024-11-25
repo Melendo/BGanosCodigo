@@ -59,6 +59,7 @@ import Presentacion.TurnoJPA.GUIModificarTurno;
 import Presentacion.TurnoJPA.GUIMostrarTurno;
 import Presentacion.TurnoJPA.GUIObtenerNominaDeTurno;
 import Presentacion.TurnoJPA.GUITurno;
+import Presentacion.EmpleadoDeCajaJPA.*;
 
 import java.util.Set;
 
@@ -283,6 +284,10 @@ public class FactoriaVistasImp extends FactoriaVistas {
                 case Evento.OBTENER_NOMINA_DE_TURNO_VISTA:
                     vistaActual = new GUIObtenerNominaDeTurno(); 
                     return vistaActual;
+                    
+                    //empleado de caja
+                case Evento.EMPLEADO_DE_CAJA_VISTA:
+                	vistaActual=new GUIEmpleadoDeCaja();
 
 
             default:
