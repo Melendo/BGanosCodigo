@@ -39,7 +39,7 @@ public class GUIListarEmpleadoDeCaja extends JFrame implements IGUI {
 	private JTextField jTextField;
 	
 	
-	public GUIListarEmpleadoDeCaja(Set<TFabricante> listaEmpleados) {
+	public GUIListarEmpleadoDeCaja(Set<TEmpleadoDeCaja> listaEmpleados) {
 		super("Mostrar todos los Empleados de Caja");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 800;
