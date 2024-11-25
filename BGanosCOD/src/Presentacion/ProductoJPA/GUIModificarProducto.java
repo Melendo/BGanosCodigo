@@ -15,65 +15,24 @@ import Negocio.ProductoJPA.TProducto;
 
 import javax.swing.JPanel;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
 public class GUIModificarProducto extends JFrame implements IGUI {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JLabel jLabel;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JButton jButton;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JTextField jTextField;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private JPanel jPanel;
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 
 	public GUIModificarProducto(TProducto datos) {
-		// TODO Auto-generated constructor stub
+		
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Void iniGUI() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	public void iniGUI() {
+
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see IGUI#actualizar(Context context)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	public void actualizar(Context context) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 
-		// end-user-code
 	}
 }

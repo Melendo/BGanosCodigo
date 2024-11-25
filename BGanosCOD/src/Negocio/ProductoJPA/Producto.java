@@ -16,12 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.InheritanceType;
 import javax.persistence.Inheritance;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
+
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @NamedQueries({

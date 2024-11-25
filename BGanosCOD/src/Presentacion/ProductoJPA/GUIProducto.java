@@ -125,7 +125,7 @@ public class GUIProducto extends JFrame implements IGUI {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 				//	GUIPlanta.this.setVisible(false);
-					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_POR_TIPO, null));
+					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_POR_TIPO_VISTA, null));
 				}
 			});
 			bListarPorTipo.setVisible(true);
@@ -138,7 +138,7 @@ public class GUIProducto extends JFrame implements IGUI {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					//GUIPlanta.this.setVisible(false);
-					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_POR_MARCA, null));
+					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_POR_MARCA_VISTA, null));
 				}
 			});
 			bListarPorMarca.setVisible(true);
@@ -152,7 +152,7 @@ public class GUIProducto extends JFrame implements IGUI {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					//GUIPlanta.this.setVisible(false);
-					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_POR_VENTA, null));
+					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_POR_VENTA_VISTA, null));
 				}
 			});
 			bListarPorVenta.setVisible(true);
