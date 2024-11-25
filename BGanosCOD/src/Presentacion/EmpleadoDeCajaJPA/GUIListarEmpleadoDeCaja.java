@@ -5,7 +5,6 @@ package Presentacion.EmpleadoDeCajaJPA;
 
 import javax.swing.JFrame;
 import Presentacion.Controller.Command.Context;
-import Presentacion.Fabricante.GUIListarFabricantes;
 import Presentacion.FactoriaVistas.Evento;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
