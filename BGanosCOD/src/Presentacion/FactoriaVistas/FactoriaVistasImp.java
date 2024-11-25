@@ -314,13 +314,13 @@ public class FactoriaVistasImp extends FactoriaVistas {
                     vistaActual = new GUIListarProducto((Set<TProducto>) contexto.getDatos()); 
                     return vistaActual;
                 case Evento.LISTAR_PRODUCTOS_POR_MARCA_VISTA:
-                	   vistaActual = new GUIListarProductoPorMarca((Set<TProducto>) contexto.getDatos());
+                	   vistaActual = new GUIListarProductoPorMarca();
                     return vistaActual;
                 case Evento.LISTAR_PRODUCTOS_POR_TIPO_VISTA:
-                    vistaActual = new GUIListarProductoPorTipo((Set<TProducto>) contexto.getDatos()); 
+                    vistaActual = new GUIListarProductoPorTipo(); 
                     return vistaActual;
                 case Evento.LISTAR_PRODUCTOS_POR_VENTA_VISTA:
-                    vistaActual = new GUIListarProductoPorVenta((Set<TProducto>) contexto.getDatos());
+                    vistaActual = new GUIListarProductoPorVenta();
                     return vistaActual;
                     
 

@@ -13,6 +13,10 @@ import Presentacion.Controller.IGUI;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Negocio.ProductoJPA.TProducto;
+import Negocio.ProductoJPA.TProductoAlimentacion;
+import Negocio.ProductoJPA.TProductoSouvenirs;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -61,8 +65,7 @@ public class GUIAltaProducto extends JFrame implements IGUI {
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-		msgIntroIDCabecera = ComponentsBuilder
-				.createLabel("Introduzca los datos del Producto" , 1, 10, 80, 20, Color.BLACK);
+		msgIntroIDCabecera = ComponentsBuilder.createLabel("Introduzca los datos del Producto" , 1, 10, 80, 20, Color.BLACK);
 		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(msgIntroIDCabecera);
 
@@ -186,15 +189,28 @@ public class GUIAltaProducto extends JFrame implements IGUI {
 							Double precio = Double.parseDouble(textPrecio.getText());
 							Integer stock = Integer.parseInt(textStock.getText());
 							Integer idMarca = Integer.parseInt(textidMarca.getText());
-							int tipo = 0;
+							int tip = 0;
+							
+							TProducto p;
 							
 							if(tipoProducto.getSelectedIndex() == 0){ //Alimentacion
 								
-							}
-							else{//Souvenir
-								tipo = 1;
+								String tipo = textTipo.getText();
+								Double peso = Double.parseDouble(textPeso.getText());
+								Double precioKilo = Double.parseDouble(textPrecioKilo.getText());
+								
+								p = new TProductoAlimentacion(nombre,precio, stock, idMarca, tip, tipo, peso, precioKilo);
 								
 							}
+							else{//Souvenir
+								tip = 1;
+								String descripcion = textDescripcion.getText();
+								
+								p = new TProductoSouvenirs(nombre,precio, stock, idMarca, tip, descripcion);
+								
+							}
+							
+							ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PRODUCTO, p));
 							
 						} catch (Exception ex) {
 							JOptionPane.showMessageDialog(GUIAltaProducto.this, "Error en el formato de los datos", "Error",

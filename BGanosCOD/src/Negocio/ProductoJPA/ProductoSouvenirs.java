@@ -28,9 +28,6 @@ public class ProductoSouvenirs extends Producto implements Serializable {
 
 
 	public void setDescripcion() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
+		
 	}
 }

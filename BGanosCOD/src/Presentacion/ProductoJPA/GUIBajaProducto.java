@@ -92,7 +92,7 @@ public class GUIBajaProducto extends JFrame implements IGUI {
 
 				try {
 					int id = Integer.parseInt(textID.getText());
-
+					ApplicationController.getInstance().manageRequest(new Context(Evento.BAJA_PRODUCTO, id));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIBajaProducto.this, "Error en el formato de los datos", "Error",
 							JOptionPane.ERROR_MESSAGE);

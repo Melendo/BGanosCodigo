@@ -22,7 +22,7 @@ public class GUIListarProductoPorVenta extends JFrame implements IGUI {
 	private static final long serialVersionUID = 1L;
 
 
-	public GUIListarProductoPorVenta(Set<TProducto> datos) {
+	public GUIListarProductoPorVenta() {
 
 		}
 	public void iniGUI() {
