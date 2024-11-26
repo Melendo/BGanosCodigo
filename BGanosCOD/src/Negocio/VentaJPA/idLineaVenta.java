@@ -11,6 +11,11 @@ public class idLineaVenta implements Serializable {
 
 	public idLineaVenta() {
 	}
+	
+	public idLineaVenta(Integer idPorducto, Integer IdVenta) {
+		this.idProducto = idPorducto;
+		this.idVenta = IdVenta;
+	}
 
 	private Integer idProducto;
 	private Integer idVenta;

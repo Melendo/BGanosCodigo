@@ -33,22 +33,22 @@ public class VentaSAImp implements VentaSA {
 
 	public List<TVenta> listarVentas() {
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
-		
+
 		TypedQuery<Venta> query = em.createNamedQuery("Negocio.VentaJPA.Venta.findAll", Venta.class);
 		query.setLockMode(LockModeType.OPTIMISTIC);
-		
+
 		List<Venta> lQuery = query.getResultList();
 		List<TVenta> lVenta = new LinkedList<TVenta>();
 
 		for (Venta v : lQuery)
-			lVenta.add(v.entityToTransfer());
+			lVenta.add(v.toTransfer());
 
 		em.close();
 		return lVenta;
 	}
 
 	public TVentaConProductos mostrarPorId(Integer id) {
-		
+
 		return null;
 
 	}
@@ -56,16 +56,16 @@ public class VentaSAImp implements VentaSA {
 	public List<TVenta> ventasPorEmpleadoDeCaja(Integer id) {
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 		EmpleadoDeCaja emCaja = em.find(EmpleadoDeCaja.class, id);
-		
+
 		TypedQuery<Venta> query = em.createNamedQuery("Negocio.VentaJPA.Venta.findByempleadoDeCaja", Venta.class);
 		query.setLockMode(LockModeType.OPTIMISTIC);
 		query.setParameter("empleadoDeCaja", emCaja);
-		
+
 		List<Venta> lQuery = query.getResultList();
 		List<TVenta> lVenta = new LinkedList<TVenta>();
 
 		for (Venta v : lQuery)
-			lVenta.add(v.entityToTransfer());
+			lVenta.add(v.toTransfer());
 
 		em.close();
 		return lVenta;
@@ -82,8 +82,63 @@ public class VentaSAImp implements VentaSA {
 	}
 
 	public Integer devolverVenta(TLineaVenta venta) {
-		return null;
+		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		et.begin();
 
+		Venta ventaD = em.find(Venta.class, venta.getIdVenta());
+
+		if (ventaD == null) { // la Venta no existe
+			et.rollback();
+			em.close();
+			return -2;
+		}
+
+		Producto prod = em.find(Producto.class, venta.getIdProducto());
+
+		if (prod == null) { // el Producto no existe
+			et.rollback();
+			em.close();
+			return -3;
+		}
+
+		LineaVenta lVenta = em.find(LineaVenta.class, new idLineaVenta(prod.getId(), venta.getIdVenta()));
+
+		if (lVenta == null) { // la Linea de Venta no existe
+			et.rollback();
+			em.close();
+			return -4;
+		}
+
+		if (venta.getCantidad() > lVenta.getCantidad()) { // no se puede devolver mas de lo que tenia la venta
+			et.rollback();
+			em.close();
+			return -5;
+		}
+
+		prod.setStock(prod.getStock() + venta.getCantidad());
+		ventaD.setPrecioTotal(lVenta.getPrecio() - venta.getCantidad() * prod.getPrecio());
+
+		if (ventaD.getPrecioTotal() == 0)
+			ventaD.setActivo(false);
+
+		lVenta.setCantidad(lVenta.getCantidad() - venta.getCantidad());
+		lVenta.setPrecio(lVenta.getPrecio() - venta.getCantidad() * prod.getPrecio());
+
+		if (lVenta.getCantidad() == 0)
+			em.remove(lVenta);
+
+		try {
+			et.commit();
+			em.close();
+			return ventaD.getId();
+		} catch (Exception e) {
+			et.rollback();
+			em.close();
+			e.printStackTrace();
+		}
+
+		return -1; // Error desconocido
 	}
 
 	public Integer procesarVenta(TCarrito carrito) {

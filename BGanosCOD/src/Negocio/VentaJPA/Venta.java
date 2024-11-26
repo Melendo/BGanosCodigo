@@ -112,7 +112,7 @@ public class Venta implements Serializable {
 		this.precioTotal = precioTotal;
 	}
 
-	public TVenta entityToTransfer() {
+	public TVenta toTransfer() {
 		TVenta tVenta = new TVenta();
 		
 		tVenta.setActivo(activo);
