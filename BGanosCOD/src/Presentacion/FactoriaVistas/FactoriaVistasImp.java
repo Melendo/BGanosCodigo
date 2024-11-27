@@ -61,6 +61,7 @@ import Presentacion.TurnoJPA.GUIMostrarTurno;
 import Presentacion.TurnoJPA.GUIObtenerNominaDeTurno;
 import Presentacion.TurnoJPA.GUITurno;
 import Presentacion.VentaJPA.GUIAltaVenta;
+import Presentacion.VentaJPA.GUIBajaVenta;
 import Presentacion.VentaJPA.GUIVentaJPA;
 
 import java.util.Set;
@@ -292,6 +293,9 @@ public class FactoriaVistasImp extends FactoriaVistas {
                 	return vistaActual;
                 case Evento.ALTA_VENTA_VISTA:
                 	vistaActual=new GUIAltaVenta();
+                	return vistaActual;
+                case Evento.BAJA_VENTA_VISTA:
+                	vistaActual=new GUIBajaVenta();
                 	return vistaActual;
 
             default:
