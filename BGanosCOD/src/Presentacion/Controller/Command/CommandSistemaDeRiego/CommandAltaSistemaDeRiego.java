@@ -12,9 +12,9 @@ public class CommandAltaSistemaDeRiego implements Command {
 	public Context execute(Object datos) {
 		int resultado = FactoriaNegocio.getInstance().getSistemaDeRiegoSA().altaSisRiego((TSistemaDeRiego)datos);
 		if(resultado > -1){
-			return new Context(Evento.ALTA_SISTEMA_DE_RIEGO_OK,resultado);
+			return new Context(Evento.ALTA_VENTA_OK,resultado);
 		}else {
-			return new Context(Evento.ALTA_SISTEMA_DE_RIEGO_KO,resultado);
+			return new Context(Evento.ALTA_VENTA_KO,resultado);
 		}
 	}
 }

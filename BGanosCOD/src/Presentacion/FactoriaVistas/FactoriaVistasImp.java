@@ -1,6 +1,7 @@
 package Presentacion.FactoriaVistas;
 
 import Presentacion.MainView;
+
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.Entrada.GUIAltaEntrada;
@@ -59,6 +60,8 @@ import Presentacion.TurnoJPA.GUIModificarTurno;
 import Presentacion.TurnoJPA.GUIMostrarTurno;
 import Presentacion.TurnoJPA.GUIObtenerNominaDeTurno;
 import Presentacion.TurnoJPA.GUITurno;
+import Presentacion.VentaJPA.GUIAltaVenta;
+import Presentacion.VentaJPA.GUIVentaJPA;
 
 import java.util.Set;
 
@@ -283,7 +286,13 @@ public class FactoriaVistasImp extends FactoriaVistas {
                 case Evento.OBTENER_NOMINA_DE_TURNO_VISTA:
                     vistaActual = new GUIObtenerNominaDeTurno(); 
                     return vistaActual;
-
+//					Vistas VENTA JPA
+                case Evento.VENTA_VISTA:
+                	vistaActual=new GUIVentaJPA();
+                	return vistaActual;
+                case Evento.ALTA_VENTA_VISTA:
+                	vistaActual=new GUIAltaVenta();
+                	return vistaActual;
 
             default:
                 return null;

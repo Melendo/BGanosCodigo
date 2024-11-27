@@ -7,6 +7,7 @@ import Negocio.Factura.FacturaSA;
 import Negocio.Invernadero.InvernaderoSA;
 import Negocio.Planta.PlantaSA;
 import Negocio.SistemaDeRiego.SistemaDeRiegoSA;
+import Negocio.VentaJPA.VentaSA;
 
 public abstract class FactoriaNegocio {
 
@@ -29,5 +30,7 @@ public abstract class FactoriaNegocio {
 	public abstract PlantaSA getPlantaSA();
 
 	public abstract SistemaDeRiegoSA getSistemaDeRiegoSA();
+	
+	public abstract VentaSA getVentaSA();
 	
 }

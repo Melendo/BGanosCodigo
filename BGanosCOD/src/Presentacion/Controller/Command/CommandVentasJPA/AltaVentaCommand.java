@@ -3,25 +3,22 @@
  */
 package Presentacion.Controller.Command.CommandVentasJPA;
 
+import Negocio.FactoriaNegocio.FactoriaNegocio;
+
+import Negocio.VentaJPA.TVenta;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
+
 public class AltaVentaCommand implements Command {
-	/** 
-	* (non-Javadoc)
-	* @see Command#execute(Object datos)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	
 	public Context execute(Object datos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		int resultado = FactoriaNegocio.getInstance().getVentaSA().altaVenta((TVenta)datos);
+		if(resultado > -1){
+			return new Context(Evento.ALTA_SISTEMA_DE_RIEGO_OK,resultado);
+		}else {
+			return new Context(Evento.ALTA_SISTEMA_DE_RIEGO_KO,resultado);
+		}
 	}
 }
