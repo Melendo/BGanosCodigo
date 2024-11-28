@@ -4,3 +4,6 @@
 - Añadir idEmpleado a TVenta
 - Añadir los metodos que faltan a LineaVenta(Entity)
 - Añadir setLineaVenta a venta
+- Quitar alta y baja venta
+- Quitar baja command
+- Cambiar command alta a command abrir

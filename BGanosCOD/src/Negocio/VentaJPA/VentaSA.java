@@ -6,10 +6,6 @@ import Negocio.ProductoJPA.TProducto;
 
 public interface VentaSA {
 
-	public Integer altaVenta(TVenta tVenta);
-
-	public Integer bajaVenta(Integer id);
-
 	public Integer modificarVenta(TVenta tVenta);
 
 	public List<TVenta> listarVentas();

@@ -17,15 +17,6 @@ import Negocio.ProductoJPA.TProducto;
 
 public class VentaSAImp implements VentaSA {
 
-	public Integer altaVenta(TVenta tVenta) {
-		return null;
-	}
-
-	public Integer bajaVenta(Integer id) {
-		return null;
-
-	}
-
 	public Integer modificarVenta(TVenta tVenta) {
 		return null;
 
@@ -81,12 +72,12 @@ public class VentaSAImp implements VentaSA {
 
 	}
 
-	public Integer devolverVenta(TLineaVenta venta) {
+	public Integer devolverVenta(TLineaVenta tLinea) {
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 
-		Venta ventaD = em.find(Venta.class, venta.getIdVenta());
+		Venta ventaD = em.find(Venta.class, tLinea.getIdVenta());
 
 		if (ventaD == null) { // la Venta no existe
 			et.rollback();
@@ -94,7 +85,7 @@ public class VentaSAImp implements VentaSA {
 			return -2;
 		}
 
-		Producto prod = em.find(Producto.class, venta.getIdProducto());
+		Producto prod = em.find(Producto.class, tLinea.getIdProducto());
 
 		if (prod == null) { // el Producto no existe
 			et.rollback();
@@ -102,7 +93,7 @@ public class VentaSAImp implements VentaSA {
 			return -3;
 		}
 
-		LineaVenta lVenta = em.find(LineaVenta.class, new idLineaVenta(prod.getId(), venta.getIdVenta()));
+		LineaVenta lVenta = em.find(LineaVenta.class, new idLineaVenta(prod.getId(), tLinea.getIdVenta()));
 
 		if (lVenta == null) { // la Linea de Venta no existe
 			et.rollback();
@@ -110,20 +101,20 @@ public class VentaSAImp implements VentaSA {
 			return -4;
 		}
 
-		if (venta.getCantidad() > lVenta.getCantidad()) { // no se puede devolver mas de lo que tenia la venta
+		if (tLinea.getCantidad() > lVenta.getCantidad()) { // no se puede devolver mas de lo que tenia la venta
 			et.rollback();
 			em.close();
 			return -5;
 		}
 
-		prod.setStock(prod.getStock() + venta.getCantidad());
-		ventaD.setPrecioTotal(ventaD.getPrecioTotal() - venta.getCantidad() * prod.getPrecio());
+		prod.setStock(prod.getStock() + tLinea.getCantidad());
+		ventaD.setPrecioTotal(ventaD.getPrecioTotal() - tLinea.getCantidad() * prod.getPrecio());
 
 		if (ventaD.getPrecioTotal() == 0)
 			ventaD.setActivo(false);
 
-		lVenta.setCantidad(lVenta.getCantidad() - venta.getCantidad());
-		lVenta.setPrecio(lVenta.getPrecio() - venta.getCantidad() * prod.getPrecio());
+		lVenta.setCantidad(lVenta.getCantidad() - tLinea.getCantidad());
+		lVenta.setPrecio(lVenta.getPrecio() - tLinea.getCantidad() * prod.getPrecio());
 
 		if (lVenta.getCantidad() == 0)
 			em.remove(lVenta);

@@ -12,6 +12,14 @@ public class TCarrito {
 		this.tLineaVenta = tLineaVenta;
 	}
 
+	public void setLineaVenta(Set<TLineaVenta> tLineaVenta) {
+		this.tLineaVenta = tLineaVenta;
+	}
+	
+	public void setLineaVenta(TVenta tVenta) {
+		this.tVenta = tVenta;
+	}
+	
 	public Set<TLineaVenta> getLineaVenta() {
 		return tLineaVenta;
 	}

@@ -27,6 +27,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.sql.Date;
@@ -41,14 +43,16 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 	private static final long serialVersionUID = 1L;
 	private JTextField textId;
 	private JTextField textCantidad;
-	private JTextField _formaPago;
+	private JTextField textPago;
+	private JTextField textQuitar;
 	private JTextField _fecha;
+	private TCarrito tCarrito;
 
 	public GUIAbrirVenta() {
 		super("Abrir Venta");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 700;
-		int alto = 500;
+		int alto = 700;
 		int x = (pantalla.width - ancho) / 2;
 		int y = (pantalla.height - alto) / 2;
 		this.setBounds(x, y, ancho, alto);
@@ -58,8 +62,9 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 	}
 
 	public void initGUI() {
-		
+
 		TVenta tVenta = new TVenta();
+		tCarrito = new TCarrito(tVenta, new LinkedHashSet<>());
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);
@@ -90,9 +95,10 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 		mainPanel.add(panelCantidad);
 
 		panelCantidad.add(new JLabel("Cantidad: "));
-		textId = new JTextField(20);
-		panelCantidad.add(textId);
+		textCantidad = new JTextField(20);
+		panelCantidad.add(textCantidad);
 
+		// aniadir boton
 		JPanel panelAniadirButton = new JPanel();
 		panelAniadirButton.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panelAniadirButton.setAlignmentX(CENTER_ALIGNMENT);
@@ -135,41 +141,44 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 //		});
 		panelAniadirButton.add(botonAnadirEntrada);
 
-		JLabel msg = ComponentsBuilder.createLabel("Introduzca el ID de la entrada que desea eliminar de la factura ",
-				1, 150, 80, 20, Color.BLACK);
-		msg.setAlignmentX(CENTER_ALIGNMENT);
-		mainPanel.add(msg);
+		// forma de pago
+		JPanel panelPago = new JPanel();
+		panelPago.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panelPago.setAlignmentX(CENTER_ALIGNMENT);
+		mainPanel.add(panelPago);
 
+		panelPago.add(new JLabel("Forma de pago: "));
+		textPago = new JTextField(20);
+		panelPago.add(textPago);
+
+		JLabel msgEliminar = ComponentsBuilder.createLabel(
+				"Introduzca el ID del Producto que desea eliminar de la Venta ", 1, 150, 75, 20, Color.BLACK);
+		msgEliminar.setAlignmentX(CENTER_ALIGNMENT);
+		mainPanel.add(msgEliminar);
+
+		// id quitar
 		JPanel panelQuitar = new JPanel();
-		panelQuitar.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panelQuitar.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panelQuitar.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(panelQuitar);
 
-		JLabel idEntradaOut = new JLabel("Id Entrada");
-		idEntradaOut.setPreferredSize(new Dimension(100, 30));
-		panelQuitar.add(idEntradaOut);
+		panelQuitar.add(new JLabel("Id Entrada: "));
+		textQuitar = new JTextField(20);
+		panelQuitar.add(textQuitar);
 
-		JTextField idOut = new JTextField();
-		idOut.setPreferredSize(new Dimension(250, 30));
-		idOut.setEditable(true);
-		panelQuitar.add(idOut);
-
+		// quitar cantidad
 		JPanel panelCantidadOut = new JPanel();
-		panelCantidadOut.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panelCantidadOut.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panelCantidadOut.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(panelCantidadOut);
 
-		JLabel cantidadOut = new JLabel("Cantidad a Quitar:");
-		cantidadOut.setPreferredSize(new Dimension(120, 60));
-		panelCantidadOut.add(cantidadOut);
-
-		JTextField cantidadOuttxt = new JTextField();
-		cantidadOuttxt.setPreferredSize(new Dimension(250, 30));
-		cantidadOuttxt.setEditable(true);
+		panelCantidadOut.add(new JLabel("Cantidad a Quitar:"));
+		JTextField cantidadOuttxt = new JTextField(20);
 		panelCantidadOut.add(cantidadOuttxt);
 
+		// quitar boton
 		JPanel panelQuitarButton = new JPanel();
-		panelQuitarButton.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panelQuitarButton.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panelQuitarButton.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(panelQuitarButton);
 
@@ -180,20 +189,17 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 //			@Override
 //			public void actionPerformed(ActionEvent e) {
 //				try {
-//					if(idOut.getText().isEmpty() || cantidadOuttxt.getText().isEmpty()){
+//					if(textId.getText().isEmpty() || cantidadOuttxt.getText().isEmpty()){
 //		    			ApplicationController.getInstance().manageRequest(new Context (Evento.CERRAR_FACTURA_KO, -1));
 //					}
 //					else{
-//						int idEntrada = Integer.parseInt(idOut.getText());
+//						int idProd = Integer.parseInt(textQuitar.getText());
 //						int cantidad = Integer.parseInt(cantidadOuttxt.getText());
-//						boolean correct = true;
 //						boolean encontrado = false;
-//	                    Set<TLineaFactura> lineaFacturas = tCarrito.getLineasFactura();
-//	                    for(TLineaFactura linea: lineaFacturas){
-//	                    	if(linea.getidEntrada() == idEntrada){
+//	                    Set<TLineaVenta> lVentas = tCarrito.getLineaVenta();
+//	                    for(TLineaVenta lVenta: lVentas){
+//	                    	if(lVenta.getIdProducto() == idProd){
 //	                    		encontrado = true;
-//								if(cantidad > linea.getCantidad())
-//					        		correct = false; 
 //								else{
 //									int cantidadTotal = linea.getCantidad() - cantidad;
 //									if(cantidadTotal == 0)
@@ -207,9 +213,6 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 //	                    if(!encontrado)
 //	                    {
 //			    			ApplicationController.getInstance().manageRequest(new Context (Evento.CERRAR_FACTURA_KO, -1));
-//	                    }
-//	                    else if(!correct){
-//			    			ApplicationController.getInstance().manageRequest(new Context (Evento.CERRAR_FACTURA_KO, -3));
 //	                    }
 //	                    else{
 //	                    	GUICerrarFactura.this.setVisible(false);
@@ -228,21 +231,21 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 
 		panelQuitarButton.add(botonQuitarEntrada);
 
-//		Set<TLineaFactura> LineasFactura = tCarrito.getLineasFactura();
-//		String[] nombreColumnas = { "Id Entrada", "Cantidad" };
-//		List<String[]> datosColumnas = new ArrayList<String[]>();
+		String[] nombreColumnas = { "Id Producto", "Cantidad" };
+		List<String[]> datosColumnas = new ArrayList<String[]>();
 
-//		for (TLineaFactura t : LineasFactura) {
-//			String[] datos = new String[2];
-//			datos[0] = t.getidEntrada().toString();
-//			datos[1] = t.getCantidad().toString();
-//			datosColumnas.add(datos);
-//		}
-//		
-//		JTable tabla = ComponentsBuilder.createTable(LineasFactura.size(), 2, nombreColumnas, datosColumnas.toArray(new String[][] {}));
-//		JScrollPane scroll = new JScrollPane(tabla);
-//		scroll.setBounds(50, 115, 900, 288);
-//		this.add(scroll);
+		for (TLineaVenta v : tCarrito.getLineaVenta()) {
+			String[] datos = new String[2];
+			datos[0] = v.getIdProducto().toString();
+			datos[1] = v.getCantidad().toString();
+			datosColumnas.add(datos);
+		}
+
+		JTable tabla = ComponentsBuilder.createTable(0, 2, nombreColumnas,
+				datosColumnas.toArray(new String[][] {}));
+		JScrollPane scroll = new JScrollPane(tabla);
+		scroll.setBounds(50, 115, 900, 288);
+		this.add(scroll);
 
 		JPanel panelBotones = new JPanel();
 		mainPanel.add(panelBotones);
