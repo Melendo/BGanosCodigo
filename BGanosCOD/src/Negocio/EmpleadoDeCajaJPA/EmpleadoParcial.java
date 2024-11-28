@@ -131,4 +131,10 @@ public class EmpleadoParcial extends EmpleadoDeCaja implements Serializable {
 
 		// end-user-code
 	}
+
+	@Override
+	public TEmpleadoDeCaja entityToTransfer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
