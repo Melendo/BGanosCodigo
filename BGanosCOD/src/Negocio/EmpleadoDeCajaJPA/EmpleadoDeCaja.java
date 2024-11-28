@@ -160,5 +160,10 @@ public abstract class EmpleadoDeCaja implements Serializable {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
+
+	public Integer getTipo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
