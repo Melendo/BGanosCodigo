@@ -3,6 +3,9 @@
  */
 package Negocio.EmpleadoDeCajaJPA;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -274,7 +277,20 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	}
 
 	public Set<TEmpleadoDeCaja> ListarEmpleadosDeCaja() {
+
+		EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
+
+		TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findAll", EmpleadoDeCaja.class);
+
+		List<EmpleadoDeCaja> lista = query.getResultList();
+		Set<TEmpleadoDeCaja> res = new LinkedHashSet<TEmpleadoDeCaja>(lista.size());
+
+		for (EmpleadoDeCaja empleado : lista) {
+			TEmpleadoDeCaja tEmpleado = empleado.entityToTransfer();
+			res.add(tEmpleado);
+		}
 		
-		return null;
+		entityManager.close();
+		return res;
 	}
 }
