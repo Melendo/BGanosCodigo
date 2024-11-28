@@ -1,27 +1,29 @@
-/**
- * 
- */
 package Presentacion.Controller.Command.CommandMarcaJPA;
 
+import java.util.Set;
+
+import Negocio.FactoriaNegocio.FactoriaSA;
+import Negocio.MarcaJPA.TMarca;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
+
 public class CommandListarMarcasPorProveedor implements Command {
-	/** 
-	* (non-Javadoc)
-	* @see Command#execute(Object datos)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	public Context execute(Object datos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TMarca> res = FactoriaSA.getInstance().getMarcaJPA().listarMarcasPorProveedor((Integer)datos);
+		
+		if(res.size() == 1) {
+			TMarca unaMarca = res.iterator().next();
+			if(unaMarca.getId() <= 0)
+				return new Context(Evento.LISTAR_MARCAS_POR_PROVEEDOR_KO, unaMarca);
+			else
+				return new Context(Evento.LISTAR_MARCAS_POR_PROVEEDOR_OK, unaMarca);
+
+		} else {
+			return new Context(Evento.LISTAR_MARCAS_POR_PROVEEDOR_OK, res);
+
+		}		
 	}
 }
