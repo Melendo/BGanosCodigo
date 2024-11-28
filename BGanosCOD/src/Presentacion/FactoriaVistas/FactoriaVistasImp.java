@@ -294,9 +294,9 @@ public class FactoriaVistasImp extends FactoriaVistas {
                 case Evento.ABRIR_VENTA_VISTA:
                 	vistaActual=new GUIAbrirVenta();
                 	return vistaActual;
-                case Evento.BAJA_VENTA_VISTA:
-                	vistaActual=new GUIBajaVenta();
-                	return vistaActual;
+//                case Evento.BAJA_VENTA_VISTA:
+//                	vistaActual=new GUIBajaVenta();
+//                	return vistaActual;
 
             default:
                 return null;

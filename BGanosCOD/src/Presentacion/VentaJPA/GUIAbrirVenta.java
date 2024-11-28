@@ -9,7 +9,11 @@ import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
+import Negocio.Factura.TLineaFactura;
 import Negocio.VentaJPA.TCarrito;
 import Negocio.VentaJPA.TLineaVenta;
 import Negocio.VentaJPA.TVenta;
@@ -45,8 +49,9 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 	private JTextField textCantidad;
 	private JTextField textPago;
 	private JTextField textQuitar;
-	private JTextField _fecha;
+	private JTable tabla;
 	private TCarrito tCarrito;
+	String[] nombreColumnas = { "Id Producto", "Cantidad" };
 
 	public GUIAbrirVenta() {
 		super("Abrir Venta");
@@ -106,39 +111,38 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 
 		JButton botonAnadirEntrada = new JButton("Añadir");
 		botonAnadirEntrada.setBounds(75, 50, 100, 100);
-//		botonAnadirEntrada.addActionListener(a -> {
-//			try {
-//
-//				if (textId.getText().isEmpty() || textCantidad.getText().isEmpty()) {
-//					JOptionPane.showMessageDialog(GUIAbrirVenta.this, "no se han rellenado todos los campos", "Error",
-//							JOptionPane.ERROR_MESSAGE);
-//				} else {
-//					int idProd = Integer.parseInt(textId.getText());
-//					int cantidad = Integer.parseInt(textCantidad.getText());
-//					TLineaVenta lVenta = new TLineaVenta();
-//					lVenta.setIdPoducto(idProd);
-//					lVenta.setCantidad(cantidad);
-//					boolean modificacionLineaFactura = false;
-//
-//					for (TLineaFactura linea : lVenta) {
-//						if (linea.getidEntrada() == idEntrada) {
-//							linea.setCantidad(linea.getCantidad() + cantidad);
-//							modificacionLineaFactura = true;
-//						}
-//					}
-//					if (!modificacionLineaFactura)
-//						lineaFacturas.add(lineaFactura);
-//					setVisible(false);
-//					ApplicationController.getInstance()
-//							.manageRequest(new Context(Evento.ANIADIR_PRODUCTO, new TCarrito(tVenta, lineaVentas)));
-//				}
-//
-//			} catch (Exception ex) {
-//				JOptionPane.showMessageDialog(GUICerrarFactura.this, "Los datos no son correctos", "Error",
-//						JOptionPane.ERROR_MESSAGE);
-//			}
-//
-//		});
+		botonAnadirEntrada.addActionListener(a -> {
+			try {
+
+				if (textId.getText().isEmpty() || textCantidad.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(GUIAbrirVenta.this, "no se han rellenado todos los campos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					int idProd = Integer.parseInt(textId.getText());
+					int cantidad = Integer.parseInt(textCantidad.getText());
+					TLineaVenta lVenta = new TLineaVenta();
+					lVenta.setIdPoducto(idProd);
+					lVenta.setCantidad(cantidad);
+					boolean modificacionLineaFactura = false;
+
+					for (TLineaVenta linea : tCarrito.getLineaVenta()) {
+						if (linea.getIdProducto() == idProd) {
+							linea.setCantidad(linea.getCantidad() + cantidad);
+							modificacionLineaFactura = true;
+						}
+					}
+					if (!modificacionLineaFactura)
+						tCarrito.getLineaVenta().add(lVenta);
+					update();
+				}
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Los datos no son correctos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+
+		});
 		panelAniadirButton.add(botonAnadirEntrada);
 
 		// forma de pago
@@ -184,68 +188,54 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 
 		JButton botonQuitarEntrada = new JButton("Quitar");
 		botonQuitarEntrada.setBounds(75, 50, 100, 100);
-//		botonQuitarEntrada.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				try {
-//					if(textId.getText().isEmpty() || cantidadOuttxt.getText().isEmpty()){
-//		    			ApplicationController.getInstance().manageRequest(new Context (Evento.CERRAR_FACTURA_KO, -1));
-//					}
-//					else{
-//						int idProd = Integer.parseInt(textQuitar.getText());
-//						int cantidad = Integer.parseInt(cantidadOuttxt.getText());
-//						boolean encontrado = false;
-//	                    Set<TLineaVenta> lVentas = tCarrito.getLineaVenta();
-//	                    for(TLineaVenta lVenta: lVentas){
-//	                    	if(lVenta.getIdProducto() == idProd){
-//	                    		encontrado = true;
-//								else{
-//									int cantidadTotal = linea.getCantidad() - cantidad;
-//									if(cantidadTotal == 0)
-//										lineaFacturas.remove(linea);
-//									else
-//										linea.setCantidad(cantidadTotal);
-//								}
-//							}
-//								
-//	                    }
-//	                    if(!encontrado)
-//	                    {
-//			    			ApplicationController.getInstance().manageRequest(new Context (Evento.CERRAR_FACTURA_KO, -1));
-//	                    }
-//	                    else{
-//	                    	GUICerrarFactura.this.setVisible(false);
-//	                        tCarrito.setLineaFactura(lineaFacturas);
-//	                        ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_FACTURA_VISTA, tCarrito));
-//	                    }
-//
-//					}
-//
-//				} catch (Exception ex) {
-//					JOptionPane.showMessageDialog(GUICerrarFactura.this, "Los datos no son correctos", "Error", JOptionPane.ERROR_MESSAGE);
-//				}
-//
-//			}
-//		});
+		botonQuitarEntrada.addActionListener(a -> {
+			try {
+				if (textId.getText().isEmpty() || cantidadOuttxt.getText().isEmpty()) {
+					ApplicationController.getInstance().manageRequest(new Context(Evento.ABRIR_VENTA_KO, -1));
+				} else {
+					int idProd = Integer.parseInt(textQuitar.getText());
+					int cantidad = Integer.parseInt(cantidadOuttxt.getText());
+					boolean correct = true;
+					boolean encontrado = false;
+					Set <TLineaVenta> lVentas = tCarrito.getLineaVenta();
+					for (TLineaVenta lVenta : lVentas) {
+						if (lVenta.getIdProducto() == idProd) {
+							encontrado = true;
+							if (cantidad > lVenta.getCantidad())
+								correct = false;
+							else {
+								int cantidadTotal = lVenta.getCantidad() - cantidad;
+								if (cantidadTotal == 0)
+									lVentas.remove(lVenta);
+								else
+									lVenta.setCantidad(cantidadTotal);
+							}
+						}
+
+					}
+
+					
+					if (!encontrado) {
+						ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_VENTA_KO, -1));
+					} else {
+						tCarrito.setLineaVenta(lVentas);
+						update();
+					}
+
+				}
+
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Los datos no son correctos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		});
 
 		panelQuitarButton.add(botonQuitarEntrada);
 
-		String[] nombreColumnas = { "Id Producto", "Cantidad" };
-		List<String[]> datosColumnas = new ArrayList<String[]>();
-
-		for (TLineaVenta v : tCarrito.getLineaVenta()) {
-			String[] datos = new String[2];
-			datos[0] = v.getIdProducto().toString();
-			datos[1] = v.getCantidad().toString();
-			datosColumnas.add(datos);
-		}
-
-		JTable tabla = ComponentsBuilder.createTable(0, 2, nombreColumnas,
-				datosColumnas.toArray(new String[][] {}));
+		tabla = ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, null);
 		JScrollPane scroll = new JScrollPane(tabla);
-		scroll.setBounds(50, 115, 900, 288);
-		this.add(scroll);
+		scroll.setPreferredSize(new Dimension(750, 250));
+		add(scroll);
 
 		JPanel panelBotones = new JPanel();
 		mainPanel.add(panelBotones);
@@ -257,23 +247,24 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				ApplicationController.getInstance().manageRequest(new Context(Evento.FACTURA_VISTA, null));
+				ApplicationController.getInstance().manageRequest(new Context(Evento.VENTA_VISTA, null));
 
 			}
 		});
 		panelBotones.add(botonCancelar);
 
-//		JButton botonCerrar = new JButton("Cerrar Factura");
-//		botonCerrar.setBounds(75, 50, 100, 100);
-//		botonCerrar.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				tCarrito.setFactura(factura);
-//	            ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_FACTURA, tCarrito));
-//			}
-//		});
-//		panelBotones.add(botonCerrar);
+		JButton botonCerrar = new JButton("Cerrar Venta");
+		botonCerrar.setBounds(75, 50, 100, 100);
+		botonCerrar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tVenta.setFormaDePago(textPago.getText());
+				tCarrito.setVenta(tVenta);;
+	            ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_FACTURA, tCarrito));
+			}
+		});
+		panelBotones.add(botonCerrar);
 		this.setVisible(true);
 		this.setResizable(true);
 	}
@@ -300,5 +291,16 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 				break;
 			}
 		}
+	}
+
+	private void update() {
+		String[][] datos = new String[tCarrito.getLineaVenta().size()][nombreColumnas.length];
+		int i = 0;
+		for (TLineaVenta v : tCarrito.getLineaVenta()) {
+			datos[i][0] = v.getIdProducto().toString();
+			datos[i][1] = v.getCantidad().toString();
+			i++;
+		}
+		tabla.setModel(new DefaultTableModel(datos, nombreColumnas));
 	}
 }
