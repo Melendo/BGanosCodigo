@@ -16,9 +16,9 @@ public class AltaVentaCommand implements Command {
 	public Context execute(Object datos) {
 		int resultado = FactoriaNegocio.getInstance().getVentaSA().altaVenta((TVenta)datos);
 		if(resultado > -1){
-			return new Context(Evento.ALTA_SISTEMA_DE_RIEGO_OK,resultado);
+			return new Context(Evento.ABRIR_VENTA_OK,resultado);
 		}else {
-			return new Context(Evento.ALTA_SISTEMA_DE_RIEGO_KO,resultado);
+			return new Context(Evento.ABRIR_VENTA_KO,resultado);
 		}
 	}
 }
