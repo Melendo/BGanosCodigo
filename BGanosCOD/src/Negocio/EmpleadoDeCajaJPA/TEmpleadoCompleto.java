@@ -27,6 +27,10 @@ public class TEmpleadoCompleto extends TEmpleadoDeCaja {
 		// TODO Auto-generated constructor stub
 	}
 
+	public TEmpleadoCompleto() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/** 
 	* <!-- begin-UML-doc -->
 	* <!-- end-UML-doc -->

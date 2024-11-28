@@ -15,8 +15,6 @@ import javax.persistence.NamedQueries;
 import java.util.Set;
 import Negocio.TurnoJPA.Turno;
 import javax.persistence.OneToMany;
-import Negocio.TurnoJPA.TTurno;
-import Negocio.VentaJPA.TVenta;
 import javax.persistence.InheritanceType;
 import javax.persistence.Inheritance;
 
@@ -154,4 +152,13 @@ public abstract class EmpleadoDeCaja implements Serializable {
 	public void setVenta(Set<Venta> venta) {
 		this.venta = venta;
 	}
+	
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+	
 }
