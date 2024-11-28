@@ -36,7 +36,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 		entityTrans.begin();
 
 		
-		TypedQuery<Turno> query2 = entityManager.createNamedQuery("Negocio.TurnoJPA.Departamento.findByid", Turno.class);
+		TypedQuery<Turno> query2 = entityManager.createNamedQuery("Negocio.TurnoJPA.Turno.findByid", Turno.class);
 		query2.setParameter("id", empleado.getId_Turno());
 	
 		try {
