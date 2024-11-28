@@ -36,6 +36,14 @@ import Presentacion.Controller.Command.CommandPlanta.CommandListarPlantasPorInve
 import Presentacion.Controller.Command.CommandPlanta.CommandListarPlantasPorTipo;
 import Presentacion.Controller.Command.CommandPlanta.CommandModificarPlanta;
 import Presentacion.Controller.Command.CommandPlanta.CommandMostarPlantaPorId;
+import Presentacion.Controller.Command.CommandProveedorJPA.altaProveedorCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.bajaProveedorCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.desvincularMarcaCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.listarProveedoresCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.listarProveedoresDeMarcaCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.modificarProveedorCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.mostarProveedorPorIdCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.vincularMarcaCommand;
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandAltaSistemaDeRiego;
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandBajaSistemaDeRiego;
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandModificarSistemaDeRiego;
@@ -148,6 +156,26 @@ public class CommandFactoryImp extends CommandFactory {
 			return new CommandMostrarSistemaDeRiegoPorFabricante();
 		case Evento.LISTAR_SISTEMAS_RIEGO:
 			return new CommandMostrarSistemasDeRiego();
+			
+			
+			// Eventos de Proveedor JPA
+		case Evento.ALTA_PROVEEDOR:
+			return new altaProveedorCommand();
+		case Evento.BAJA_PROVEEDOR:
+			return new bajaProveedorCommand();
+		case Evento.MODIFICAR_PROVEEDORES:
+			return new modificarProveedorCommand();
+		case Evento.LISTAR_PROVEEDORES:
+			return new listarProveedoresCommand();
+		case Evento.MOSTRAR_PROVEEDORES_POR_ID:
+			return new mostarProveedorPorIdCommand();
+		case Evento.LISTAR_PROVEEDORES_DE_MARCA:
+			return new listarProveedoresDeMarcaCommand();
+		case Evento.VINCULAR_MARCA_PROVEEDOR:
+			return new vincularMarcaCommand();
+		case Evento.DESVINCULAR_MARCA_PROVEEDOR:
+			return new desvincularMarcaCommand();
+		
 
 		}
 		return null;
