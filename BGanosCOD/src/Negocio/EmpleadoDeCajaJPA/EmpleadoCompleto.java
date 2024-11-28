@@ -6,133 +6,63 @@ import java.io.Serializable;
 import javax.persistence.NamedQuery;
 import javax.persistence.NamedQueries;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoCompleto.findByid", query = "select obj from EmpleadoCompleto obj where :id = obj.id "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoCompleto.findBySueldo_Base", query = "select obj from EmpleadoCompleto obj where :Sueldo_Base = obj.Sueldo_Base "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoCompleto.findByComplementos", query = "select obj from EmpleadoCompleto obj where :Complementos = obj.Complementos ") })
 public class EmpleadoCompleto extends EmpleadoDeCaja implements Serializable {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	
 	private static final long serialVersionUID = 0;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	
+	private Integer id;
+	private Double Sueldo_Base;
+	private Double Complementos;
+	
 	public EmpleadoCompleto() {
 	}
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private Integer id;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private Double Sueldo_Base;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private Double Complementos;
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Integer getId() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param id
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public void setId(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Double getSueldo_Base() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param sueldo_Base
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public void setSueldo_Base(Double sueldo_Base) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Double getComplementos() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param complementos
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public void setComplementos(Double complementos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
-	@Override
+	
 	public TEmpleadoDeCaja entityToTransfer() {
-		// TODO Auto-generated method stub
-		return null;
+		return new TEmpleadoCompleto(super.getId(), super.getDNI(), super.getNombre(), super.getApellido(), super.getSueldo(),
+				super.getTelefono(), super.getTurno().getId(), super.getActivo(), Sueldo_Base, Complementos);
 	}
+	
+	public void transferToEntity(TEmpleadoDeCaja empleado) {
+    	super.transferToEntity(empleado);
+    	TEmpleadoCompleto empParcial = (TEmpleadoCompleto) empleado;
+    	this.setSueldo_Base(empParcial.getSueldo_Base());
+    	this.setComplementos(empParcial.getComplementos());
+	}
+
+	public Double calcularSueldo() {
+		return super.getSueldo() + Sueldo_Base + Complementos;
+	}
+
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Double getSueldo_Base() {
+		return Sueldo_Base;
+	}
+
+	public void setSueldo_Base(Double sueldo_Base) {
+		this.Sueldo_Base = sueldo_Base;
+	}
+
+	public Double getComplementos() {
+		return Complementos;
+	}
+
+	public void setComplementos(Double complementos) {
+		this.Complementos = complementos;
+	}
+
+	
 }
