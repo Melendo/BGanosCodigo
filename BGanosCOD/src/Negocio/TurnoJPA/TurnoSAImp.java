@@ -1,12 +1,17 @@
 package Negocio.TurnoJPA;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.LockModeType;
 import javax.persistence.TypedQuery;
 
 import Negocio.EMFSingleton.EMFSingleton;
+import Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja;
 
 public class TurnoSAImp implements TurnoSA {
 
@@ -74,23 +79,171 @@ public class TurnoSAImp implements TurnoSA {
 	}
 
 	public Integer bajaTurno(Integer idTurno) {
-		return null;
+int resultado = -1;
+    	
+        if (!validarId(idTurno)) {
+            // El ID no es sint�cticamente correcto
+            return -4;
+        }
+
+        EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+		
+		Turno turno = em.find(Turno.class, idTurno);
+		
+		if(turno != null && turno.isActivo()){
+			turno.setActivo(false);
+			try {				
+				transaction.commit();
+				resultado = turno.getId();
+			} catch (Exception e) {
+				transaction.rollback();
+                em.close();
+				return resultado;
+			}
+			
+		}
+		else{
+			transaction.rollback();
+            em.close();
+			return -112;
+		}
+		
+		em.close();
+		return resultado;
 	}
 
 	public Integer modificarTurno(TTurno turno) {
-		return null;
+		Integer resultado = -1;
+	    EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+
+	        if (!validarHorario(turno.getHorario()) || !validarId(turno.getId())) {
+	        	//DEBUG
+	        System.out.println("Id o nombre de departamento no v�lido");
+	        return -4;
+	    }
+	    EntityTransaction transaction = em.getTransaction();
+
+	    transaction.begin();
+
+	    Turno turnoBD = em.find(Turno.class, turno.getId());
+
+	    if (turnoBD != null && turnoBD.isActivo()) { //Existe y esta activo
+	    		TypedQuery<Turno> query = em.createNamedQuery("Negocio.TurnoJPA.Turno.findByhorario", Turno.class);
+	    		query.setParameter("nombre", turno.getHorario());
+	    		Turno existeTurno = null;
+	    		
+	    		try{
+	    			existeTurno = query.getSingleResult();
+	    		}
+	    		catch(Exception e){
+	    			//No hay un departamento con el mismo nombre continuamos
+	        		}
+	        		
+	        		if(existeTurno == null){
+	        			turnoBD.transferToEntity(existeTurno.entityToTransfer());
+	    				try {				
+	    					transaction.commit();
+	    					resultado = turnoBD.getId();
+	    				} catch (Exception e) {
+	    					transaction.rollback();
+	    	                em.close();
+	    					return resultado;
+	    				}
+	        		}
+	        		else
+	        		{
+	        			transaction.rollback();
+	                    em.close();
+	        			return -113;
+	        		}
+	        			
+	            }
+	        else
+	        {
+	        	transaction.rollback();
+	            em.close();
+	        	return -114;
+	        }
+	        em.close();
+
+	    return resultado;
 	}
 
 	public TTurno mostrarTurno(Integer idTurno) {
-		return null;
-	}
+        TTurno error = new TTurno();
+    	
+    	if (!validarId(idTurno)) {
+            // DEBUG
+            System.out.println("Formato incorrecto para el ID del departamento.");
+            error.setId(-4);
+            return error;
+        }
+
+        EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager(); //No usamos transacci�n al ser un read
+
+        Turno turno = em.find(Turno.class, idTurno);
+
+		if (turno == null)
+		{
+			error.setId(-115);
+			return error;
+		}
+		TTurno tTurno = turno.entityToTransfer();
+		
+		em.close();
+		
+		return tTurno;	}
 
 	public Set<TTurno> listarTurnos() {
-		return null;
+		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+
+		TypedQuery<Turno> query = em.createNamedQuery("Negocio.TurnoJPA.Turno.findAll", Turno.class);
+
+		List<Turno> l = query.getResultList();
+		Set<TTurno> lista = new HashSet<TTurno>();
+
+		for (Turno turno : l) {
+			TTurno t = turno.entityToTransfer();
+			lista.add(t);
+		}
+		
+		em.close();
+		return lista;
 	}
 
 	public Float obtenerNominaDelTurno(Integer idTurno) {
-		return null;
+		float nominaTotal = (float) 0.0;
+	    EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
+		
+	        Turno turno = em.find(Turno.class, idTurno, LockModeType.OPTIMISTIC);
+
+	        if (turno == null || !turno.isActivo()) {
+	        	//DEBUG
+	            System.out.println("El departamento con ID " + idTurno + " no existe o no est� activo.");
+	            transaction.rollback();
+	            em.close();
+	            return (float) -4;
+	        }
+
+			TypedQuery<EmpleadoDeCaja> query = em.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByturno", EmpleadoDeCaja.class);
+			
+			List<EmpleadoDeCaja> l = query.getResultList();
+			
+	        for (EmpleadoDeCaja empleado : l) {
+	            if (empleado.getActivo()) {
+					em.lock(empleado, LockModeType.OPTIMISTIC);
+					nominaTotal += empleado.getSueldo(); 
+	            }
+	        }
+
+	    transaction.commit();
+	    em.close();
+	    
+	    return nominaTotal;
 	}
 	
 	//------ Métodos auxiliares ------//
@@ -98,4 +251,8 @@ public class TurnoSAImp implements TurnoSA {
 	private boolean validarHorario(String horario) {
 		return horario != null && !horario.isEmpty();
 	}
+	
+	private boolean validarId(Integer id) {
+        return id != null && id > 0;
+    }
 }
