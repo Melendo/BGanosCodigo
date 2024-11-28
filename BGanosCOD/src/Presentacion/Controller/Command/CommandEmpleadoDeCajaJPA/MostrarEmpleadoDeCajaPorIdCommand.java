@@ -3,25 +3,21 @@
  */
 package Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA;
 
+import Negocio.EmpleadoDeCajaJPA.TEmpleadoDeCaja;
+import Negocio.FactoriaNegocio.FactoriaSA;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
+
 public class MostrarEmpleadoDeCajaPorIdCommand implements Command {
-	/** 
-	* (non-Javadoc)
-	* @see Command#execute(Object datos)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	
 	public Context execute(Object datos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		TEmpleadoDeCaja res = FactoriaSA.getInstance().getEmpleadoDeCajaJPA().MostrarEmpleadoDeCajaPorId((int) datos);
+		if (res.getID() > -1) {
+			return new Context(Evento.MOSTAR_EMPLEADO_DE_CAJA_POR_ID_OK, res);
+		} else {
+			return new Context(Evento. MOSTAR_EMPLEADO_DE_CAJA_POR_ID_KO, res);
+		}
 	}
 }
