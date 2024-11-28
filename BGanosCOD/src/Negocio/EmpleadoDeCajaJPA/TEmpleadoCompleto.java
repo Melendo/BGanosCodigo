@@ -1,85 +1,33 @@
-/**
- * 
- */
+
+
 package Negocio.EmpleadoDeCajaJPA;
 
-/** 
- * <!-- begin-UML-doc -->
- * <!-- end-UML-doc -->
- * @author airam
- * @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
- */
+
 public class TEmpleadoCompleto extends TEmpleadoDeCaja {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	private Double Sueldo_Base;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	private Double Complementos;
 
-	public TEmpleadoCompleto(TEmpleadoDeCaja empleado) {
-		// TODO Auto-generated constructor stub
+	public TEmpleadoCompleto(Integer id, String dni, String nombre, String apellido, Double sueldo, Integer tlf,
+			Integer id_turno, Boolean activo, Double sueldo_base, Double complementos) {
+		super(id, dni, nombre, apellido, sueldo, tlf, id_turno, activo, 0); //0 sera empleados completos
+		this.setSueldo_Base(sueldo_base);
+		this.setComplementos(complementos);
 	}
 
-	public TEmpleadoCompleto() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Double getSueldo_Base() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return Sueldo_Base;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param sueldo_Base
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public void setSueldo_Base(Double sueldo_Base) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
+		Sueldo_Base = sueldo_Base;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Double getComplementos() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return Complementos;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param complementos
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public void setComplementos(Double complementos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
+		Complementos = complementos;
 	}
 }
