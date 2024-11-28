@@ -9,7 +9,7 @@ import Negocio.MarcaJPA.TMarca;
 public class CommandAltaMarca implements Command {
 
 	public Context execute(Object datos) {
-		// TODO preguntar por qué en este alta está FactoriaSA y en alta entrada FactoriaNegocio
+		// TODO: preguntar por qué en este alta está FactoriaSA y en alta entrada FactoriaNegocio
 		int res = FactoriaSA.getInstance().getMarcaJPA().altaMarca((TMarca)datos);
 		
 		if(res > -1) {

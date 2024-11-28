@@ -38,7 +38,7 @@ public class GUIAltaMarca extends JFrame implements IGUI, ActionListener {
 
 	private JPanel mainPanel;
 
-	// TODO nuevo, JLabel
+	// TODO: nuevo, JLabel
 	private JLabel msgIntroIDCabecera;
 
 	public GUIAltaMarca() {
@@ -155,7 +155,7 @@ public class GUIAltaMarca extends JFrame implements IGUI, ActionListener {
 
 	}
 
-	// TODO no lo uso de momento
+	// TODO: no lo uso de momento
 	public void actionPerformed(ActionEvent e) {
 
 	}

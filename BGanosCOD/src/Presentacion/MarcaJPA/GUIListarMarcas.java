@@ -33,7 +33,7 @@ public class GUIListarMarcas extends JFrame implements IGUI, ActionListener {
 
 	private JButton botonCancelar;
 
-	// TODO solo uso el JPanel y el JButton
+	// TODO: solo uso el JPanel y el JButton
 	private JTextField jTextField;
 
 	private JLabel jLabel;
@@ -113,7 +113,7 @@ public class GUIListarMarcas extends JFrame implements IGUI, ActionListener {
 	}
 
 	
-	// TODO no lo utilizo
+	// TODO: no lo utilizo (en todas las vistas está)
 	public void actionPerformed(ActionEvent e) {
 
 	}

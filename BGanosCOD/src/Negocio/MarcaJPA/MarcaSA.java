@@ -10,10 +10,10 @@ public interface MarcaSA {
 
 	public Set<TMarca> listarMarcas();
 
-	// TODO añadir el Integer id de parámetro,
-	// cambiar tipo de integer a TMarca, antes estaba:
+	// TODO: añadir el Integer id de parámetro,
+	// TODO: cambiar tipo de integer a TMarca, antes estaba:
 	
-	// 	public Integer mostrarMarcaPorId();
+	// TODO: public Integer mostrarMarcaPorId();
 	public TMarca mostrarMarcaPorId(Integer id);
 
 	public Set<TMarca> listarMarcasPorProveedor(Integer idProv);

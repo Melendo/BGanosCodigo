@@ -40,7 +40,7 @@ public class GUIModificarMarca extends JFrame implements IGUI, ActionListener {
 
 	private JLabel msgDatosLeft;
 
-	// TODO no los uso
+	// TODO: no los uso
 	private JDialog jDialog;
 
 	private JTextField jTextField;
@@ -185,7 +185,7 @@ public class GUIModificarMarca extends JFrame implements IGUI, ActionListener {
 
 	}
 
-	// TODO NO LO UTILIZO
+	// TODO: NO LO UTILIZO
 	public void actionPerformed(ActionEvent e) {
 
 	}

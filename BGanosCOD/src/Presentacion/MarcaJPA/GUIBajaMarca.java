@@ -31,10 +31,10 @@ public class GUIBajaMarca extends JFrame implements IGUI, ActionListener {
 	
 	private JButton botonCancelar;
 
-	// TODO quitar, no lo uso
+	// TODO: quitar, no lo uso
 	private JDialog jDialog;
 
-	// TODO quitar en modelo
+	// TODO: quitar en modelo
 	private JPanel jPanel2;
 	
 	private JLabel labelID;
@@ -139,7 +139,7 @@ public class GUIBajaMarca extends JFrame implements IGUI, ActionListener {
 		
 	}
 	
-	// TODO no lo uso
+	// TODO: no lo uso
 	public void actionPerformed(ActionEvent e) {
 
 	}
