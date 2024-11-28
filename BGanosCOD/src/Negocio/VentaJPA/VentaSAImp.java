@@ -117,7 +117,7 @@ public class VentaSAImp implements VentaSA {
 		}
 
 		prod.setStock(prod.getStock() + venta.getCantidad());
-		ventaD.setPrecioTotal(lVenta.getPrecio() - venta.getCantidad() * prod.getPrecio());
+		ventaD.setPrecioTotal(ventaD.getPrecioTotal() - venta.getCantidad() * prod.getPrecio());
 
 		if (ventaD.getPrecioTotal() == 0)
 			ventaD.setActivo(false);
