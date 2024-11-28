@@ -23,6 +23,10 @@ public class TEmpleadoCompleto extends TEmpleadoDeCaja {
 	*/
 	private Double Complementos;
 
+	public TEmpleadoCompleto(TEmpleadoDeCaja empleado) {
+		// TODO Auto-generated constructor stub
+	}
+
 	/** 
 	* <!-- begin-UML-doc -->
 	* <!-- end-UML-doc -->
