@@ -109,6 +109,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	
 	public Integer bajaEmpleadoDeCaja(Integer idEmpleado) {
 		int res = -1;
+		
     	
         if (idEmpleado != null && idEmpleado > 0) {
             return -4; // id incorrecto
@@ -168,7 +169,75 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	
 	public Integer ModificarEmpleadoDeCaja(TEmpleadoDeCaja empleado) {
 
-		return null;
+		Integer res = -1;
+		String nombre = empleado.getNombre();
+		
+		if (nombre != null && !nombre.isEmpty()){
+			return -4;
+		}
+		
+	    EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
+	    EntityTransaction entityTrans = entityManager.getTransaction();
+	    entityTrans.begin();
+
+	    EmpleadoDeCaja empModificar = entityManager.find(EmpleadoDeCaja.class, empleado.getID());
+
+	    if (empModificar != null ) { //Existe
+	    	TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findBydni", EmpleadoDeCaja.class);
+	    	query.setParameter("dni", empleado.getNombre());
+	    	EmpleadoDeCaja empExistente = null;
+    		Turno turno = null;
+
+    		try{
+    			empExistente = query.getSingleResult();
+    		}
+    		catch(Exception e){
+    		 
+        	}
+        		
+    		if(empExistente == null || empExistente.getId() == empModificar.getId()){ // No existe o es el mismo
+    			
+    			TypedQuery<Turno> query2 = entityManager.createNamedQuery("Negocio.TurnoJPA.Turno.findByid", Turno.class);
+    			query2.setParameter("id", empleado.getId_Turno());
+    			
+    			//Se comprueba si existe
+    			try {
+    				turno = query2.getSingleResult();
+    			} catch (Exception e) {
+    				
+    				entityTrans.rollback();
+    	            entityManager.close();
+    				return -115;
+    		}        		
+        			
+    			if(turno.isActivo()){
+    				empModificar.transferToEntity(empleado);
+    				empModificar.setTurno(turno);
+    				
+					try {				
+						entityTrans.commit();
+						res = empModificar.getId();
+					} catch (Exception e) {
+						entityTrans.rollback();
+				        entityManager.close();
+						return res;
+					}
+    			}
+        	}
+    		else{
+    			entityTrans.rollback();
+    	        entityManager.close();
+    			return -501; // exite ya el DNI y no es mismo
+    		}	
+        }
+        else{
+        	entityTrans.rollback();
+            entityManager.close();
+        	return -404; //empleado no existe
+        }
+        entityManager.close();
+
+    return res;    		
 	}
 
 	
