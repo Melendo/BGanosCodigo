@@ -37,6 +37,9 @@ public class TEmpleadoDeCaja {
 		this.activo=empleado.getActivo();
 		this.tipo = empleado.getTipo();
 	}
+	
+	public TEmpleadoDeCaja(){
+	}
 
 	public String getDNI() {
 		return DNI;

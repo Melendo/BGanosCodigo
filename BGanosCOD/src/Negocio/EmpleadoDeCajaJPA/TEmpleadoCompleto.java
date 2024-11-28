@@ -14,6 +14,8 @@ public class TEmpleadoCompleto extends TEmpleadoDeCaja {
 		this.setSueldo_Base(sueldo_base);
 		this.setComplementos(complementos);
 	}
+	public TEmpleadoCompleto(){
+	}
 
 	public Double getSueldo_Base() {
 		return Sueldo_Base;

@@ -12,6 +12,9 @@ public class TEmpleadoParcial extends TEmpleadoDeCaja {
 		this.setPrecio_h(precio_h);
 		this.setHoras(horas);
 	}
+	
+	public TEmpleadoParcial(){
+	}
 
 	public Double getPrecio_h() {
 		return Precio_h;
