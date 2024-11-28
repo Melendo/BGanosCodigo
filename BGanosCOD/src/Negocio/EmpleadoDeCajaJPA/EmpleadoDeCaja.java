@@ -44,25 +44,36 @@ public abstract class EmpleadoDeCaja implements Serializable {
 	
 	@OneToMany(mappedBy = "empleadoDeCaja")
 	private Set<Venta> venta;
-	
 	@ManyToOne
 	private Turno turno;
 	
 	private String nombre;
-	
 	private String Apellido;
-	
 	private String DNI;
-	
 	private Double Sueldo;
-	
 	private Integer telefono;
-	
-	private Integer id_turno;
-	
 	private Integer version;
-	
 	private Boolean activo;
+	private Integer tipo;
+	
+	
+	public void transferToEntity(TEmpleadoDeCaja empleadoDeCaja) {
+		this.setDNI(empleadoDeCaja.getDNI());
+        this.setNombre(empleadoDeCaja.getNombre());
+        this.setApellido(empleadoDeCaja.getApellido());
+        this.setSueldo(empleadoDeCaja.getSueldo());
+        this.setTelefono(empleadoDeCaja.getTelefono());
+        this.setActivo(empleadoDeCaja.getActivo());
+        this.setTipo(empleadoDeCaja.getTipo());
+	}
+
+	public EmpleadoDeCaja(TEmpleadoDeCaja empleadoDeCaja) {
+		transferToEntity(empleadoDeCaja);
+	}
+
+	public abstract TEmpleadoDeCaja entityToTransfer();
+
+    public abstract Double calcularSueldo();
 
 	public Integer getId() {
 		return id;
@@ -120,22 +131,6 @@ public abstract class EmpleadoDeCaja implements Serializable {
 		this.activo = activo;
 	}
 
-	public void transferToEntity(TEmpleadoDeCaja empleadoDeCaja) {
-		this.setDNI(empleadoDeCaja.getDNI());
-        this.setNombre(empleadoDeCaja.getNombre());
-        this.setApellido(empleadoDeCaja.getApellido());
-        this.setSueldo(empleadoDeCaja.getSueldo());
-        this.setTelefono(empleadoDeCaja.getTelefono());
-       // this.setActivo(empleadoDeCaja.isActivo());
-       // this.setTipo(empleadoDeCaja.getTipo());
-	}
-
-	public EmpleadoDeCaja(TEmpleadoDeCaja empleadoDeCaja) {
-		transferToEntity(empleadoDeCaja);
-	}
-
-	public abstract TEmpleadoDeCaja entityToTransfer();
-
 	public Turno getTurno() {
 		return turno;
 	}
@@ -144,7 +139,6 @@ public abstract class EmpleadoDeCaja implements Serializable {
 		this.turno = turno;
 	}
 
-	
 	public Set<Venta> getVenta() {
 		return venta;
 	}
@@ -162,8 +156,11 @@ public abstract class EmpleadoDeCaja implements Serializable {
 	}
 
 	public Integer getTipo() {
-		// TODO Auto-generated method stub
-		return null;
+		return tipo;
+	}
+	
+	public void setTipo(Integer tipo){
+		this.tipo = tipo;
 	}
 	
 }
