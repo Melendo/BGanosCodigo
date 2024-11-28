@@ -14,7 +14,7 @@ public interface EmpleadoDeCajaSA {
 
 	public Set<TEmpleadoDeCaja> ListarEmpleadoDeCajaPorNombre(String nombre);
 
-	public Set<TEmpleadoDeCaja> MostrarEmpleadoDeCajaPorId(Integer id);
+	public TEmpleadoDeCaja MostrarEmpleadoDeCajaPorId(Integer id);
 
 	public Set<TEmpleadoDeCaja> ListarEmpleadosPorTurno(Integer idTurno);
 

@@ -247,9 +247,25 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	}
 
 	
-	public Set<TEmpleadoDeCaja> MostrarEmpleadoDeCajaPorId(Integer id) {
+	public TEmpleadoDeCaja MostrarEmpleadoDeCajaPorId(Integer id) {
+
+		if (id != null && id > 0) {
+			return null; // id incorrecto
+	    }
+
+        EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
+        EmpleadoDeCaja empleado = entityManager.find(EmpleadoDeCaja.class, id);
+
+		if (empleado == null){ // no encontrado
+	        entityManager.close();
+	        return null;
+		}
+
+		TEmpleadoDeCaja TTrabajador = empleado.entityToTransfer();
 		
-		return null;
+		entityManager.close();
+		
+		return TTrabajador;
 	}
 
 	public Set<TEmpleadoDeCaja> ListarEmpleadosPorTurno(Integer idTurno) {
