@@ -245,10 +245,24 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 
 	
 	public Set<TEmpleadoDeCaja> ListarEmpleadoDeCajaPorNombre(String nombre) {
-		
-		return null;
-	}
 
+		EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
+
+		TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findBynombre", EmpleadoDeCaja.class);
+		query.setParameter("nombre", nombre);
+		
+		List<EmpleadoDeCaja> lista = query.getResultList(); 
+		Set<TEmpleadoDeCaja> res = new LinkedHashSet<TEmpleadoDeCaja>(lista.size());
+
+		for (EmpleadoDeCaja empleado : lista) {
+			TEmpleadoDeCaja tEmpleado = empleado.entityToTransfer();
+			res.add(tEmpleado);
+		}
+		
+		entityManager.close();
+		return res;
+	}
+	
 	
 	public TEmpleadoDeCaja MostrarEmpleadoDeCajaPorId(Integer id) {
 
@@ -272,8 +286,22 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	}
 
 	public Set<TEmpleadoDeCaja> ListarEmpleadosPorTurno(Integer idTurno) {
+
+		EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
+
+		TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByturno", EmpleadoDeCaja.class);
+		query.setParameter("id_Turno", idTurno);
 		
-		return null;
+		List<EmpleadoDeCaja> lista = query.getResultList(); 
+		Set<TEmpleadoDeCaja> res = new LinkedHashSet<TEmpleadoDeCaja>(lista.size());
+
+		for (EmpleadoDeCaja empleado : lista) {
+			TEmpleadoDeCaja tEmpleado = empleado.entityToTransfer();
+			res.add(tEmpleado);
+		}
+		
+		entityManager.close();
+		return res;
 	}
 
 	public Set<TEmpleadoDeCaja> ListarEmpleadosDeCaja() {
