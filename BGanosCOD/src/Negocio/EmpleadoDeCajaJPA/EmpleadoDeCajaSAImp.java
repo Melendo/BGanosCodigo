@@ -34,7 +34,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 		entityTrans.begin();
 
 		
-		TypedQuery<Turno> query2 = entityManager.createNamedQuery("Negocio.TurnoJPA.Departamento.mostrarTurno", Turno.class);
+		TypedQuery<Turno> query2 = entityManager.createNamedQuery("Negocio.TurnoJPA.Departamento.findByid", Turno.class);
 		query2.setParameter("id", empleado.getId_Turno());
 	
 		try {
@@ -52,7 +52,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 			return -403; // Turno no activo
 		}
 
-		TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.Trabajador.MostrarEmpleadoDeCajaPorId", EmpleadoDeCaja.class);
+		TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.Trabajador.findByid", EmpleadoDeCaja.class);
 		query.setParameter("dni", empleado.getDNI());
 		
 		try {
@@ -79,13 +79,15 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
         		return -501; // Empleado existe y activo
         	}
         }
-		 else {
+		 else{
 				if(empleado instanceof TEmpleadoCompleto){
-					//empleadoNuevo = new TEmpleadoCompleto(empleado);
+					empleadoNuevo = new EmpleadoCompleto(empleado);
 				}
 				else if(empleado instanceof TEmpleadoParcial){
-					//empleadoNuevo = new TEmpleadoParcial(empleado);
+					empleadoNuevo = new EmpleadoParcial(empleado);
 				}
+				
+				//turno
 				
 	            entityManager.persist(empleadoNuevo);
 	            success = true;

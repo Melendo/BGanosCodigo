@@ -23,6 +23,10 @@ public class EmpleadoCompleto extends EmpleadoDeCaja implements Serializable {
 	public EmpleadoCompleto() {
 	}
 	
+	public EmpleadoCompleto(TEmpleadoDeCaja empleado) {
+    	this.transferToEntity(empleado);
+    }
+	
 	public TEmpleadoDeCaja entityToTransfer() {
 		return new TEmpleadoCompleto(super.getId(), super.getDNI(), super.getNombre(), super.getApellido(), super.getSueldo(),
 				super.getTelefono(), super.getTurno().getId(), super.getActivo(), Sueldo_Base, Complementos);
