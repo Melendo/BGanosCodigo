@@ -8,9 +8,9 @@ public interface EmpleadoDeCajaSA {
 	
 	public Integer altaEmpleadoDeCaja(TEmpleadoDeCaja empleado);
 
-	public Integer bajaEmpleadoDeCaja();
+	public Integer bajaEmpleadoDeCaja(Integer idEmpleado);
 
-	public Integer ModificarEmpleadoDeCaja();
+	public Integer ModificarEmpleadoDeCaja(TEmpleadoDeCaja empleado);
 
 	public Set<TEmpleadoDeCaja> ListarEmpleadoDeCajaPorNombre(String nombre);
 

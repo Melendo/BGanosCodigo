@@ -18,11 +18,10 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	public Integer altaEmpleadoDeCaja(TEmpleadoDeCaja empleado) {
 
 		Integer id = -1;
-		boolean success = false;
+		boolean exito = false;
 		EmpleadoDeCaja empleadoExistente = null;
 		EmpleadoDeCaja empleadoNuevo = null;
 		Turno turno = null;
-		
 		String nombre = empleado.getNombre();
 		
 		if (nombre != null && !nombre.isEmpty()){
@@ -90,11 +89,11 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 				//turno
 				
 	            entityManager.persist(empleadoNuevo);
-	            success = true;
+	            exito = true;
 	        }
 		try{
         	entityTrans.commit();
-        	if(success){
+        	if(exito){
         		id = empleadoNuevo.getId();
         	}
         		
@@ -108,13 +107,66 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	}
 
 	
-	public Integer bajaEmpleadoDeCaja() {
+	public Integer bajaEmpleadoDeCaja(Integer idEmpleado) {
+		int res = -1;
+    	
+        if (idEmpleado != null && idEmpleado > 0) {
+            return -4; // id incorrecto
+        }
+
+        EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
+        EntityTransaction entityTrans = entityManager.getTransaction();
+        entityTrans.begin();
 		
-		return null;
+		EmpleadoDeCaja empleado = entityManager.find(EmpleadoDeCaja.class, idEmpleado);
+		
+		if(empleado != null){ 
+			if(empleado.getActivo()){
+				empleado.setActivo(false);
+//				// Obtenemos el turno por id
+//				TypedQuery<Turno> query2 = entityManager.createNamedQuery("Negocio.TurnoJPA.Turno.findByid", Turno.class);
+//				query2.setParameter("id", empleado.getTurno().getId());
+//				
+//				Turno turno = null;
+//				try {
+//					turno = query2.getSingleResult();
+//				} catch (Exception e) {
+//					
+//					entityTrans.rollback();
+//			        entityManager.close();
+//					return -115;
+//				}
+//				//turno?
+				
+				
+				try {				
+					entityTrans.commit();
+					res = empleado.getId();
+				} catch (Exception e) {
+					entityTrans.rollback();
+			        entityManager.close();
+					return res;
+				}
+			}
+			else{
+				entityTrans.rollback();
+		        entityManager.close();
+				return -403; //Empleado inactivo
+			}
+			
+		}
+		else{
+			entityTrans.rollback();
+	        entityManager.close();
+			return -404; //Empleado no encontrado 
+		}
+		
+		entityManager.close();
+		return res;
 	}
 
 	
-	public Integer ModificarEmpleadoDeCaja() {
+	public Integer ModificarEmpleadoDeCaja(TEmpleadoDeCaja empleado) {
 
 		return null;
 	}
