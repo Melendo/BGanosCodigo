@@ -79,10 +79,9 @@ public class TurnoSAImp implements TurnoSA {
 	}
 
 	public Integer bajaTurno(Integer idTurno) {
-int resultado = -1;
+		int resultado = -1;
     	
         if (!validarId(idTurno)) {
-            // El ID no es sint�cticamente correcto
             return -4;
         }
 
@@ -107,7 +106,7 @@ int resultado = -1;
 		else{
 			transaction.rollback();
             em.close();
-			return -112;
+			return -2;
 		}
 		
 		em.close();
@@ -129,44 +128,35 @@ int resultado = -1;
 
 	    Turno turnoBD = em.find(Turno.class, turno.getId());
 
-	    if (turnoBD != null && turnoBD.isActivo()) { //Existe y esta activo
-	    		TypedQuery<Turno> query = em.createNamedQuery("Negocio.TurnoJPA.Turno.findByhorario", Turno.class);
-	    		query.setParameter("nombre", turno.getHorario());
-	    		Turno existeTurno = null;
-	    		
-	    		try{
-	    			existeTurno = query.getSingleResult();
-	    		}
-	    		catch(Exception e){
-	    			//No hay un departamento con el mismo nombre continuamos
-	        		}
-	        		
-	        		if(existeTurno == null){
-	        			turnoBD.transferToEntity(existeTurno.entityToTransfer());
-	    				try {				
-	    					transaction.commit();
-	    					resultado = turnoBD.getId();
-	    				} catch (Exception e) {
-	    					transaction.rollback();
-	    	                em.close();
-	    					return resultado;
-	    				}
-	        		}
-	        		else
-	        		{
-	        			transaction.rollback();
-	                    em.close();
-	        			return -113;
-	        		}
+	    if (turnoBD != null && turnoBD.isActivo()) {
+    		TypedQuery<Turno> query = em.createNamedQuery("Negocio.TurnoJPA.Turno.findByhorario", Turno.class);
+    		query.setParameter("nombre", turno.getHorario());
+    		int numTurnos;
+    		
+    		
+			numTurnos = query.getResultList().size();
+			if(numTurnos > 0) {
+				return -2;
+			}
+    		
+			turnoBD.transferToEntity(turno);
+			try {				
+				transaction.commit();
+				resultado = turnoBD.getId();
+			} catch (Exception e) {
+				transaction.rollback();
+                em.close();
+				return resultado;
+			}
 	        			
-	            }
-	        else
-	        {
-	        	transaction.rollback();
-	            em.close();
-	        	return -114;
-	        }
-	        em.close();
+	    }
+        else
+        {
+        	transaction.rollback();
+            em.close();
+        	return -2;
+        }
+        em.close();
 
 	    return resultado;
 	}
@@ -187,7 +177,7 @@ int resultado = -1;
 
 		if (turno == null)
 		{
-			error.setId(-115);
+			error.setId(-4);
 			return error;
 		}
 		TTurno tTurno = turno.entityToTransfer();
