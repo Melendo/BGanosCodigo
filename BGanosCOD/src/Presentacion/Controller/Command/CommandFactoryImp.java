@@ -43,6 +43,7 @@ import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandMostrarSiste
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandMostrarSistemaDeRiegoPorFabricante;
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandMostrarSistemasDeRiego;
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandMostrarSistemasDeRiegoPorId;
+import Presentacion.Controller.Command.CommandVentasJPA.CerrarVentaCommand;
 import Presentacion.FactoriaVistas.Evento;
 
 public class CommandFactoryImp extends CommandFactory {
@@ -149,6 +150,9 @@ public class CommandFactoryImp extends CommandFactory {
 		case Evento.LISTAR_SISTEMAS_RIEGO:
 			return new CommandMostrarSistemasDeRiego();
 
+		// Eventos Venta
+		case Evento.CERRAR_VENTA:
+			return new CerrarVentaCommand();
 		}
 		return null;
 	}

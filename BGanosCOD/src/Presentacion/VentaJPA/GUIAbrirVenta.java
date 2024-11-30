@@ -213,11 +213,12 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 						}
 
 					}
-
-					
-					if (!encontrado) {
+					if(!correct)
+						JOptionPane.showMessageDialog(this, "No hay entradas suficientes para quitar", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					if (!encontrado)
 						ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_VENTA_KO, -1));
-					} else {
+					else {
 						tCarrito.setLineaVenta(lVentas);
 						update();
 					}
@@ -261,7 +262,7 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 			public void actionPerformed(ActionEvent e) {
 				tVenta.setFormaDePago(textPago.getText());
 				tCarrito.setVenta(tVenta);;
-	            ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_FACTURA, tCarrito));
+	            ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_VENTA, tCarrito));
 			}
 		});
 		panelBotones.add(botonCerrar);
@@ -273,7 +274,7 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		int resultado = (int) context.getDatos();
 		if (context.getEvento() == Evento.ABRIR_VENTA_OK) {
-			JOptionPane.showMessageDialog(this, "Venta dada de alta correctamente con id: " + resultado, "Éxito",
+			JOptionPane.showMessageDialog(this, "Venta cerrada con id " + resultado +" cerrada correctamente", "Éxito",
 					JOptionPane.INFORMATION_MESSAGE);
 		} else if (context.getEvento() == Evento.ABRIR_VENTA_KO) {
 			switch (resultado) {

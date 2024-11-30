@@ -1,0 +1,29 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+	<persistence-unit name="BGanosJPA" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja</class>
+		<class>Negocio.EmpleadoDeCajaJPA.EmpleadoParcial</class>
+		<class>Negocio.EmpleadoDeCajaJPA.EmpleadoCompletoa</class>
+		<class>Negocio.MarcaJPA.Marca</class>
+		<class>Negocio.ProductoJPA.Producto</class>
+		<class>Negocio.ProductoJPA.ProductoAlimentacion</class>
+		<class>Negocio.ProductoJPA.ProductoSouvenirs</class>
+		<class>Negocio.ProveedorJPA.Proveedor</class>
+		<class>Negocio.TurnoJPA.Turno</class>
+		<class>Negocio.VentaJPA.Venta</class>
+		<class>Negocio.VentaJPA.LineaVenta</class>
+		<validation-mode>NONE</validation-mode>
+		<shared-cache-mode>NONE</shared-cache-mode>
+		<properties>
+			<!-- las dos propiedades siguientes tienen valores específicos para
+			Apache Derby -->
+			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver" />
+			<property name="javax.persistence.jdbc.url"	value="jdbc:derby://localhost:1527/EmpServDB;create=true" />
+			<property name="javax.persistence.jdbc.user" value="APP" />
+			<property name="javax.persistence.jdbc.password" value="APP" />
+			<property name="eclipselink.logging.level" value="FINE" />
+			<property name="eclipselink.ddl-generation"	value="drop-and-create-tables" />
+			<property name="eclipselink.ddl-generation.output-mode" value="both" />
+		</properties>
+	</persistence-unit>
+</persistence>
