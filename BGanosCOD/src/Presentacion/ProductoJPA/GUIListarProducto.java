@@ -59,11 +59,8 @@ public class GUIListarProducto extends JFrame implements IGUI {
 	* @return
 	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
 	*/
-	public Void iniGUI() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	public void iniGUI() {
+
 	}
 
 	/** 

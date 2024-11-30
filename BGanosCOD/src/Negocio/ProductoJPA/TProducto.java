@@ -35,6 +35,10 @@ public class TProducto {
 		this.tipoProducto = tipoProducto;
 	}
 
+	public TProducto() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getTipoProducto() {
 		return tipoProducto;
 	}

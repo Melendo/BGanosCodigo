@@ -22,12 +22,12 @@ public class ProductoSouvenirs extends Producto implements Serializable {
 	private String descripcion;
 
 
-	public void getDescripcion() {
-
+	public String getDescripcion() {
+		return descripcion;
 	}
 
 
-	public void setDescripcion() {
-		
+	public void setDescripcion(String d) {
+		descripcion = d;
 	}
 }
