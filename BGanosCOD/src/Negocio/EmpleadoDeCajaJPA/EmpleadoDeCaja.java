@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import Negocio.VentaJPA.Venta;
@@ -118,6 +119,7 @@ public class EmpleadoDeCaja implements Serializable {
 	* <!-- end-UML-doc -->
 	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
 	*/
+	@Version
 	private Integer version;
 
 	/** 

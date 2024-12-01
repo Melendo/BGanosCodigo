@@ -3,8 +3,6 @@ package Presentacion.VentaJPA;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,21 +17,13 @@ import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
 public class GUIVentaJPA extends JFrame implements IGUI {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	private JButton buttonAltaVenta;
-	private JButton buttonBajaVenta;
+	private JButton buttonAbrirVenta;
 	private JButton buttonModificarVenta;
 	private JButton buttonMostrarVenta;
 	private JButton buttonListarVentas;
-	private JButton buttonAnyadirProducto;
 	private JButton buttonDevolverVenta;
-	private JButton buttonProcesarVenta;
-	private JButton buttonQuitarProducto;
 	private JButton buttonVentasPorEmpleadoDeCaja;
 	private JButton backButton;
 	private JPanel panel;
@@ -61,25 +51,13 @@ public class GUIVentaJPA extends JFrame implements IGUI {
 		this.add(label);
 
 		// ALTA VENTA
-		buttonAltaVenta = ComponentsBuilder.createButton("Abrir", 100, 100, 185, 100);
-		buttonAltaVenta.addActionListener(a -> {
+		buttonAbrirVenta = ComponentsBuilder.createButton("Abrir", 100, 100, 185, 100);
+		buttonAbrirVenta.addActionListener(a -> {
 			GUIVentaJPA.this.setVisible(false);
 			ApplicationController.getInstance().manageRequest(new Context(Evento.ABRIR_VENTA_VISTA, tVenta));
 		});
-		buttonAltaVenta.setVisible(true);
-		this.add(buttonAltaVenta);
-
-		// BAJA VENTA //TODO: puede que haya que borrarlo
-//        buttonBajaVenta = ComponentsBuilder.createButton("Baja", 300, 100, 185, 100);
-//        buttonBajaVenta.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//            	GUIVentaJPA.this.setVisible(false);
-//                ApplicationController.getInstance().manageRequest(new Context(Evento.BAJA_VENTA_VISTA, tVenta));
-//            }
-//        });
-//        buttonBajaVenta.setVisible(true);
-//        this.add(buttonBajaVenta);
+		buttonAbrirVenta.setVisible(true);
+		this.add(buttonAbrirVenta);
 
 		// MODIFICAR VENTA
 		buttonModificarVenta = ComponentsBuilder.createButton("Modificar", 300, 100, 185, 100);
@@ -118,30 +96,6 @@ public class GUIVentaJPA extends JFrame implements IGUI {
 		buttonVentasPorEmpleadoDeCaja.setVisible(true);
 		this.add(buttonVentasPorEmpleadoDeCaja);
 
-//        // AÑADIR PRODUCTO A VENTA
-//        buttonAnyadirProducto = ComponentsBuilder.createButton("Añadir Producto", 100, 375, 185, 100);
-//        buttonAnyadirProducto.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//            	GUIVentaJPA.this.setVisible(false);
-//                ApplicationController.getInstance().manageRequest(new Context(Evento.ANIADIR_PRODUCTO_VISTA, tVenta));
-//            }
-//        });
-//        buttonAnyadirProducto.setVisible(true);
-//        this.add(buttonAnyadirProducto);
-//
-//        // QUITAR PRODUCTO DE VENTA
-//        buttonQuitarProducto = ComponentsBuilder.createButton("Quitar Producto", 300, 375, 185, 100);
-//        buttonQuitarProducto.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//            	GUIVentaJPA.this.setVisible(false);
-//                ApplicationController.getInstance().manageRequest(new Context(Evento.QUITAR_PRODUCTO_VISTA, tVenta));
-//            }
-//        });
-//        buttonQuitarProducto.setVisible(true);
-//        this.add(buttonQuitarProducto);
-
 		// DEVOLVER VENTA
 		buttonDevolverVenta = ComponentsBuilder.createButton("Devolver", 300, 250, 185, 100);
 		buttonDevolverVenta.addActionListener(a -> {
@@ -150,18 +104,6 @@ public class GUIVentaJPA extends JFrame implements IGUI {
 		});
 		buttonDevolverVenta.setVisible(true);
 		this.add(buttonDevolverVenta);
-
-//        // PROCESAR VENTA
-//        buttonProcesarVenta = ComponentsBuilder.createButton("Procesar Venta", 700, 375, 185, 100);
-//        buttonProcesarVenta.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//            	GUIVentaJPA.this.setVisible(false);
-//                ApplicationController.getInstance().manageRequest(new Context(Evento.PROCESAR_VENTA, tVenta));
-//            }
-//        });
-//        buttonProcesarVenta.setVisible(true);
-//        this.add(buttonProcesarVenta);
 
 		// BOTON DE VOLVER
 		backButton = ComponentsBuilder.createBackButton();
@@ -178,8 +120,6 @@ public class GUIVentaJPA extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

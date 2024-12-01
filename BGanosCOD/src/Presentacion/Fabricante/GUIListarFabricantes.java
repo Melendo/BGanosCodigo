@@ -11,6 +11,7 @@ import Presentacion.FactoriaVistas.Evento;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.Box;
@@ -27,7 +28,7 @@ import javax.swing.JTable;
 @SuppressWarnings("serial")
 public class GUIListarFabricantes extends JFrame implements IGUI {
 
-	public GUIListarFabricantes(Set<TFabricante> listaFabricantes) {
+	public GUIListarFabricantes(List<TFabricante> listaFabricantes) {
 		super("Mostrar todos los Fabricantes");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 800;
@@ -42,7 +43,7 @@ public class GUIListarFabricantes extends JFrame implements IGUI {
 
 	}
 
-	public void initGUI(Set<TFabricante> listaFabricantes) {
+	public void initGUI(List<TFabricante> listaFabricantes) {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);
