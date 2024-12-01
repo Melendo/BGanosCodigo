@@ -31,7 +31,7 @@ import javax.persistence.Inheritance;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByid", query = "select obj from EmpleadoDeCaja obj where :id = obj.id "),
-		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByventa", query = "select obj from EmpleadoDeCaja obj where :venta = obj.venta "),
+		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByventa", query = "select obj from EmpleadoDeCaja obj where :venta MEMBER OF obj.venta "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByturno", query = "select obj from EmpleadoDeCaja obj where :turno MEMBER OF obj.turno "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findBynombre", query = "select obj from EmpleadoDeCaja obj where :nombre = obj.nombre "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByApellido", query = "select obj from EmpleadoDeCaja obj where :Apellido = obj.Apellido "),
@@ -69,7 +69,7 @@ public class EmpleadoDeCaja implements Serializable {
 	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
 	*/
 	@OneToMany(mappedBy = "empleadoDeCaja")
-	private Venta venta;
+	private Set<Venta> venta;
 	/** 
 	* <!-- begin-UML-doc -->
 	* <!-- end-UML-doc -->

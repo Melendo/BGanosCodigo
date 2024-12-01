@@ -21,8 +21,8 @@ import Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja;
 		@NamedQuery(name = "Negocio.VentaJPA.Venta.findByprecioTotal", query = "select obj from Venta obj where :precioTotal = obj.precioTotal "),
 		@NamedQuery(name = "Negocio.VentaJPA.Venta.findByformaPago", query = "select obj from Venta obj where :formaPago = obj.formaPago "),
 		@NamedQuery(name = "Negocio.VentaJPA.Venta.findByfecha", query = "select obj from Venta obj where :fecha = obj.fecha "),
-		@NamedQuery(name = "Negocio.VentaJPA.Venta.findBy_", query = "select obj from Venta obj where :_ MEMBER OF obj._ "),
-		@NamedQuery(name = "Negocio.VentaJPA.Venta.findByempleadoDeCaja", query = "select obj from Venta obj where :empleadoDeCaja MEMBER OF obj.empleadoDeCaja ") })
+		@NamedQuery(name = "Negocio.VentaJPA.Venta.findBylieanVenta", query = "select obj from Venta obj where :lieanVenta MEMBER OF obj.lieanVenta "),
+		@NamedQuery(name = "Negocio.VentaJPA.Venta.findByempleadoDeCaja", query = "select obj from Venta obj where :empleadoDeCaja = obj.empleadoDeCaja ") })
 public class Venta implements Serializable {
 
 	private static final long serialVersionUID = 0;

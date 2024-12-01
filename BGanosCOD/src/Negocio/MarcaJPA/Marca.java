@@ -19,12 +19,12 @@ import javax.persistence.OneToMany;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByid", query = "select obj from Marca obj where :id = obj.id "),
-		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByActivo", query = "select obj from Marca obj where :Activo = obj.Activo "),
-		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByNombre", query = "select obj from Marca obj where :Nombre = obj.Nombre "),
+		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByActivo", query = "select obj from Marca obj where :activo = obj.activo "),
+		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByNombre", query = "select obj from Marca obj where :nombre = obj.nombre "),
 		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByversion", query = "select obj from Marca obj where :version = obj.version "),
 		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByproveedor", query = "select obj from Marca obj where :proveedor MEMBER OF obj.proveedor "),
 		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByproducto", query = "select obj from Marca obj where :producto MEMBER OF obj.producto "),
-		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByPaisOrigen", query = "select obj from Marca obj where :PaisOrigen = obj.PaisOrigen ") })
+		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByPaisOrigen", query = "select obj from Marca obj where :paisOrigen = obj.paisOrigen ") })
 public class Marca implements Serializable {
 
 	private static final long serialVersionUID = 0;
