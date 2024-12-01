@@ -1,6 +1,6 @@
 package Presentacion.Controller.Command.CommandMarcaJPA;
 
-import java.util.Set;
+import java.util.List;
 
 import Negocio.FactoriaNegocio.FactoriaSA;
 import Negocio.MarcaJPA.TMarca;
@@ -12,7 +12,7 @@ import Presentacion.FactoriaVistas.Evento;
 public class CommandListarMarcas implements Command {
 
 	public Context execute(Object datos) {
-		Set<TMarca> res = FactoriaSA.getInstance().getMarcaJPA().listarMarcas();
+		List<TMarca> res = FactoriaSA.getInstance().getMarcaJPA().listarMarcas();
 		return new Context (Evento.LISTAR_MARCAS_VISTA, res);
 
 	}

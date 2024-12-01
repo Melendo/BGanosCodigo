@@ -7,6 +7,8 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.NamedQueries;
+
+import java.util.List;
 import java.util.Set;
 import Negocio.ProveedorJPA.Proveedor;
 import javax.persistence.ManyToMany;
@@ -30,32 +32,37 @@ public class Marca implements Serializable {
 	@Id
 	private Integer id;
 
-	private Boolean activo;
-
 	private String nombre;
-
-	private Integer version;
-
-	@ManyToMany(mappedBy = "marca")
-	private Set<Proveedor> proveedor;
-
-	@OneToMany(mappedBy = "marca")
-	private Set<Producto> producto;
 
 	private String paisOrigen;
 
+	private Integer version;
+
+	private Boolean activo;
+
+	@ManyToMany(mappedBy = "marca")
+	private List<Proveedor> proveedor;
+
+	@OneToMany(mappedBy = "marca")
+	private List<Producto> producto;
+	
+	private int contadorProductos;
 
 	public Marca() {
 
 	}
+
 	// TODO: nuevo
 	public Marca(TMarca marca) {
 
 	}
-	
-	
+
 	public Integer getId() {
 		return this.id;
+	}
+
+	public String getNombre() {
+		return this.nombre;
 	}
 
 	public String getPaisOrigen() {
@@ -66,24 +73,17 @@ public class Marca implements Serializable {
 		return this.activo;
 	}
 
-
-	public String getNombre() {
-		return this.nombre;
-	}
-
-	
 	// TODO: le añadí un TMarca como parámetro
 	public void transferToEntity(TMarca marca) {
 		this.nombre = marca.getNombre();
 		this.paisOrigen = marca.getPais();
 		this.activo = marca.getActivo();
 	}
-	
+
 	// TODO: nuevo método
 	public TMarca entityToTransfer() {
 		return new TMarca(this);
 	}
-
 
 	// TODO: todos los set no tienen parámetros, hay que ponerselos
 	// TODO: el tipo de todos los set era Void, no void, cambiar
@@ -103,14 +103,31 @@ public class Marca implements Serializable {
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
 	}
-	
-	
-	// TODO falta get y set de proveedor
-	public Set<Proveedor> getProveedores(){
+
+	// TODO: falta get y set de proveedor
+	public List<Proveedor> getProveedores() {
 		return this.proveedor;
 	}
-	
-	public void setProveedores(Set<Proveedor> proveedores) {
+
+	public void setProveedores(List<Proveedor> proveedores) {
 		this.proveedor = proveedores;
+	}
+
+	// TODO: faltan get y set de producto
+	public List<Producto> getProductos() {
+		return this.producto;
+	}
+	
+	// TODO: añadido el set
+	public void setProductos(List<Producto> productos) {
+		this.producto = productos;
+	}
+	
+	public int getContadorProductos() {
+		return this.contadorProductos;
+	}
+	
+	public void setContadorProductos(int contador) {
+		this.contadorProductos = contador;
 	}
 }

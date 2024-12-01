@@ -97,7 +97,7 @@ public class MarcaSAImp implements MarcaSA {
 		// para añadir en el if el marca.getContador() == 0
 		if (marca != null && marca.getActivo()) {
 
-			Set<Proveedor> listaProveedores = marca.getProveedores();
+			List<Proveedor> listaProveedores = marca.getProveedores();
 
 			// Desvincular de la marca sus proveedores
 			for (Proveedor p : listaProveedores) {
