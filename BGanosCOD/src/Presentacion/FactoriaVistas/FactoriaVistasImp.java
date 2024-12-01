@@ -45,6 +45,15 @@ import Presentacion.Planta.GUIListarPlantasPorInvernadero;
 import Presentacion.Planta.GUIModificarPlanta;
 import Presentacion.Planta.GUIMostarPlantasPorID;
 import Presentacion.Planta.GUIPlanta;
+import Presentacion.ProductoJPA.GUIAltaProducto;
+import Presentacion.ProductoJPA.GUIBajaProducto;
+import Presentacion.ProductoJPA.GUIListarProducto;
+import Presentacion.ProductoJPA.GUIListarProductoPorMarca;
+import Presentacion.ProductoJPA.GUIListarProductoPorTipo;
+import Presentacion.ProductoJPA.GUIListarProductoPorVenta;
+import Presentacion.ProductoJPA.GUIModificarProducto;
+import Presentacion.ProductoJPA.GUIMostrarProductoPorId;
+import Presentacion.ProductoJPA.GUIProducto;
 import Presentacion.SistemaDeRiego.GUIAltaSistemaDeRiego;
 import Presentacion.SistemaDeRiego.GUIBajaSistemaDeRiego;
 import Presentacion.SistemaDeRiego.GUIListarSistemaDeRiegoDelInvernadero;
@@ -64,6 +73,7 @@ import Presentacion.VentaJPA.GUIAbrirVenta;
 import Presentacion.VentaJPA.GUIBajaVenta;
 import Presentacion.VentaJPA.GUIVentaJPA;
 
+import java.util.List;
 import java.util.Set;
 
 import Negocio.Entrada.TEntrada;
@@ -72,6 +82,7 @@ import Negocio.Factura.TCarrito;
 import Negocio.Factura.TFactura;
 import Negocio.Invernadero.TInvernadero;
 import Negocio.Planta.TPlanta;
+import Negocio.ProductoJPA.TProducto;
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
 import Negocio.TurnoJPA.TTurno;
 
@@ -287,6 +298,8 @@ public class FactoriaVistasImp extends FactoriaVistas {
                 case Evento.OBTENER_NOMINA_DE_TURNO_VISTA:
                     vistaActual = new GUIObtenerNominaDeTurno(); 
                     return vistaActual;
+
+                    
 //					Vistas VENTA JPA
                 case Evento.VENTA_VISTA:
                 	vistaActual=new GUIVentaJPA();
@@ -296,7 +309,39 @@ public class FactoriaVistasImp extends FactoriaVistas {
                 	return vistaActual;
 //                case Evento.BAJA_VENTA_VISTA:
 //                	vistaActual=new GUIBajaVenta();
-//                	return vistaActual;
+//                	return vistaActual;                    
+                	
+                	
+                	
+// 					Vista Producto JPA
+                case Evento.PRODUCTO_VISTA:
+                    vistaActual = new GUIProducto();
+                    return vistaActual;
+                case Evento.ALTA_PRODUCTO_VISTA:
+                    vistaActual = new GUIAltaProducto(); 
+                    return vistaActual;
+                case Evento.BAJA_PRODUCTO_VISTA:
+                    vistaActual = new GUIBajaProducto(); 
+                    return vistaActual;
+                case Evento.MODIFICAR_PRODUCTO_VISTA:
+                    vistaActual = new GUIModificarProducto((TProducto) contexto.getDatos()); 
+                    return vistaActual;
+                case Evento.MOSTRAR_PRODUCTO_POR_ID_VISTA:
+                    vistaActual = new GUIMostrarProductoPorId();
+                    return vistaActual;
+                case Evento.LISTAR_PRODUCTOS_VISTA:
+                    vistaActual = new GUIListarProducto(( List<TProducto>) contexto.getDatos()); 
+                    return vistaActual;
+                case Evento.LISTAR_PRODUCTOS_POR_MARCA_VISTA:
+                	   vistaActual = new GUIListarProductoPorMarca();
+                    return vistaActual;
+                case Evento.LISTAR_PRODUCTOS_POR_TIPO_VISTA:
+                    vistaActual = new GUIListarProductoPorTipo(); 
+                    return vistaActual;
+                case Evento.LISTAR_PRODUCTOS_POR_VENTA_VISTA:
+                    vistaActual = new GUIListarProductoPorVenta();
+                    return vistaActual;
+                    
 
             default:
                 return null;

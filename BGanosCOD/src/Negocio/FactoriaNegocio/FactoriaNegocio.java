@@ -39,13 +39,13 @@ public abstract class FactoriaNegocio {
 	public abstract EmpleadoDeCajaSA getEmpleadoDeCajaJPA();
 	
 	public abstract MarcaSA getMarcaJPA();
-	
-	public abstract ProductoSA getProductoJPA();
-	
+		
 	public abstract ProveedorSA getProveedorJPA();
 	
 	public abstract TurnoSA getTurnoJPA();
 	
 	public abstract VentaSA getVentaSA();
 		
+	public abstract ProductoSA getProductoJPA() ;
+	
 }

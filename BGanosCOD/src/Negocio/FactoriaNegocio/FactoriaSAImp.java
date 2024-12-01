@@ -59,10 +59,6 @@ public class FactoriaSAImp extends FactoriaNegocio {
 		return new MarcaSAImp();
 	}
 
-	public ProductoSA getProductoJPA() {
-		return new ProductoSAImp();
-	}
-
 	public ProveedorSA getProveedorJPA() {
 		return new ProveedorSAImp();
 	}
@@ -74,4 +70,9 @@ public class FactoriaSAImp extends FactoriaNegocio {
 	public VentaSA getVentaSA() {
 		return new VentaSAImp();
 	}
+	
+	public ProductoSA getProductoJPA(){
+		return new ProductoSAImp();
+}
+	
 }

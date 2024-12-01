@@ -3,25 +3,23 @@
  */
 package Presentacion.Controller.Command.CommandProductoJPA;
 
+import Negocio.FactoriaNegocio.FactoriaNegocio;
+import Negocio.ProductoJPA.TProducto;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
+
 public class CommandMostrarProductoPorId implements Command {
-	/** 
-	* (non-Javadoc)
-	* @see Command#execute(Object datos)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	public Context execute(Object datos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		TProducto res = new TProducto();
+		
+		res = FactoriaNegocio.getInstance().getProductoJPA().mostrarProducto((int) datos);
+	if(res != null) {
+		return new Context(Evento.MOSTRAR_PRODUCTO_POR_ID_OK, res);
+	}else {
+		return new Context(Evento.MOSTRAR_PRODUCTO_POR_ID_KO, res);
+	}
 	}
 }
