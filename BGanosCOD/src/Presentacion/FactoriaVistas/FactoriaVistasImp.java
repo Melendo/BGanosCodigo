@@ -69,6 +69,7 @@ import Presentacion.TurnoJPA.GUIMostrarTurno;
 import Presentacion.TurnoJPA.GUIObtenerNominaDeTurno;
 import Presentacion.TurnoJPA.GUITurno;
 
+import java.util.List;
 import java.util.Set;
 
 import Negocio.Entrada.TEntrada;
@@ -305,13 +306,13 @@ public class FactoriaVistasImp extends FactoriaVistas {
                     vistaActual = new GUIBajaProducto(); 
                     return vistaActual;
                 case Evento.MODIFICAR_PRODUCTO_VISTA:
-                    vistaActual = new GUIModificarProducto((TProducto)contexto.getDatos()); 
+                    vistaActual = new GUIModificarProducto((TProducto) contexto.getDatos()); 
                     return vistaActual;
                 case Evento.MOSTRAR_PRODUCTO_POR_ID_VISTA:
                     vistaActual = new GUIMostrarProductoPorId();
                     return vistaActual;
                 case Evento.LISTAR_PRODUCTOS_VISTA:
-                    vistaActual = new GUIListarProducto((Set<TProducto>) contexto.getDatos()); 
+                    vistaActual = new GUIListarProducto(( List<TProducto>) contexto.getDatos()); 
                     return vistaActual;
                 case Evento.LISTAR_PRODUCTOS_POR_MARCA_VISTA:
                 	   vistaActual = new GUIListarProductoPorMarca();

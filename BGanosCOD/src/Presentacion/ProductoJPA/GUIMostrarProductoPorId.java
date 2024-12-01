@@ -8,6 +8,7 @@ import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
+import Presentacion.Controller.GUIMSG;
 import Presentacion.Controller.IGUI;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,15 +23,19 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import Negocio.Planta.TPlanta;
+import Negocio.Planta.TPlantaFrutal;
+import Negocio.Planta.TPlantaNoFrutal;
+import Negocio.ProductoJPA.TProducto;
+import Negocio.ProductoJPA.TProductoAlimentacion;
+import Negocio.ProductoJPA.TProductoSouvenirs;
+
 import javax.swing.JPanel;
 
 
 public class GUIMostrarProductoPorId extends JFrame implements IGUI {
 
-	/**
-	 * 
-	 */
-	
 
 	private JButton botonAceptar;
 	
@@ -126,6 +131,20 @@ public GUIMostrarProductoPorId(){
 	}
 
 	public void actualizar(Context context) {
-
+		switch(context.getEvento()) {
+		case Evento.MOSTRAR_PRODUCTO_POR_ID_KO:
+			GUIMSG.showMessage("Producto no registrada", "MOSTRAR PRODUCTO", true);
+			break;
+		case  Evento.MOSTRAR_PRODUCTO_POR_ID_OK:
+			if((TProducto) context.getDatos() instanceof TProductoAlimentacion ){
+				GUIMSG.showMessage(context.getDatos().toString(), "MOSTRAR PRODUCTO", false);
+			}
+			else if((TProducto) context.getDatos() instanceof TProductoSouvenirs )
+			GUIMSG.showMessage(context.getDatos().toString(), "MOSTRAR PRODUCTO", false);
+			break;
+		default:
+			GUIMSG.showMessage("ERROR INESPERADO", "MOSTRAR PRODUCTO", true);
+			break;
+		}
 	}
 }

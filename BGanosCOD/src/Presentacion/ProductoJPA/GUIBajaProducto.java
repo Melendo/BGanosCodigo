@@ -8,6 +8,7 @@ import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
+import Presentacion.Controller.GUIMSG;
 import Presentacion.Controller.IGUI;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -121,6 +122,26 @@ public class GUIBajaProducto extends JFrame implements IGUI {
 
 
 	public void actualizar(Context context) {
+
+		switch(context.getEvento()) {
+		case Evento.BAJA_PRODUCTO_OK:
+			GUIMSG.showMessage("Producto dado de baja correctamente", "BAJA PRODUCTO", false);
+			break;
+		case  Evento.BAJA_PRODUCTO_KO:
+			
+			if((int)context.getDatos() == -2)
+				GUIMSG.showMessage("Marca no registrada", "BAJA PRODUCTO", true);
+			else if((int)context.getDatos() == -3)
+				GUIMSG.showMessage("Producto inactivo", "BAJA PRODUCTO", true);
+			else
+				GUIMSG.showMessage("No se pudo dar de baja", "BAJA PRODUCTO", true);
+			break;
+		default:
+			GUIMSG.showMessage("ERROR INESPERADO", "BAJA PRODUCTO", true);
+			break;
+		
+	}
+
 
 	}
 }

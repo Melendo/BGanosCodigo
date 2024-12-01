@@ -9,6 +9,7 @@ import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
+import Presentacion.Controller.GUIMSG;
 import Presentacion.Controller.IGUI;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -282,6 +283,18 @@ public class GUIAltaProducto extends JFrame implements IGUI {
 	}
 
 	public void actualizar(Context context) {
+		
+		switch(context.getEvento()) {
+		case Evento.ALTA_PRODUCTO_OK:
+			GUIMSG.showMessage("Producto dado de alta con ID: " + context.getDatos(), "ALTA PLANTA", false);
+			break;
+		case  Evento.ALTA_PRODUCTO_KO:
+			GUIMSG.showMessage("No se pudo dar de alta a la planta", "ALTA PLANTA", true);
+			break;
+		default:
+			GUIMSG.showMessage("Error inesperado", "ALTA PLANTA", true);
+			break;
+		}
 	
 	}
 }

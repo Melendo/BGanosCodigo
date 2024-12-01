@@ -4,7 +4,6 @@
 package Negocio.ProductoJPA;
 
 import java.util.List;
-import java.util.Set;
 
 
 public interface ProductoSA {
@@ -17,12 +16,12 @@ public interface ProductoSA {
 
 	public List<TProducto> listarProductos();
 
-	public Set<TProducto> listarProductosPorMarca(Integer idMarca);
+	public List<TProducto> listarProductosPorMarca(Integer idMarca);
 
-	public Set<TProducto> listarProductosPorTipo(Integer tipo);
+	public List<TProducto> listarProductosPorTipo(Integer tipo);
 
 	
-	public Set<TProducto> listarProductoPorVenta(Integer idVenta);
+	public List<TProducto> listarProductoPorVenta(Integer idVenta);
 
 
 	public Integer modificarProducto(TProducto producto);

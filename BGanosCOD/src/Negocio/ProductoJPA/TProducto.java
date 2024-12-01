@@ -135,4 +135,5 @@ public class TProducto {
 		+ "Id de la Marca: " + idMarca + "\n" 
 		+ "Activo: " + estado + "\n";
 	}
+
 }

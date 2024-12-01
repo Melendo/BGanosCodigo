@@ -8,6 +8,7 @@ import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
+import Presentacion.Controller.GUIMSG;
 import Presentacion.Controller.IGUI;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -127,6 +128,19 @@ public class GUIListarProductoPorMarca extends JFrame implements IGUI {
 	}
 
 	public void actualizar(Context context) {
+		switch(context.getEvento()) {
+		case Evento.LISTAR_PRODUCTOS_POR_MARCA_KO:
+			GUIMSG.showMessage("No existe plantas en el invernadero seleccionado o el invernadero seleccionado no existe", "LISTAR PLANTAS POR INVERNADERO", true);
+			break;
+		case  Evento.LISTAR_PRODUCTOS_POR_MARCA_OK:
+			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_VISTA,context.getDatos()));
+			break;
+		default:
+			GUIMSG.showMessage("ERROR INESPERADO", "LISTAR PRODUCTOS POR MARCA", true);
+			break;
+		
+	}
 
+		
 	}
 }
