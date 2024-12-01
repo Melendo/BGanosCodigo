@@ -464,20 +464,20 @@ public class Evento {
 
 	// Vistas Proveedor 1100 - 1119
 
-	public static final int ALTA_PORVEEDOR_VISTA = 1100;
+	public static final int ALTA_PROVEEDOR_VISTA = 1100;
 	public static final int BAJA_PROVEEDOR_VISTA = 1101;
 	public static final int DESVINCULAR_MARCA_PROVEEDOR_VISTA = 1102;
 	public static final int LISTAR_PROVEEDORES_VISTA = 1103;
 	public static final int LISTAR_PROVEEDORES_DE_MARCA_VISTA = 1104;
-	public static final int MODIFICAR_PROVEEDORES_VISTA = 1105;
+	public static final int MODIFICAR_PROVEEDOR_VISTA = 1105;
 	public static final int MOSTRAR_PROVEEDORES_POR_ID_VISTA = 1106;
-	public static final int SVINCULAR_MARCA_PROVEEDOR_VISTA = 1107;
+	public static final int VINCULAR_MARCA_PROVEEDOR_VISTA = 1107;
 	public static final int PROVEEDOR_VISTA = 1108;
 	
 
 	// Funciones Proveedor 1120 - 1139
 
-	public static final int ALTA_PORVEEDOR = 1120;
+	public static final int ALTA_PROVEEDOR = 1120;
 	public static final int BAJA_PROVEEDOR = 1121;
 	public static final int DESVINCULAR_MARCA_PROVEEDOR = 1122;
 	public static final int LISTAR_PROVEEDORES = 1123;

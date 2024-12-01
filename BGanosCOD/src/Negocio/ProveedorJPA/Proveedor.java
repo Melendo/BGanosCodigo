@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Negocio.ProveedorJPA;
 
 import javax.persistence.Entity;
@@ -12,12 +9,6 @@ import java.util.Set;
 import Negocio.MarcaJPA.Marca;
 import javax.persistence.ManyToMany;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Negocio.ProveedorJPA.Proveedor.findByid", query = "select obj from Proveedor obj where :id = obj.id "),
@@ -28,246 +19,107 @@ import javax.persistence.ManyToMany;
 		@NamedQuery(name = "Negocio.ProveedorJPA.Proveedor.findByactivo", query = "select obj from Proveedor obj where :activo = obj.activo "),
 		@NamedQuery(name = "Negocio.ProveedorJPA.Proveedor.findBymarca", query = "select obj from Proveedor obj where :marca MEMBER OF obj.marca ") })
 public class Proveedor implements Serializable {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	private static final long serialVersionUID = 0;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Proveedor() {
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	@Id
 	private Integer id;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	private String CIF;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	private String nombre;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	private String telefono;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	private Integer version;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	private Boolean activo;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	@ManyToMany
 	private Set<Marca> marca;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	
+
 	public Integer getId() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return id;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param id
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public void setId(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
+		this.id = id;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public String getNombre() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param nombre
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public void setNombre(String nombre) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public String getCIF() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return CIF;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param CIF
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public void setCIF(String CIF) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
+	public void setCIF(String cIF) {
+		CIF = cIF;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
 	public String getTelefono() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return telefono;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param telefono
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public void setTelefono(String telefono) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
+		this.telefono = telefono;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Boolean isActivo() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param activo
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public void setActivo(Boolean activo) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Integer getVersion() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return version;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param version
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public void setVersion(Integer version) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
+		this.version = version;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param Proveedor
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public void transferToEntity(TProveedor Proveedor) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
+	public Boolean getActivo() {
+		return activo;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+
+	public Set<Marca> getMarca() {
+		return marca;
+	}
+
+	public void setMarca(Set<Marca> marca) {
+		this.marca = marca;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public void transferToEntity(TProveedor proveedor) {
+		id = proveedor.getId();
+		nombre = proveedor.getNombre();
+		CIF = proveedor.getCIF();
+		telefono = proveedor.getTelefono();
+		activo = proveedor.getActivo();
+	}
+
 	public TProveedor entityToTransfer() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		TProveedor proveedor = new TProveedor();
+		proveedor.setId(id);
+		proveedor.setNombre(nombre);
+		proveedor.setCIF(CIF);
+		proveedor.setTelefono(telefono);
+		proveedor.setActivo(activo);
+
+		return proveedor;
 	}
 	
 	public Set<Marca> getMarcas(){
