@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Negocio.TurnoJPA.TTurno;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
@@ -73,9 +74,11 @@ public class GUIAltaTurno extends JFrame implements IGUI {
         // Boton Aceptar
         JButton botonAceptar = new JButton("Aceptar");
         botonAceptar.addActionListener(a -> {
+        	TTurno turno = new TTurno();
             String turnoSeleccionado = (String) comboTurno.getSelectedItem();
+            turno.setHorario(turnoSeleccionado);
             if (turnoSeleccionado != null) {
-                ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_TURNO, turnoSeleccionado));
+                ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_TURNO, turno));
             } else {
                 JOptionPane.showMessageDialog(this, "Por favor, seleccione un turno.", "Error",
                         JOptionPane.ERROR_MESSAGE);

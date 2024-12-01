@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 
 import Negocio.TurnoJPA.TTurno;
 import Presentacion.Controller.ApplicationController;
@@ -23,7 +24,7 @@ import java.awt.Toolkit;
 @SuppressWarnings("serial")
 public class GUIObtenerNominaDeTurno extends JFrame implements IGUI {
 
-    private JComboBox<String> comboHorario;
+	private JTextField textId;
     private JTabbedPane tabbedPane;
 
     public GUIObtenerNominaDeTurno() {
@@ -57,13 +58,13 @@ public class GUIObtenerNominaDeTurno extends JFrame implements IGUI {
         gbc.gridwidth = 1;
         gbc.gridy = 1;
 
-        // ComboBox para seleccionar el horario
-        JLabel labelHorario = new JLabel("Horario:");
+        // Campo para el ID del turno
+        JLabel labelId = new JLabel("ID:");
         gbc.gridx = 0; // Columna 0
-        mainPanel.add(labelHorario, gbc);
-        comboHorario = new JComboBox<>(new String[] { "Mañana", "Mediodía", "Tarde", "Noche" });
+        mainPanel.add(labelId, gbc);
+        textId = new JTextField(20);
         gbc.gridx = 1; // Columna 1
-        mainPanel.add(comboHorario, gbc);
+        mainPanel.add(textId, gbc);
 
         // Panel de botones
         JPanel panelBotones = new JPanel();
@@ -76,8 +77,8 @@ public class GUIObtenerNominaDeTurno extends JFrame implements IGUI {
         // Boton de aceptar
         JButton botonAceptar = new JButton("Aceptar");
         botonAceptar.addActionListener(a -> {
-            String horarioSeleccionado = (String) comboHorario.getSelectedItem();
-            ApplicationController.getInstance().manageRequest(new Context(Evento.OBTENER_NOMINA_DE_TURNO, horarioSeleccionado));
+            Integer idTurno = Integer.parseInt(textId.getText());
+            ApplicationController.getInstance().manageRequest(new Context(Evento.OBTENER_NOMINA_DE_TURNO, idTurno));
         });
         panelBotones.add(botonAceptar);
 

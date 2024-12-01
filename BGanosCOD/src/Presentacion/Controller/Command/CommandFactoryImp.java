@@ -43,6 +43,12 @@ import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandMostrarSiste
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandMostrarSistemaDeRiegoPorFabricante;
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandMostrarSistemasDeRiego;
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandMostrarSistemasDeRiegoPorId;
+import Presentacion.Controller.Command.CommandTurnoJPA.CommandAltaTurno;
+import Presentacion.Controller.Command.CommandTurnoJPA.CommandBajaTurno;
+import Presentacion.Controller.Command.CommandTurnoJPA.CommandListarTurnos;
+import Presentacion.Controller.Command.CommandTurnoJPA.CommandModificarTurno;
+import Presentacion.Controller.Command.CommandTurnoJPA.CommandMostrarTurno;
+import Presentacion.Controller.Command.CommandTurnoJPA.CommandObtenerNominaDelTurno;
 import Presentacion.FactoriaVistas.Evento;
 
 public class CommandFactoryImp extends CommandFactory {
@@ -148,7 +154,21 @@ public class CommandFactoryImp extends CommandFactory {
 			return new CommandMostrarSistemaDeRiegoPorFabricante();
 		case Evento.LISTAR_SISTEMAS_RIEGO:
 			return new CommandMostrarSistemasDeRiego();
-
+		
+		// Eventos de Turno
+		case Evento.ALTA_TURNO:
+			return new CommandAltaTurno();
+		case Evento.BAJA_TURNO:
+			return new CommandBajaTurno();
+		case Evento.MODIFICAR_TURNO:
+			return new CommandModificarTurno();
+		case Evento.MOSTRAR_TURNO:
+			return new CommandMostrarTurno();
+		case Evento.LISTAR_TURNO:
+			return new CommandListarTurnos();
+		case Evento.OBTENER_NOMINA_DE_TURNO:
+			return new CommandObtenerNominaDelTurno();
+			
 		}
 		return null;
 	}

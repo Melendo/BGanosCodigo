@@ -37,12 +37,12 @@ public class TurnoSAImp implements TurnoSA {
         transaction.begin();
 
 		TypedQuery<Turno> query = em.createNamedQuery("Negocio.TurnoJPA.Turno.findByhorario", Turno.class);
-		query.setParameter("nombre", turno.getHorario());
+		query.setParameter("horario", turno.getHorario());
 
         try {
         	turnoExistente = query.getSingleResult();     
         } catch (Exception e) {
-        	return -1;
+        	turnoExistente = null;
         }
         
         if(turnoExistente != null) {
@@ -60,6 +60,7 @@ public class TurnoSAImp implements TurnoSA {
         } else {
         	nuevoTurno = new Turno();
         	nuevoTurno.transferToEntity(turno);
+        	nuevoTurno.setActivo(true);
             em.persist(nuevoTurno);
             success = true;
         }
@@ -118,7 +119,6 @@ public class TurnoSAImp implements TurnoSA {
 	    EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 
 	        if (!validarHorario(turno.getHorario()) || !validarId(turno.getId())) {
-	        	//DEBUG
 	        System.out.println("Id o nombre de departamento no v�lido");
 	        return -4;
 	    }
@@ -130,7 +130,7 @@ public class TurnoSAImp implements TurnoSA {
 
 	    if (turnoBD != null && turnoBD.isActivo()) {
     		TypedQuery<Turno> query = em.createNamedQuery("Negocio.TurnoJPA.Turno.findByhorario", Turno.class);
-    		query.setParameter("nombre", turno.getHorario());
+    		query.setParameter("horario", turno.getHorario());
     		int numTurnos;
     		
     		
@@ -165,13 +165,12 @@ public class TurnoSAImp implements TurnoSA {
         TTurno error = new TTurno();
     	
     	if (!validarId(idTurno)) {
-            // DEBUG
             System.out.println("Formato incorrecto para el ID del departamento.");
             error.setId(-4);
             return error;
         }
 
-        EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager(); //No usamos transacci�n al ser un read
+        EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 
         Turno turno = em.find(Turno.class, idTurno);
 
@@ -212,7 +211,6 @@ public class TurnoSAImp implements TurnoSA {
 	        Turno turno = em.find(Turno.class, idTurno, LockModeType.OPTIMISTIC);
 
 	        if (turno == null || !turno.isActivo()) {
-	        	//DEBUG
 	            System.out.println("El departamento con ID " + idTurno + " no existe o no est� activo.");
 	            transaction.rollback();
 	            em.close();
