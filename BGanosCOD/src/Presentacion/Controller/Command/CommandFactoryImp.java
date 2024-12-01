@@ -29,6 +29,12 @@ import Presentacion.Controller.Command.CommandInvernadero.CommandListarInvernade
 import Presentacion.Controller.Command.CommandInvernadero.CommandModificarInvernadero;
 import Presentacion.Controller.Command.CommandInvernadero.CommandMostrarInvernaderoPorID;
 import Presentacion.Controller.Command.CommandInvernadero.CommandVincularSRInvernadero;
+import Presentacion.Controller.Command.CommandMarcaJPA.CommandAltaMarca;
+import Presentacion.Controller.Command.CommandMarcaJPA.CommandBajaMarca;
+import Presentacion.Controller.Command.CommandMarcaJPA.CommandListarMarcas;
+import Presentacion.Controller.Command.CommandMarcaJPA.CommandListarMarcasPorProveedor;
+import Presentacion.Controller.Command.CommandMarcaJPA.CommandModificarMarca;
+import Presentacion.Controller.Command.CommandMarcaJPA.CommandMostrarMarcaPorId;
 import Presentacion.Controller.Command.CommandPlanta.CommandAltaPlanta;
 import Presentacion.Controller.Command.CommandPlanta.CommandBajaPlanta;
 import Presentacion.Controller.Command.CommandPlanta.CommandListarPlanta;
@@ -173,6 +179,21 @@ public class CommandFactoryImp extends CommandFactory {
 		// Eventos Venta
 		case Evento.CERRAR_VENTA:
 			return new CerrarVentaCommand();
+			
+		// Eventos de Marca JPA
+		case Evento.ALTA_MARCA:
+			return new CommandAltaMarca();
+		case Evento.BAJA_MARCA:
+			return new CommandBajaMarca();
+		case Evento.MODIFICAR_MARCA:
+			return new CommandModificarMarca();
+		case Evento.MOSTRAR_MARCA:
+			return new CommandMostrarMarcaPorId();
+		case Evento.LISTAR_MARCAS:
+			return new CommandListarMarcas();
+		case Evento.LISTAR_MARCAS_POR_PROVEEDOR:
+			return new CommandListarMarcasPorProveedor();
+			
 		}
 		return null;
 	}
