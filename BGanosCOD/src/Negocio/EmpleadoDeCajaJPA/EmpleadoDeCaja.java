@@ -68,7 +68,7 @@ public class EmpleadoDeCaja implements Serializable {
 	* <!-- end-UML-doc -->
 	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
 	*/
-	@ManyToOne
+	@OneToMany(mappedBy = "empleadoDeCaja")
 	private Venta venta;
 	/** 
 	* <!-- begin-UML-doc -->

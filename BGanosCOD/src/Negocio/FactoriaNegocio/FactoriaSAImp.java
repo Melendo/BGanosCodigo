@@ -71,7 +71,7 @@ public class FactoriaSAImp extends FactoriaNegocio {
 		return new TurnoSAImp();
 	}
 
-	public VentaSA getVentaJPA() {
+	public VentaSA getVentaSA() {
 		return new VentaSAImp();
 	}
 }

@@ -49,6 +49,7 @@ import Presentacion.Controller.Command.CommandTurnoJPA.CommandListarTurnos;
 import Presentacion.Controller.Command.CommandTurnoJPA.CommandModificarTurno;
 import Presentacion.Controller.Command.CommandTurnoJPA.CommandMostrarTurno;
 import Presentacion.Controller.Command.CommandTurnoJPA.CommandObtenerNominaDelTurno;
+import Presentacion.Controller.Command.CommandVentasJPA.CerrarVentaCommand;
 import Presentacion.FactoriaVistas.Evento;
 
 public class CommandFactoryImp extends CommandFactory {
@@ -169,6 +170,9 @@ public class CommandFactoryImp extends CommandFactory {
 		case Evento.OBTENER_NOMINA_DE_TURNO:
 			return new CommandObtenerNominaDelTurno();
 			
+		// Eventos Venta
+		case Evento.CERRAR_VENTA:
+			return new CerrarVentaCommand();
 		}
 		return null;
 	}

@@ -46,6 +46,6 @@ public abstract class FactoriaNegocio {
 	
 	public abstract TurnoSA getTurnoJPA();
 	
-	public abstract VentaSA getVentaJPA();
-	
+	public abstract VentaSA getVentaSA();
+		
 }

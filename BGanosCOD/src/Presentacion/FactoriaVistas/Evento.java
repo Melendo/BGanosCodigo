@@ -569,9 +569,9 @@ public class Evento {
 
 	// Vistas Venta 1300 - 1319
 	public static final int VENTA_VISTA = 1301;
-	public static final int ALTA_VENTA_VISTA = 1302;
+	public static final int ABRIR_VENTA_VISTA = 1302;
 	public static final int ANIADIR_PRODUCTO_VISTA = 1302;
-	public static final int BAJA_VENTA_VISTA = 1303;
+	public static final int CERRAR_VENTA_VISTA = 1303;
 	public static final int DEVOLVER_VENTA_VISTA = 1304;
 	public static final int LISTAR_VENTAS_VISTA = 1305;
 	public static final int MODIFICAR_VENTAS_VISTA = 1306;
@@ -581,9 +581,9 @@ public class Evento {
 	public static final int VENTAS_POR_EMPLEADO_DE_CAJA_VISTA = 1310;
 
 	// Funciones Venta 1320 - 1349
-	public static final int ALTA_VENTA = 1320;
+	public static final int ABRIR_VENTA = 1320;
 	public static final int ANIADIR_PRODUCTO = 1321;
-	public static final int BAJA_VENTA = 1322;
+	public static final int CERRAR_VENTA = 1322;
 	public static final int DEVOLVER_VENTA = 1323;
 	public static final int LISTAR_VENTAS = 1324;
 	public static final int MODIFICAR_VENTAS = 1325;
@@ -594,16 +594,16 @@ public class Evento {
 
 	// OKs y KOs Venta 1350 - 1399
 	// alta
-	public static final int ALTA_VENTA_OK = 1350;
-	public static final int ALTA_VENTA_KO = 1351;
+	public static final int ABRIR_VENTA_OK = 1350;
+	public static final int ABRIR_VENTA_KO = 1351;
 
 	// aniadir producto
 	public static final int ANIADIR_PRODUCTO_OK = 1352;
 	public static final int ANIADIR_PRODUCTO_KO = 1353;
 
 	// baja
-	public static final int BAJA_VENTA_OK = 1354;
-	public static final int BAJA_VENTA_KO = 1355;
+	public static final int CERRAR_VENTA_OK = 1354;
+	public static final int CERRAR_VENTA_KO = 1355;
 
 	// devolver venta
 	public static final int DEVOLVER_VENTA_OK = 1356;
