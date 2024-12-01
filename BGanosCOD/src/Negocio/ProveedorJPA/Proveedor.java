@@ -269,4 +269,12 @@ public class Proveedor implements Serializable {
 		return null;
 		// end-user-code
 	}
+	
+	public Set<Marca> getMarcas(){
+		return this.marca;
+	}
+	
+	public void SetMarcas(Set<Marca> marcas) {
+		this.marca = marcas;
+	}
 }

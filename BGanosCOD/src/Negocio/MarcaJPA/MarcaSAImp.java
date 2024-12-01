@@ -238,7 +238,7 @@ public class MarcaSAImp implements MarcaSA {
 			return null;
 		}
 
-		List<Marca> marcasProveedor = proveedor.getMarcas();
+		Set<Marca> marcasProveedor = proveedor.getMarcas();
 		// TODO preguntar si está bien el cast
 		List<TMarca> marcas = new ArrayList<TMarca>();
 
