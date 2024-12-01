@@ -22,6 +22,14 @@ public class TMarca {
 		this.paisOrigen = paisOrigen;
 		this.activo = activo;
 	}
+	
+	// TODO: constructora nueva
+	public TMarca(Marca marca) {
+		this.id = marca.getId();
+		this.nombre = marca.getNombre();
+		this.paisOrigen = marca.getPaisOrigen();
+		this.activo = marca.getActivo();
+	}
 
 	public TMarca() {
 	}

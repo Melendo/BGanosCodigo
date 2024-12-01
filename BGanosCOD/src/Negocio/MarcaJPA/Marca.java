@@ -78,6 +78,11 @@ public class Marca implements Serializable {
 		this.paisOrigen = marca.getPais();
 		this.activo = marca.getActivo();
 	}
+	
+	// TODO: nuevo método
+	public TMarca entityToTransfer() {
+		return new TMarca(this);
+	}
 
 
 	// TODO: todos los set no tienen parámetros, hay que ponerselos
@@ -97,5 +102,15 @@ public class Marca implements Serializable {
 
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
+	}
+	
+	
+	// TODO falta get y set de proveedor
+	public Set<Proveedor> getProveedores(){
+		return this.proveedor;
+	}
+	
+	public void setProveedores(Set<Proveedor> proveedores) {
+		this.proveedor = proveedores;
 	}
 }
