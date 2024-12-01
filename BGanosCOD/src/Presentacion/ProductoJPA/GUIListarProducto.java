@@ -35,7 +35,7 @@ public class GUIListarProducto extends JFrame implements IGUI {
 	private JPanel mainPanel;
 
 	public GUIListarProducto(List<TProducto> list) {
-		super("MOSTRAR PRODUCTOS");
+		super("LISTAR PRODUCTOS");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 630;
 		int alto = 330;

@@ -301,7 +301,7 @@ public class GUIModificarProducto extends JFrame implements IGUI {
 				else{
 					
 					textNombre.setText(producto.getNombre());
-					textId.setEditable(false);
+					textId.setEnabled(false);
 					textidMarca.setText(""+producto.getIdMarca());;
 					textStock.setText(""+producto.getStock());
 					textPrecio.setText(""+producto.getPrecio());
@@ -311,7 +311,7 @@ public class GUIModificarProducto extends JFrame implements IGUI {
 					if(!producto.getActivo())
 						estado.setSelectedIndex(1);
 						
-					tipoProducto.setEditable(false);
+					tipoProducto.setEnabled(false);
 					
                     if (producto instanceof TProductoAlimentacion) {
                     	
@@ -346,6 +346,23 @@ public class GUIModificarProducto extends JFrame implements IGUI {
 
 
 	public void actualizar(Context context) {
-
+		switch(context.getEvento()) {
+		case Evento.MODIFICAR_PRODUCTO_OK:
+			GUIMSG.showMessage("Se realizo la modificacion correctamente", "MODIFICAR PRODUCTO", false);
+			break;
+		case  Evento.MODIFICAR_PRODUCTO_KO:
+			if((int) context.getDatos() == -2){
+				GUIMSG.showMessage("id de la Marca incorrecto", "MODIFICAR PRODUCTO", true);
+			}
+			else if((int) context.getDatos() == -3)
+				GUIMSG.showMessage("No se encontro el producto", "MODIFICAR PRODUCTO", true);
+			else
+			GUIMSG.showMessage("No se pudo realizar la modificacion", "MODIFICAR PRODUCTO", true);
+			break;
+		default:
+			GUIMSG.showMessage("ERROR INESPERADO", "MODIFICAR PRODUCTO", true);
+			break;
+		
+	}
 	}
 }

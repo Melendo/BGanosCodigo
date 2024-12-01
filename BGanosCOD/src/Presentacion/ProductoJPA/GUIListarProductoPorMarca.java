@@ -130,7 +130,7 @@ public class GUIListarProductoPorMarca extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		switch(context.getEvento()) {
 		case Evento.LISTAR_PRODUCTOS_POR_MARCA_KO:
-			GUIMSG.showMessage("No existe plantas en el invernadero seleccionado o el invernadero seleccionado no existe", "LISTAR PLANTAS POR INVERNADERO", true);
+			GUIMSG.showMessage("No existe productos de la marca seleccionado o la marca seleccionada no existe", "LISTAR PRODUCTOS POR MARCA", true);
 			break;
 		case  Evento.LISTAR_PRODUCTOS_POR_MARCA_OK:
 			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_VISTA,context.getDatos()));
