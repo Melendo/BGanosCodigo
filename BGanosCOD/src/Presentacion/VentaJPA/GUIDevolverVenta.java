@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.VentaJPA;
 
 import javax.swing.JFrame;
@@ -32,9 +29,6 @@ import Negocio.Factura.TLineaFactura;
 
 public class GUIDevolverVenta extends JFrame implements IGUI {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private JTextField idVentaField;

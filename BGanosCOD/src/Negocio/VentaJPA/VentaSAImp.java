@@ -87,6 +87,9 @@ public class VentaSAImp implements VentaSA {
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 		EmpleadoDeCaja emCaja = em.find(EmpleadoDeCaja.class, id);
 
+		if(emCaja == null)
+			return null;
+		
 		TypedQuery<Venta> query = em.createNamedQuery("Negocio.VentaJPA.Venta.findByempleadoDeCaja", Venta.class);
 		query.setParameter("empleadoDeCaja", emCaja);
 

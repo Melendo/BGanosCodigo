@@ -100,7 +100,7 @@ public class GUIVentaJPA extends JFrame implements IGUI {
 		buttonDevolverVenta = ComponentsBuilder.createButton("Devolver", 300, 250, 185, 100);
 		buttonDevolverVenta.addActionListener(a -> {
 			GUIVentaJPA.this.setVisible(false);
-			ApplicationController.getInstance().manageRequest(new Context(Evento.DEVOLVER_VENTA, tVenta));
+			ApplicationController.getInstance().manageRequest(new Context(Evento.DEVOLVER_VENTA_VISTA, tVenta));
 		});
 		buttonDevolverVenta.setVisible(true);
 		this.add(buttonDevolverVenta);

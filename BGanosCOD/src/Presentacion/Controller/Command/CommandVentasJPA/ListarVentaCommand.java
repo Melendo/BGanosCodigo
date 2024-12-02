@@ -12,6 +12,6 @@ public class ListarVentaCommand implements Command {
 
 	public Context execute(Object datos) {
 		List<TVenta> res = FactoriaNegocio.getInstance().getVentaSA().listarVentas();
-		return new Context(Evento.LISTAR_FABRICANTES_VISTA, res);
+		return new Context(Evento.LISTAR_VENTAS_VISTA, res);
 	}
 }
