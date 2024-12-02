@@ -9,3 +9,4 @@
 - Cambiar command alta a command abrir
 - Cambiado Cerrar venta return type a context
 - Añadir getters y setters a TVentaConProductos
+- Quitar los GUIs que sobran

@@ -50,7 +50,7 @@ public class GUIVentaJPA extends JFrame implements IGUI {
 		JLabel label = ComponentsBuilder.createLabel("Venta", 250, 30, 500, 50, Color.BLACK);
 		this.add(label);
 
-		// ALTA VENTA
+		// ABRIR VENTA
 		buttonAbrirVenta = ComponentsBuilder.createButton("Abrir", 100, 100, 185, 100);
 		buttonAbrirVenta.addActionListener(a -> {
 			GUIVentaJPA.this.setVisible(false);

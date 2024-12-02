@@ -7,7 +7,7 @@ import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
-public class MostrarPorIdCommand implements Command {
+public class MostrarVentaPorIdCommand implements Command {
 
 	public Context execute(Object datos) {
 		TVentaConProductos res = FactoriaNegocio.getInstance().getVentaSA().mostrarPorId((Integer)datos );

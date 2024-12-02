@@ -63,8 +63,10 @@ import Presentacion.Controller.Command.CommandTurnoJPA.CommandListarTurnos;
 import Presentacion.Controller.Command.CommandTurnoJPA.CommandModificarTurno;
 import Presentacion.Controller.Command.CommandTurnoJPA.CommandMostrarTurno;
 import Presentacion.Controller.Command.CommandTurnoJPA.CommandObtenerNominaDelTurno;
+import Presentacion.Controller.Command.CommandVentasJPA.AbrirVentaCommand;
 import Presentacion.Controller.Command.CommandVentasJPA.CerrarVentaCommand;
 import Presentacion.Controller.Command.CommandVentasJPA.ListarVentaCommand;
+import Presentacion.Controller.Command.CommandVentasJPA.MostrarVentaPorIdCommand;
 import Presentacion.Controller.Command.CommandVentasJPA.VentasPorEmpleadoDeCajaCommand;
 import Presentacion.FactoriaVistas.Evento;
 
@@ -187,12 +189,16 @@ public class CommandFactoryImp extends CommandFactory {
 			return new CommandObtenerNominaDelTurno();
 			
 		// Eventos Venta
+		case Evento.ABRIR_VENTA:
+			return new AbrirVentaCommand();
 		case Evento.CERRAR_VENTA:
 			return new CerrarVentaCommand();
 		case Evento.LISTAR_VENTAS:
 			return new ListarVentaCommand();
 		case Evento.VENTAS_POR_EMPLEADO_DE_CAJA:
 			return new VentasPorEmpleadoDeCajaCommand();
+		case Evento.MOSTRAR_VENTA_POR_ID:
+			return new MostrarVentaPorIdCommand();
 			
 		// Eventos de Marca JPA
 		case Evento.ALTA_MARCA:

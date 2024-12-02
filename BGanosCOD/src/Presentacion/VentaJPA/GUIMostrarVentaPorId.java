@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -25,12 +26,19 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import Negocio.VentaJPA.TLineaVenta;
+import Negocio.VentaJPA.TVentaConProductos;
 
 public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 
 	private static final long serialVersionUID = 1L;
 
-	private JTable tablaDatos;
+	private Set<TLineaVenta> datos;
+	String[] nombreColumnas = { "Id Producto", "Cantidad", "Precio" };
+	private JTable tabla;
+	private JTextField idText;
 	private JLabel mensajeVenta;
 	private JScrollPane scroll;
 
@@ -67,11 +75,11 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 		JLabel labelID = ComponentsBuilder.createLabel("ID Venta: ", 10, 100, 80, 20, Color.BLACK);
 		panelID.add(labelID);
 
-		JTextField id = new JTextField();
-		id.setPreferredSize(new Dimension(250, 30));
+		idText = new JTextField();
+		idText.setPreferredSize(new Dimension(250, 30));
 
-		id.setEditable(true);
-		panelID.add(id);
+		idText.setEditable(true);
+		panelID.add(idText);
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
 
@@ -81,11 +89,10 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 		mensajeVenta = ComponentsBuilder.createLabel("", 10, 100, 80, 20, Color.BLACK);
 		mensaje.add(mensajeVenta);
 
-		String[] nombreColumnas = { "Id Venta", "ID Precio total", "Forma de pago", "Fecha" };
 		List<String[]> datosColumnas = new ArrayList<String[]>();
 
-		tablaDatos = ComponentsBuilder.createTable(0, 4, nombreColumnas, datosColumnas.toArray(new String[][] {}));
-		scroll = new JScrollPane(tablaDatos);
+		tabla = ComponentsBuilder.createTable(0, 4, nombreColumnas, datosColumnas.toArray(new String[][] {}));
+		scroll = new JScrollPane(tabla);
 		scroll.setBounds(50, 115, 900, 288);
 		mainPanel.add(scroll);
 
@@ -99,9 +106,9 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Integer id_Factura = Integer.parseInt(id.getText());
+					Integer id_Factura = Integer.parseInt(idText.getText());
 					ApplicationController.getInstance().manageRequest(
-							new Context(Evento.MOSTRAR_FACTURA_POR_ID, !id.getText().isEmpty() ? id_Factura : 0));
+							new Context(Evento.MOSTRAR_VENTA_POR_ID, !idText.getText().isEmpty() ? id_Factura : 0));
 
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIMostrarVentaPorId.this, "Los datos no son correctos", "Error",
@@ -130,6 +137,34 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 	}
 
 	public void actualizar(Context context) {
+		if (context.getEvento() == Evento.MOSTRAR_VENTA_POR_ID_OK) {
 
+			TVentaConProductos res = (TVentaConProductos) context.getDatos();
+			datos = res.getLineasVenta();
+
+			mensajeVenta
+					.setText("Perecio Total: " + res.getVenta().getPrecioTotal() + ", Empleado que realizo la venta: "
+							+ res.getVenta().getIdEmplado() + ", Forma de Pago: " + res.getVenta().getPrecioTotal()
+							+ ", Fecha: " + res.getVenta().getFecha() + ", Activo: " + res.getVenta().getActivo());
+
+			String[][] tablaDatos = new String[datos.size()][nombreColumnas.length];
+
+			int i = 0;
+			for (TLineaVenta lv : datos) {
+				tablaDatos[i][0] = lv.getIdProducto().toString();
+				tablaDatos[i][1] = lv.getCantidad().toString();
+				tablaDatos[i][2] = lv.getPrecio() * lv.getCantidad() + "";
+				i++;
+			}
+
+			tabla.setModel(new DefaultTableModel(tablaDatos, nombreColumnas));
+		} else if (context.getEvento() == Evento.MOSTRAR_VENTA_POR_ID_KO) {
+			if (context.getDatos() == null) {
+				JOptionPane.showMessageDialog(this, "No existe el Empleado con id: " + idText.getText(), "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else
+				JOptionPane.showMessageDialog(this, "Error al tratar de listar los Fabricantes", "Error",
+						JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }

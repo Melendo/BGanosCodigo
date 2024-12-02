@@ -21,7 +21,6 @@ public class VentaSAImp implements VentaSA {
 
 	public Integer modificarVenta(TVenta tVenta) {
 		return null;
-
 	}
 
 	public List<TVenta> listarVentas() {

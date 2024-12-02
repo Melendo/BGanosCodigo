@@ -38,7 +38,7 @@ public class GUIVentasPorEmpleadoDeCaja extends JFrame implements IGUI {
 	private JButton botonCancelar;
 
 	public GUIVentasPorEmpleadoDeCaja() {
-		super("Mostrar Fabricante");
+		super("Ventas efectuadas por un Empleado");
 		datos = new HashSet<TVenta>();
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 600;
