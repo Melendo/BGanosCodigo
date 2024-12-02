@@ -81,6 +81,7 @@ import Presentacion.TurnoJPA.GUITurno;
 import Presentacion.VentaJPA.GUIAbrirVenta;
 import Presentacion.VentaJPA.GUIBajaVenta;
 import Presentacion.VentaJPA.GUIVentaJPA;
+import Presentacion.EmpleadoDeCajaJPA.*;
 
 import java.util.List;
 import java.util.Set;
@@ -359,7 +360,27 @@ public class FactoriaVistasImp extends FactoriaVistas {
 				case Evento.DESVINCULAR_MARCA_PROVEEDOR_VISTA:
 					vistaActual = new GUIDesvincularMarcaProveedor();
 					return vistaActual;
-
+                    
+                    //empleado de caja
+                case Evento.EMPLEADO_DE_CAJA_VISTA:
+                	vistaActual=new GUIEmpleadoDeCaja();
+                	return vistaActual;
+                case Evento.ALTA_EMPLEADO_DE_CAJA_VISTA:
+                	vistaActual=new GUIAltaEmpleadoDeCaja();
+                	return vistaActual;
+                case Evento.BAJA_EMPLEADO_DE_CAJA_VISTA:
+                	vistaActual=new GUIBajaEmpleadoDeCaja();
+                	return vistaActual;
+                case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE_VISTA:
+                	vistaActual=new GUIListarEmpleadoDeCajaPorNombre();
+                	return vistaActual;
+                case Evento.MODIFICAR_EMPLEADO_DE_CAJA_VISTA:
+                	vistaActual=new GUIModificarEmpleadoDeCaja();
+                	return vistaActual;
+                case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO_VISTA:
+                	vistaActual=new GUIListarEmpleadoDeCajaPorTurno();
+                	return vistaActual;
+                	
 		default:
 			return null;
 		}

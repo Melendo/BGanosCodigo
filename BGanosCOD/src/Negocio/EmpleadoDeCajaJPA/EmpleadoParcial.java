@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package Negocio.EmpleadoDeCajaJPA;
 
 import javax.persistence.Entity;
@@ -8,127 +6,64 @@ import java.io.Serializable;
 import javax.persistence.NamedQuery;
 import javax.persistence.NamedQueries;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoParcial.findByid", query = "select obj from EmpleadoParcial obj where :id = obj.id "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoParcial.findByPrecio_h", query = "select obj from EmpleadoParcial obj where :Precio_h = obj.Precio_h "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoParcial.findByHoras", query = "select obj from EmpleadoParcial obj where :Horas = obj.Horas ") })
 public class EmpleadoParcial extends EmpleadoDeCaja implements Serializable {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	
 	private static final long serialVersionUID = 0;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	private Integer id;
+	private Double Precio_h;
+	private Double Horas;
+	
 	public EmpleadoParcial() {
 	}
+	
+	public EmpleadoParcial(TEmpleadoDeCaja empleado) {
+    	this.transferToEntity(empleado);
+    }
+	
+	public TEmpleadoDeCaja entityToTransfer() {
+		return new TEmpleadoParcial(super.getId(), super.getDNI(), super.getNombre(), super.getApellido(), super.getSueldo(),
+				super.getTelefono(), super.getTurno().getId(), super.getActivo(), Precio_h, Horas);
+	}
+	
+	public void transferToEntity(TEmpleadoDeCaja empleado) {
+	    	super.transferToEntity(empleado);
+	    	TEmpleadoParcial empParcial = (TEmpleadoParcial) empleado;
+	    	this.setHoras(empParcial.getHoras());
+	    	this.setPrecio_h(empParcial.getPrecio_h());
+	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private Integer id;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private Double Precio_h;
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private Double Horas;
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	public Double calcularSueldo() {
+		return super.getSueldo() + (this.Horas * this.Precio_h);
+	}
+	
 	public Integer getId() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return id;
 	}
-
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param id
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	
 	public void setId(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
+		this.id = id;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Double getHoras() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return Horas;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param horas
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public void setHoras(Double horas) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
+		this.Horas = horas;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Double getPrecio_h() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return Precio_h;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param precio
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public void setPrecio_h(Double precio) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
+		this.Precio_h = precio;
 	}
+
 }
