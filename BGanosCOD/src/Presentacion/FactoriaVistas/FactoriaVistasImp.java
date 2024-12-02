@@ -37,6 +37,13 @@ import Presentacion.Invernadero.GUIModificarInvernadero;
 import Presentacion.Invernadero.GUIMostrarInvernaderoPorID;
 import Presentacion.Invernadero.GUITresFechasMasVendidas;
 import Presentacion.Invernadero.GUIVincularSRInvernadero;
+import Presentacion.MarcaJPA.GUIAltaMarca;
+import Presentacion.MarcaJPA.GUIBajaMarca;
+import Presentacion.MarcaJPA.GUIListaMarcasPorProveedor;
+import Presentacion.MarcaJPA.GUIListarMarcas;
+import Presentacion.MarcaJPA.GUIMarca;
+import Presentacion.MarcaJPA.GUIModificarMarca;
+import Presentacion.MarcaJPA.GUIMostrarMarcaPorId;
 import Presentacion.Planta.GUIAltaPlanta;
 import Presentacion.Planta.GUIBajaPlanta;
 import Presentacion.Planta.GUIListarPlantas;
@@ -85,6 +92,7 @@ import Presentacion.VentaJPA.GUIModificarVenta;
 import Presentacion.VentaJPA.GUIMostrarVentaPorId;
 import Presentacion.VentaJPA.GUIVentaJPA;
 import Presentacion.VentaJPA.GUIVentasPorEmpleadoDeCaja;
+import Presentacion.EmpleadoDeCajaJPA.*;
 
 import java.util.List;
 import java.util.Set;
@@ -94,6 +102,7 @@ import Negocio.Fabricante.TFabricante;
 import Negocio.Factura.TCarrito;
 import Negocio.Factura.TFactura;
 import Negocio.Invernadero.TInvernadero;
+import Negocio.MarcaJPA.TMarca;
 import Negocio.Planta.TPlanta;
 import Negocio.ProductoJPA.TProducto;
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
@@ -375,6 +384,51 @@ public class FactoriaVistasImp extends FactoriaVistas {
 			vistaActual = new GUIDesvincularMarcaProveedor();
 			return vistaActual;
 
+            
+            //empleado de caja
+        case Evento.EMPLEADO_DE_CAJA_VISTA:
+        	vistaActual=new GUIEmpleadoDeCaja();
+        	return vistaActual;
+        case Evento.ALTA_EMPLEADO_DE_CAJA_VISTA:
+        	vistaActual=new GUIAltaEmpleadoDeCaja();
+        	return vistaActual;
+        case Evento.BAJA_EMPLEADO_DE_CAJA_VISTA:
+        	vistaActual=new GUIBajaEmpleadoDeCaja();
+        	return vistaActual;
+        case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE_VISTA:
+        	vistaActual=new GUIListarEmpleadoDeCajaPorNombre();
+        	return vistaActual;
+        case Evento.MODIFICAR_EMPLEADO_DE_CAJA_VISTA:
+        	vistaActual=new GUIModificarEmpleadoDeCaja();
+        	return vistaActual;
+        case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO_VISTA:
+        	vistaActual=new GUIListarEmpleadoDeCajaPorTurno();
+        	return vistaActual;
+        	
+        	
+//					Vistas Marca JPA
+        case Evento.MARCA_VISTA:
+        	vistaActual = new GUIMarca();
+        	return vistaActual;
+        case Evento.ALTA_MARCA_VISTA:
+        	vistaActual = new GUIAltaMarca();
+        	return vistaActual;
+        case Evento.BAJA_MARCA_VISTA:
+        	vistaActual = new GUIBajaMarca();
+        	return vistaActual;
+        case Evento.MODIFICAR_MARCA_VISTA:
+        	vistaActual = new GUIModificarMarca();
+        	return vistaActual;
+        case Evento.MOSTRAR_MARCA_VISTA:
+        	vistaActual = new GUIMostrarMarcaPorId();
+        	return vistaActual;
+        case Evento.LISTAR_MARCAS_VISTA:
+        	vistaActual = new GUIListarMarcas((Set<TMarca>) contexto.getDatos());
+        	return vistaActual;
+        case Evento.LISTAR_MARCAS_POR_PROVEEDOR_VISTA:
+        	vistaActual = new GUIListaMarcasPorProveedor();
+        	return vistaActual;
+                	
 		default:
 			return null;
 		}
