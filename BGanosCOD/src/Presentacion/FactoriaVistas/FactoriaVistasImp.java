@@ -288,6 +288,23 @@ public class FactoriaVistasImp extends FactoriaVistas {
                     //empleado de caja
                 case Evento.EMPLEADO_DE_CAJA_VISTA:
                 	vistaActual=new GUIEmpleadoDeCaja();
+                	return vistaActual;
+                case Evento.ALTA_EMPLEADO_DE_CAJA_VISTA:
+                	vistaActual=new GUIAltaEmpleadoDeCaja();
+                	return vistaActual;
+                case Evento.BAJA_EMPLEADO_DE_CAJA_VISTA:
+                	vistaActual=new GUIBajaEmpleadoDeCaja();
+                	return vistaActual;
+                case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE_VISTA:
+                	vistaActual=new GUIListarEmpleadoDeCajaPorNombre();
+                	return vistaActual;
+                case Evento.MODIFICAR_EMPLEADO_DE_CAJA_VISTA:
+                	vistaActual=new GUIModificarEmpleadoDeCaja();
+                	return vistaActual;
+                case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO_VISTA:
+                	vistaActual=new GUIListarEmpleadoDeCajaPorTurno();
+                	return vistaActual;
+                	
 
 
             default:
