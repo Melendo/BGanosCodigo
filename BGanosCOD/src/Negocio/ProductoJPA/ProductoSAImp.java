@@ -35,7 +35,7 @@ public class ProductoSAImp implements ProductoSA {
 					t.rollback();
 				}
 				else{
-					TypedQuery<Producto> query = em.createNamedQuery("negocio.ProductoJPA.Producto.findBynombre", Producto.class);
+					TypedQuery<Producto> query = em.createNamedQuery("Negocio.ProductoJPA.Producto.findBynombre", Producto.class);
 					query.setParameter("nombre", producto.getNombre());
 					List<Producto> data = query.getResultList();
 					Producto p = data.isEmpty() ? null : data.get(0);
@@ -84,7 +84,7 @@ public class ProductoSAImp implements ProductoSA {
 					t.rollback();
 				}
 				else{
-					TypedQuery<Producto> query = em.createNamedQuery("negocio.ProductoJPA.Producto.findBynombre", Producto.class);
+					TypedQuery<Producto> query = em.createNamedQuery("Negocio.ProductoJPA.Producto.findBynombre", Producto.class);
 					query.setParameter("nombre", producto.getNombre());
 					
 					List<Producto> data = query.getResultList();
@@ -148,7 +148,7 @@ public class ProductoSAImp implements ProductoSA {
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 		EntityTransaction t = em.getTransaction();
 		t.begin();
-		final TypedQuery<Producto> query = em.createNamedQuery("negocio.ProductoJPA.Producto.findAll", Producto.class);
+		final TypedQuery<Producto> query = em.createNamedQuery("Negocio.ProductoJPA.Producto.findAll", Producto.class);
 		
 		final List<TProducto> lista = query.getResultList().stream().map(Producto::entityToTransfer).collect(Collectors.toList());
 		
@@ -199,7 +199,7 @@ public class ProductoSAImp implements ProductoSA {
 		
 		List<TProducto> listaTipos = new ArrayList<TProducto>();
 		
-		final TypedQuery<Producto> query = em.createNamedQuery("negocio.ProductoJPA.Producto.findAll", Producto.class);
+		final TypedQuery<Producto> query = em.createNamedQuery("Negocio.ProductoJPA.Producto.findAll", Producto.class);
 		
 		final List<TProducto> lista = query.getResultList().stream().map(Producto::entityToTransfer).collect(Collectors.toList());
 		
@@ -216,7 +216,7 @@ public class ProductoSAImp implements ProductoSA {
 
 
 	public List<TProducto> listarProductoPorVenta(Integer idVenta) {
-		List<TProducto> lista= new ArrayList<TProducto>();
+		List<TProducto> lista = new ArrayList<>();
 		// Empieza una transacción
 				EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 				EntityTransaction t = em.getTransaction();
@@ -231,15 +231,14 @@ public class ProductoSAImp implements ProductoSA {
 				}
 				else
 				{
-					/*
-					LineaVenta v = em.find(LineaVenta,venta.getId(), LockModeType.OPTIMISTIC);
 					
-					for(Producto p: v.getProductos()){
-						em.lock(p, LockModeType.OPTIMISTIC);
-						lista.add(p.entityToTransfer());
+					
+					final TypedQuery<LineaVenta> query = em.createNamedQuery("Negocio.VentaJPA.LineaVenta.findByventa", LineaVenta.class);
+					List<LineaVenta> list = query.getResultList();
+					
+					for(LineaVenta lv: list){
+						lista.add(lv.getProducto().entityToTransfer());
 					}
-					*/
-					
 			
 					t.commit();
 				}
@@ -269,6 +268,7 @@ public class ProductoSAImp implements ProductoSA {
 				t.rollback();
 			}
 			else{
+				
 				if(producto.getTipoProducto() == 0){
 					TProductoAlimentacion tali = (TProductoAlimentacion)producto;
 					
