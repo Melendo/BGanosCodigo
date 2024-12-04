@@ -3,25 +3,19 @@
  */
 package Presentacion.Controller.Command.CommandProveedorJPA;
 
+import Negocio.FactoriaNegocio.FactoriaNegocio;
+import Negocio.ProveedorJPA.TProveedor;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
 public class mostarProveedorPorIdCommand implements Command {
-	/** 
-	* (non-Javadoc)
-	* @see Command#execute(Object datos)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Context execute(Object datos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		TProveedor resultado = FactoriaNegocio.getInstance().getProveedorJPA().mostrarProveedorPorID((Integer) datos);
+		if(resultado.getId() > -1){ 
+			return new Context(Evento.MOSTRAR_PROVEEDORES_POR_ID_OK,resultado);
+		}else {
+			return new Context(Evento.MOSTRAR_PROVEEDORES_POR_ID_KO,resultado);
+		}
 	}
 }
