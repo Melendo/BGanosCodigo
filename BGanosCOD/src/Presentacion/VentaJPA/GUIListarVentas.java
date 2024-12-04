@@ -12,7 +12,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Set;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -28,7 +28,7 @@ public class GUIListarVentas extends JFrame implements IGUI {
 
 	private static final long serialVersionUID = 1L;
 
-	public GUIListarVentas(Set<TVenta> datos) {
+	public GUIListarVentas(List<TVenta> datos) {
 		super("Mostrar todas las ventas");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 800;
@@ -42,7 +42,7 @@ public class GUIListarVentas extends JFrame implements IGUI {
 		initGUI(datos);
 	}
 
-	public void initGUI(Set<TVenta> datos) {
+	public void initGUI(List<TVenta> datos) {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);

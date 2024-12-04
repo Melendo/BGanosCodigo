@@ -317,7 +317,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
 			vistaActual = new GUIModificarVenta();
 			return vistaActual;
 		case Evento.LISTAR_VENTAS_VISTA:
-			vistaActual = new GUIListarVentas((Set<TVenta>) contexto.getDatos());
+			vistaActual = new GUIListarVentas((List<TVenta>) contexto.getDatos());
 			return vistaActual;
 		case Evento.VENTAS_POR_EMPLEADO_DE_CAJA_VISTA:
 			vistaActual = new GUIVentasPorEmpleadoDeCaja();

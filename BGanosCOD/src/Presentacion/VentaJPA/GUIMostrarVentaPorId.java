@@ -72,11 +72,9 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 		JPanel panelID = new JPanel();
 		mainPanel.add(panelID);
 
-		JLabel labelID = ComponentsBuilder.createLabel("ID Venta: ", 10, 100, 80, 20, Color.BLACK);
-		panelID.add(labelID);
+		panelID.add(new JLabel("Id de la Venta: "));
 
-		idText = new JTextField();
-		idText.setPreferredSize(new Dimension(250, 30));
+		idText = new JTextField(20);
 
 		idText.setEditable(true);
 		panelID.add(idText);
@@ -99,9 +97,9 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 		JPanel panelBotones = new JPanel();
 		mainPanel.add(panelBotones);
 
-		JButton botonAceptar = new JButton("Aceptar");
-		botonAceptar.setBounds(75, 50, 100, 100);
-		botonAceptar.addActionListener(new ActionListener() {
+		JButton botonBuscar = new JButton("Buscar");
+		botonBuscar.setBounds(75, 50, 100, 100);
+		botonBuscar.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -117,7 +115,7 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 
 			}
 		});
-		panelBotones.add(botonAceptar);
+		panelID.add(botonBuscar);
 
 		JButton botonCancelar = new JButton("Cancelar");
 		botonCancelar.setBounds(200, 50, 100, 100);
@@ -160,7 +158,7 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 			tabla.setModel(new DefaultTableModel(tablaDatos, nombreColumnas));
 		} else if (context.getEvento() == Evento.MOSTRAR_VENTA_POR_ID_KO) {
 			if (context.getDatos() == null) {
-				JOptionPane.showMessageDialog(this, "No existe el Empleado con id: " + idText.getText(), "Error",
+				JOptionPane.showMessageDialog(this, "No existe la Venta con id: " + idText.getText(), "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else
 				JOptionPane.showMessageDialog(this, "Error al tratar de listar los Fabricantes", "Error",

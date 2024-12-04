@@ -11,10 +11,9 @@ public class CerrarVentaCommand implements Command {
 	public Context execute(Object datos) {
 		int ret = FactoriaNegocio.getInstance().getVentaSA().procesarVenta((TCarrito) datos);
 		int event = - ret / 100000000;
-		if (event > -1) {
+		if (event > -1)
 			return new Context(Evento.CERRAR_VENTA_OK, ret);
-		} else {
+		else
 			return new Context(Evento.CERRAR_VENTA_KO, ret);
-		}
 	}
 }
