@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Controller.Command.CommandProveedorJPA;
 
 import Negocio.FactoriaNegocio.FactoriaNegocio;
