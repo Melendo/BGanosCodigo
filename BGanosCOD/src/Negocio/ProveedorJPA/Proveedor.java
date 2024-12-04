@@ -1,9 +1,12 @@
 package Negocio.ProveedorJPA;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+
 import java.io.Serializable;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.Version;
 import javax.persistence.NamedQueries;
 import java.util.Set;
 import Negocio.MarcaJPA.Marca;
@@ -26,6 +29,7 @@ public class Proveedor implements Serializable {
 	}
 
 	@Id
+	@GeneratedValue
 	private Integer id;
 
 	private String CIF;
@@ -34,6 +38,7 @@ public class Proveedor implements Serializable {
 
 	private String telefono;
 
+	@Version
 	private Integer version;
 
 	private Boolean activo;
