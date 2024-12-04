@@ -1,6 +1,8 @@
 package Negocio.VentaJPA;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+
 import java.io.Serializable;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -40,17 +42,14 @@ public class Venta implements Serializable {
 		fecha = tVenta.getFecha();
 	}
 	@Id
+	@GeneratedValue
 	private Integer id;
 	
 	@Version
 	private Integer version;
-	
 	private Boolean activo;
-
 	private Double precioTotal;
-	
 	private String formaPago;
-	
 	private Date fecha;
 	
 	@OneToMany(mappedBy = "venta")
