@@ -101,6 +101,7 @@ import Negocio.Invernadero.TInvernadero;
 import Negocio.MarcaJPA.TMarca;
 import Negocio.Planta.TPlanta;
 import Negocio.ProductoJPA.TProducto;
+import Negocio.ProveedorJPA.TProveedor;
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
 import Negocio.TurnoJPA.TTurno;
 
@@ -357,7 +358,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
 					vistaActual = new GUIMostrarProveedorPorId();
 					return vistaActual;
 				case Evento.LISTAR_PROVEEDORES_VISTA:
-					vistaActual = new GUIListarProveedores();
+					vistaActual = new GUIListarProveedores((Set<TProveedor>) contexto.getDatos());
 					return vistaActual;
 				case Evento.LISTAR_PROVEEDORES_DE_MARCA_VISTA:
 					vistaActual = new GUIListarProveedoresDeMarca();
