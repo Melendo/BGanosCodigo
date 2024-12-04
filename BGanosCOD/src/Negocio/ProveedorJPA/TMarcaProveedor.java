@@ -1,15 +1,15 @@
 package Negocio.ProveedorJPA;
 
-public class TMarcaProducto {
+public class TMarcaProveedor {
 	private Integer id_proveedor;
 
 	private Integer id_marca;
 
-	public TMarcaProducto() {
+	public TMarcaProveedor() {
 
 	}
 
-	public TMarcaProducto(Integer id_proveedor, Integer id_marca) {
+	public TMarcaProveedor(Integer id_proveedor, Integer id_marca) {
 		this.id_proveedor = id_proveedor;
 		this.id_marca = id_marca;
 	}
@@ -22,7 +22,7 @@ public class TMarcaProducto {
 		this.id_proveedor = id_proveedor;
 	}
 
-	public Integer getIMarca() {
+	public Integer getIdMarca() {
 		return id_marca;
 	}
 
