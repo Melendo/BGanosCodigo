@@ -6,7 +6,6 @@ package Presentacion.ProveedorJPA;
 import javax.swing.JFrame;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.Invernadero.GUIAltaInvernadero;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 
@@ -23,7 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import Negocio.Invernadero.TInvernadero;
+import Negocio.ProveedorJPA.TProveedor;
 
 import javax.swing.JPanel;
 import javax.swing.JDialog;
@@ -106,12 +105,16 @@ public class GUIAltaProveedor extends JFrame implements IGUI {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					String nombre = textNombre.getText();
-					String sustrato = textCIF.getText();
-					String iluminacion = textTelefono.getText();
+					String cif = textCIF.getText();
+					String telefono = textTelefono.getText();
+					TProveedor proveedor = new TProveedor();
+					proveedor.setNombre(nombre != null ? nombre : "");
+					proveedor.setCIF(cif != null ? cif : "");
+					proveedor.setTelefono(telefono != null ? telefono : "");
+					proveedor.setActivo(true);
 
 					ApplicationController.getInstance().manageRequest(
-							new Context(Evento.ALTA_PROVEEDOR, new TInvernadero(nombre != null ? nombre : "",
-									sustrato != null ? sustrato : "", iluminacion != null ? iluminacion : "")));
+							new Context(Evento.ALTA_PROVEEDOR, new TProveedor()));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIAltaProveedor.this, "Error en el formato de los datos", "Error",
 							JOptionPane.ERROR_MESSAGE);
