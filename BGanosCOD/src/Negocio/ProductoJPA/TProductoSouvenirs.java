@@ -11,6 +11,10 @@ public class TProductoSouvenirs extends TProducto {
 		this.descripcion = descripcion;
 	}
 
+	public TProductoSouvenirs() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}

@@ -14,6 +14,7 @@ import javax.persistence.NamedQuery;
 import java.util.Set;
 import Negocio.VentaJPA.LineaVenta;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 import javax.persistence.NamedQueries;
 import Negocio.MarcaJPA.Marca;
 import javax.persistence.ManyToOne;
@@ -37,25 +38,26 @@ public class Producto implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
-	@Id  
-	private Integer id;
+	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected Integer id;
 
 	@OneToMany(mappedBy = "producto")
-	private Set<LineaVenta> lineaVenta;
+	protected Set<LineaVenta> lineaVenta;
 
-	private int version;
+	@Version
+	protected int version;
 
 	@Column(unique = true, nullable = false)
-	private String nombre;
+	protected String nombre;
 
-	private Integer stock;
+	protected Integer stock;
 
-	private Boolean activo;
+	protected Boolean activo;
 	
-	private double precio;
+	protected double precio;
 
 	@ManyToOne
-	private Marca marca;
+	protected Marca marca;
 
 	public Producto() {
 
@@ -133,8 +135,7 @@ public class Producto implements Serializable {
 		this.activo = producto.getActivo();
 		this.precio = producto.getPrecio();
 		this.id = producto.getId();
-		this.stock = producto.getStock();
-		
+		this.stock = producto.getStock();	
 	}
 
 
@@ -146,6 +147,7 @@ public class Producto implements Serializable {
 		ttp.setNombre(nombre);
 		ttp.setPrecio(precio);
 		ttp.setStock(stock);
+		ttp.setIdMarca(marca.getId());
 
 		return ttp;
 	}

@@ -30,4 +30,19 @@ public class ProductoSouvenirs extends Producto implements Serializable {
 	public void setDescripcion(String d) {
 		descripcion = d;
 	}
+	
+	public TProductoSouvenirs entityToTransfer() {
+		TProductoSouvenirs ttp = new TProductoSouvenirs();
+		ttp.setActivo(activo);
+		ttp.setId(id);
+		ttp.setIdMarca(marca.getId());
+		ttp.setNombre(nombre);
+		ttp.setPrecio(precio);
+		ttp.setStock(stock);
+		ttp.setIdMarca(marca.getId());
+		ttp.setDescripcion(descripcion);
+		ttp.setTipoProducto(1);
+
+		return ttp;
+	}
 }

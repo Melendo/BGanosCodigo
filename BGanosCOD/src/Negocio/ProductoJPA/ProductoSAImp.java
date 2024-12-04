@@ -12,6 +12,8 @@ import javax.persistence.TypedQuery;
 
 import Negocio.EMFSingleton.EMFSingleton;
 import Negocio.MarcaJPA.Marca;
+import Negocio.VentaJPA.LineaVenta;
+import Negocio.VentaJPA.Venta;
 
 
 public class ProductoSAImp implements ProductoSA {
@@ -49,7 +51,7 @@ public class ProductoSAImp implements ProductoSA {
 					else{
 						p = new Producto(producto);
 						p.setMarca(marca);
-						//marca.getProductos().add(p);
+						marca.getProductos().add(p);
 						em.persist(p);
 						t.commit();
 						id = p.getId();
@@ -57,6 +59,8 @@ public class ProductoSAImp implements ProductoSA {
 					}
 					
 				}
+				
+				em.close();
 				
 				
 		return id;
@@ -97,7 +101,7 @@ public class ProductoSAImp implements ProductoSA {
 					else{
 						p = new Producto(producto);
 						p.setMarca(marca);
-						//marca.getProductos().add(p);
+						marca.getProductos().add(p);
 						em.persist(p);
 						t.commit();
 						id = p.getId();
@@ -105,6 +109,8 @@ public class ProductoSAImp implements ProductoSA {
 					}
 					
 				}
+				
+				em.close();
 		
 		return id;
 	}
@@ -118,6 +124,7 @@ public class ProductoSAImp implements ProductoSA {
 		t.begin();
 		
 		Producto p = em.find(Producto.class, idProducto);
+		
 		if(p == null){
 			res = -2;
 			t.rollback();
@@ -127,7 +134,7 @@ public class ProductoSAImp implements ProductoSA {
 			t.commit();
 			res = p.getId();
 		}
-		
+		em.close();
 		
 		return res;
 		
@@ -147,6 +154,8 @@ public class ProductoSAImp implements ProductoSA {
 		
 		t.commit();
 		
+		
+		em.close();
 		return lista;
 		
 	}
@@ -168,16 +177,16 @@ public class ProductoSAImp implements ProductoSA {
 		}
 		else
 		{
-			/*
+			
 			for(Producto p: marca.getProductos()){
 				em.lock(p, LockModeType.OPTIMISTIC);
 				lista.add(p.entityToTransfer());
 			}
 			
-			*/
+		
 			t.commit();
 		}
-		
+		em.close();
 		return lista;
 	}
 
@@ -201,20 +210,42 @@ public class ProductoSAImp implements ProductoSA {
 		}
 
 		t.commit();
-		
+		em.close();
 		return listaTipos;
 	}
 
 
 	public List<TProducto> listarProductoPorVenta(Integer idVenta) {
-	
+		List<TProducto> lista= new ArrayList<TProducto>();
 		// Empieza una transacción
 				EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 				EntityTransaction t = em.getTransaction();
 				t.begin();
 				
-		
-		return null;
+				Venta venta = em.find(Venta.class, idVenta,  LockModeType.OPTIMISTIC);
+				
+				if(venta == null || !venta.getActivo()){
+					t.rollback();
+					
+					lista = null;
+				}
+				else
+				{
+					/*
+					LineaVenta v = em.find(LineaVenta,venta.getId(), LockModeType.OPTIMISTIC);
+					
+					for(Producto p: v.getProductos()){
+						em.lock(p, LockModeType.OPTIMISTIC);
+						lista.add(p.entityToTransfer());
+					}
+					*/
+					
+			
+					t.commit();
+				}
+				
+		em.close();
+		return lista;
 	
 	}
 
@@ -270,7 +301,7 @@ public class ProductoSAImp implements ProductoSA {
 			}
 		}
 		
-		
+		em.close();
 		return id;
 	}
 
@@ -294,6 +325,7 @@ public class ProductoSAImp implements ProductoSA {
 			t.commit();
 		}
 		
+		em.close();
 		return res;
 	}
 }

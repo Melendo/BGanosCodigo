@@ -56,4 +56,21 @@ public class ProductoAlimentacion extends Producto implements Serializable {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+	
+	public TProductoAlimentacion entityToTransfer() {
+		TProductoAlimentacion ttp = new TProductoAlimentacion();
+		ttp.setActivo(activo);
+		ttp.setId(id);
+		ttp.setIdMarca(marca.getId());
+		ttp.setNombre(nombre);
+		ttp.setPrecio(precio);
+		ttp.setStock(stock);
+		ttp.setIdMarca(marca.getId());
+		ttp.setPeso(peso);
+		ttp.setPrecioKilo(precioKilo);
+		ttp.setTipo(tipo);
+		ttp.setTipoProducto(0);
+
+		return ttp;
+	}
 }
