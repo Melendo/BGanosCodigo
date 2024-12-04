@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Controller.Command.CommandProveedorJPA;
 
 import Negocio.FactoriaNegocio.FactoriaNegocio;
@@ -9,22 +6,17 @@ import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
 public class vincularMarcaCommand implements Command {
-	
+
 	public Context execute(Object datos) {
 		TMarcaProveedor vinculacion = (TMarcaProveedor) datos;
-		int resultado = FactoriaNegocio.getInstance().getProveedorJPA().vincularMarca(vinculacion.getIdProveedor(), vinculacion.getIdMarca());
+		int resultado = FactoriaNegocio.getInstance().getProveedorJPA().vincularMarca(vinculacion.getIdProveedor(),
+				vinculacion.getIdMarca());
 		if (resultado > -1) {
 			return new Context(Evento.VINCULAR_MARCA_PROVEEDOR_OK, resultado);
 		} else {
 			return new Context(Evento.VINCULAR_MARCA_PROVEEDOR_KO, resultado);
 		}
 	}
-	
+
 }
