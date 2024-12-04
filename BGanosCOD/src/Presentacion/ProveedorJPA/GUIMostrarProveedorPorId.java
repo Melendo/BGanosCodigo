@@ -31,7 +31,7 @@ public class GUIMostrarProveedorPorId extends JFrame implements IGUI {
 	private JTextField textId; // Campo para introducir el ID del sistema de riego
 
 	public GUIMostrarProveedorPorId() {
-		super("Mostrar Proveedore por ID");
+		super("Mostrar Proveedor por ID");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 600;
 		int alto = 400;
