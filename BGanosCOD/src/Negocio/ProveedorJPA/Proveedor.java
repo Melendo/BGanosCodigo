@@ -1,17 +1,21 @@
 package Negocio.ProveedorJPA;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 import java.io.Serializable;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import javax.persistence.NamedQueries;
 import java.util.Set;
 import Negocio.MarcaJPA.Marca;
 import javax.persistence.ManyToMany;
-
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = "CIF") })
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Negocio.ProveedorJPA.Proveedor.findByid", query = "select obj from Proveedor obj where :id = obj.id "),
@@ -29,9 +33,11 @@ public class Proveedor implements Serializable {
 	}
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+
+	@Column(nullable = false, unique = true)
 	private String CIF;
 
 	private String nombre;
