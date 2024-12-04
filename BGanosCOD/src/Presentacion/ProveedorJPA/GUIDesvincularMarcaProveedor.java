@@ -24,7 +24,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 
+@SuppressWarnings("serial")
 public class GUIDesvincularMarcaProveedor extends JFrame implements IGUI {
+	
+	
 	private JTextField textId_Proveedor;
 	private JTextField textId_Marca;
 

@@ -6,7 +6,6 @@ package Presentacion.ProveedorJPA;
 import javax.swing.JFrame;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.Invernadero.GUIVincularSRInvernadero;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 
@@ -24,14 +23,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import Negocio.Invernadero.TTiene;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
+
+@SuppressWarnings("serial")
 public class GUIVincularMarcaProveedor extends JFrame implements IGUI {
 	private JTextField textId_Proveedor;
 	private JTextField textId_Marca;

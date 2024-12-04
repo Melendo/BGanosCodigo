@@ -27,6 +27,7 @@ import Negocio.ProveedorJPA.TProveedor;
 import javax.swing.JPanel;
 import javax.swing.JDialog;
 
+@SuppressWarnings("serial")
 public class GUIAltaProveedor extends JFrame implements IGUI {
 
 	private JTextField textNombre;

@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
+@SuppressWarnings("serial")
 public class GUIListarProveedoresDeMarca extends JFrame implements IGUI {
 	
 	private JTextField idText;

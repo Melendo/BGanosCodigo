@@ -24,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 
+@SuppressWarnings("serial")
 public class GUIBajaProveedor extends JFrame implements IGUI {
 	private JTextField textId;
 

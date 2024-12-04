@@ -6,12 +6,10 @@ package Presentacion.ProveedorJPA;
 import javax.swing.JFrame;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.Invernadero.GUIModificarInvernadero;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import javax.swing.JTextField;
 
-import Negocio.Invernadero.TInvernadero;
 import Negocio.ProveedorJPA.TProveedor;
 
 import javax.swing.JLabel;
@@ -30,6 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.JDialog;
 
 
+@SuppressWarnings("serial")
 public class GUIModificarProveedor extends JFrame implements IGUI {
 	
 	private JTextField textId;
@@ -98,19 +97,19 @@ public void initGUI() {
 		mainPanel.add(textNombre, gbc);
 
 		// CIF
-		JLabel labelSustrato = new JLabel("Sustrato:");
+		JLabel labelCIF = new JLabel("CIF:");
 		gbc.gridx = 0;
 		gbc.gridy = 4;
-		mainPanel.add(labelSustrato, gbc);
+		mainPanel.add(labelCIF, gbc);
 		textCIF = new JTextField(20);
 		gbc.gridx = 1;
 		mainPanel.add(textCIF, gbc);
 
 		// Telefono
-		JLabel labelTipoIluminacion = new JLabel("Tipo de Iluminacion:");
+		JLabel labelTelefono = new JLabel("Telefono:");
 		gbc.gridx = 0;
 		gbc.gridy = 5;
-		mainPanel.add(labelTipoIluminacion, gbc);
+		mainPanel.add(labelTelefono, gbc);
 		textTelefono = new JTextField(20);
 		gbc.gridx = 1;
 		mainPanel.add(textTelefono, gbc);

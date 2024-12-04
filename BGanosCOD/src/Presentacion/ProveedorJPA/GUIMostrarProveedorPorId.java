@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.Invernadero.GUIMostrarInvernaderoPorID;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 
@@ -27,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.JDialog;
 
 
+@SuppressWarnings("serial")
 public class GUIMostrarProveedorPorId extends JFrame implements IGUI {
 	private JTextField textId; // Campo para introducir el ID del sistema de riego
 

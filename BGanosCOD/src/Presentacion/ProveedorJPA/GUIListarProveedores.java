@@ -6,13 +6,11 @@ package Presentacion.ProveedorJPA;
 import javax.swing.JFrame;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.Invernadero.GUIListarInvernadero;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import javax.swing.JTable;
 
-import Negocio.Invernadero.TInvernadero;
 import Negocio.ProveedorJPA.TProveedor;
 
 import javax.swing.JPanel;
@@ -27,9 +25,9 @@ import java.util.Set;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 
 
+@SuppressWarnings("serial")
 public class GUIListarProveedores extends JFrame implements IGUI {
 	
 	public GUIListarProveedores(Set<TProveedor> datos) {
