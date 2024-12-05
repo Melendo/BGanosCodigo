@@ -110,7 +110,7 @@ public class GUIProveedor extends JFrame implements IGUI{
             @Override
             public void actionPerformed(ActionEvent e) {
             	GUIProveedor.this.setVisible(false);
-                ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PROVEEDORES_VISTA, proveedor));
+                ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PROVEEDORES, proveedor));
             }
         });
         buttonListarProveedor.setVisible(true);
