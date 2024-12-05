@@ -138,7 +138,8 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 			}
 
 		});
-
+		panelBotones.add(botonDevolver);
+		
 		JButton botonCancelar = new JButton("Cancelar");
 		botonCancelar.setBounds(200, 50, 100, 100);
 		botonCancelar.addActionListener(new ActionListener() {

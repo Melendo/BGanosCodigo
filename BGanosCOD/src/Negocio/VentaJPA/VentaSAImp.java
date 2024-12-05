@@ -20,7 +20,44 @@ import Negocio.ProductoJPA.TProducto;
 public class VentaSAImp implements VentaSA {
 
 	public Integer modificarVenta(TVenta tVenta) {
-		return null;
+		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+
+		Venta venta = em.find(Venta.class, tVenta.getId());
+
+		if (venta == null) { // no existe la venta
+			et.rollback();
+			em.close();
+			return -2;
+		}
+		if (!venta.getActivo()) { // venta dada de baja
+			et.rollback();
+			em.close();
+			return -3;
+		}
+
+		EmpleadoDeCaja empleado = em.find(EmpleadoDeCaja.class, tVenta.getIdEmplado());
+
+		if (empleado == null) { // empleado no existe
+			et.rollback();
+			em.close();
+			return -4;
+		}
+
+		venta.setFormaPago(tVenta.getFormaPago());
+		venta.setEmpleado(empleado);
+
+		try {
+			et.commit();
+			em.close();
+			return venta.getId();
+		} catch (Exception e) {
+			e.printStackTrace();
+			et.rollback();
+			em.close();
+			return -1;
+		}
 	}
 
 	public List<TVenta> listarVentas() {
@@ -86,9 +123,9 @@ public class VentaSAImp implements VentaSA {
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 		EmpleadoDeCaja emCaja = em.find(EmpleadoDeCaja.class, id);
 
-		if(emCaja == null)
+		if (emCaja == null)
 			return null;
-		
+
 		TypedQuery<Venta> query = em.createNamedQuery("Negocio.VentaJPA.Venta.findByempleadoDeCaja", Venta.class);
 		query.setParameter("empleadoDeCaja", emCaja);
 

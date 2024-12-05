@@ -2,6 +2,7 @@ package Negocio.VentaJPA;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 import java.io.Serializable;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ public class Venta implements Serializable {
 		fecha = tVenta.getFecha();
 	}
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Version
@@ -103,6 +104,10 @@ public class Venta implements Serializable {
 
 	public void setId(Integer Id) {
 		this.id = Id;
+	}
+	
+	public void setEmpleado(EmpleadoDeCaja empleado) {
+		this.empleadoDeCaja = empleado;
 	}
 
 	public Double getPrecioTotal() {

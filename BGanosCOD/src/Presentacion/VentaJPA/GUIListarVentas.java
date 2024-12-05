@@ -31,7 +31,7 @@ public class GUIListarVentas extends JFrame implements IGUI {
 	public GUIListarVentas(List<TVenta> datos) {
 		super("Mostrar todas las ventas");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-		int ancho = 800;
+		int ancho = 600;
 		int alto = 400;
 		int x = (pantalla.width - ancho) / 2;
 		int y = (pantalla.height - alto) / 2;
