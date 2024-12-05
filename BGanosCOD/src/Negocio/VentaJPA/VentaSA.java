@@ -2,8 +2,6 @@ package Negocio.VentaJPA;
 
 import java.util.List;
 
-import Negocio.ProductoJPA.TProducto;
-
 public interface VentaSA {
 
 	public Integer modificarVenta(TVenta tVenta);
@@ -13,10 +11,6 @@ public interface VentaSA {
 	public TVentaConProductos mostrarPorId(Integer id);
 
 	public List<TVenta> ventasPorEmpleadoDeCaja(Integer id);
-
-	public TProducto aniadirProducto(Integer idProducto);
-
-	public Integer quitarProducto(Integer id);
 
 	public Integer devolverVenta(TLineaVenta venta);
 

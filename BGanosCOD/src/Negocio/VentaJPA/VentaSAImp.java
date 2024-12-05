@@ -2,8 +2,10 @@ package Negocio.VentaJPA;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -19,14 +21,11 @@ public class VentaSAImp implements VentaSA {
 
 	public Integer modificarVenta(TVenta tVenta) {
 		return null;
-
 	}
 
 	public List<TVenta> listarVentas() {
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
-
 		TypedQuery<Venta> query = em.createNamedQuery("Negocio.VentaJPA.Venta.findAll", Venta.class);
-		query.setLockMode(LockModeType.OPTIMISTIC);
 
 		List<Venta> lQuery = query.getResultList();
 		List<TVenta> lVenta = new LinkedList<TVenta>();
@@ -39,8 +38,47 @@ public class VentaSAImp implements VentaSA {
 	}
 
 	public TVentaConProductos mostrarPorId(Integer id) {
+		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		et.begin();
 
-		return null;
+		TVentaConProductos vCProd = new TVentaConProductos();
+		TVenta tVenta = new TVenta();
+
+		Venta venta = em.find(Venta.class, id);
+
+		if (venta == null) { // no existe la venta
+			tVenta.setId(-2);
+			et.rollback();
+			em.close();
+			vCProd.setVenta(tVenta);
+			return vCProd;
+		}
+
+		Set<TProducto> productos = new HashSet<TProducto>();
+		Set<TLineaVenta> lVentas = new HashSet<TLineaVenta>();
+
+		vCProd.setVenta(venta.toTransfer());
+		for (LineaVenta lv : venta.getLineaVenta()) {
+			productos.add(lv.getProducto().entityToTransfer());
+			lVentas.add(lv.ToTransfer());
+		}
+
+		vCProd.setProductos(productos);
+		vCProd.setLineasVenta(lVentas);
+
+		try {
+			et.commit();
+			em.close();
+			return vCProd;
+		} catch (Exception e) {
+			e.printStackTrace();
+			et.rollback();
+			em.close();
+			tVenta.setId(-2);
+			vCProd.setVenta(tVenta);
+			return vCProd;
+		}
 
 	}
 
@@ -48,8 +86,10 @@ public class VentaSAImp implements VentaSA {
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 		EmpleadoDeCaja emCaja = em.find(EmpleadoDeCaja.class, id);
 
+		if(emCaja == null)
+			return null;
+		
 		TypedQuery<Venta> query = em.createNamedQuery("Negocio.VentaJPA.Venta.findByempleadoDeCaja", Venta.class);
-		query.setLockMode(LockModeType.OPTIMISTIC);
 		query.setParameter("empleadoDeCaja", emCaja);
 
 		List<Venta> lQuery = query.getResultList();
@@ -60,16 +100,6 @@ public class VentaSAImp implements VentaSA {
 
 		em.close();
 		return lVenta;
-	}
-
-	public TProducto aniadirProducto(Integer idProducto) {
-		return null;
-
-	}
-
-	public Integer quitarProducto(Integer id) {
-		return null;
-
 	}
 
 	public Integer devolverVenta(TLineaVenta tLinea) {
@@ -143,19 +173,19 @@ public class VentaSAImp implements VentaSA {
 		if (emCaja == null) {// Empleado no existe
 			et.rollback();
 			em.close();
-			return -2;
+			return 200000000 + carrito.getVenta().getIdEmplado();
 		}
 
 		if (!emCaja.getActivo()) {// Empledo dado de baja
 			et.rollback();
 			em.close();
-			return -3;
+			return 300000000 + carrito.getVenta().getIdEmplado();
 		}
 
 		if (carrito.getLineaVenta().isEmpty()) {// Carrito vacio
 			et.rollback();
 			em.close();
-			return -4;
+			return 400000000;
 		}
 
 		double total = 0; // Creamos la venta
@@ -169,17 +199,17 @@ public class VentaSAImp implements VentaSA {
 			if (prod == null) { // Producto no existe
 				et.rollback();
 				em.close();
-				return -5;
+				return 50000000 + linV.getIdProducto();
 			}
 			if (!prod.getActivo()) { // Producto dado de baja
 				et.rollback();
 				em.close();
-				return -6;
+				return 60000000 + linV.getIdProducto();
 			}
 			if (linV.getCantidad() > prod.getStock()) { // No hay stock suficiente
 				et.rollback();
 				em.close();
-				return -7;
+				return 70000000 + linV.getIdProducto();
 			}
 
 			prod.setStock(linV.getCantidad());
@@ -203,6 +233,6 @@ public class VentaSAImp implements VentaSA {
 			em.close();
 		}
 
-		return -1; // Error desconocido
+		return 100000000; // Error desconocido
 	}
 }

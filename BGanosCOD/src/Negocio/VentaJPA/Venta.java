@@ -1,6 +1,8 @@
 package Negocio.VentaJPA;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+
 import java.io.Serializable;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -22,7 +24,9 @@ import Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja;
 		@NamedQuery(name = "Negocio.VentaJPA.Venta.findByformaPago", query = "select obj from Venta obj where :formaPago = obj.formaPago "),
 		@NamedQuery(name = "Negocio.VentaJPA.Venta.findByfecha", query = "select obj from Venta obj where :fecha = obj.fecha "),
 		@NamedQuery(name = "Negocio.VentaJPA.Venta.findBylieanVenta", query = "select obj from Venta obj where :lieanVenta MEMBER OF obj.lieanVenta "),
-		@NamedQuery(name = "Negocio.VentaJPA.Venta.findByempleadoDeCaja", query = "select obj from Venta obj where :empleadoDeCaja = obj.empleadoDeCaja ") })
+		@NamedQuery(name = "Negocio.VentaJPA.Venta.findByempleadoDeCaja", query = "select obj from Venta obj where :empleadoDeCaja = obj.empleadoDeCaja "),
+		@NamedQuery(name = "Negocio.VentaJPA.Venta.findAll", query = "select obj from Venta obj") })
+
 public class Venta implements Serializable {
 
 	private static final long serialVersionUID = 0;
@@ -38,17 +42,14 @@ public class Venta implements Serializable {
 		fecha = tVenta.getFecha();
 	}
 	@Id
+	@GeneratedValue
 	private Integer id;
 	
 	@Version
 	private Integer version;
-	
 	private Boolean activo;
-
 	private Double precioTotal;
-	
 	private String formaPago;
-	
 	private Date fecha;
 	
 	@OneToMany(mappedBy = "venta")
