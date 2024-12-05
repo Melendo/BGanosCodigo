@@ -66,10 +66,44 @@ public class ProveedorSAImp implements ProveedorSA {
 	}
 
 	public Integer bajaProveedor(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		int exito = -1; // Error general
+		Proveedor provExiste;
+		EntityManager em = null;
+
+		if (id < 1) {
+			exito = -2;// Id debe ser mayor que 0
+
+		} else {
+			try {
+				em = EMFSingleton.getInstance().getEMF().createEntityManager();
+
+				EntityTransaction transaction = em.getTransaction();
+				transaction.begin();
+
+				provExiste = em.find(Proveedor.class, id);
+				if (provExiste != null) {
+					if (provExiste.getActivo()) {
+						provExiste.setActivo(false);
+						transaction.commit();
+						exito = provExiste.getId();
+					} else {
+						transaction.rollback();
+						exito = -3; // El proveedor ya esta dado de baja
+					}
+				} else {
+					transaction.rollback();
+					exito = -4; // El proveedor no existe
+				}
+			} catch (Exception e) {
+				exito = -1;
+			} finally {
+				if (em != null) {
+					em.close();
+				}
+			}
+		}
+
+		return exito;
 	}
 
 	public Integer modificarProveedor(TProveedor tProv) {
