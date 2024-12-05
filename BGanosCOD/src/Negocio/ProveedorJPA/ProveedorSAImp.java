@@ -164,7 +164,7 @@ public class ProveedorSAImp implements ProveedorSA {
 
 	public Set<TProveedor> listarProveedor() {
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
-		
+
 		TypedQuery<Proveedor> query = em.createNamedQuery("Negocio.ProveedorJPA.Proveedor.findAll", Proveedor.class);
 		List<Proveedor> l = query.getResultList();
 		Set<TProveedor> proveedores = new LinkedHashSet<TProveedor>();
@@ -179,10 +179,34 @@ public class ProveedorSAImp implements ProveedorSA {
 	}
 
 	public TProveedor mostrarProveedorPorID(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		TProveedor prov = new TProveedor();
+		prov.setId(-1); // Error general
+		EntityManager em = null;
+
+		if (id < 1) {
+			prov.setId(-2); // Id debe ser mayor que 0
+
+		} else {
+			try {
+				em = EMFSingleton.getInstance().getEMF().createEntityManager();
+
+				Proveedor provExiste = em.find(Proveedor.class, id);
+
+				if (provExiste != null) {
+					prov = provExiste.entityToTransfer();
+
+				} else {
+					prov.setId(-3); // El proveedor no existe
+				}
+			} catch (Exception e) {
+				prov.setId(-1); // Error general
+			} finally {
+				if (em != null) {
+					em.close();
+				}
+			}
+		}
+		return prov;
 	}
 
 	public TProveedor mostrarProveedorPorCIF(String CIF) {
