@@ -49,7 +49,7 @@ public class Proveedor implements Serializable {
 
 	private Boolean activo;
 
-	@ManyToMany
+	@ManyToMany(mappedBy = "proveedor")
 	private Set<Marca> marca;
 
 	

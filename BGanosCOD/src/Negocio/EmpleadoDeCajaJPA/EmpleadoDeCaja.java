@@ -23,7 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.InheritanceType;
 import javax.persistence.Inheritance;
 
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED )
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "DNI") })
 @Entity
 @NamedQueries({
