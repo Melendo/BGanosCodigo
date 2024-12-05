@@ -5,8 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 import java.io.Serializable;
+import java.util.Set;
+
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
@@ -41,8 +44,8 @@ public class Turno implements Serializable {
 	
 	private String horario;
 	
-	@ManyToOne
-	private EmpleadoDeCaja empleadoDeCaja;
+	@OneToMany(mappedBy = "Turno")
+	private Set<EmpleadoDeCaja> empleadoDeCaja;
 
 	public Integer getId() {
 		return id;

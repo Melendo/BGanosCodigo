@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.Version;
 import javax.persistence.NamedQueries;
 import java.util.Set;
 import Negocio.MarcaJPA.Marca;
@@ -34,6 +35,7 @@ public class Proveedor implements Serializable {
 
 	private String telefono;
 
+	@Version
 	private Integer version;
 
 	private Boolean activo;

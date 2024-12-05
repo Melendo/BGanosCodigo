@@ -4,6 +4,9 @@
 package Negocio.EmpleadoDeCajaJPA;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 import java.io.Serializable;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -40,6 +43,7 @@ public abstract class EmpleadoDeCaja implements Serializable {
 	public EmpleadoDeCaja() {
 	}
 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Integer id;
 
@@ -53,6 +57,7 @@ public abstract class EmpleadoDeCaja implements Serializable {
 	private String DNI;
 	private Double Sueldo;
 	private Integer telefono;
+	@Version
 	private Integer version;
 	private Boolean activo;
 	private Integer tipo;

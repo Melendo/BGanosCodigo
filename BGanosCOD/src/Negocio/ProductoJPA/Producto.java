@@ -14,6 +14,7 @@ import javax.persistence.NamedQuery;
 import java.util.Set;
 import Negocio.VentaJPA.LineaVenta;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 import javax.persistence.NamedQueries;
 import Negocio.MarcaJPA.Marca;
 import javax.persistence.ManyToOne;
@@ -43,6 +44,7 @@ public class Producto implements Serializable {
 	@OneToMany(mappedBy = "producto")
 	private Set<LineaVenta> lineaVenta;
 
+	@Version
 	private int version;
 
 	@Column(unique = true, nullable = false)
