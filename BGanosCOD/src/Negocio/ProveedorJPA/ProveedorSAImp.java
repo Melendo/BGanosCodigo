@@ -1,6 +1,8 @@
 package Negocio.ProveedorJPA;
 
+import java.util.List;
 import java.util.Set;
+import java.util.LinkedHashSet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -161,10 +163,19 @@ public class ProveedorSAImp implements ProveedorSA {
 	}
 
 	public Set<TProveedor> listarProveedor() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+		
+		TypedQuery<Proveedor> query = em.createNamedQuery("Negocio.ProveedorJPA.Proveedor.findAll", Proveedor.class);
+		List<Proveedor> l = query.getResultList();
+		Set<TProveedor> proveedores = new LinkedHashSet<TProveedor>();
+
+		for (Proveedor p : l) {
+			proveedores.add(p.entityToTransfer());
+		}
+
+		em.close();
+
+		return proveedores;
 	}
 
 	public TProveedor mostrarProveedorPorID(Integer id) {
