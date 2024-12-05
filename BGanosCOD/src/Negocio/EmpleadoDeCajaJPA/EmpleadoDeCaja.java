@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import Negocio.VentaJPA.Venta;

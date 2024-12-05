@@ -55,7 +55,7 @@ public class LineaVenta implements Serializable {
 
 	}
 
-	public TLineaVenta entityToTransfer() {
+	public TLineaVenta ToTransfer() {
 		TLineaVenta lineaVenta = new TLineaVenta();
 		lineaVenta.setCantidad(cantidad);
 		lineaVenta.setIdPoducto(id.getIdProducto());

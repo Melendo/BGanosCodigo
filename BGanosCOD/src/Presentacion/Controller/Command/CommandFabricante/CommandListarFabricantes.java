@@ -9,6 +9,7 @@ import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
 public class CommandListarFabricantes implements Command {
+	
 	public Context execute(Object datos) {
 		Set<TFabricante> res = FactoriaNegocio.getInstance().getFabricanteSA().listarFabricantes();
 		return new Context(Evento.LISTAR_FABRICANTES_VISTA, res);
