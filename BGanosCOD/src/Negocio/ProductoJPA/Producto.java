@@ -45,7 +45,7 @@ public class Producto implements Serializable {
 	protected Set<LineaVenta> lineaVenta;
 
 	@Version
-	protected int version;
+	private int version;
 
 	@Column(unique = true, nullable = false)
 	protected String nombre;

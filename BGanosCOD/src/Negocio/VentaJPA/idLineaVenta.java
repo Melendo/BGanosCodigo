@@ -49,23 +49,13 @@ public class idLineaVenta implements Serializable {
 		return true;
 	}
 
-	private UUID uuid;
-
 	public int hashCode() {
-		final int prime = 31;
-		int hash = 17;
-		if (idProducto != null) {
-			hash = hash * prime + idProducto.hashCode();
-		}
-		if (idVenta != null) {
-			hash = hash * prime + idVenta.hashCode();
-		}
-		if (hash == 17) {
-			if (uuid == null) {
-				uuid = UUID.randomUUID();
-			}
-			hash = uuid.hashCode();
-		}
-		return hash;
+	    final int prime = 31;
+	    int hash = 17;
+
+	    hash = hash * prime + ((idVenta == null) ? 0 : idVenta.hashCode());
+	    hash = hash * prime + ((idProducto == null) ? 0 : idProducto.hashCode());
+
+	    return hash;
 	}
 }

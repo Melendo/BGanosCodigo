@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.VentaJPA;
 
 import javax.swing.Box;
@@ -29,14 +26,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-
-
-
 public class GUIModificarVenta extends JFrame implements IGUI {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	public GUIModificarVenta(){
