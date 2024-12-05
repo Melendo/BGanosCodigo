@@ -25,7 +25,9 @@ import javax.persistence.ManyToMany;
 		@NamedQuery(name = "Negocio.ProveedorJPA.Proveedor.findBytelefono", query = "select obj from Proveedor obj where :telefono = obj.telefono "),
 		@NamedQuery(name = "Negocio.ProveedorJPA.Proveedor.findByversion", query = "select obj from Proveedor obj where :version = obj.version "),
 		@NamedQuery(name = "Negocio.ProveedorJPA.Proveedor.findByactivo", query = "select obj from Proveedor obj where :activo = obj.activo "),
-		@NamedQuery(name = "Negocio.ProveedorJPA.Proveedor.findBymarca", query = "select obj from Proveedor obj where :marca MEMBER OF obj.marca ") })
+		@NamedQuery(name = "Negocio.ProveedorJPA.Proveedor.findBymarca", query = "select obj from Proveedor obj where :marca MEMBER OF obj.marca "),
+		@NamedQuery(name = "Negocio.ProveedorJPA.Proveedor.findAll", query = "select obj from Proveedor obj order by obj.id") })
+
 public class Proveedor implements Serializable {
 
 	private static final long serialVersionUID = 0;
@@ -107,7 +109,6 @@ public class Proveedor implements Serializable {
 	public void setMarca(Set<Marca> marca) {
 		this.marca = marca;
 	}
-
 
 	public void transferToEntity(TProveedor proveedor) {
 		id = proveedor.getId();
