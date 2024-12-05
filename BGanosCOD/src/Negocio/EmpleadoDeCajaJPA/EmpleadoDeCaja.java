@@ -3,6 +3,7 @@
  */
 package Negocio.EmpleadoDeCajaJPA;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.InheritanceType;
 import javax.persistence.Inheritance;
 
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "DNI") })
 @Entity
 @NamedQueries({
@@ -43,8 +44,8 @@ public abstract class EmpleadoDeCaja implements Serializable {
 	public EmpleadoDeCaja() {
 	}
 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@OneToMany(mappedBy = "empleadoDeCaja")
@@ -54,6 +55,8 @@ public abstract class EmpleadoDeCaja implements Serializable {
 	
 	private String nombre;
 	private String Apellido;
+	
+	@Column(nullable = false, unique = true)
 	private String DNI;
 	private Double Sueldo;
 	private Integer telefono;
