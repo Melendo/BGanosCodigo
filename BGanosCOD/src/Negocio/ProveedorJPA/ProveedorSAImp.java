@@ -107,10 +107,57 @@ public class ProveedorSAImp implements ProveedorSA {
 	}
 
 	public Integer modificarProveedor(TProveedor tProv) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		int exito = -1; // Error general
+		Proveedor provExiste;
+		EntityManager em = null;
+
+		if (!this.validarCamposRellanados(tProv)) {
+			exito = -2;// Campos vacios
+		} else if (!this.comprobarTelefono(tProv.getTelefono())) {
+			exito = -3; // Telefono mal definido
+		} else {
+			try {
+				em = EMFSingleton.getInstance().getEMF().createEntityManager();
+
+				provExiste = em.find(Proveedor.class, tProv.getId());
+
+				EntityTransaction transaction = em.getTransaction();
+				transaction.begin();
+
+				if (provExiste == null) {
+					exito = -4; // NO HAY UN PROVEEDOR ACTIVO CON ESE ID
+					transaction.rollback();
+				} else {
+					TypedQuery<Proveedor> query = em.createNamedQuery("Negocio.ProveedorJPA.Proveedor.findByCIF",
+							Proveedor.class);
+					query.setParameter("CIF", tProv.getCIF());
+					Proveedor proveedorCIF;
+					try {
+						proveedorCIF = query.getSingleResult();
+					} catch (NoResultException e) {
+						proveedorCIF = null;
+					}
+
+					if (proveedorCIF == null || (proveedorCIF != null && proveedorCIF.getId() == tProv.getId())) {
+						tProv.setActivo(provExiste.getActivo());
+						provExiste.transferToEntity(tProv);
+						transaction.commit();
+						exito = provExiste.getId();
+					} else {
+						exito = -5; // YA HAY UN PROVEEDOR CON ESE CIF
+						transaction.rollback();
+					}
+				}
+			} catch (Exception e) {
+				exito = -1;
+			} finally {
+				if (em != null) {
+					em.close();
+				}
+			}
+		}
+
+		return exito;
 	}
 
 	public Set<TProveedor> listarProveedor() {
