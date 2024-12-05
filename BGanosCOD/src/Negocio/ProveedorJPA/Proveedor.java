@@ -49,7 +49,7 @@ public class Proveedor implements Serializable {
 
 	private Boolean activo;
 
-	@ManyToMany(mappedBy = "proveedor")
+	@ManyToMany
 	private Set<Marca> marca;
 
 	public Integer getId() {
