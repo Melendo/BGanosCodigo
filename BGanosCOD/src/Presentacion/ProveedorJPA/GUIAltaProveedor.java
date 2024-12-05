@@ -6,6 +6,7 @@ package Presentacion.ProveedorJPA;
 import javax.swing.JFrame;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
+import Presentacion.Invernadero.GUIAltaInvernadero;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 
@@ -114,8 +115,8 @@ public class GUIAltaProveedor extends JFrame implements IGUI {
 					proveedor.setTelefono(telefono != null ? telefono : "");
 					proveedor.setActivo(true);
 
-					ApplicationController.getInstance().manageRequest(
-							new Context(Evento.ALTA_PROVEEDOR, new TProveedor()));
+					ApplicationController.getInstance()
+							.manageRequest(new Context(Evento.ALTA_PROVEEDOR, proveedor));
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIAltaProveedor.this, "Error en el formato de los datos", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -141,9 +142,37 @@ public class GUIAltaProveedor extends JFrame implements IGUI {
 	}
 
 	public void actualizar(Context context) {
-		// begin-user-code
-		// TODO Auto-generated method stub
+		int resultado = (int) context.getDatos();
+		if (context.getEvento() == Evento.ALTA_PROVEEDOR_OK) {
 
-		// end-user-code
+			JOptionPane.showMessageDialog(this, "Proveedor dado de alta correctamente con id: " + resultado, "Exito",
+					JOptionPane.INFORMATION_MESSAGE);
+			GUIAltaProveedor.this.setVisible(false);
+			ApplicationController.getInstance().manageRequest(new Context(Evento.PROVEEDOR_VISTA, null));
+		} else if (context.getEvento() == Evento.ALTA_PROVEEDOR_KO) {
+
+			switch (resultado) {
+			case -1:
+				JOptionPane.showMessageDialog(this, "Error al dar de alta el Proveedor.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -2:
+				JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -3:
+				JOptionPane.showMessageDialog(this, "Error: El formato del Telefono es incorrecto.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -4:
+				JOptionPane.showMessageDialog(this, "Error: Ya existe un Proveedor con el mismo CIF.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			default:
+				JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta el Proveedor.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			}
+		}
 	}
 }
