@@ -23,8 +23,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JDialog;
 
+import Negocio.ProveedorJPA.TProveedor;
+
+import javax.swing.JDialog;
 
 @SuppressWarnings("serial")
 public class GUIMostrarProveedorPorId extends JFrame implements IGUI {
@@ -89,8 +91,8 @@ public class GUIMostrarProveedorPorId extends JFrame implements IGUI {
 					ApplicationController.getInstance()
 							.manageRequest(new Context(Evento.MOSTRAR_PROVEEDORES_POR_ID, idTexto));
 				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(GUIMostrarProveedorPorId.this, "Error en el formato del ID",
-							"Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(GUIMostrarProveedorPorId.this, "Error en el formato del ID", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -109,10 +111,36 @@ public class GUIMostrarProveedorPorId extends JFrame implements IGUI {
 
 		this.setVisible(true);
 	}
-	public void actualizar(Context context) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 
-		// end-user-code
+	public void actualizar(Context context) {
+		TProveedor proveedor = (TProveedor) context.getDatos();
+
+		if (context.getEvento() == Evento.MOSTRAR_PROVEEDORES_POR_ID_OK) {
+			proveedor = (TProveedor) context.getDatos();
+			String texto = "ID: " + proveedor.getId() + "\nNombre: " + proveedor.getNombre() + "\nCIF: "
+					+ proveedor.getCIF() + "\nTelefono: " + proveedor.getTelefono() + "\nActivo: "
+					+ proveedor.getActivo();
+
+			JOptionPane.showMessageDialog(this, texto, "Proveedor", JOptionPane.INFORMATION_MESSAGE);
+			this.setVisible(false);
+			ApplicationController.getInstance().manageRequest(new Context(Evento.PROVEEDOR_VISTA, null));
+		} else if (context.getEvento() == Evento.MOSTRAR_PROVEEDORES_POR_ID_KO) {
+			switch (proveedor.getId()) {
+			case -1:
+				JOptionPane.showMessageDialog(this, "Error al mostrar el Proveedor.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -2:
+				JOptionPane.showMessageDialog(this, "Error: El id debe ser mayor que 0.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -3:
+				JOptionPane.showMessageDialog(this, "Error: El Proveedor no existe.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			default:
+				break;
+			}
+		}
 	}
 }
