@@ -168,9 +168,41 @@ public void initGUI() {
 
 	
 	public void actualizar(Context context) {
-		// begin-user-code
-		// TODO Auto-generated method stub
+		int resultado = (int) context.getDatos();
+		if (context.getEvento() == Evento.MODIFICAR_PROVEEDORES_OK) {
 
-		// end-user-code
+			JOptionPane.showMessageDialog(this, "Proveedor con id: "+ resultado + " modificado correctamente " , "Exito",
+					JOptionPane.INFORMATION_MESSAGE);
+			GUIModificarProveedor.this.setVisible(false);
+			ApplicationController.getInstance().manageRequest(new Context(Evento.PROVEEDOR_VISTA, null));
+		} else if (context.getEvento() == Evento.MODIFICAR_PROVEEDORES_KO) {
+
+			switch (resultado) {
+			case -1:
+				JOptionPane.showMessageDialog(this, "Error al modificar el Proveedor.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -2:
+				JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -3:
+				JOptionPane.showMessageDialog(this, "Error: El formato del Telefono es incorrecto.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -4:
+				JOptionPane.showMessageDialog(this, "Error: El Proveedor no existe.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -5:
+				JOptionPane.showMessageDialog(this, "Error: Ya existe un proveedor con el CIF proporcionado.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			default:
+				JOptionPane.showMessageDialog(this, "Error desconocido al modificar el Proveedor.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			}
+		}
 	}
 }
