@@ -108,9 +108,37 @@ public class GUIBajaProveedor extends JFrame implements IGUI {
 	}
 	
 	public void actualizar(Context context) {
-		// begin-user-code
-		// TODO Auto-generated method stub
+		int resultado = (int) context.getDatos();
+		if (context.getEvento() == Evento.BAJA_PROVEEDOR_OK) {
 
-		// end-user-code
+			JOptionPane.showMessageDialog(this, "Proveedor con id: " + resultado + " dado de baja correctamente", "Exito",
+					JOptionPane.INFORMATION_MESSAGE);
+			GUIBajaProveedor.this.setVisible(false);
+			ApplicationController.getInstance().manageRequest(new Context(Evento.PROVEEDOR_VISTA, null));
+		} else if (context.getEvento() == Evento.BAJA_PROVEEDOR_KO) {
+
+			switch (resultado) {
+			case -1:
+				JOptionPane.showMessageDialog(this, "Error al dar de baja el Proveedor.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -2:
+				JOptionPane.showMessageDialog(this, "Error: El id debe ser mayor que 0.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -3:
+				JOptionPane.showMessageDialog(this, "Error: Proveedor ya está dado de Baja.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -4:
+				JOptionPane.showMessageDialog(this, "Error: El Proveedor no existe.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			default:
+				JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta el Proveedor.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			}
+		}
 	}
 }
