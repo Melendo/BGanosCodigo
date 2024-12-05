@@ -23,14 +23,14 @@ import javax.persistence.Inheritance;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByid", query = "select obj from EmpleadoDeCaja obj where :id = obj.id "),
-		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByventa", query = "select obj from EmpleadoDeCaja obj where :venta MEMBER OF obj.venta "),
-		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByturno", query = "select obj from EmpleadoDeCaja obj where :turno MEMBER OF obj.turno "),
+		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByventa", query = "select obj from EmpleadoDeCaja obj where :venta = obj.venta "),
+		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByturno", query = "select obj from EmpleadoDeCaja obj where :turno = obj.turno "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findBynombre", query = "select obj from EmpleadoDeCaja obj where :nombre = obj.nombre "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByApellido", query = "select obj from EmpleadoDeCaja obj where :Apellido = obj.Apellido "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByDNI", query = "select obj from EmpleadoDeCaja obj where :DNI = obj.DNI "),
-		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByTelefono", query = "select obj from EmpleadoDeCaja obj where :Telefono = obj.Telefono "),
+		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByTelefono", query = "select obj from EmpleadoDeCaja obj where :telefono = obj.telefono "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findBySueldo", query = "select obj from EmpleadoDeCaja obj where :Sueldo = obj.Sueldo "),
-		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByid_turno", query = "select obj from EmpleadoDeCaja obj where :id_turno = obj.id_turno "),
+		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByid_turno", query = "select obj from EmpleadoDeCaja obj where :id_turno = obj.turno.id "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByversion", query = "select obj from EmpleadoDeCaja obj where :version = obj.version ") })
 public abstract class EmpleadoDeCaja implements Serializable {
 	
