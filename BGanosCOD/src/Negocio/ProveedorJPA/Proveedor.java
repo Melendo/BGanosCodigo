@@ -15,6 +15,7 @@ import javax.persistence.NamedQueries;
 import java.util.Set;
 import Negocio.MarcaJPA.Marca;
 import javax.persistence.ManyToMany;
+
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "CIF") })
 @Entity
 @NamedQueries({
@@ -36,7 +37,6 @@ public class Proveedor implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-
 	@Column(nullable = false, unique = true)
 	private String CIF;
 
@@ -51,8 +51,6 @@ public class Proveedor implements Serializable {
 
 	@ManyToMany
 	private Set<Marca> marca;
-
-	
 
 	public Integer getId() {
 		return id;
@@ -110,9 +108,6 @@ public class Proveedor implements Serializable {
 		this.marca = marca;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	public void transferToEntity(TProveedor proveedor) {
 		id = proveedor.getId();
@@ -132,11 +127,11 @@ public class Proveedor implements Serializable {
 
 		return proveedor;
 	}
-	
-	public Set<Marca> getMarcas(){
+
+	public Set<Marca> getMarcas() {
 		return this.marca;
 	}
-	
+
 	public void SetMarcas(Set<Marca> marcas) {
 		this.marca = marcas;
 	}
