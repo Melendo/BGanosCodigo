@@ -42,7 +42,7 @@ public class Marca implements Serializable {
 
 	private Boolean activo;
 
-	@ManyToMany(mappedBy = "marca")
+	@ManyToMany
 	private List<Proveedor> proveedor;
 
 	@OneToMany(mappedBy = "marca")
