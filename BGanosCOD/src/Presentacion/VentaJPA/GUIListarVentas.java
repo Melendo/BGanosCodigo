@@ -49,6 +49,7 @@ public class GUIListarVentas extends JFrame implements IGUI {
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
+		// tabla
 		String[] nombreColumnas = { "ID", "Precio Total", "Forma de Pago", "Fecha" };
 		String[][] tablaDatos = new String[datos.size()][nombreColumnas.length];
 
@@ -68,6 +69,7 @@ public class GUIListarVentas extends JFrame implements IGUI {
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
+		// botones
 		JPanel panelBotones = new JPanel();
 		mainPanel.add(panelBotones);
 

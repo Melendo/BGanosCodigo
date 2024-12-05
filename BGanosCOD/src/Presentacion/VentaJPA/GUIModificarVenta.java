@@ -52,7 +52,7 @@ public class GUIModificarVenta extends JFrame implements IGUI {
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-		// ID
+		// cabecera
 		JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("Introduzca el ID de la Venta que quiere modificar ",
 				1, 10, 80, 20, Color.BLACK);
 		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
@@ -60,9 +60,9 @@ public class GUIModificarVenta extends JFrame implements IGUI {
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
+		// id venta
 		JPanel panelID = new JPanel();
 		mainPanel.add(panelID);
-
 		panelID.add(new JLabel("ID Venta: "));
 
 		textID = new JTextField(20);
@@ -70,22 +70,25 @@ public class GUIModificarVenta extends JFrame implements IGUI {
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
+		// id empleado
 		JPanel panelEmpleado = new JPanel();
-
 		mainPanel.add(panelEmpleado);
 		panelEmpleado.add(new JLabel("ID Empleado: "));
+		
 		textEmp = new JTextField(20);
 		panelEmpleado.add(textEmp);
 
+		// forma pago
 		JPanel panelFormaPago = new JPanel();
 		mainPanel.add(panelFormaPago);
-		pagoBox = new JComboBox<String>(pago);
-
 		panelFormaPago.add(new JLabel("Forma de Pago: "));
+
+		pagoBox = new JComboBox<String>(pago);
 		panelFormaPago.add(pagoBox);
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
+		// botones
 		JPanel panelBotones = new JPanel();
 		mainPanel.add(panelBotones);
 
