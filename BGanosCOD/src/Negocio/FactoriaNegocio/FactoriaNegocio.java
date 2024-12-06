@@ -1,12 +1,18 @@
 
 package Negocio.FactoriaNegocio;
 
+import Negocio.EmpleadoDeCajaJPA.EmpleadoDeCajaSA;
 import Negocio.Entrada.EntradaSA;
 import Negocio.Fabricante.FabricanteSA;
 import Negocio.Factura.FacturaSA;
 import Negocio.Invernadero.InvernaderoSA;
+import Negocio.MarcaJPA.MarcaSA;
 import Negocio.Planta.PlantaSA;
+import Negocio.ProductoJPA.ProductoSA;
+import Negocio.ProveedorJPA.ProveedorSA;
 import Negocio.SistemaDeRiego.SistemaDeRiegoSA;
+import Negocio.TurnoJPA.TurnoSA;
+import Negocio.VentaJPA.VentaSA;
 
 public abstract class FactoriaNegocio {
 
@@ -29,5 +35,17 @@ public abstract class FactoriaNegocio {
 	public abstract PlantaSA getPlantaSA();
 
 	public abstract SistemaDeRiegoSA getSistemaDeRiegoSA();
+	
+	public abstract EmpleadoDeCajaSA getEmpleadoDeCajaJPA();
+	
+	public abstract MarcaSA getMarcaJPA();
+		
+	public abstract ProveedorSA getProveedorJPA();
+	
+	public abstract TurnoSA getTurnoJPA();
+	
+	public abstract VentaSA getVentaSA();
+		
+	public abstract ProductoSA getProductoJPA() ;
 	
 }

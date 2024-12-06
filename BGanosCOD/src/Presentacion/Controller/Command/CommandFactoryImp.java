@@ -29,6 +29,12 @@ import Presentacion.Controller.Command.CommandInvernadero.CommandListarInvernade
 import Presentacion.Controller.Command.CommandInvernadero.CommandModificarInvernadero;
 import Presentacion.Controller.Command.CommandInvernadero.CommandMostrarInvernaderoPorID;
 import Presentacion.Controller.Command.CommandInvernadero.CommandVincularSRInvernadero;
+import Presentacion.Controller.Command.CommandMarcaJPA.CommandAltaMarca;
+import Presentacion.Controller.Command.CommandMarcaJPA.CommandBajaMarca;
+import Presentacion.Controller.Command.CommandMarcaJPA.CommandListarMarcas;
+import Presentacion.Controller.Command.CommandMarcaJPA.CommandListarMarcasPorProveedor;
+import Presentacion.Controller.Command.CommandMarcaJPA.CommandModificarMarca;
+import Presentacion.Controller.Command.CommandMarcaJPA.CommandMostrarMarcaPorId;
 import Presentacion.Controller.Command.CommandPlanta.CommandAltaPlanta;
 import Presentacion.Controller.Command.CommandPlanta.CommandBajaPlanta;
 import Presentacion.Controller.Command.CommandPlanta.CommandListarPlanta;
@@ -36,6 +42,14 @@ import Presentacion.Controller.Command.CommandPlanta.CommandListarPlantasPorInve
 import Presentacion.Controller.Command.CommandPlanta.CommandListarPlantasPorTipo;
 import Presentacion.Controller.Command.CommandPlanta.CommandModificarPlanta;
 import Presentacion.Controller.Command.CommandPlanta.CommandMostarPlantaPorId;
+import Presentacion.Controller.Command.CommandProveedorJPA.altaProveedorCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.bajaProveedorCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.desvincularMarcaCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.listarProveedoresCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.listarProveedoresDeMarcaCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.modificarProveedorCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.mostarProveedorPorIdCommand;
+import Presentacion.Controller.Command.CommandProveedorJPA.vincularMarcaCommand;
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandAltaSistemaDeRiego;
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandBajaSistemaDeRiego;
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandModificarSistemaDeRiego;
@@ -43,6 +57,17 @@ import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandMostrarSiste
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandMostrarSistemaDeRiegoPorFabricante;
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandMostrarSistemasDeRiego;
 import Presentacion.Controller.Command.CommandSistemaDeRiego.CommandMostrarSistemasDeRiegoPorId;
+import Presentacion.Controller.Command.CommandTurnoJPA.CommandAltaTurno;
+import Presentacion.Controller.Command.CommandTurnoJPA.CommandBajaTurno;
+import Presentacion.Controller.Command.CommandTurnoJPA.CommandListarTurnos;
+import Presentacion.Controller.Command.CommandTurnoJPA.CommandModificarTurno;
+import Presentacion.Controller.Command.CommandTurnoJPA.CommandMostrarTurno;
+import Presentacion.Controller.Command.CommandTurnoJPA.CommandObtenerNominaDelTurno;
+import Presentacion.Controller.Command.CommandVentasJPA.AbrirVentaCommand;
+import Presentacion.Controller.Command.CommandVentasJPA.CerrarVentaCommand;
+import Presentacion.Controller.Command.CommandVentasJPA.ListarVentaCommand;
+import Presentacion.Controller.Command.CommandVentasJPA.MostrarVentaPorIdCommand;
+import Presentacion.Controller.Command.CommandVentasJPA.VentasPorEmpleadoDeCajaCommand;
 import Presentacion.FactoriaVistas.Evento;
 
 public class CommandFactoryImp extends CommandFactory {
@@ -148,6 +173,66 @@ public class CommandFactoryImp extends CommandFactory {
 			return new CommandMostrarSistemaDeRiegoPorFabricante();
 		case Evento.LISTAR_SISTEMAS_RIEGO:
 			return new CommandMostrarSistemasDeRiego();
+		
+		// Eventos de Turno
+		case Evento.ALTA_TURNO:
+			return new CommandAltaTurno();
+		case Evento.BAJA_TURNO:
+			return new CommandBajaTurno();
+		case Evento.MODIFICAR_TURNO:
+			return new CommandModificarTurno();
+		case Evento.MOSTRAR_TURNO:
+			return new CommandMostrarTurno();
+		case Evento.LISTAR_TURNO:
+			return new CommandListarTurnos();
+		case Evento.OBTENER_NOMINA_DE_TURNO:
+			return new CommandObtenerNominaDelTurno();
+			
+		// Eventos Venta
+		case Evento.ABRIR_VENTA:
+			return new AbrirVentaCommand();
+		case Evento.CERRAR_VENTA:
+			return new CerrarVentaCommand();
+		case Evento.LISTAR_VENTAS:
+			return new ListarVentaCommand();
+		case Evento.VENTAS_POR_EMPLEADO_DE_CAJA:
+			return new VentasPorEmpleadoDeCajaCommand();
+		case Evento.MOSTRAR_VENTA_POR_ID:
+			return new MostrarVentaPorIdCommand();
+			
+		// Eventos de Marca JPA
+		case Evento.ALTA_MARCA:
+			return new CommandAltaMarca();
+		case Evento.BAJA_MARCA:
+			return new CommandBajaMarca();
+		case Evento.MODIFICAR_MARCA:
+			return new CommandModificarMarca();
+		case Evento.MOSTRAR_MARCA:
+			return new CommandMostrarMarcaPorId();
+		case Evento.LISTAR_MARCAS:
+			return new CommandListarMarcas();
+		case Evento.LISTAR_MARCAS_POR_PROVEEDOR:
+			return new CommandListarMarcasPorProveedor();	
+			
+			
+			// Eventos de Proveedor JPA
+		case Evento.ALTA_PROVEEDOR:
+			return new altaProveedorCommand();
+		case Evento.BAJA_PROVEEDOR:
+			return new bajaProveedorCommand();
+		case Evento.MODIFICAR_PROVEEDORES:
+			return new modificarProveedorCommand();
+		case Evento.LISTAR_PROVEEDORES:
+			return new listarProveedoresCommand();
+		case Evento.MOSTRAR_PROVEEDORES_POR_ID:
+			return new mostarProveedorPorIdCommand();
+		case Evento.LISTAR_PROVEEDORES_DE_MARCA:
+			return new listarProveedoresDeMarcaCommand();
+		case Evento.VINCULAR_MARCA_PROVEEDOR:
+			return new vincularMarcaCommand();
+		case Evento.DESVINCULAR_MARCA_PROVEEDOR:
+			return new desvincularMarcaCommand();
+		
 
 		}
 		return null;

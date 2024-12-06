@@ -1,0 +1,39 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+	<persistence-unit name="BGanosJPA" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>Negocio.TurnoJPA.Turno</class>
+		<class>Negocio.ProductoJPA.Producto</class>
+		<class>Negocio.ProductoJPA.ProductoAlimentacion</class>
+		<class>Negocio.ProductoJPA.ProductoSouvenirs</class>
+		<class>Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja</class>
+		<class>Negocio.EmpleadoDeCajaJPA.EmpleadoCompleto</class>
+		<class>Negocio.EmpleadoDeCajaJPA.EmpleadoParcial</class>
+		<class>Negocio.MarcaJPA.Marca</class>
+		<class>Negocio.ProveedorJPA.Proveedor</class>
+		<class>Negocio.VentaJPA.LineaVenta</class>
+		<class>Negocio.VentaJPA.idLineaVenta</class>
+		<class>Negocio.VentaJPA.Venta</class>
+		<!-- 
+		<validation-mode>NONE</validation-mode>
+		<shared-cache-mode>NONE</shared-cache-mode>
+		 -->
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ms-db-dao-bganos?useSSL=false&amp;serverTimezone=UTC"/>
+			<property name="javax.persistence.jdbc.user" value="root"/>
+			<property name="javax.persistence.schema-generation.database.action" value="create"/>
+			<property name="javax.persistence.jdbc.password" value="root"/>
+			<!-- 
+			las dos propiedades siguientes tienen valores específicos para
+			Apache Derby
+			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver" />
+			<property name="javax.persistence.jdbc.url"	value="jdbc:derby://localhost:1527/EmpServDB;create=true" />
+			<property name="javax.persistence.jdbc.user" value="APP" />
+			<property name="javax.persistence.jdbc.password" value="APP" />
+			<property name="eclipselink.logging.level" value="FINE" />
+			<property name="eclipselink.ddl-generation"	value="drop-and-create-tables" />
+			<property name="eclipselink.ddl-generation.output-mode" value="both" />
+			-->
+		</properties>
+	</persistence-unit>
+</persistence>

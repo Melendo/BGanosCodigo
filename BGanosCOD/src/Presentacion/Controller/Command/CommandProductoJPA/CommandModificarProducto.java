@@ -3,25 +3,39 @@
  */
 package Presentacion.Controller.Command.CommandProductoJPA;
 
+import Negocio.FactoriaNegocio.FactoriaNegocio;
+import Negocio.Planta.TPlanta;
+import Negocio.ProductoJPA.TProducto;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
 public class CommandModificarProducto implements Command {
-	/** 
-	* (non-Javadoc)
-	* @see Command#execute(Object datos)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	public Context execute(Object datos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+
+		TProducto tmp = (TProducto) datos;
+		
+		if(tmp.getIdMarca() == null){
+			TProducto p = FactoriaNegocio.getInstance().getProductoJPA().mostrarProducto(tmp.getId());
+			
+			if(p != null){return new Context(Evento.MODIFICAR_PLANTA_VISTA, p);}
+			else{
+				return new Context(Evento.MODIFICAR_PLANTA_KO, -3);
+			}
+		}
+		else{
+		
+			int	res = FactoriaNegocio.getInstance().getPlantaSA().modificarPlanta((TPlanta)datos);
+	
+			if(res > -1) {
+				return new Context(Evento.MODIFICAR_PLANTA_OK, res);
+			}
+			else {
+				return new Context(Evento.MODIFICAR_PLANTA_KO, res);
+			}
+		
+		}
+	
 	}
 }

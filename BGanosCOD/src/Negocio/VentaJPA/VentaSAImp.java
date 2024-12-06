@@ -1,136 +1,238 @@
-/**
- * 
- */
 package Negocio.VentaJPA;
 
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.LockModeType;
+import javax.persistence.TypedQuery;
+
+import Negocio.EMFSingleton.EMFSingleton;
+import Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja;
+import Negocio.ProductoJPA.Producto;
 import Negocio.ProductoJPA.TProducto;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
 public class VentaSAImp implements VentaSA {
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#altaVenta(TVenta tVenta)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Integer altaVenta(TVenta tVenta) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#bajaVenta(Integer id)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Integer bajaVenta(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
-
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#modificarVenta(TVenta tVenta)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Integer modificarVenta(TVenta tVenta) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#listarVentas()
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Set<TVenta> listarVentas() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	public List<TVenta> listarVentas() {
+		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+		TypedQuery<Venta> query = em.createNamedQuery("Negocio.VentaJPA.Venta.findAll", Venta.class);
+
+		List<Venta> lQuery = query.getResultList();
+		List<TVenta> lVenta = new LinkedList<TVenta>();
+
+		for (Venta v : lQuery)
+			lVenta.add(v.toTransfer());
+
+		em.close();
+		return lVenta;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#mostrarPorId(Integer id)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public TVenta mostrarPorId(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	public TVentaConProductos mostrarPorId(Integer id) {
+		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+
+		TVentaConProductos vCProd = new TVentaConProductos();
+		TVenta tVenta = new TVenta();
+
+		Venta venta = em.find(Venta.class, id);
+
+		if (venta == null) { // no existe la venta
+			tVenta.setId(-2);
+			et.rollback();
+			em.close();
+			vCProd.setVenta(tVenta);
+			return vCProd;
+		}
+
+		Set<TProducto> productos = new HashSet<TProducto>();
+		Set<TLineaVenta> lVentas = new HashSet<TLineaVenta>();
+
+		vCProd.setVenta(venta.toTransfer());
+		for (LineaVenta lv : venta.getLineaVenta()) {
+			productos.add(lv.getProducto().entityToTransfer());
+			lVentas.add(lv.ToTransfer());
+		}
+
+		vCProd.setProductos(productos);
+		vCProd.setLineasVenta(lVentas);
+
+		try {
+			et.commit();
+			em.close();
+			return vCProd;
+		} catch (Exception e) {
+			e.printStackTrace();
+			et.rollback();
+			em.close();
+			tVenta.setId(-2);
+			vCProd.setVenta(tVenta);
+			return vCProd;
+		}
+
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#ventasPorEmpleadoDeCaja(Integer id)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Set<TVenta> ventasPorEmpleadoDeCaja(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	public List<TVenta> ventasPorEmpleadoDeCaja(Integer id) {
+		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+		EmpleadoDeCaja emCaja = em.find(EmpleadoDeCaja.class, id);
+
+		if(emCaja == null)
+			return null;
+		
+		TypedQuery<Venta> query = em.createNamedQuery("Negocio.VentaJPA.Venta.findByempleadoDeCaja", Venta.class);
+		query.setParameter("empleadoDeCaja", emCaja);
+
+		List<Venta> lQuery = query.getResultList();
+		List<TVenta> lVenta = new LinkedList<TVenta>();
+
+		for (Venta v : lQuery)
+			lVenta.add(v.toTransfer());
+
+		em.close();
+		return lVenta;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#añadirProducto(Integer idProducto)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public TProducto añadirProducto(Integer idProducto) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	public Integer devolverVenta(TLineaVenta tLinea) {
+		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+
+		Venta ventaD = em.find(Venta.class, tLinea.getIdVenta());
+
+		if (ventaD == null) { // la Venta no existe
+			et.rollback();
+			em.close();
+			return -2;
+		}
+
+		Producto prod = em.find(Producto.class, tLinea.getIdProducto());
+
+		if (prod == null) { // el Producto no existe
+			et.rollback();
+			em.close();
+			return -3;
+		}
+
+		LineaVenta lVenta = em.find(LineaVenta.class, new idLineaVenta(prod.getId(), tLinea.getIdVenta()));
+
+		if (lVenta == null) { // la Linea de Venta no existe
+			et.rollback();
+			em.close();
+			return -4;
+		}
+
+		if (tLinea.getCantidad() > lVenta.getCantidad()) { // no se puede devolver mas de lo que tenia la venta
+			et.rollback();
+			em.close();
+			return -5;
+		}
+
+		prod.setStock(prod.getStock() + tLinea.getCantidad());
+		ventaD.setPrecioTotal(ventaD.getPrecioTotal() - tLinea.getCantidad() * prod.getPrecio());
+
+		if (ventaD.getPrecioTotal() == 0)
+			ventaD.setActivo(false);
+
+		lVenta.setCantidad(lVenta.getCantidad() - tLinea.getCantidad());
+		lVenta.setPrecio(lVenta.getPrecio() - tLinea.getCantidad() * prod.getPrecio());
+
+		if (lVenta.getCantidad() == 0)
+			em.remove(lVenta);
+
+		try {
+			et.commit();
+			em.close();
+			return ventaD.getId();
+		} catch (Exception e) {
+			et.rollback();
+			em.close();
+			e.printStackTrace();
+		}
+
+		return -1; // Error desconocido
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#quitarProducto(Integer id)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Integer quitarProducto(Integer id) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
-
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#devolverVenta(TlineaVenta venta)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Integer devolverVenta(TlineaVenta venta) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
-	}
-
-	/** 
-	* (non-Javadoc)
-	* @see VentaSA#procesarVenta(TCarrito carrito)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Integer procesarVenta(TCarrito carrito) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+
+		EmpleadoDeCaja emCaja = em.find(EmpleadoDeCaja.class, carrito.getVenta().getIdEmplado(),
+				LockModeType.OPTIMISTIC);
+
+		if (emCaja == null) {// Empleado no existe
+			et.rollback();
+			em.close();
+			return 200000000 + carrito.getVenta().getIdEmplado();
+		}
+
+		if (!emCaja.getActivo()) {// Empledo dado de baja
+			et.rollback();
+			em.close();
+			return 300000000 + carrito.getVenta().getIdEmplado();
+		}
+
+		if (carrito.getLineaVenta().isEmpty()) {// Carrito vacio
+			et.rollback();
+			em.close();
+			return 400000000;
+		}
+
+		double total = 0; // Creamos la venta
+		Venta venta = new Venta(carrito.getVenta());
+		venta.setActivo(true);
+		venta.setFecha(new Date(Calendar.getInstance().getTime().getTime()));
+		em.persist(venta);
+
+		for (TLineaVenta linV : carrito.getLineaVenta()) {// Iteramos sobre las lineas de venta
+			Producto prod = em.find(Producto.class, linV.getIdProducto());
+			if (prod == null) { // Producto no existe
+				et.rollback();
+				em.close();
+				return 50000000 + linV.getIdProducto();
+			}
+			if (!prod.getActivo()) { // Producto dado de baja
+				et.rollback();
+				em.close();
+				return 60000000 + linV.getIdProducto();
+			}
+			if (linV.getCantidad() > prod.getStock()) { // No hay stock suficiente
+				et.rollback();
+				em.close();
+				return 70000000 + linV.getIdProducto();
+			}
+
+			prod.setStock(linV.getCantidad());
+			LineaVenta lineaVenta = new LineaVenta(linV);
+			double precio = linV.getCantidad() * prod.getPrecio();
+			lineaVenta.setProducto(prod);
+			lineaVenta.setVenta(venta);
+			lineaVenta.setPrecio(precio);
+			em.persist(lineaVenta);
+			venta.setLineaVenta(lineaVenta);
+			total += precio;
+		}
+		venta.setPrecioTotal(total);
+		try {
+			et.commit();
+			em.close();
+			return venta.getId();
+		} catch (Exception e) {
+			e.printStackTrace();
+			et.rollback();
+			em.close();
+		}
+
+		return 100000000; // Error desconocido
 	}
 }

@@ -186,8 +186,8 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	    EmpleadoDeCaja empModificar = entityManager.find(EmpleadoDeCaja.class, empleado.getID());
 
 	    if (empModificar != null ) { //Existe
-	    	TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findBydni", EmpleadoDeCaja.class);
-	    	query.setParameter("dni", empleado.getNombre());
+	    	TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByDNI", EmpleadoDeCaja.class);
+	    	query.setParameter("DNI", empleado.getNombre());
 	    	EmpleadoDeCaja empExistente = null;
     		Turno turno = null;
 

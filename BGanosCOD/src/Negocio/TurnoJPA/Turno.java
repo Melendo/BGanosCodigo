@@ -1,20 +1,31 @@
 package Negocio.TurnoJPA;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 import java.io.Serializable;
+import java.util.Set;
+
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 import javax.persistence.NamedQueries;
 import Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja;
 import javax.persistence.ManyToOne;
 
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = "horario") })
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Negocio.TurnoJPA.Turno.findByid", query = "select obj from Turno obj where :id = obj.id "),
 		@NamedQuery(name = "Negocio.TurnoJPA.Turno.findByversion", query = "select obj from Turno obj where :version = obj.version "),
 		@NamedQuery(name = "Negocio.TurnoJPA.Turno.findByactivo", query = "select obj from Turno obj where :activo = obj.activo "),
 		@NamedQuery(name = "Negocio.TurnoJPA.Turno.findByhorario", query = "select obj from Turno obj where :horario = obj.horario "),
-		@NamedQuery(name = "Negocio.TurnoJPA.Turno.findByempleadoDeCaja", query = "select obj from Turno obj where :empleadoDeCaja = obj.empleadoDeCaja ") })
+		@NamedQuery(name = "Negocio.TurnoJPA.Turno.findByempleadoDeCaja", query = "select obj from Turno obj where :empleadoDeCaja = obj.empleadoDeCaja "),
+		@NamedQuery(name = "Negocio.TurnoJPA.Turno.findAll", query = "select obj from Turno obj order by obj.id ")})
 public class Turno implements Serializable {
 	
 	private static final long serialVersionUID = 0;
@@ -22,17 +33,19 @@ public class Turno implements Serializable {
 	public Turno() {
 	}
 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Integer id;
 	
+	@Version
 	private Integer version;
 	
 	private Boolean activo;
 	
 	private String horario;
 	
-	@ManyToOne
-	private EmpleadoDeCaja empleadoDeCaja;
+	@OneToMany(mappedBy = "Turno")
+	private Set<EmpleadoDeCaja> empleadoDeCaja;
 
 	public Integer getId() {
 		return id;

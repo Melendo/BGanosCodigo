@@ -464,20 +464,20 @@ public class Evento {
 
 	// Vistas Proveedor 1100 - 1119
 
-	public static final int ALTA_PORVEEDOR_VISTA = 1100;
+	public static final int ALTA_PROVEEDOR_VISTA = 1100;
 	public static final int BAJA_PROVEEDOR_VISTA = 1101;
 	public static final int DESVINCULAR_MARCA_PROVEEDOR_VISTA = 1102;
 	public static final int LISTAR_PROVEEDORES_VISTA = 1103;
 	public static final int LISTAR_PROVEEDORES_DE_MARCA_VISTA = 1104;
-	public static final int MODIFICAR_PROVEEDORES_VISTA = 1105;
+	public static final int MODIFICAR_PROVEEDOR_VISTA = 1105;
 	public static final int MOSTRAR_PROVEEDORES_POR_ID_VISTA = 1106;
-	public static final int SVINCULAR_MARCA_PROVEEDOR_VISTA = 1107;
+	public static final int VINCULAR_MARCA_PROVEEDOR_VISTA = 1107;
 	public static final int PROVEEDOR_VISTA = 1108;
 	
 
 	// Funciones Proveedor 1120 - 1139
 
-	public static final int ALTA_PORVEEDOR = 1120;
+	public static final int ALTA_PROVEEDOR = 1120;
 	public static final int BAJA_PROVEEDOR = 1121;
 	public static final int DESVINCULAR_MARCA_PROVEEDOR = 1122;
 	public static final int LISTAR_PROVEEDORES = 1123;
@@ -569,9 +569,9 @@ public class Evento {
 
 	// Vistas Venta 1300 - 1319
 	public static final int VENTA_VISTA = 1301;
-	public static final int ALTA_VENTA_VISTA = 1302;
+	public static final int ABRIR_VENTA_VISTA = 1302;
 	public static final int ANIADIR_PRODUCTO_VISTA = 1302;
-	public static final int BAJA_VENTA_VISTA = 1303;
+	public static final int CERRAR_VENTA_VISTA = 1303;
 	public static final int DEVOLVER_VENTA_VISTA = 1304;
 	public static final int LISTAR_VENTAS_VISTA = 1305;
 	public static final int MODIFICAR_VENTAS_VISTA = 1306;
@@ -581,9 +581,9 @@ public class Evento {
 	public static final int VENTAS_POR_EMPLEADO_DE_CAJA_VISTA = 1310;
 
 	// Funciones Venta 1320 - 1349
-	public static final int ALTA_VENTA = 1320;
+	public static final int ABRIR_VENTA = 1320;
 	public static final int ANIADIR_PRODUCTO = 1321;
-	public static final int BAJA_VENTA = 1322;
+	public static final int CERRAR_VENTA = 1322;
 	public static final int DEVOLVER_VENTA = 1323;
 	public static final int LISTAR_VENTAS = 1324;
 	public static final int MODIFICAR_VENTAS = 1325;
@@ -594,16 +594,16 @@ public class Evento {
 
 	// OKs y KOs Venta 1350 - 1399
 	// alta
-	public static final int ALTA_VENTA_OK = 1350;
-	public static final int ALTA_VENTA_KO = 1351;
+	public static final int ABRIR_VENTA_OK = 1350;
+	public static final int ABRIR_VENTA_KO = 1351;
 
 	// aniadir producto
 	public static final int ANIADIR_PRODUCTO_OK = 1352;
 	public static final int ANIADIR_PRODUCTO_KO = 1353;
 
 	// baja
-	public static final int BAJA_VENTA_OK = 1354;
-	public static final int BAJA_VENTA_KO = 1355;
+	public static final int CERRAR_VENTA_OK = 1354;
+	public static final int CERRAR_VENTA_KO = 1355;
 
 	// devolver venta
 	public static final int DEVOLVER_VENTA_OK = 1356;

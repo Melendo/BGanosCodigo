@@ -3,44 +3,43 @@
  */
 package Negocio.ProductoJPA;
 
-/** 
- * <!-- begin-UML-doc -->
- * <!-- end-UML-doc -->
- * @author airam
- * @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
- */
+
 public class TProductoSouvenirs extends TProducto {
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	private String descripcion;
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+	public TProductoSouvenirs(String nombre, Double precio, Integer stock, Integer idMarca, int tipoProducto,String descripcion ) {
+		super(nombre, precio, stock, idMarca, tipoProducto);
+		this.descripcion = descripcion;
+	}
+
 	public String getDescripcion() {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		return descripcion;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param descripcion
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Void setDescripcion(String descripcion) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
+
+	private String descripcion;
+	
+	public String toString() {
+		
+		String estado = "Si", tip = "Alimentacion";
+		if (!activo) {
+			estado = "No";
+		}
+		if(tipoProducto == 1){
+			tip = "Souvenir";
+		}
+
+		return "Informacion del Producto: " + "\n" 
+		+ "Id: " + id + "\n" 
+		+ "Nombre: " + nombre + "\n"
+		+ "Precio: " + precio + "\n" 
+		+ "Stock: " + stock + "\n" 
+		+ "Tipo del Producto: " + tip + "\n" 
+		+ "Id de la Marca: " + idMarca + "\n" 
+		+ "Activo: " + estado + "\n"
+		+ "Descripcion: " + descripcion + "\n";
+	}
+
 }

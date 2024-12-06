@@ -3,25 +3,17 @@
  */
 package Presentacion.Controller.Command.CommandTurnoJPA;
 
+import java.util.Set;
+
+import Negocio.FactoriaNegocio.FactoriaNegocio;
+import Negocio.TurnoJPA.TTurno;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
 public class CommandListarTurnos implements Command {
-	/** 
-	* (non-Javadoc)
-	* @see Command#execute(Object datos)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Context execute(Object datos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TTurno> resultado = FactoriaNegocio.getInstance().getTurnoJPA().listarTurnos();
+		return new Context(Evento.LISTAR_TURNO_VISTA,resultado);
 	}
 }
