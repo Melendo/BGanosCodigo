@@ -26,9 +26,9 @@ public class CommandModificarProducto implements Command {
 			}
 		}
 		else{
-		
+			
 			int	res = FactoriaNegocio.getInstance().getProductoJPA().modificarProducto((TProducto)datos);
-	
+
 			if(res > -1) {
 				return new Context(Evento.MODIFICAR_PRODUCTO_OK, res);
 			}

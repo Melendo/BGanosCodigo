@@ -275,13 +275,17 @@ public class ProductoSAImp implements ProductoSA {
 			
 		}
 		else{
+
 			Producto p = em.find(Producto.class, producto.getId());
-			if(p == null ){
+		
+			
+			if(p == null){
+				
 				id = -3;
 				t.rollback();
 			}
 			else{
-				
+			
 				if(producto.getTipoProducto() == 0){
 					TProductoAlimentacion tali = (TProductoAlimentacion)producto;
 					
@@ -310,6 +314,7 @@ public class ProductoSAImp implements ProductoSA {
 				t.commit();
 				id = producto.getId();
 			}
+			
 		}
 		
 		em.close();

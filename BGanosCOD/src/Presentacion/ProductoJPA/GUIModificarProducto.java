@@ -361,6 +361,8 @@ public class GUIModificarProducto extends JFrame implements IGUI {
 			}
 			else if((int) context.getDatos() == -3)
 				GUIMSG.showMessage("No se encontro el producto", "MODIFICAR PRODUCTO", true);
+			else if((int) context.getDatos() == -4)
+				GUIMSG.showMessage("Nombre duplicado", "MODIFICAR PRODUCTO", true);
 			else
 			GUIMSG.showMessage("No se pudo realizar la modificacion", "MODIFICAR PRODUCTO", true);
 			break;
