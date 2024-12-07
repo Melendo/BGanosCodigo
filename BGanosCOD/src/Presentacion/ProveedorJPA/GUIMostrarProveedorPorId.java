@@ -119,7 +119,7 @@ public class GUIMostrarProveedorPorId extends JFrame implements IGUI {
 			proveedor = (TProveedor) context.getDatos();
 			String texto = "ID: " + proveedor.getId() + "\nNombre: " + proveedor.getNombre() + "\nCIF: "
 					+ proveedor.getCIF() + "\nTelefono: " + proveedor.getTelefono() + "\nActivo: "
-					+ proveedor.getActivo();
+					+  (proveedor.getActivo() ? "Si" : "No");
 
 			JOptionPane.showMessageDialog(this, texto, "Proveedor", JOptionPane.INFORMATION_MESSAGE);
 			this.setVisible(false);
