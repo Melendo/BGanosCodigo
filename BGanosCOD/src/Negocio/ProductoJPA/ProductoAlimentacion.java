@@ -6,6 +6,7 @@ package Negocio.ProductoJPA;
 import javax.persistence.Entity;
 import java.io.Serializable;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.NamedQueries;
 
 @Entity
@@ -13,12 +14,17 @@ import javax.persistence.NamedQueries;
 		@NamedQuery(name = "Negocio.ProductoJPA.ProductoAlimentacion.findBypeso", query = "select obj from ProductoAlimentacion obj where :peso = obj.peso "),
 		@NamedQuery(name = "Negocio.ProductoJPA.ProductoAlimentacion.findByprecioKilo", query = "select obj from ProductoAlimentacion obj where :precioKilo = obj.precioKilo "),
 		@NamedQuery(name = "Negocio.ProductoJPA.ProductoAlimentacion.findBytipo", query = "select obj from ProductoAlimentacion obj where :tipo = obj.tipo ") })
+@PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class ProductoAlimentacion extends Producto implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
 
 	public ProductoAlimentacion() {
+	}
+
+	public ProductoAlimentacion(TProducto producto) {
+		super(producto);
 	}
 
 	private double peso;

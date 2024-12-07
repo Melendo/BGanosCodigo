@@ -104,6 +104,7 @@ public GUIMostrarProductoPorId(){
 				try {
 					int id = Integer.parseInt(textID.getText());
 					ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_PRODUCTO_POR_ID, id));
+					setVisible(false);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIMostrarProductoPorId.this, "Error en el formato de los datos", "Error",
 							JOptionPane.ERROR_MESSAGE);

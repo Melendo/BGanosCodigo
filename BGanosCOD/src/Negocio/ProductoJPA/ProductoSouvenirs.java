@@ -6,16 +6,23 @@ package Negocio.ProductoJPA;
 import javax.persistence.Entity;
 import java.io.Serializable;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 
 @Entity
 @NamedQuery(name = "Negocio.ProductoJPA.ProductoSouvenirs.findBydescripcion", query = "select obj from ProductoSouvenirs obj where :descripcion = obj.descripcion ")
+@PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class ProductoSouvenirs extends Producto implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
 
 	public ProductoSouvenirs() {
+	}
+	
+	public ProductoSouvenirs(TProducto p) {
+		super(p);
+		
 	}
 
 

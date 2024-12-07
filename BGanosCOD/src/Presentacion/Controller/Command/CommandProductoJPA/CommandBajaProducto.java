@@ -15,9 +15,9 @@ public class CommandBajaProducto implements Command {
 		int resp = FactoriaNegocio.getInstance().getProductoJPA().bajaProducto((int) datos);
 		int tmp;
 		if(resp > 0)
-			tmp = Evento.BAJA_PLANTA_OK;
+			tmp = Evento.BAJA_PRODUCTO_OK;
 		else
-			tmp = Evento.BAJA_PLANTA_KO;
+			tmp = Evento.BAJA_PRODUCTO_KO;
 		
 		return new Context(tmp, resp);
 	

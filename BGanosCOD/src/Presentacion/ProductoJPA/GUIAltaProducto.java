@@ -212,7 +212,7 @@ public class GUIAltaProducto extends JFrame implements IGUI {
 							}
 							
 							ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PRODUCTO, p));
-							
+							setVisible(false);
 						} catch (Exception ex) {
 							JOptionPane.showMessageDialog(GUIAltaProducto.this, "Error en el formato de los datos", "Error",
 									JOptionPane.ERROR_MESSAGE);
@@ -286,13 +286,23 @@ public class GUIAltaProducto extends JFrame implements IGUI {
 		
 		switch(context.getEvento()) {
 		case Evento.ALTA_PRODUCTO_OK:
-			GUIMSG.showMessage("Producto dado de alta con ID: " + context.getDatos(), "ALTA PLANTA", false);
+		case Evento.ALTA_PRODUCTO_ALIMENTACION_OK:
+		case Evento.ALTA_PRODUCTO_SOUVENIRS_OK:
+			
+			GUIMSG.showMessage("Producto dado de alta con ID: " + context.getDatos(), "ALTA PRODUCTO", false);
 			break;
 		case  Evento.ALTA_PRODUCTO_KO:
-			GUIMSG.showMessage("No se pudo dar de alta a la planta", "ALTA PLANTA", true);
+		case Evento.ALTA_PRODUCTO_ALIMENTACION_KO:
+		case Evento.ALTA_PRODUCTO_SOUVENIRS_KO:
+
+			if((int) context.getDatos() == -2){
+				GUIMSG.showMessage("Marca inexistente", "ALTA PRODUCTO", true);
+			}
+			else
+			GUIMSG.showMessage("No se pudo dar de alta", "ALTA PRODUCTO", true);
 			break;
 		default:
-			GUIMSG.showMessage("Error inesperado", "ALTA PLANTA", true);
+			GUIMSG.showMessage("Error inesperado", "ALTA PRODUCTO", true);
 			break;
 		}
 	

@@ -103,7 +103,7 @@ public class GUIListarProductoPorTipo extends JFrame implements IGUI {
 
 				try {
 					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_POR_TIPO,  tipoProducto.getSelectedIndex()));
-					
+					setVisible(false);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIListarProductoPorTipo.this, "Error en el formato de los datos", "Error",
 							JOptionPane.ERROR_MESSAGE);

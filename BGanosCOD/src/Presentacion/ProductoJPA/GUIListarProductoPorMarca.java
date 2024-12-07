@@ -101,6 +101,7 @@ public class GUIListarProductoPorMarca extends JFrame implements IGUI {
 				try {
 					int id = Integer.parseInt(textID.getText());
 					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_POR_MARCA, id));
+					setVisible(false);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIListarProductoPorMarca.this, "Error en el formato de los datos", "Error",
 							JOptionPane.ERROR_MESSAGE);

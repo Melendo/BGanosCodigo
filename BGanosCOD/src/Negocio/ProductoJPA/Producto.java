@@ -32,7 +32,14 @@ import javax.persistence.Inheritance;
 		@NamedQuery(name = "Negocio.ProductoJPA.Producto.findBystock", query = "select obj from Producto obj where :stock = obj.stock "),
 		@NamedQuery(name = "Negocio.ProductoJPA.Producto.findByactivo", query = "select obj from Producto obj where :activo = obj.activo "),
 		@NamedQuery(name = "Negocio.ProductoJPA.Producto.findByprecio", query = "select obj from Producto obj where :precio = obj.precio "),
-		@NamedQuery(name = "Negocio.ProductoJPA.Producto.findBymarca", query = "select obj from Producto obj where :marca = obj.marca ") })
+		@NamedQuery(name = "Negocio.ProductoJPA.Producto.findBymarca", query = "select obj from Producto obj where :marca = obj.marca ") ,
+		@NamedQuery(name = "Negocio.ProductoJPA.Producto.findAll", query = "select obj from Producto obj ")
+		})
+		
+
+
+
+
 
 public class Producto implements Serializable {
 

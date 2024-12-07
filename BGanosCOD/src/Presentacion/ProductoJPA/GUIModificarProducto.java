@@ -241,6 +241,7 @@ public class GUIModificarProducto extends JFrame implements IGUI {
 							}
 							p.setId(producto.getId());
 							ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_PRODUCTO, p));
+							setVisible(false);
 							
 						} catch (Exception ex) {
 							JOptionPane.showMessageDialog(GUIModificarProducto.this, "Error en el formato de los datos", "Error",
@@ -286,6 +287,7 @@ public class GUIModificarProducto extends JFrame implements IGUI {
 				
 				
 				if(producto == null){
+					botonAceptar.setEnabled(false);
 					estado.setEnabled(false);
 					textNombre.setEnabled(false);
 					tipoProducto.setEnabled(false);
@@ -302,11 +304,14 @@ public class GUIModificarProducto extends JFrame implements IGUI {
 					
 					textNombre.setText(producto.getNombre());
 					textId.setEnabled(false);
+					textidMarca.setEnabled(false);
+				
 					textidMarca.setText(""+producto.getIdMarca());;
 					textStock.setText(""+producto.getStock());
 					textPrecio.setText(""+producto.getPrecio());
 					
-					
+					botonAceptar.setEnabled(true);
+					botonCancelar.setEnabled(false);
 					estado.setSelectedIndex(0);
 					if(!producto.getActivo())
 						estado.setSelectedIndex(1);
