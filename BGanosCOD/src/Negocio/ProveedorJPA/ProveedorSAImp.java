@@ -210,8 +210,34 @@ public class ProveedorSAImp implements ProveedorSA {
 	}
 
 	public TProveedor mostrarProveedorPorCIF(String CIF) {
-		// TODO Auto-generated method stub
-		return null;
+		TProveedor prov = new TProveedor();
+		prov.setId(-1); // Error general
+		EntityManager em = null;
+
+		if (CIF == null || CIF.isEmpty() ) {
+			prov.setId(-2); // CIF debe estar completo
+
+		} else {
+			try {
+				em = EMFSingleton.getInstance().getEMF().createEntityManager();
+
+				Proveedor provExiste = em.find(Proveedor.class, CIF);
+
+				if (provExiste != null) {
+					prov = provExiste.entityToTransfer();
+
+				} else {
+					prov.setId(-3); // El proveedor no existe
+				}
+			} catch (Exception e) {
+				prov.setId(-1); // Error general
+			} finally {
+				if (em != null) {
+					em.close();
+				}
+			}
+		}
+		return prov;
 	}
 
 	public Integer vincularMarca(Integer idProv, Integer idMarca) {
