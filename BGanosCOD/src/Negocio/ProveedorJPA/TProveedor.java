@@ -12,6 +12,28 @@ public class TProveedor {
 	private String telefono;
 	
 	private Boolean activo;
+	
+	public TProveedor() {
+		
+	}
+	
+	public TProveedor(Integer id, String CIF, String nombre, String telefono, Boolean activo) {
+		super();
+		this.id = id;
+		this.CIF = CIF;
+		this.nombre = nombre;
+		this.telefono = telefono;
+		this.activo = activo;
+	}
+
+	public TProveedor(Proveedor p) {
+		super();
+		this.id = p.getId();
+		this.CIF = p.getCIF();
+		this.nombre = p.getNombre();
+		this.telefono = p.getTelefono();
+		this.activo = p.getActivo();
+	}
 
 	public Integer getId() {
 		return id;
