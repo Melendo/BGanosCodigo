@@ -12,6 +12,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import java.awt.Color;
@@ -120,18 +121,39 @@ public void initGUI() {
 
 @Override
 public void actualizar(Context context) {
-	switch(context.getEvento()) {
-	case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE_KO:
-		GUIMSG.showMessage("No existe empleados con ese nombre", "LISTAR Empleados por nombre", true);
-		break;
-	case  Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE_OK:
-		
-		ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE_VISTA,context.getDatos()));
-		break;
-	default:
-		GUIMSG.showMessage("ERROR INESPERADO", "LISTAR Empleados por nombre", true);
-		break;
-	
-}
+    if (context.getEvento() == Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE_OK) {
+        @SuppressWarnings("unchecked")
+        Set<TEmpleadoDeCaja> listaEmpleados = (Set<TEmpleadoDeCaja>) context.getDatos();
+
+        String[][] datos = new String[listaEmpleados.size()][8];
+        int i = 0;
+        for (TEmpleadoDeCaja empleado : listaEmpleados) {
+            datos[i++] = new String[] {
+                String.valueOf(empleado.getID()),
+                empleado.getNombre(),
+                empleado.getApellido(),
+                empleado.getDNI(),
+                String.valueOf(empleado.getTelefono()),
+                String.valueOf(empleado.getSueldo()),
+                String.valueOf(empleado.getId_Turno()),
+                empleado.getActivo() ? "Sí" : "No"
+            };
+        }
+
+        JTable tabla = new JTable(datos, new String[] {
+            "ID", "Nombre", "Apellido", "DNI", "Teléfono", "Sueldo", "ID Turno", "Activo"
+        });
+
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        JOptionPane.showMessageDialog(this, scrollPane, "Empleados de Caja por Nombre", JOptionPane.INFORMATION_MESSAGE);
+
+    } else if (context.getEvento() == Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE_KO) {
+        JOptionPane.showMessageDialog(this, "No existen empleados con el nombre especificado.", "Error", JOptionPane.ERROR_MESSAGE);
+    } else {
+        JOptionPane.showMessageDialog(this, "Error inesperado al listar empleados por nombre.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    this.setVisible(false);
+    ApplicationController.getInstance().manageRequest(new Context(Evento.EMPLEADO_DE_CAJA_VISTA, null));
 }
 }

@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Negocio.EmpleadoDeCajaJPA.TEmpleadoDeCaja;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
@@ -98,6 +99,25 @@ public class GUIMostrarEmpleadoDeCajaPorId extends JFrame implements IGUI {
 
     @Override
     public void actualizar(Context context) {
+        if (context.getEvento() == Evento.MOSTAR_EMPLEADO_DE_CAJA_POR_ID_OK) {
+            TEmpleadoDeCaja empleado = (TEmpleadoDeCaja) context.getDatos();
+
+            String texto = "ID: " + empleado.getID() +
+                           "Nombre: " + empleado.getNombre() +
+                           "Apellido: " + empleado.getApellido() +
+                           "DNI: " + empleado.getDNI() +
+                           "Teléfono: " + empleado.getTelefono() +
+                           "Sueldo: " + empleado.getSueldo() +
+                           "ID Turno: " + empleado.getId_Turno() +
+                           "Activo: " + (empleado.getActivo() ? "Sí" : "No");
+
+            JOptionPane.showMessageDialog(this, texto, "Empleado de Caja", JOptionPane.INFORMATION_MESSAGE);
+        } else if (context.getEvento() == Evento.MOSTAR_EMPLEADO_DE_CAJA_POR_ID_KO) {
+            JOptionPane.showMessageDialog(this, "No existe empleado de caja con el ID especificado.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        this.setVisible(false);
+        ApplicationController.getInstance().manageRequest(new Context(Evento.EMPLEADO_DE_CAJA_VISTA, null));
     }
 
 	

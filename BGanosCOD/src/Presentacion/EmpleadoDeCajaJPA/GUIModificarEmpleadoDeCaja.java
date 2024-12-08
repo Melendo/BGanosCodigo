@@ -243,20 +243,27 @@ public class GUIModificarEmpleadoDeCaja extends JFrame implements IGUI {
         int resultado = (int) context.getDatos();
 
         if (context.getEvento() == Evento.MODIFICAR_EMPLEADO_DE_CAJA_OK) {
-            JOptionPane.showMessageDialog(this, "Empleado de caja modificado correctamente con id: " + resultado, "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Empleado de caja " + resultado + " modificado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } else if (context.getEvento() == Evento.MODIFICAR_EMPLEADO_DE_CAJA_KO) {
+
             switch (resultado) {
-                case -2:
-                    JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error",
-                            JOptionPane.ERROR_MESSAGE);
+                case -4:
+                    JOptionPane.showMessageDialog(this, "Error: El nombre del empleado es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
                     break;
-                case -3:
-                    JOptionPane.showMessageDialog(this, "El empleado especificado no existe.", "Error",
-                            JOptionPane.ERROR_MESSAGE);
+                case -501:
+                    JOptionPane.showMessageDialog(this, "Error: Ya existe un empleado con el mismo DNI y no es el actual.", "Error", JOptionPane.ERROR_MESSAGE);
+                    break;
+                case -115:
+                    JOptionPane.showMessageDialog(this, "Error: El turno especificado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+                    break;
+                case -404:
+                    JOptionPane.showMessageDialog(this, "Error: El empleado especificado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
                     break;
                 default:
                     JOptionPane.showMessageDialog(this, "Error desconocido al modificar el empleado de caja.", "Error", JOptionPane.ERROR_MESSAGE);
-            }}
-}
+                    break;
+            }
+        }
+    }
+
     }

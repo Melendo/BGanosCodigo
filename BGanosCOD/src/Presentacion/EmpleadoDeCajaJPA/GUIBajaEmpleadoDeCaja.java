@@ -108,10 +108,28 @@ public class GUIBajaEmpleadoDeCaja extends JFrame implements IGUI {
 		this.setVisible(true);
 	}
 
+	@Override
 	public void actualizar(Context context) {
-		// begin-user-code
-		// TODO Auto-generated method stub
+	    int resultado = (int) context.getDatos();
 
-		// end-user-code
+	    if (context.getEvento() == Evento.BAJA_EMPLEADO_DE_CAJA_OK) {
+	        JOptionPane.showMessageDialog(this, "Empleado de caja " + resultado + " dado de baja correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	    } else if (context.getEvento() == Evento.BAJA_EMPLEADO_DE_CAJA_KO) {
+
+	        switch (resultado) {
+	            case -4:
+	                JOptionPane.showMessageDialog(this, "Error: El ID del empleado es incorrecto.", "Error", JOptionPane.ERROR_MESSAGE);
+	                break;
+	            case -403:
+	                JOptionPane.showMessageDialog(this, "Error: El empleado ya está inactivo.", "Error", JOptionPane.ERROR_MESSAGE);
+	                break;
+	            case -404:
+	                JOptionPane.showMessageDialog(this, "Error: El empleado especificado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+	                break;
+	            default:
+	                JOptionPane.showMessageDialog(this, "Error desconocido al dar de baja el empleado de caja.", "Error", JOptionPane.ERROR_MESSAGE);
+	                break;
+	        }
+	    }
 	}
 }

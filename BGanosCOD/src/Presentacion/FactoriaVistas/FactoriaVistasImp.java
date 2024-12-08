@@ -404,6 +404,9 @@ public class FactoriaVistasImp extends FactoriaVistas {
         case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO_VISTA:
         	vistaActual=new GUIListarEmpleadoDeCajaPorTurno();
         	return vistaActual;
+        case Evento. MOSTAR_EMPLEADO_DE_CAJA_POR_ID_VISTA:
+        	vistaActual=new GUIListarEmpleadoDeCajaPorTurno();
+        	return vistaActual;
         	
         	
 //					Vistas Marca JPA
