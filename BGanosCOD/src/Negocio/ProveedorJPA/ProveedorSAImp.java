@@ -292,10 +292,48 @@ public class ProveedorSAImp implements ProveedorSA {
 	}
 
 	public Integer desvincularMarca(Integer idProv, Integer idMarca) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		int exito = -1;
+		EntityManager em = null;
+		if (idProv < 1 && idMarca < 1) {
+			exito = -2; // IDs deben ser mayores que 0
+		} else {
+			try {
+				em = EMFSingleton.getInstance().getEMF().createEntityManager();
+				EntityTransaction transaction = em.getTransaction();
+				transaction.begin();
+
+				Proveedor prov = em.find(Proveedor.class, idProv);
+				Marca marca = em.find(Marca.class, idMarca, LockModeType.OPTIMISTIC);
+				if (prov != null && prov.getActivo()) {
+					if (marca != null && marca.getActivo()) {
+
+						Set<Marca> list = prov.getMarcas();
+						if (list.contains(marca)) {
+							list.remove(marca);
+							marca.getProveedores().remove(prov);
+							exito = 1;
+							transaction.commit();
+						} else {
+							exito = -5;
+							transaction.rollback();
+						}
+					} else {
+						exito = -4;
+						transaction.rollback();
+					}
+				} else {
+					exito = -3;
+					transaction.rollback();
+				}
+			} catch (Exception e) {
+				exito = -1; // Error general
+			} finally {
+				if (em != null) {
+					em.close();
+				}
+			}
+		}
+		return exito;
 	}
 
 	public Set<TProveedor> listarProveedoresDeMarca(Integer idMarca) {
