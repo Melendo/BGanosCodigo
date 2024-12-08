@@ -176,7 +176,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 
 	    if (empModificar != null ) { //Existe
 	    	TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByDNI", EmpleadoDeCaja.class);
-	    	query.setParameter("DNI", empleado.getNombre());
+	    	query.setParameter("DNI", empleado.getDNI());
 	    	EmpleadoDeCaja empExistente = null;
     		Turno turno = null;
 
@@ -187,7 +187,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
     		 
         	}
         		
-    		if(empExistente == null || empExistente.getId() == empModificar.getId()){ // No existe o es el mismo
+    		if(empExistente == null || empExistente.getId() == empleado.getID()){ // No existe o es el mismo
     			
     			TypedQuery<Turno> query2 = entityManager.createNamedQuery("Negocio.TurnoJPA.Turno.findByid", Turno.class);
     			query2.setParameter("id", empleado.getId_Turno());
@@ -203,18 +203,26 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
     		}        		
         			
     			if(turno.isActivo()){
-    				empleado.setActivo(empModificar.getActivo());
-    				empModificar.transferToEntity(empleado);
-    				empModificar.setTurno(turno);
+    				if(empleado.getTipo() == empModificar.getTipo()){
+    					empleado.setActivo(empModificar.getActivo());
+        				empModificar.transferToEntity(empleado);
+        				empModificar.setTurno(turno);
+        				
+    					try {				
+    						entityTrans.commit();
+    						res = empModificar.getId();
+    					} catch (Exception e) {
+    						entityTrans.rollback();
+    				        entityManager.close();
+    						return res;
+    					}
+    				}
+    				else{
+    					entityTrans.rollback();
+        	            entityManager.close();
+        				return -506;
+    				}
     				
-					try {				
-						entityTrans.commit();
-						res = empModificar.getId();
-					} catch (Exception e) {
-						entityTrans.rollback();
-				        entityManager.close();
-						return res;
-					}
     			}
     			else{
     				entityTrans.rollback();
