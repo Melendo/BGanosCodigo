@@ -15,7 +15,7 @@ import Negocio.EmpleadoDeCajaJPA.TEmpleadoParcial;
 
 public class GUIModificarEmpleadoDeCaja extends JFrame implements IGUI {
 
-    private JTextField textId, textNombre, textApellido, textDNI, textTelefono, textIdTurno;
+    private JTextField textId, textNombre, textApellido, textDNI, textTelefono, textIdTurno, textSueldo;
     private JTextField textSueldoBase, textComplemento, textPrecioHora, textHoras;
     private Boolean tCompleto = false;
 
@@ -68,6 +68,7 @@ public class GUIModificarEmpleadoDeCaja extends JFrame implements IGUI {
         contentPanel.add(createInputPanel("Apellido: ", textApellido = new JTextField(15)));
         contentPanel.add(createInputPanel("DNI: ", textDNI = new JTextField(15)));
         contentPanel.add(createInputPanel("Teléfono: ", textTelefono = new JTextField(15)));
+        contentPanel.add(createInputPanel("Sueldo: ", textSueldo = new JTextField(15)));
         contentPanel.add(createInputPanel("ID del turno: ", textIdTurno = new JTextField(15)));
 
         // Panel de empleado completo
@@ -124,10 +125,12 @@ public class GUIModificarEmpleadoDeCaja extends JFrame implements IGUI {
             TEmpleadoDeCaja empleado;
             if (tCompleto) {
                 empleado = new TEmpleadoCompleto();
+                empleado.setTipo(0);
                 ((TEmpleadoCompleto) empleado).setSueldo_Base(Double.parseDouble(textSueldoBase.getText()));
                 ((TEmpleadoCompleto) empleado).setComplementos(Double.parseDouble(textComplemento.getText()));
             } else {
                 empleado = new TEmpleadoParcial();
+                empleado.setTipo(1);
                 ((TEmpleadoParcial) empleado).setPrecio_h(Double.parseDouble(textPrecioHora.getText()));
                 ((TEmpleadoParcial) empleado).setHoras(Double.parseDouble(textHoras.getText()));
             }
@@ -137,6 +140,7 @@ public class GUIModificarEmpleadoDeCaja extends JFrame implements IGUI {
             empleado.setApellido(textApellido.getText());
             empleado.setDNI(textDNI.getText());
             empleado.setTelefono(Integer.parseInt(textTelefono.getText()));
+            empleado.setSueldo(Double.parseDouble(textSueldo.getText()));
             empleado.setId_Turno(Integer.parseInt(textIdTurno.getText()));
 
             ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_EMPLEADO_DE_CAJA, empleado));
@@ -166,6 +170,9 @@ public class GUIModificarEmpleadoDeCaja extends JFrame implements IGUI {
                     break;
                 case -115:
                     JOptionPane.showMessageDialog(this, "Error: El turno especificado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+                    break;
+                case -114:
+                    JOptionPane.showMessageDialog(this, "Error: El turno especificado está inactivo.", "Error", JOptionPane.ERROR_MESSAGE);
                     break;
                 case -404:
                     JOptionPane.showMessageDialog(this, "Error: El empleado especificado no existe.", "Error", JOptionPane.ERROR_MESSAGE);

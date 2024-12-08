@@ -203,6 +203,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
     		}        		
         			
     			if(turno.isActivo()){
+    				empleado.setActivo(empModificar.getActivo());
     				empModificar.transferToEntity(empleado);
     				empModificar.setTurno(turno);
     				
@@ -214,6 +215,11 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 				        entityManager.close();
 						return res;
 					}
+    			}
+    			else{
+    				entityTrans.rollback();
+    	            entityManager.close();
+    				return -115;
     			}
         	}
     		else{
