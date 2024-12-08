@@ -277,33 +277,29 @@ public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
 
 	@Override
 	public void actualizar(Context context) {
-		int resultado = (int) context.getDatos();
+	    int resultado = (int) context.getDatos();
 
-		/*
-		 * if (context.getEvento() == Evento.ALTA_EMPLEADO_DE_CAJA_OK)
-		 * 
-		 * JOptionPane.showMessageDialog(this,
-		 * "Empleado de caja dado de alta correctamente con id: " + resultado,
-		 * "Éxito", JOptionPane.INFORMATION_MESSAGE); else if
-		 * (context.getEvento() == Evento.ALTA_EMPLEADO_DE_CAJA_KO) switch
-		 * (resultado) { case -2: JOptionPane.showMessageDialog(this,
-		 * "Por favor, completa todos los campos requeridos.", "Error",
-		 * JOptionPane.ERROR_MESSAGE); break; case -3:
-		 * JOptionPane.showMessageDialog(this,
-		 * "Ya existe un empleado de caja con el mismo DNI y está activo.",
-		 * "Error", JOptionPane.ERROR_MESSAGE); break; case -4:
-		 * JOptionPane.showMessageDialog(this, "Telefono invalido.", "Error",
-		 * JOptionPane.ERROR_MESSAGE); break; case -5:
-		 * JOptionPane.showMessageDialog(this,
-		 * "El fabricante que estas intentando modificar es local.", "Error",
-		 * JOptionPane.ERROR_MESSAGE); break; case -6:
-		 * JOptionPane.showMessageDialog(this,
-		 * "El fabricante que estas intentando modificar es extranjero.",
-		 * "Error", JOptionPane.ERROR_MESSAGE); break; default:
-		 * JOptionPane.showMessageDialog(this,
-		 * "Error desconocido al dar de alta el fabricante.", "Error",
-		 * JOptionPane.ERROR_MESSAGE); break; }
-		 */
+	    if (context.getEvento() == Evento.ALTA_EMPLEADO_DE_CAJA_OK) {
+	        JOptionPane.showMessageDialog(this, "Empleado de caja dado de alta correctamente con id: " + resultado, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	    } else if (context.getEvento() == Evento.ALTA_EMPLEADO_DE_CAJA_KO) {
 
+	        switch (resultado) {
+	            case -4:
+	                JOptionPane.showMessageDialog(this, "Error: El nombre del empleado es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
+	                break;
+	            case -404:
+	                JOptionPane.showMessageDialog(this, "Error: El turno especificado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+	                break;
+	            case -403:
+	                JOptionPane.showMessageDialog(this, "Error: El turno asociado no está activo.", "Error", JOptionPane.ERROR_MESSAGE);
+	                break;
+	            case -501:
+	                JOptionPane.showMessageDialog(this, "Error: Ya existe un empleado con el mismo DNI y está activo.", "Error", JOptionPane.ERROR_MESSAGE);
+	                break;
+	            default:
+	                JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta el empleado de caja.", "Error", JOptionPane.ERROR_MESSAGE);
+	                break;
+	        }
+	    }
 	}
 }
