@@ -38,7 +38,9 @@ public class GUIListarEmpleadoDeCajaPorNombre extends JFrame implements IGUI {
     String seleccion = "";
 
 public GUIListarEmpleadoDeCajaPorNombre() {
+	
     super("Listar Empleados de Caja por Nombre");
+   
 	Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 	int ancho = 1000;
 	int alto = 525;
