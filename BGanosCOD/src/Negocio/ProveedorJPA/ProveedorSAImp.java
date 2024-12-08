@@ -214,14 +214,18 @@ public class ProveedorSAImp implements ProveedorSA {
 		prov.setId(-1); // Error general
 		EntityManager em = null;
 
-		if (CIF == null || CIF.isEmpty() ) {
+		if (CIF == null || CIF.isEmpty()) {
 			prov.setId(-2); // CIF debe estar completo
 
 		} else {
 			try {
-				em = EMFSingleton.getInstance().getEMF().createEntityManager();
 
-				Proveedor provExiste = em.find(Proveedor.class, CIF);
+				em = EMFSingleton.getInstance().getEMF().createEntityManager();
+				TypedQuery<Proveedor> query = em.createNamedQuery("Negocio.ProveedorJPA.Proveedor.findByCIF",
+						Proveedor.class);
+				query.setParameter("CIF", CIF);
+
+				Proveedor provExiste = query.getSingleResult();
 
 				if (provExiste != null) {
 					prov = provExiste.entityToTransfer();
