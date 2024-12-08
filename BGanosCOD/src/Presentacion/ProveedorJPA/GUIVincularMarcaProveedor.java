@@ -23,7 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-
+import Negocio.ProveedorJPA.TMarcaProveedor;
 
 @SuppressWarnings("serial")
 public class GUIVincularMarcaProveedor extends JFrame implements IGUI {
@@ -78,7 +78,7 @@ public class GUIVincularMarcaProveedor extends JFrame implements IGUI {
 		textId_Marca = new JTextField(20);
 		gbc.gridx = 1; // Columna 1
 		mainPanel.add(textId_Marca, gbc);
-		
+
 		// Panel de botones
 		JPanel panelBotones = new JPanel();
 		gbc.gridx = 0;
@@ -95,20 +95,19 @@ public class GUIVincularMarcaProveedor extends JFrame implements IGUI {
 				try {
 					String idTexto1 = textId_Proveedor.getText();
 					Integer idProveedor = idTexto1 != null ? Integer.parseInt(idTexto1) : 0;
-					
+
 					String idTexto2 = textId_Marca.getText();
 					Integer idMarca = idTexto2 != null ? Integer.parseInt(idTexto2) : 0;
 
-					/* ESTO TIENE QUE CAMBIAR A DIOS SABE COMO, PROBLEMA PARA TI IVAN DEL FUTURO
-					 * TTiene tiene = new TTiene();
-					 *	tiene.setId_Invernadero(idProveedor);
-					 *	tiene.setId_SistemasDeRiego(idSisRiego);*/
-					
-					/*ApplicationController.getInstance()
-							.manageRequest(new Context(Evento.VINCULAR_SISTEMA_RIEGO_A_INVERNADERO, tiene));*/
+					TMarcaProveedor mp = new TMarcaProveedor();
+					mp.setIdProveedor(idProveedor);
+					mp.setIdMarca(idMarca);
+
+					ApplicationController.getInstance().manageRequest(new Context(Evento.VINCULAR_MARCA_PROVEEDOR, mp));
+
 				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(GUIVincularMarcaProveedor.this, "Error en el formato del ID o campos vacios", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(GUIVincularMarcaProveedor.this,
+							"Error en el formato del ID o campos vacios", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -127,10 +126,36 @@ public class GUIVincularMarcaProveedor extends JFrame implements IGUI {
 
 		this.setVisible(true);
 	}
-	public void actualizar(Context context) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 
-		// end-user-code
+	public void actualizar(Context context) {
+		int resultado = (int) context.getDatos();
+		if (context.getEvento() == Evento.VINCULAR_MARCA_PROVEEDOR_OK) {
+
+			JOptionPane.showMessageDialog(this, "Proveedor y Marca vinculados correctamente", "Exito",
+					JOptionPane.INFORMATION_MESSAGE);
+		} else if (context.getEvento() == Evento.VINCULAR_MARCA_PROVEEDOR_KO) {
+
+			switch (resultado) {
+			case -1:
+				JOptionPane.showMessageDialog(this, "Error al vincular el Proveedor y la Marca.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -2:
+				JOptionPane.showMessageDialog(this, "Error: Los IDs tienen que ser mayores que 0.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -3:
+				JOptionPane.showMessageDialog(this, "Error: El Proveedor introducido no Existe.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -4:
+				JOptionPane.showMessageDialog(this, "Error: La Marca introducida no existe.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			case -5:
+				JOptionPane.showMessageDialog(this, "Error: El Proveedor y la Marca ya se encuentran vinculados.",
+						"Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			}
+		}
 	}
 }
