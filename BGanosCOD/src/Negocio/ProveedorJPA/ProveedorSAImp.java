@@ -2,6 +2,7 @@ package Negocio.ProveedorJPA;
 
 import java.util.List;
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 import javax.persistence.EntityManager;
@@ -337,10 +338,45 @@ public class ProveedorSAImp implements ProveedorSA {
 	}
 
 	public Set<TProveedor> listarProveedoresDeMarca(Integer idMarca) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TProveedor> proveedoresDeMarca = new LinkedHashSet<>();
+
+		EntityManager em = null;
+		if (idMarca < 1) {
+			TProveedor p = new TProveedor();
+			p.setId(-2);
+			proveedoresDeMarca.clear();
+			proveedoresDeMarca.add(p);
+		} else {
+			try {
+				em = EMFSingleton.getInstance().getEMF().createEntityManager();
+				Marca marca = em.find(Marca.class, idMarca);
+
+				if (marca == null) {
+					TProveedor p = new TProveedor();
+					p.setId(-3);
+					proveedoresDeMarca.clear();
+					proveedoresDeMarca.add(p);
+				} else {
+
+					List<Proveedor> provMarca = marca.getProveedores();
+
+					for (Proveedor p : provMarca) {
+						proveedoresDeMarca.add(new TProveedor(p));
+					}
+				}
+			} catch (Exception e) {
+				TProveedor p = new TProveedor();
+				p.setId(-1);
+				proveedoresDeMarca.clear();
+				proveedoresDeMarca.add(p);
+			} finally {
+				if (em != null) {
+					em.close();
+				}
+			}
+		}
+
+		return proveedoresDeMarca;
 	}
 
 	/* FUNCIONES DE SOPORTE */
