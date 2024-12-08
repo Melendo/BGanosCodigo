@@ -259,7 +259,7 @@ public class ProveedorSAImp implements ProveedorSA {
 				transaction.begin();
 
 				Proveedor prov = em.find(Proveedor.class, idProv);
-				Marca marca = em.find(Marca.class, idMarca, LockModeType.OPTIMISTIC);
+				Marca marca = em.find(Marca.class, idMarca, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
 				if (prov != null && prov.getActivo()) {
 					if (marca != null && marca.getActivo()) {
 
@@ -304,7 +304,7 @@ public class ProveedorSAImp implements ProveedorSA {
 				transaction.begin();
 
 				Proveedor prov = em.find(Proveedor.class, idProv);
-				Marca marca = em.find(Marca.class, idMarca, LockModeType.OPTIMISTIC);
+				Marca marca = em.find(Marca.class, idMarca, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
 				if (prov != null && prov.getActivo()) {
 					if (marca != null && marca.getActivo()) {
 
