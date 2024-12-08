@@ -19,19 +19,19 @@ import Negocio.TurnoJPA.Turno;
 public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	
 	public Integer altaEmpleadoDeCaja(TEmpleadoDeCaja empleado) {
-	    System.out.println("DENTROOO");
-
-	    if (empleado == null) {
-	        System.out.println("Empleado es nulo");
-	        return -1;  // Error por empleado nulo
-	    }
+	    
 
 	    Integer id = -1;
 	    boolean exito = false;
 	    EmpleadoDeCaja empleadoExistente = null;
 	    EmpleadoDeCaja empleadoNuevo = null;
 	    Turno turno = null;
+	    String nombre = empleado.getNombre();
 	    
+	    
+	    if (nombre == null || nombre.isEmpty()){
+			return -4;
+		}
 
 	    EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
 	    EntityTransaction entityTrans = entityManager.getTransaction();
@@ -117,7 +117,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 		int res = -1;
 		
     	
-        if (idEmpleado != null && idEmpleado > 0) {
+        if (idEmpleado == null || idEmpleado < 0) {
             return -4; // id incorrecto
         }
 
@@ -130,21 +130,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 		if(empleado != null){ 
 			if(empleado.getActivo()){
 				empleado.setActivo(false);
-//				// Obtenemos el turno por id
-//				TypedQuery<Turno> query2 = entityManager.createNamedQuery("Negocio.TurnoJPA.Turno.findByid", Turno.class);
-//				query2.setParameter("id", empleado.getTurno().getId());
-//				
-//				Turno turno = null;
-//				try {
-//					turno = query2.getSingleResult();
-//				} catch (Exception e) {
-//					
-//					entityTrans.rollback();
-//			        entityManager.close();
-//					return -115;
-//				}
-//				//turno?
-				
+
 				
 				try {				
 					entityTrans.commit();
@@ -178,7 +164,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 		Integer res = -1;
 		String nombre = empleado.getNombre();
 		
-		if (nombre != null && !nombre.isEmpty()){
+		if (nombre == null || nombre.isEmpty()){
 			return -4;
 		}
 		
@@ -269,7 +255,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	
 	public TEmpleadoDeCaja MostrarEmpleadoDeCajaPorId(Integer id) {
 
-		if (id != null && id > 0) {
+		if (id == null || id < 0) {
 			return null; // id incorrecto
 	    }
 
