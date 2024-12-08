@@ -5,33 +5,30 @@ package Presentacion.EmpleadoDeCajaJPA;
 
 import javax.swing.JFrame;
 import Presentacion.Controller.Command.Context;
-import Presentacion.Fabricante.GUIAltaFabricante;
+
 import Presentacion.FactoriaVistas.Evento;
 
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
-import javax.swing.JDialog;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+
 import java.awt.GridLayout;
-import java.awt.Insets;
+
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.font.TextHitInfo;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
