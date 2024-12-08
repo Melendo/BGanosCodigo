@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import Presentacion.Controller.Command.Context;
 import Presentacion.Fabricante.GUIAltaFabricante;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.SistemaDeRiego.GUIAltaSistemaDeRiego;
+
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import javax.swing.JDialog;
@@ -15,7 +15,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -25,256 +30,157 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.TextHitInfo;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import Negocio.EmpleadoDeCajaJPA.TEmpleadoCompleto;
 import Negocio.EmpleadoDeCajaJPA.TEmpleadoDeCaja;
 import Negocio.EmpleadoDeCajaJPA.TEmpleadoParcial;
-import Negocio.Fabricante.TFabricante;
-import Negocio.Fabricante.TFabricanteExtranjero;
-import Negocio.Fabricante.TFabricanteLocal;;
+
 
 public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
 
-	private JDialog jDialog;
+	private JTextField textNombre, textApellido, textDNI, textTelefono, textSueldo, textIdTurno;
+    private JTextField textSueldoBase, textComplemento, textPrecioHora, textHoras;
+    private Boolean tCompleto = false;
 
-	private JLabel jLabel;
+    public GUIAltaEmpleadoDeCaja() {
+        super("Alta Empleado De Caja");
 
-	private JPanel jPanel;
+        // Configuración de la ventana
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int ancho = 800, alto = 600; // Tamaño ajustado para centrado
+        int x = (pantalla.width - ancho) / 2;
+        int y = (pantalla.height - alto) / 2;
+        this.setBounds(x, y, ancho, alto);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setLayout(new BorderLayout());
 
-	private JButton jButton;
+        // Inicializar la interfaz gráfica
+        initGUI();
+    }
 
-	private JTextField jTextField;
+    private void initGUI() {
+        // Panel principal
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        this.setContentPane(mainPanel);
 
-	private JTextField textNombre;
-	private JTextField textApellido;
-	private JTextField textDNI;
-	private JTextField textTelefono;
-	private JTextField textSueldo;
-	private JTextField textIdTurno;
-	private JTextField textSueldoBase;
-	private JTextField textComplemento;
-	private JTextField textPrecioHora;
-	private JTextField textHoras;
+        // Título
+        JLabel titleLabel = new JLabel("Alta de Empleado de Caja", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        mainPanel.add(titleLabel, BorderLayout.NORTH);
 
-	private Boolean tCompleto = false;
+        // Panel de contenido centrado
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        mainPanel.add(contentPanel, BorderLayout.CENTER);
 
-	public GUIAltaEmpleadoDeCaja() {
-		super("Alta Empleado De Caja");
+        // Tipo de empleado
+        JPanel panelTEmpleado = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel labelTEmpleado = new JLabel("Tipo de Empleado: ");
+        JComboBox<String> tipoEmpleado = new JComboBox<>(new String[]{"Completo", "Parcial"});
+        tipoEmpleado.setPreferredSize(new Dimension(200, 25));
+        panelTEmpleado.add(labelTEmpleado);
+        panelTEmpleado.add(tipoEmpleado);
+        contentPanel.add(panelTEmpleado);
 
-		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        // Campos generales
+        contentPanel.add(createInputPanel("Nombre: ", textNombre = new JTextField(15)));
+        contentPanel.add(createInputPanel("Apellido: ", textApellido = new JTextField(15)));
+        contentPanel.add(createInputPanel("DNI: ", textDNI = new JTextField(15)));
+        contentPanel.add(createInputPanel("Teléfono: ", textTelefono = new JTextField(15)));
+        contentPanel.add(createInputPanel("Sueldo: ", textSueldo = new JTextField(15)));
+        contentPanel.add(createInputPanel("ID del turno: ", textIdTurno = new JTextField(15)));
 
-		int ancho = 1000;
-		int alto = 525;
+        // Panel de empleado completo
+        JPanel E_Completo = new JPanel(new GridLayout(2, 2, 10, 10));
+        E_Completo.setBorder(BorderFactory.createTitledBorder("Empleado Completo"));
+        E_Completo.add(new JLabel("Sueldo Base: "));
+        E_Completo.add(textSueldoBase = new JTextField(15));
+        E_Completo.add(new JLabel("Complementos: "));
+        E_Completo.add(textComplemento = new JTextField(15));
+        E_Completo.setVisible(true);
+        contentPanel.add(E_Completo);
 
-		int x = (pantalla.width - ancho) / 2;
-		int y = (pantalla.height - alto) / 2;
+        // Panel de empleado parcial
+        JPanel E_Parcial = new JPanel(new GridLayout(2, 2, 10, 10));
+        E_Parcial.setBorder(BorderFactory.createTitledBorder("Empleado Parcial"));
+        E_Parcial.add(new JLabel("Precio Hora: "));
+        E_Parcial.add(textPrecioHora = new JTextField(15));
+        E_Parcial.add(new JLabel("Horas: "));
+        E_Parcial.add(textHoras = new JTextField(15));
+        E_Parcial.setVisible(false);
+        contentPanel.add(E_Parcial);
 
-		this.setBounds(x, y, ancho, alto);
-		this.setLayout(null);
+        // Acción del selector de tipo de empleado
+        tipoEmpleado.addActionListener(e -> {
+            String option = (String) tipoEmpleado.getSelectedItem();
+            tCompleto = "Completo".equals(option);
+            E_Completo.setVisible(tCompleto);
+            E_Parcial.setVisible(!tCompleto);
+        });
 
-		this.setResizable(false);
+        // Panel de botones
+        JPanel okCancel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JButton botonAceptar = new JButton("Aceptar");
+        botonAceptar.addActionListener(this::handleAceptar);
+        JButton botonCancelar = new JButton("Cancelar");
+        botonCancelar.addActionListener(this::handleCancelar);
+        okCancel.add(botonAceptar);
+        okCancel.add(botonCancelar);
+        contentPanel.add(okCancel);
 
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+    }
 
-		initGUI();
+    private JPanel createInputPanel(String labelText, JTextField textField) {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel label = new JLabel(labelText);
+        panel.add(label);
+        panel.add(textField);
+        return panel;
+    }
 
-	}
+    private void handleAceptar(ActionEvent e) {
+        try {
+            TEmpleadoDeCaja empleado;
+            if (tCompleto) {
+                empleado = new TEmpleadoCompleto();
+                ((TEmpleadoCompleto) empleado).setSueldo_Base(Double.parseDouble(textSueldoBase.getText()));
+                ((TEmpleadoCompleto) empleado).setComplementos(Double.parseDouble(textComplemento.getText()));
+            } else {
+                empleado = new TEmpleadoParcial();
+                ((TEmpleadoParcial) empleado).setPrecio_h(Double.parseDouble(textPrecioHora.getText()));
+                ((TEmpleadoParcial) empleado).setHoras(Double.parseDouble(textHoras.getText()));
+            }
 
-	private void initGUI() {
+            empleado.setNombre(textNombre.getText());
+            empleado.setApellido(textApellido.getText());
+            empleado.setDNI(textDNI.getText());
+            empleado.setTelefono(Integer.parseInt(textTelefono.getText()));
+            empleado.setSueldo(Double.parseDouble(textSueldo.getText()));
+            empleado.setId_Turno(Integer.parseInt(textIdTurno.getText()));
 
-		// Panel principal
-		JPanel mainPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = new Insets(10, 10, 10, 10); // Margenes entre componentes
-		this.setContentPane(mainPanel);
+            ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_EMPLEADO_DE_CAJA, empleado));
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el formato de los datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
-		// Titulo
-		gbc.gridwidth = 2; // Dos columnas para el titulo
-		JLabel msgIntro = new JLabel("Introduzca los datos del empleado de caja", JLabel.CENTER);
-		mainPanel.add(msgIntro, gbc);
-
-		// Resetear para los campos
-		gbc.gridwidth = 1;
-		gbc.gridy = 1;
-
-		// Nombre del empleado de caja
-		JLabel labelNombre = new JLabel("Nombre: ");
-		gbc.gridx = 0;
-		mainPanel.add(labelNombre, gbc);
-		textNombre = new JTextField(20);
-		gbc.gridx = 1;
-		mainPanel.add(textNombre, gbc);
-
-		// Apellido
-		JLabel labelApellido = new JLabel("Apellido: ");
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		mainPanel.add(labelApellido, gbc);
-		textApellido = new JTextField(20);
-		gbc.gridx = 1;
-		mainPanel.add(textApellido, gbc);
-
-		// DNI
-		JLabel labelDNI = new JLabel("DNI: ");
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-		mainPanel.add(labelDNI, gbc);
-		textDNI = new JTextField(20);
-		gbc.gridx = 1;
-		mainPanel.add(textDNI, gbc);
-
-		// Telefono
-		JLabel labelTelefono = new JLabel("Telefono: ");
-		gbc.gridx = 0;
-		gbc.gridy = 4;
-		mainPanel.add(labelTelefono, gbc);
-		textTelefono = new JTextField(20);
-		gbc.gridx = 1;
-		mainPanel.add(textTelefono, gbc);
-
-		// Sueldo
-		JLabel labelSueldo = new JLabel("Sueldo: ");
-		gbc.gridx = 0;
-		gbc.gridy = 5;
-		mainPanel.add(labelSueldo, gbc);
-		textSueldo = new JTextField(20);
-		gbc.gridx = 1;
-		mainPanel.add(textSueldo, gbc);
-
-		// IdTurno
-		JLabel labelIdTurno = new JLabel("ID del turno del empleado: ");
-		gbc.gridx = 0;
-		gbc.gridy = 6;
-		mainPanel.add(labelIdTurno, gbc);
-		textIdTurno = new JTextField(20);
-		gbc.gridx = 1;
-		mainPanel.add(textIdTurno, gbc);
-
-		// Panel de botones E.completo/E.parcial
-		JPanel completoParcial = new JPanel();
-		gbc.gridx = 0;
-		gbc.gridy = 7;
-		gbc.gridwidth = 2;
-		gbc.anchor = GridBagConstraints.CENTER;
-		mainPanel.add(completoParcial, gbc);
-
-		// Empleado Completo
-		JPanel E_Completo = new JPanel(new GridLayout(2, 2, 0, 18));
-		E_Completo.setVisible(false);
-		gbc.gridx = 0;
-		gbc.gridy = 8;
-		gbc.gridheight = 2;
-		gbc.anchor = GridBagConstraints.CENTER;
-		mainPanel.add(E_Completo, gbc);
-
-		// SueldoBase
-		JLabel labelSueldoBase = new JLabel("Sueldo Base: ");
-		E_Completo.add(labelSueldoBase);
-		textSueldoBase = new JTextField(20);
-		E_Completo.add(textSueldoBase);
-
-		// Complementos
-		JLabel labelComplemento = new JLabel("Subvenciones: ");
-		E_Completo.add(labelComplemento, gbc);
-		textComplemento = new JTextField(20);
-		E_Completo.add(textComplemento, gbc);
-
-		// Empleado Parcial
-		JPanel E_parcial = new JPanel(new GridLayout(2, 2, 0, 18));
-		E_parcial.setVisible(false);
-		gbc.gridx = 0;
-		gbc.gridy = 8;
-		gbc.gridheight = 2;
-		gbc.anchor = GridBagConstraints.CENTER;
-		mainPanel.add(E_parcial, gbc);
-
-		// Precio Hora
-		JLabel labelPrecioHora = new JLabel("Precio Hora: ");
-		E_Completo.add(labelPrecioHora);
-		textPrecioHora = new JTextField(20);
-		E_Completo.add(textPrecioHora);
-
-		// Horas
-		JLabel labelHoras = new JLabel("Horas: ");
-		E_Completo.add(labelPrecioHora);
-		textHoras = new JTextField(20);
-		E_Completo.add(textHoras);
-
-		// Boton Empleado completo
-		JButton bCompleto = new JButton("Empleado Completo");
-		bCompleto.addActionListener(a -> {
-			tCompleto = true;
-			E_Completo.setVisible(true);
-			E_parcial.setVisible(false);
-		});
-		completoParcial.add(bCompleto);
-
-		// Boton Empleado Parcial
-		JButton bParcial = new JButton("Empleado Parcial");
-		bParcial.addActionListener(a -> {
-			tCompleto = false;
-			E_parcial.setVisible(true);
-			E_Completo.setVisible(false);
-		});
-		completoParcial.add(bParcial);
-
-		// Panel de botones aceptar/cancelar
-		JPanel okCancel = new JPanel();
-		gbc.gridx = 0;
-		gbc.gridy = 8;
-		gbc.gridwidth = 2;
-		gbc.anchor = GridBagConstraints.CENTER;
-		mainPanel.add(okCancel, gbc);
-
-		// Boton Aceptar
-		JButton botonAceptar = new JButton("Aceptar");
-		botonAceptar.addActionListener(a -> {
-			try {
-				TEmpleadoDeCaja empleado;
-				if (tCompleto) {
-					empleado = new TEmpleadoCompleto();
-					((TEmpleadoCompleto) empleado).setSueldo_Base(Double.parseDouble(textSueldoBase.getText()));
-					((TEmpleadoCompleto) empleado).setComplementos(Double.parseDouble(textComplemento.getText()));
-
-				} else {
-					empleado = new TEmpleadoParcial();
-					((TEmpleadoParcial) empleado).setHoras(Double.parseDouble(textHoras.getText()));
-					((TEmpleadoParcial) empleado).setPrecio_h(Double.parseDouble(textPrecioHora.getText()));
-					;
-				}
-
-				empleado.setNombre(textNombre.getText());
-				empleado.setApellido(textApellido.getText());
-				empleado.setDNI(textDNI.getText());
-				empleado.setTelefono(Integer.parseInt(textTelefono.getText()));
-				empleado.setSueldo(Double.parseDouble(textSueldo.getText()));
-				empleado.setId_Turno(Integer.parseInt(textIdTurno.getText()));
-
-				ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_EMPLEADO_DE_CAJA, empleado));
-			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(GUIAltaEmpleadoDeCaja.this, "Error en el formato de los datos", "Error",
-						JOptionPane.ERROR_MESSAGE);
-			}
-
-		});
-		okCancel.add(botonAceptar);
-
-		// Boton Cancelar
-		JButton botonCancelar = new JButton("Cancelar");
-		botonCancelar.addActionListener(a -> {
-			GUIAltaEmpleadoDeCaja.this.setVisible(false);
-			ApplicationController.getInstance().manageRequest(new Context(Evento.EMPLEADO_DE_CAJA_VISTA, null));
-		});
-
-		okCancel.add(botonCancelar);
-
-		setVisible(true);
-
-	}
-
+    private void handleCancelar(ActionEvent e) {
+        this.setVisible(false);
+        ApplicationController.getInstance().manageRequest(new Context(Evento.EMPLEADO_DE_CAJA_VISTA, null));
+    }
+    
 	@Override
 	public void actualizar(Context context) {
 		int resultado = (int) context.getDatos();
