@@ -74,7 +74,7 @@ public class GUIListarEmpleadoDeCaja extends JFrame implements IGUI {
 			tablaDatos[i][5] = empleado.getSueldo().toString();
 			tablaDatos[i][6] = empleado.getId_Turno().toString();
 			tablaDatos[i][7] = (empleado instanceof TEmpleadoParcial) ? "Parcial" : "Completo";
-			//tablaDatos[i][8] = empleado.getActivo() ? "Sí" : "No";
+			tablaDatos[i][8] = empleado.getActivo() ? "Sí" : "No";
 			i++;
 		}
 		
