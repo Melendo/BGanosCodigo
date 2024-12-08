@@ -1,241 +1,153 @@
-/**
- * 
- */
 package Presentacion.EmpleadoDeCajaJPA;
 
-import javax.swing.JFrame;
-import Presentacion.Controller.Command.Context;
-import Presentacion.FactoriaVistas.Evento;
+import javax.swing.*;
 import Presentacion.Controller.ApplicationController;
+import Presentacion.Controller.Command.Context;
 import Presentacion.Controller.IGUI;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import Presentacion.FactoriaVistas.Evento;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Toolkit;
-
-import javax.swing.JButton;
-import javax.swing.JTextField;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 
 import Negocio.EmpleadoDeCajaJPA.TEmpleadoCompleto;
 import Negocio.EmpleadoDeCajaJPA.TEmpleadoDeCaja;
 import Negocio.EmpleadoDeCajaJPA.TEmpleadoParcial;
 
-
-@SuppressWarnings("serial")
 public class GUIModificarEmpleadoDeCaja extends JFrame implements IGUI {
 
-    private JTextField textId;
-    private JTextField textNombre;
-    private JTextField textApellido;
-    private JTextField textDNI;
-    private JTextField textTelefono;
-    private JTextField textTurno;
-    private JTextField textSueldoBase;
-    private JTextField textComplemento;
-    private JTextField textHoras;
-    private JTextField textPrecioHora;
-    private Boolean tCompleto;
+    private JTextField textId, textNombre, textApellido, textDNI, textTelefono, textIdTurno;
+    private JTextField textSueldoBase, textComplemento, textPrecioHora, textHoras;
+    private Boolean tCompleto = false;
 
     public GUIModificarEmpleadoDeCaja() {
-        super("Modificar Empleado de Caja");
+        super("Modificar Empleado De Caja");
+
+        // Configuración de la ventana
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        int ancho = 600;
-        int alto = 500;
+        int ancho = 800, alto = 600;
         int x = (pantalla.width - ancho) / 2;
         int y = (pantalla.height - alto) / 2;
         this.setBounds(x, y, ancho, alto);
-        this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setLayout(new BorderLayout());
+
+        // Inicializar la interfaz gráfica
         initGUI();
     }
 
-    public void initGUI() {
+    private void initGUI() {
         // Panel principal
-        JPanel mainPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 10, 10, 10); // Margenes entre componentes
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         this.setContentPane(mainPanel);
 
-        // Titulo
-        gbc.gridwidth = 2; // Dos columnas para el título
-        JLabel msgIntro = new JLabel("Introduzca los nuevos datos del empleado de caja", JLabel.CENTER);
-        mainPanel.add(msgIntro, gbc);
+        // Título
+        JLabel titleLabel = new JLabel("Modificar Empleado de Caja", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        mainPanel.add(titleLabel, BorderLayout.NORTH);
 
-        // Resetear para los campos
-        gbc.gridwidth = 1;
-        gbc.gridy = 1;
+        // Panel de contenido centrado
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        mainPanel.add(contentPanel, BorderLayout.CENTER);
 
-        // ID del empleado
-        JLabel labelID = new JLabel("ID:");
-        gbc.gridx = 0;
-        mainPanel.add(labelID, gbc);
-        textId = new JTextField(20);
-        gbc.gridx = 1;
-        mainPanel.add(textId, gbc);
+        // Tipo de empleado
+        JPanel panelTEmpleado = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel labelTEmpleado = new JLabel("Tipo de Empleado: ");
+        JComboBox<String> tipoEmpleado = new JComboBox<>(new String[]{"Completo", "Parcial"});
+        tipoEmpleado.setPreferredSize(new Dimension(200, 25));
+        panelTEmpleado.add(labelTEmpleado);
+        panelTEmpleado.add(tipoEmpleado);
+        contentPanel.add(panelTEmpleado);
 
-        // Nombre del empleado
-        JLabel labelNombre = new JLabel("Nombre:");
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        mainPanel.add(labelNombre, gbc);
-        textNombre = new JTextField(20);
-        gbc.gridx = 1;
-        mainPanel.add(textNombre, gbc);
+        // Campos generales
+        contentPanel.add(createInputPanel("ID: ", textId = new JTextField(15)));
+        contentPanel.add(createInputPanel("Nombre: ", textNombre = new JTextField(15)));
+        contentPanel.add(createInputPanel("Apellido: ", textApellido = new JTextField(15)));
+        contentPanel.add(createInputPanel("DNI: ", textDNI = new JTextField(15)));
+        contentPanel.add(createInputPanel("Teléfono: ", textTelefono = new JTextField(15)));
+        contentPanel.add(createInputPanel("ID del turno: ", textIdTurno = new JTextField(15)));
 
-        // Apellido del empleado
-        JLabel labelApellido = new JLabel("Apellido:");
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        mainPanel.add(labelApellido, gbc);
-        textApellido = new JTextField(20);
-        gbc.gridx = 1;
-        mainPanel.add(textApellido, gbc);
+        // Panel de empleado completo
+        JPanel E_Completo = new JPanel(new GridLayout(2, 2, 10, 10));
+        E_Completo.setBorder(BorderFactory.createTitledBorder("Empleado Completo"));
+        E_Completo.add(new JLabel("Sueldo Base: "));
+        E_Completo.add(textSueldoBase = new JTextField(15));
+        E_Completo.add(new JLabel("Complementos: "));
+        E_Completo.add(textComplemento = new JTextField(15));
+        E_Completo.setVisible(true);
+        contentPanel.add(E_Completo);
 
-        // DNI del empleado
-        JLabel labelDNI = new JLabel("DNI:");
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        mainPanel.add(labelDNI, gbc);
-        textDNI = new JTextField(20);
-        gbc.gridx = 1;
-        mainPanel.add(textDNI, gbc);
+        // Panel de empleado parcial
+        JPanel E_Parcial = new JPanel(new GridLayout(2, 2, 10, 10));
+        E_Parcial.setBorder(BorderFactory.createTitledBorder("Empleado Parcial"));
+        E_Parcial.add(new JLabel("Precio Hora: "));
+        E_Parcial.add(textPrecioHora = new JTextField(15));
+        E_Parcial.add(new JLabel("Horas: "));
+        E_Parcial.add(textHoras = new JTextField(15));
+        E_Parcial.setVisible(false);
+        contentPanel.add(E_Parcial);
 
-        // Teléfono
-        JLabel labelTelefono = new JLabel("Teléfono:");
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        mainPanel.add(labelTelefono, gbc);
-        textTelefono = new JTextField(20);
-        gbc.gridx = 1;
-        mainPanel.add(textTelefono, gbc);
-
-        // Panel de botones tiempo completo/tiempo parcial
-        JPanel completoParcial = new JPanel();
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(completoParcial, gbc);
-
-        // Boton Tiempo Completo
-        JButton bCompleto = new JButton("Tiempo Completo");
-        bCompleto.addActionListener(a -> {
-            tCompleto = true;
-            mostrarCamposEmpleadoCompleto(true);
+        // Acción del selector de tipo de empleado
+        tipoEmpleado.addActionListener(e -> {
+            String option = (String) tipoEmpleado.getSelectedItem();
+            tCompleto = "Completo".equals(option);
+            E_Completo.setVisible(tCompleto);
+            E_Parcial.setVisible(!tCompleto);
         });
-        completoParcial.add(bCompleto);
 
-        // Boton Tiempo Parcial
-        JButton bParcial = new JButton("Tiempo Parcial");
-        bParcial.addActionListener(a -> {
-            tCompleto = false;
-            mostrarCamposEmpleadoCompleto(false);
-        });
-        completoParcial.add(bParcial);
-
-        // Panel Tiempo Completo
-        JLabel labelSueldoBase = new JLabel("Sueldo Base:");
-        gbc.gridx = 0;
-        gbc.gridy = 7;
-        mainPanel.add(labelSueldoBase, gbc);
-        textSueldoBase = new JTextField(20);
-        gbc.gridx = 1;
-        mainPanel.add(textSueldoBase, gbc);
-
-        JLabel labelComplemento = new JLabel("Complemento:");
-        gbc.gridx = 0;
-        gbc.gridy = 8;
-        mainPanel.add(labelComplemento, gbc);
-        textComplemento = new JTextField(20);
-        gbc.gridx = 1;
-        mainPanel.add(textComplemento, gbc);
-
-        // Panel Tiempo Parcial
-        JLabel labelHoras = new JLabel("Horas:");
-        gbc.gridx = 0;
-        gbc.gridy = 9;
-        mainPanel.add(labelHoras, gbc);
-        textHoras = new JTextField(20);
-        gbc.gridx = 1;
-        mainPanel.add(textHoras, gbc);
-
-        JLabel labelPrecioHora = new JLabel("Precio Hora:");
-        gbc.gridx = 0;
-        gbc.gridy = 10;
-        mainPanel.add(labelPrecioHora, gbc);
-        textPrecioHora = new JTextField(20);
-        gbc.gridx = 1;
-        mainPanel.add(textPrecioHora, gbc);
-
-        // Turno
-        JLabel labelTurno = new JLabel("ID Turno:");
-        gbc.gridx = 0;
-        gbc.gridy = 11;
-        mainPanel.add(labelTurno, gbc);
-        textTurno = new JTextField(20);
-        gbc.gridx = 1;
-        mainPanel.add(textTurno, gbc);
-
-        // Panel de botones aceptar/cancelar
-        JPanel okCancel = new JPanel();
-        gbc.gridx = 0;
-        gbc.gridy = 12;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(okCancel, gbc);
-
-        // Boton Aceptar
+        // Panel de botones
+        JPanel okCancel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton botonAceptar = new JButton("Aceptar");
-        botonAceptar.addActionListener(a -> {
-            try {
-                TEmpleadoDeCaja empleado;
-                if (tCompleto) {
-                    empleado = new TEmpleadoCompleto();
-                    ((TEmpleadoCompleto) empleado).setSueldo_Base(Double.parseDouble(textSueldoBase.getText()));
-                    ((TEmpleadoCompleto) empleado).setComplementos(Double.parseDouble(textComplemento.getText()));
-                } else {
-                    empleado = new TEmpleadoParcial();
-                    ((TEmpleadoParcial) empleado).setHoras(Double.parseDouble(textHoras.getText()));
-                    ((TEmpleadoParcial) empleado).setPrecio_h(Double.parseDouble(textPrecioHora.getText()));
-                }
-                empleado.setID(Integer.parseInt(textId.getText()));
-                empleado.setNombre(textNombre.getText());
-                empleado.setApellido(textApellido.getText());
-                empleado.setDNI(textDNI.getText());
-                empleado.setTelefono(Integer.parseInt(textTelefono.getText()));
-                empleado.setId_Turno(Integer.parseInt(textTurno.getText()));
-                ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_EMPLEADO_DE_CAJA, empleado));
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(GUIModificarEmpleadoDeCaja.this, "Error en el formato de los datos", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        okCancel.add(botonAceptar);
-
-        // Boton Cancelar
+        botonAceptar.addActionListener(this::handleAceptar);
         JButton botonCancelar = new JButton("Cancelar");
-        botonCancelar.addActionListener(a -> {
-            GUIModificarEmpleadoDeCaja.this.setVisible(false);
-            ApplicationController.getInstance().manageRequest(new Context(Evento.EMPLEADO_DE_CAJA_VISTA, null));
-        });
+        botonCancelar.addActionListener(this::handleCancelar);
+        okCancel.add(botonAceptar);
         okCancel.add(botonCancelar);
+        contentPanel.add(okCancel);
 
-        setVisible(true);
+        this.setVisible(true);
     }
 
+    private JPanel createInputPanel(String labelText, JTextField textField) {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel label = new JLabel(labelText);
+        panel.add(label);
+        panel.add(textField);
+        return panel;
+    }
 
-    private void mostrarCamposEmpleadoCompleto(boolean completo) {
-        textSueldoBase.setVisible(completo);
-        textComplemento.setVisible(completo);
-        textHoras.setVisible(!completo);
-        textPrecioHora.setVisible(!completo);
+    private void handleAceptar(ActionEvent e) {
+        try {
+            TEmpleadoDeCaja empleado;
+            if (tCompleto) {
+                empleado = new TEmpleadoCompleto();
+                ((TEmpleadoCompleto) empleado).setSueldo_Base(Double.parseDouble(textSueldoBase.getText()));
+                ((TEmpleadoCompleto) empleado).setComplementos(Double.parseDouble(textComplemento.getText()));
+            } else {
+                empleado = new TEmpleadoParcial();
+                ((TEmpleadoParcial) empleado).setPrecio_h(Double.parseDouble(textPrecioHora.getText()));
+                ((TEmpleadoParcial) empleado).setHoras(Double.parseDouble(textHoras.getText()));
+            }
+
+            empleado.setID(Integer.parseInt(textId.getText()));
+            empleado.setNombre(textNombre.getText());
+            empleado.setApellido(textApellido.getText());
+            empleado.setDNI(textDNI.getText());
+            empleado.setTelefono(Integer.parseInt(textTelefono.getText()));
+            empleado.setId_Turno(Integer.parseInt(textIdTurno.getText()));
+
+            ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_EMPLEADO_DE_CAJA, empleado));
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el formato de los datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void handleCancelar(ActionEvent e) {
+        this.setVisible(false);
+        ApplicationController.getInstance().manageRequest(new Context(Evento.EMPLEADO_DE_CAJA_VISTA, null));
     }
 
     @Override
@@ -243,9 +155,8 @@ public class GUIModificarEmpleadoDeCaja extends JFrame implements IGUI {
         int resultado = (int) context.getDatos();
 
         if (context.getEvento() == Evento.MODIFICAR_EMPLEADO_DE_CAJA_OK) {
-            JOptionPane.showMessageDialog(this, "Empleado de caja " + resultado + " modificado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Empleado de caja modificado correctamente con ID: " + resultado, "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } else if (context.getEvento() == Evento.MODIFICAR_EMPLEADO_DE_CAJA_KO) {
-
             switch (resultado) {
                 case -4:
                     JOptionPane.showMessageDialog(this, "Error: El nombre del empleado es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -265,5 +176,4 @@ public class GUIModificarEmpleadoDeCaja extends JFrame implements IGUI {
             }
         }
     }
-
-    }
+}
