@@ -15,7 +15,7 @@ public class MostrarEmpleadoDeCajaPorIdCommand implements Command {
 	
 	public Context execute(Object datos) {
 		TEmpleadoDeCaja res = FactoriaNegocio.getInstance().getEmpleadoDeCajaJPA().MostrarEmpleadoDeCajaPorId((int) datos);
-		if (res.getID() > -1) {
+		if (res != null) {
 			return new Context(Evento.MOSTAR_EMPLEADO_DE_CAJA_POR_ID_OK, res);
 		} else {
 			return new Context(Evento. MOSTAR_EMPLEADO_DE_CAJA_POR_ID_KO, res);
