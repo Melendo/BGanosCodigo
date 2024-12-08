@@ -166,6 +166,7 @@ public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
             empleado.setTelefono(Integer.parseInt(textTelefono.getText()));
             empleado.setSueldo(Double.parseDouble(textSueldo.getText()));
             empleado.setId_Turno(Integer.parseInt(textIdTurno.getText()));
+            empleado.setActivo(true);
            
             ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_EMPLEADO_DE_CAJA, empleado));
         } catch (NumberFormatException ex) {
