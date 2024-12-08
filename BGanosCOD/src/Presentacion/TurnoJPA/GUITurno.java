@@ -90,7 +90,7 @@ public class GUITurno extends JFrame implements IGUI {
         this.add(bListar);
         bListar.addActionListener(a -> {
             this.setVisible(false);
-            ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_TURNO_VISTA));
+            ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_TURNO));
         });
 
         // Obtener Nómina del Turno

@@ -13,9 +13,9 @@ public class CommandObtenerNominaDelTurno implements Command {
 	public Context execute(Object datos) {
 		Float resultado = FactoriaNegocio.getInstance().getTurnoJPA().obtenerNominaDelTurno((Integer)datos);
 		if(resultado >= 0) {
-			return new Context(Evento.ALTA_TURNO_OK,resultado);
+			return new Context(Evento.OBTENER_NOMINA_DE_TURNO_OK,resultado);
 		}else {
-			return new Context(Evento.ALTA_TURNO_KO,resultado);
+			return new Context(Evento.OBTENER_NOMINA_DE_TURNO_KO,resultado);
 		}
 	}
 }

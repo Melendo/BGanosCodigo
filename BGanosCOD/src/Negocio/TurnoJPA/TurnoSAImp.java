@@ -129,6 +129,7 @@ public class TurnoSAImp implements TurnoSA {
 	    Turno turnoBD = em.find(Turno.class, turno.getId());
 
 	    if (turnoBD != null && turnoBD.isActivo()) {
+	    	turno.setActivo(turnoBD.isActivo());
     		TypedQuery<Turno> query = em.createNamedQuery("Negocio.TurnoJPA.Turno.findByhorario", Turno.class);
     		query.setParameter("horario", turno.getHorario());
     		int numTurnos;
@@ -218,6 +219,7 @@ public class TurnoSAImp implements TurnoSA {
 	        }
 
 			TypedQuery<EmpleadoDeCaja> query = em.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByturno", EmpleadoDeCaja.class);
+			query.setParameter("turno", turno);
 			
 			List<EmpleadoDeCaja> l = query.getResultList();
 			

@@ -13,9 +13,9 @@ public class CommandMostrarTurno implements Command {
 	public Context execute(Object datos) {
 		TTurno resultado = FactoriaNegocio.getInstance().getTurnoJPA().mostrarTurno((Integer)datos);
 		if(resultado.getId() >= 0) {
-			return new Context(Evento.ALTA_TURNO_OK,resultado);
+			return new Context(Evento.MOSTRAR_TURNO_OK,resultado);
 		}else {
-			return new Context(Evento.ALTA_TURNO_KO,resultado);
+			return new Context(Evento.MOSTRAR_TURNO_KO,resultado);
 		}
 	}
 }
