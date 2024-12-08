@@ -53,6 +53,7 @@ public class GUIListarEmpleadoDeCaja extends JFrame implements IGUI {
 	}
 	
 	public void initGUI(Set<TEmpleadoDeCaja> listaEmpleados) {
+		System.out.println(listaEmpleados);
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);

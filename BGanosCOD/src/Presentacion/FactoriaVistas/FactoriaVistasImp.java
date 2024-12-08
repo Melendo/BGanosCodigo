@@ -97,6 +97,7 @@ import Presentacion.EmpleadoDeCajaJPA.*;
 import java.util.List;
 import java.util.Set;
 
+import Negocio.EmpleadoDeCajaJPA.TEmpleadoDeCaja;
 import Negocio.Entrada.TEntrada;
 import Negocio.Fabricante.TFabricante;
 import Negocio.Factura.TCarrito;
@@ -405,8 +406,12 @@ public class FactoriaVistasImp extends FactoriaVistas {
         	vistaActual=new GUIListarEmpleadoDeCajaPorTurno();
         	return vistaActual;
         case Evento. MOSTAR_EMPLEADO_DE_CAJA_POR_ID_VISTA:
-        	vistaActual=new GUIListarEmpleadoDeCajaPorTurno();
+        	vistaActual=new GUIMostrarEmpleadoDeCajaPorId();
         	return vistaActual;
+        case Evento. LISTAR_EMPLEADOS_DE_CAJA_VISTA:
+        	vistaActual=new GUIListarEmpleadoDeCaja((Set<TEmpleadoDeCaja>) contexto.getDatos());
+        	return vistaActual;
+        	
         	
         	
 //					Vistas Marca JPA

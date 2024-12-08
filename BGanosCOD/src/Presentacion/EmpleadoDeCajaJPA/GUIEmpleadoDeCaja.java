@@ -137,16 +137,15 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 		});
 		
 		//ListarPorId
+		 /*
 				bListarPorId = ComponentsBuilder.createButton("Listar Por Id", 700, 250, 185, 100);
 				bListarPorId.setVisible(true);
 				this.add(bListarPorId);
 				bListarPorId.addActionListener(a -> {
 					GUIEmpleadoDeCaja.this.setVisible(false);
-					ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTAR_EMPLEADO_DE_CAJA_POR_ID_VISTA));// vista
-																																// o
-																																// directamente
-																																// evento?
-				});
+					ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTAR_EMPLEADO_DE_CAJA_POR_ID_VISTA));
+																																
+				});*/
 
 		// Atras
 				bAtras = ComponentsBuilder.createBackButton();
