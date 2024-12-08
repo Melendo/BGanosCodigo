@@ -22,11 +22,14 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import Negocio.EmpleadoDeCajaJPA.TEmpleadoDeCaja;
 
 public class GUIListarEmpleadoDeCajaPorTurno extends JFrame implements IGUI {
 
