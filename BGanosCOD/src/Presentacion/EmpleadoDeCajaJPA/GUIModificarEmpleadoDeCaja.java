@@ -168,6 +168,9 @@ public class GUIModificarEmpleadoDeCaja extends JFrame implements IGUI {
                 case -501:
                     JOptionPane.showMessageDialog(this, "Error: Ya existe un empleado con el mismo DNI y no es el actual.", "Error", JOptionPane.ERROR_MESSAGE);
                     break;
+                case -506:
+                    JOptionPane.showMessageDialog(this, "Error: No se puede cambiar de tipo al Empleado.", "Error", JOptionPane.ERROR_MESSAGE);
+                    break;
                 case -115:
                     JOptionPane.showMessageDialog(this, "Error: El turno especificado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
                     break;
