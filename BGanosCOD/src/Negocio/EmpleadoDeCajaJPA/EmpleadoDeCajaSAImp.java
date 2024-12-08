@@ -219,7 +219,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
     			else{
     				entityTrans.rollback();
     	            entityManager.close();
-    				return -115;
+    				return -114;
     			}
         	}
     		else{
