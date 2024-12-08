@@ -25,11 +25,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 		EmpleadoDeCaja empleadoExistente = null;
 		EmpleadoDeCaja empleadoNuevo = null;
 		Turno turno = null;
-		String nombre = empleado.getNombre();
 		
-		if (nombre != null && !nombre.isEmpty()){
-			return -4;
-		}
 
 		EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
 		EntityTransaction entityTrans = entityManager.getTransaction();

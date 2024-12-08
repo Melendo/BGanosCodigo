@@ -149,7 +149,7 @@ public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
 
     private void handleAceptar(ActionEvent e) {
         try {
-            TEmpleadoDeCaja empleado;
+            TEmpleadoDeCaja empleado = new TEmpleadoDeCaja();
             if (tCompleto) {
                 empleado = new TEmpleadoCompleto();
                 ((TEmpleadoCompleto) empleado).setSueldo_Base(Double.parseDouble(textSueldoBase.getText()));
@@ -166,7 +166,7 @@ public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
             empleado.setTelefono(Integer.parseInt(textTelefono.getText()));
             empleado.setSueldo(Double.parseDouble(textSueldo.getText()));
             empleado.setId_Turno(Integer.parseInt(textIdTurno.getText()));
-
+           
             ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_EMPLEADO_DE_CAJA, empleado));
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Error en el formato de los datos", "Error", JOptionPane.ERROR_MESSAGE);
