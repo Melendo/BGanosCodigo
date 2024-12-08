@@ -1,5 +1,11 @@
 package Presentacion.Controller.Command;
 
+import Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA.AltaEmpleadoDeCajaCommand;
+import Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA.BajaEmpleadoDeCajaCommand;
+import Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA.ListarEmpleadoDeCajaCommand;
+import Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA.ListarEmpleadoDeCajaPorTurnoCommand;
+import Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA.ModificarEmpleadoDeCajaCommand;
+import Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA.MostrarEmpleadoDeCajaPorIdCommand;
 import Presentacion.Controller.Command.CommandEntrada.CommandAltaEntrada;
 import Presentacion.Controller.Command.CommandEntrada.CommandBajaEntrada;
 import Presentacion.Controller.Command.CommandEntrada.CommandListarEntrada;
@@ -232,6 +238,25 @@ public class CommandFactoryImp extends CommandFactory {
 			return new vincularMarcaCommand();
 		case Evento.DESVINCULAR_MARCA_PROVEEDOR:
 			return new desvincularMarcaCommand();
+
+			
+			
+			// Eventos de Empleado De Caja JPA
+		case Evento.ALTA_EMPLEADO_DE_CAJA:
+			return new AltaEmpleadoDeCajaCommand();
+		case Evento.BAJA_EMPLEADO_DE_CAJA:
+			return new BajaEmpleadoDeCajaCommand();
+		case Evento.MODIFICAR_EMPLEADO_DE_CAJA:
+			return new ModificarEmpleadoDeCajaCommand();
+		case Evento.LISTAR_EMPLEADOS_DE_CAJA:
+			return new ListarEmpleadoDeCajaCommand();
+		case Evento.MOSTAR_EMPLEADO_DE_CAJA_POR_ID:
+			return new MostrarEmpleadoDeCajaPorIdCommand();
+		case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO:
+			return new ListarEmpleadoDeCajaPorTurnoCommand();
+		case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE:
+			return new ListarEmpleadoDeCajaPorTurnoCommand();
+	
 		
 
 		}
