@@ -13,6 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import Negocio.Invernadero.TInvernadero;
+import Negocio.ProveedorJPA.TProveedor;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -21,13 +25,14 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
 @SuppressWarnings("serial")
 public class GUIListarProveedoresDeMarca extends JFrame implements IGUI {
-	
+
 	private JTextField idText;
 	private JPanel mainPanel;
 	private JTable tabla;
@@ -56,7 +61,6 @@ public class GUIListarProveedoresDeMarca extends JFrame implements IGUI {
 		panelCentro.setLayout(new FlowLayout(FlowLayout.CENTER));
 		mainPanel.add(panelCentro);
 
-		
 		JLabel labelMarca = new JLabel("Ingrese el id de la Marca:");
 		panelCentro.add(labelMarca);
 
@@ -96,7 +100,7 @@ public class GUIListarProveedoresDeMarca extends JFrame implements IGUI {
 
 		this.setVisible(true);
 	}
-	
+
 	private void buscarPorMarca() {
 		String id = idText.getText().trim();
 		if (id.isEmpty()) {
@@ -107,18 +111,52 @@ public class GUIListarProveedoresDeMarca extends JFrame implements IGUI {
 
 		try {
 			int idMarca = Integer.parseInt(id);
-			ApplicationController.getInstance()
-					.manageRequest(new Context(Evento.LISTAR_PROVEEDORES_DE_MARCA, idMarca));
+			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PROVEEDORES_DE_MARCA, idMarca));
 		} catch (NumberFormatException ex) {
 			JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID valido para la Marca.", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
-	public void actualizar(Context context) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 
-		// end-user-code
+	public void actualizar(Context context) {
+		if (context.getEvento() == Evento.LISTAR_PROVEEDORES_DE_MARCA_OK) {
+			Set<TProveedor> proveedores = (Set<TProveedor>) context.getDatos();
+
+			String[][] datos = new String[proveedores.size()][7];
+			int i = 0;
+			for (TProveedor proveedor : proveedores) {
+				String activo = proveedor.getActivo() ? "Si" : "No";
+				datos[i++] = new String[] { String.valueOf(proveedor.getId()), proveedor.getNombre(),
+						proveedor.getCIF(), proveedor.getTelefono(), activo
+
+				};
+			}
+			tabla.setModel(new javax.swing.table.DefaultTableModel(datos,
+					new String[] { "ID", "Nombre", "CIF", "Telefono", "Activo" }));
+			ComponentsBuilder.adjustColumnWidths(tabla);
+		} else if (context.getEvento() == Evento.LISTAR_PROVEEDORES_DE_MARCA_KO) {
+			Set<TProveedor> resultado = (Set<TProveedor>) context.getDatos();
+			try {
+				int aux = resultado.iterator().next().getId();
+				switch (aux) {
+				case -1:
+					JOptionPane.showMessageDialog(this, "Error al listar los Proveedores de una Marca.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					break;
+				case -2:
+					JOptionPane.showMessageDialog(this, "Error: El ID tiene que ser mayor que 0.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					break;
+				case -3:
+					JOptionPane.showMessageDialog(this, "Error: La Marca introducida no existe.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					break;
+				}
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this, "No hay ningun Proveedor vinculado a la Marca introducida.", "Informacion",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+
+		}
 	}
 }
