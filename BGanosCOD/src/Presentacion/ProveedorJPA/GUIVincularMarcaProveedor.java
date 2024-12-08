@@ -151,6 +151,7 @@ public class GUIVincularMarcaProveedor extends JFrame implements IGUI {
 			case -4:
 				JOptionPane.showMessageDialog(this, "Error: La Marca introducida no existe.", "Error",
 						JOptionPane.ERROR_MESSAGE);
+				break;
 			case -5:
 				JOptionPane.showMessageDialog(this, "Error: El Proveedor y la Marca ya se encuentran vinculados.",
 						"Error", JOptionPane.ERROR_MESSAGE);
