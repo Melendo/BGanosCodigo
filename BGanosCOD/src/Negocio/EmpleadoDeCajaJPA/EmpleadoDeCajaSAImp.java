@@ -278,8 +278,8 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 
 		EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
 
-		TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByturno", EmpleadoDeCaja.class);
-		query.setParameter("id_Turno", idTurno);
+		TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByid_turno", EmpleadoDeCaja.class);
+		query.setParameter("id_turno", idTurno);
 		
 		List<EmpleadoDeCaja> lista = query.getResultList(); 
 		Set<TEmpleadoDeCaja> res = new LinkedHashSet<TEmpleadoDeCaja>(lista.size());

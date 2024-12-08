@@ -91,7 +91,7 @@ public class GUIListarEmpleadoDeCajaPorTurno extends JFrame implements IGUI {
                     JOptionPane.showMessageDialog(GUIListarEmpleadoDeCajaPorTurno.this,
                             "Por favor, inserta un ID de turno.", "ERROR", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO, turnoText.getText()));
+                    ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO, Integer.parseInt(turnoText.getText())));
                 }
             }
         });
