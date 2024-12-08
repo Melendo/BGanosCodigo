@@ -3,6 +3,7 @@ package Presentacion.Controller.Command;
 import Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA.AltaEmpleadoDeCajaCommand;
 import Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA.BajaEmpleadoDeCajaCommand;
 import Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA.ListarEmpleadoDeCajaCommand;
+import Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA.ListarEmpleadoDeCajaPorNombreCommand;
 import Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA.ListarEmpleadoDeCajaPorTurnoCommand;
 import Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA.ModificarEmpleadoDeCajaCommand;
 import Presentacion.Controller.Command.CommandEmpleadoDeCajaJPA.MostrarEmpleadoDeCajaPorIdCommand;
@@ -255,7 +256,7 @@ public class CommandFactoryImp extends CommandFactory {
 		case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO:
 			return new ListarEmpleadoDeCajaPorTurnoCommand();
 		case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE:
-			return new ListarEmpleadoDeCajaPorTurnoCommand();
+			return new ListarEmpleadoDeCajaPorNombreCommand();
 	
 		
 
