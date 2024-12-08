@@ -36,7 +36,8 @@ import javax.persistence.Inheritance;
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByTelefono", query = "select obj from EmpleadoDeCaja obj where :telefono = obj.telefono "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findBySueldo", query = "select obj from EmpleadoDeCaja obj where :Sueldo = obj.Sueldo "),
 		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByid_turno", query = "select obj from EmpleadoDeCaja obj where :id_turno = obj.turno.id "),
-		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByversion", query = "select obj from EmpleadoDeCaja obj where :version = obj.version ") })
+		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByversion", query = "select obj from EmpleadoDeCaja obj where :version = obj.version "), 
+		@NamedQuery(name = "Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findAll", query = "select obj from EmpleadoDeCaja obj order by obj.id") })
 public abstract class EmpleadoDeCaja implements Serializable {
 	
 	private static final long serialVersionUID = 0;
