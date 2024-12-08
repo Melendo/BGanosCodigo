@@ -68,6 +68,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	        if (!empleadoExistente.getActivo()) { // Empleado no activo
 	            id = empleadoExistente.getId();
 	            empleadoExistente.transferToEntity(empleado);
+	            empleadoExistente.setTurno(turno);
 	            // Aquí puedes considerar si hacer algo con el turno
 	            entityTrans.commit();
 	            entityManager.close();
@@ -84,13 +85,14 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	        } else if (empleado instanceof TEmpleadoParcial) {
 	            empleadoNuevo = new EmpleadoParcial(empleado);
 	        } else {
-	            System.out.println("ERROR NO SABE QUE T ES ");
+	        	
 	            entityTrans.rollback();
 	            entityManager.close();
 	            return -1; // Error en el tipo de empleado
 	        }
 
 	        // Persistir nuevo empleado
+	        empleadoNuevo.setTurno(turno);
 	        entityManager.persist(empleadoNuevo);
 	        exito = true;
 	    }

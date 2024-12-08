@@ -152,10 +152,12 @@ public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
             TEmpleadoDeCaja empleado = new TEmpleadoDeCaja();
             if (tCompleto) {
                 empleado = new TEmpleadoCompleto();
+                empleado.setTipo(0);
                 ((TEmpleadoCompleto) empleado).setSueldo_Base(Double.parseDouble(textSueldoBase.getText()));
                 ((TEmpleadoCompleto) empleado).setComplementos(Double.parseDouble(textComplemento.getText()));
             } else {
                 empleado = new TEmpleadoParcial();
+                empleado.setTipo(1);
                 ((TEmpleadoParcial) empleado).setPrecio_h(Double.parseDouble(textPrecioHora.getText()));
                 ((TEmpleadoParcial) empleado).setHoras(Double.parseDouble(textHoras.getText()));
             }
