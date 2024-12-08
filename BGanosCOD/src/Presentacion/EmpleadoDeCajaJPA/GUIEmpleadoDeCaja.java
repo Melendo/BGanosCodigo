@@ -105,7 +105,7 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 		bListar.addActionListener(a -> {
 
 			GUIEmpleadoDeCaja.this.setVisible(false);
-			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_EMPLEADOS_DE_CAJA));// vista
+			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_EMPLEADOS_DE_CAJA_VISTA));// vista
 																											// o
 																											// directamente
 																											// evento?

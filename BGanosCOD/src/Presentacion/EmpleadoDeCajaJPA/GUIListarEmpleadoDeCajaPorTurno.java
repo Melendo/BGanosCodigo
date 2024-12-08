@@ -127,17 +127,41 @@ public class GUIListarEmpleadoDeCajaPorTurno extends JFrame implements IGUI {
 
     @Override
     public void actualizar(Context context) {
-        switch (context.getEvento()) {
-            case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO_KO:
-                GUIMSG.showMessage("No existen empleados para el turno indicado", "LISTAR Empleados por turno", true);
-                break;
-            case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO_OK:
-                ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO_VISTA, context.getDatos()));
-                break;
-            default:
-                GUIMSG.showMessage("ERROR INESPERADO", "LISTAR Empleados por turno", true);
-                break;
+        if (context.getEvento() == Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO_OK) {
+            @SuppressWarnings("unchecked")
+            Set<TEmpleadoDeCaja> listaEmpleados = (Set<TEmpleadoDeCaja>) context.getDatos();
+
+            String[][] datos = new String[listaEmpleados.size()][8];
+            int i = 0;
+            for (TEmpleadoDeCaja empleado : listaEmpleados) {
+                datos[i++] = new String[] {
+                    String.valueOf(empleado.getID()),
+                    empleado.getNombre(),
+                    empleado.getApellido(),
+                    empleado.getDNI(),
+                    String.valueOf(empleado.getTelefono()),
+                    String.valueOf(empleado.getSueldo()),
+                    String.valueOf(empleado.getId_Turno()),
+                    empleado.getActivo() ? "Sí" : "No"
+                };
+            }
+
+            JTable tabla = new JTable(datos, new String[] {
+                "ID", "Nombre", "Apellido", "DNI", "Teléfono", "Sueldo", "ID Turno", "Activo"
+            });
+
+            JScrollPane scrollPane = new JScrollPane(tabla);
+            JOptionPane.showMessageDialog(this, scrollPane, "Empleados de Caja por Turno", JOptionPane.INFORMATION_MESSAGE);
+
+        } else if (context.getEvento() == Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO_KO) {
+            JOptionPane.showMessageDialog(this, "No existen empleados para el turno indicado.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error inesperado al listar empleados por turno.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+        this.setVisible(false);
+        ApplicationController.getInstance().manageRequest(new Context(Evento.EMPLEADO_DE_CAJA_VISTA, null));
     }
+
 
 }
