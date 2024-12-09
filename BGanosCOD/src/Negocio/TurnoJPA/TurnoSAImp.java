@@ -47,6 +47,8 @@ public class TurnoSAImp implements TurnoSA {
         
         if(turnoExistente != null) {
         	if(!turnoExistente.isActivo()) {
+        		turno.setActivo(true);
+        		turno.setId(turnoExistente.getId());
         		turnoExistente.transferToEntity(turno);
                 id = turnoExistente.getId();
                 transaction.commit();
