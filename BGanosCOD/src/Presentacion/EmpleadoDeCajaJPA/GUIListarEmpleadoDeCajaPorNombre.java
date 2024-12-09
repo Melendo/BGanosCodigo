@@ -12,7 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 
+import Negocio.EmpleadoDeCajaJPA.TEmpleadoCompleto;
 import Negocio.EmpleadoDeCajaJPA.TEmpleadoDeCaja;
+import Negocio.EmpleadoDeCajaJPA.TEmpleadoParcial;
 
 public class GUIListarEmpleadoDeCajaPorNombre extends JFrame implements IGUI {
 
@@ -21,12 +23,16 @@ public class GUIListarEmpleadoDeCajaPorNombre extends JFrame implements IGUI {
     private JPanel mainPanel;
     private JTable tabla;
     private JScrollPane scrollPane;
-    private String[] nombreColumnas = { "ID", "Nombre", "Apellido", "DNI", "Teléfono", "Sueldo", "ID Turno", "Activo" };
+    private String[] nombreColumnas = { 
+            "ID", "Nombre", "Apellido", "DNI", "Teléfono", "Sueldo", "ID Turno", "Activo", 
+            "Tipo", "Horas", "Precio Hora", "Sueldo Base", "Complementos" 
+        };
+    
 
     public GUIListarEmpleadoDeCajaPorNombre() {
         super("Listar Empleados de Caja por Nombre");
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        int ancho = 1000;
+        int ancho = 1500;
         int alto = 600;
         int x = (pantalla.width - ancho) / 2;
         int y = (pantalla.height - alto) / 2;
@@ -116,16 +122,41 @@ public class GUIListarEmpleadoDeCajaPorNombre extends JFrame implements IGUI {
             String[][] datos = new String[listaEmpleados.size()][nombreColumnas.length];
             int i = 0;
             for (TEmpleadoDeCaja empleado : listaEmpleados) {
-                datos[i++] = new String[] {
-                        String.valueOf(empleado.getID()),
-                        empleado.getNombre(),
-                        empleado.getApellido(),
-                        empleado.getDNI(),
-                        String.valueOf(empleado.getTelefono()),
-                        String.valueOf(empleado.getSueldo()),
-                        String.valueOf(empleado.getId_Turno()),
-                        empleado.getActivo() ? "Sí" : "No"
-                };
+                if (empleado instanceof TEmpleadoParcial) {
+                    TEmpleadoParcial parcial = (TEmpleadoParcial) empleado;
+                    datos[i++] = new String[] {
+                            String.valueOf(parcial.getID()),
+                            parcial.getNombre(),
+                            parcial.getApellido(),
+                            parcial.getDNI(),
+                            String.valueOf(parcial.getTelefono()),
+                            String.valueOf(parcial.getSueldo()),
+                            String.valueOf(parcial.getId_Turno()),
+                            parcial.getActivo() ? "Sí" : "No",
+                            "Parcial",
+                            String.valueOf(parcial.getHoras()),
+                            String.valueOf(parcial.getPrecio_h()),
+                            "N/A",
+                            "N/A"
+                    };
+                } else if (empleado instanceof TEmpleadoCompleto) {
+                    TEmpleadoCompleto completo = (TEmpleadoCompleto) empleado;
+                    datos[i++] = new String[] {
+                            String.valueOf(completo.getID()),
+                            completo.getNombre(),
+                            completo.getApellido(),
+                            completo.getDNI(),
+                            String.valueOf(completo.getTelefono()),
+                            String.valueOf(completo.getSueldo()),
+                            String.valueOf(completo.getId_Turno()),
+                            completo.getActivo() ? "Sí" : "No",
+                            "Completo",
+                            "N/A",
+                            "N/A",
+                            String.valueOf(completo.getSueldo_Base()),
+                            String.valueOf(completo.getComplementos())
+                    };
+                }
             }
 
             tabla.setModel(new javax.swing.table.DefaultTableModel(datos, nombreColumnas));
@@ -134,5 +165,5 @@ public class GUIListarEmpleadoDeCajaPorNombre extends JFrame implements IGUI {
         } else {
             JOptionPane.showMessageDialog(this, "Error inesperado al listar empleados por nombre.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
+}
 }

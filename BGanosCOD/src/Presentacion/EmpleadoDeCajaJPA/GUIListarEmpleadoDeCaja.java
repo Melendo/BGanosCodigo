@@ -25,6 +25,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+import Negocio.EmpleadoDeCajaJPA.TEmpleadoCompleto;
 import Negocio.EmpleadoDeCajaJPA.TEmpleadoDeCaja;
 import Negocio.EmpleadoDeCajaJPA.TEmpleadoParcial;;
 
@@ -41,8 +42,8 @@ public class GUIListarEmpleadoDeCaja extends JFrame implements IGUI {
 	public GUIListarEmpleadoDeCaja(Set<TEmpleadoDeCaja> listaEmpleados) {
 		super("Mostrar todos los Empleados de Caja");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-		int ancho = 800;
-		int alto = 400;
+		int ancho = 1500;
+		int alto = 600;
 		int x = (pantalla.width - ancho) / 2;
 		int y = (pantalla.height - alto) / 2;
 		this.setBounds(x, y, ancho, alto);
@@ -61,22 +62,40 @@ public class GUIListarEmpleadoDeCaja extends JFrame implements IGUI {
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
 		// Tabla
-		String[] nombreColumnas = { "ID", "Nombre", "Apellido","DNI", "Teléfono", "Sueldo","ID Turno","Tipo","Activo" };
-		String[][] tablaDatos = new String[listaEmpleados.size()][nombreColumnas.length];
+		String[] nombreColumnas = { 
+		        "ID", "Nombre", "Apellido", "DNI", "Teléfono", "Sueldo", 
+		        "ID Turno", "Tipo", "Activo", "Horas", "Precio Hora", "Sueldo Base", "Complementos" 
+		    };
+		    String[][] tablaDatos = new String[listaEmpleados.size()][nombreColumnas.length];
 
-		int i = 0;
-		for (TEmpleadoDeCaja empleado : listaEmpleados) {
-			tablaDatos[i][0] = empleado.getID().toString();
-			tablaDatos[i][1] = empleado.getNombre();
-			tablaDatos[i][2] = empleado.getApellido();
-			tablaDatos[i][3] = empleado.getDNI();
-			tablaDatos[i][4] = empleado.getTelefono().toString();
-			tablaDatos[i][5] = empleado.getSueldo().toString();
-			tablaDatos[i][6] = empleado.getId_Turno().toString();
-			tablaDatos[i][7] = (empleado instanceof TEmpleadoParcial) ? "Parcial" : "Completo";
-			tablaDatos[i][8] = empleado.getActivo() ? "Sí" : "No";
-			i++;
-		}
+		    int i = 0;
+		    for (TEmpleadoDeCaja empleado : listaEmpleados) {
+		        tablaDatos[i][0] = empleado.getID().toString();
+		        tablaDatos[i][1] = empleado.getNombre();
+		        tablaDatos[i][2] = empleado.getApellido();
+		        tablaDatos[i][3] = empleado.getDNI();
+		        tablaDatos[i][4] = empleado.getTelefono().toString();
+		        tablaDatos[i][5] = empleado.getSueldo().toString();
+		        tablaDatos[i][6] = empleado.getId_Turno().toString();
+		        tablaDatos[i][7] = (empleado instanceof TEmpleadoParcial) ? "Parcial" : "Completo";
+		        tablaDatos[i][8] = empleado.getActivo() ? "Sí" : "No";
+
+		        if (empleado instanceof TEmpleadoParcial) {
+		            TEmpleadoParcial parcial = (TEmpleadoParcial) empleado;
+		            tablaDatos[i][9] = String.valueOf(parcial.getHoras());
+		            tablaDatos[i][10] = String.valueOf(parcial.getPrecio_h());
+		            tablaDatos[i][11] = "N/A";
+		            tablaDatos[i][12] = "N/A";
+		        } else if (empleado instanceof TEmpleadoCompleto) {
+		            TEmpleadoCompleto completo = (TEmpleadoCompleto) empleado;
+		            tablaDatos[i][9] = "N/A";
+		            tablaDatos[i][10] = "N/A";
+		            tablaDatos[i][11] = String.valueOf(completo.getSueldo_Base());
+		            tablaDatos[i][12] = String.valueOf(completo.getComplementos());
+		        }
+
+		        i++;
+		    }
 		
 		JTable tabla = ComponentsBuilder.createTable(0, nombreColumnas.length, nombreColumnas, tablaDatos);
 		JScrollPane scroll = new JScrollPane(tabla);
