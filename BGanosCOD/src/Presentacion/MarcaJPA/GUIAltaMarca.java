@@ -24,7 +24,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GUIAltaMarca extends JFrame implements IGUI, ActionListener {
+public class GUIAltaMarca extends JFrame implements IGUI {
 
 	private static final long serialVersionUID = 1L;
 
@@ -150,13 +150,21 @@ public class GUIAltaMarca extends JFrame implements IGUI, ActionListener {
 			ApplicationController.getInstance().manageRequest(new Context(Evento.MARCA_VISTA, null));
 
 		} else if (context.getEvento() == Evento.ALTA_MARCA_KO) {
-			// TODO
+			switch (res) {
+            case -2:
+                JOptionPane.showMessageDialog(this, "Marca inactiva", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
+            case -3:
+                JOptionPane.showMessageDialog(this, "Error en la transacción", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta la marca", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
+            }
 		}
-
-	}
-
-	// TODO: no lo uso de momento
-	public void actionPerformed(ActionEvent e) {
 
 	}
 }

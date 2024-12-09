@@ -24,7 +24,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 
-public class GUIMostrarMarcaPorId extends JFrame implements IGUI, ActionListener {
+public class GUIMostrarMarcaPorId extends JFrame implements IGUI {
 
 	private static final long serialVersionUID = 1L;
 
@@ -153,9 +153,5 @@ public class GUIMostrarMarcaPorId extends JFrame implements IGUI, ActionListener
 			ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_MARCA_VISTA, null));
 
 		}
-	}
-
-	public void actionPerformed(ActionEvent e) {
-
 	}
 }

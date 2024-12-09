@@ -25,7 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 
-public class GUIListarMarcas extends JFrame implements IGUI, ActionListener {
+public class GUIListarMarcas extends JFrame implements IGUI {
 
 	private static final long serialVersionUID = 1L;
 
@@ -112,9 +112,5 @@ public class GUIListarMarcas extends JFrame implements IGUI, ActionListener {
 		}
 	}
 
-	
-	// TODO: no lo utilizo (en todas las vistas está)
-	public void actionPerformed(ActionEvent e) {
 
-	}
 }

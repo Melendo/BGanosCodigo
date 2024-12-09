@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 
-public class GUIModificarMarca extends JFrame implements IGUI, ActionListener {
+public class GUIModificarMarca extends JFrame implements IGUI {
 
 	private static final long serialVersionUID = 1L;
 
@@ -181,13 +181,21 @@ public class GUIModificarMarca extends JFrame implements IGUI, ActionListener {
 			ApplicationController.getInstance().manageRequest(new Context(Evento.MARCA_VISTA, null));
 
 		} else if (context.getEvento() == Evento.MODIFICAR_MARCA_KO) {
-
+			switch (res) {
+            case -4:
+                JOptionPane.showMessageDialog(this, "Marca no existe o está inactiva", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
+            case -5:
+                JOptionPane.showMessageDialog(this, "Ya existe marca activa con el mismo nombre", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta la marca", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
+            }
 		}
-
-	}
-
-	// TODO: NO LO UTILIZO
-	public void actionPerformed(ActionEvent e) {
 
 	}
 }

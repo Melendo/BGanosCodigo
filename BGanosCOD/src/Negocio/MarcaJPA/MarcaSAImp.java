@@ -20,7 +20,7 @@ public class MarcaSAImp implements MarcaSA {
 		Marca nuevaMarca = null;
 
 		if (!validarNombre(marca.getNombre())) {
-			return -4;
+			return -4; // datos incorrectos
 		}
 
 		// Empieza una transacción
@@ -56,7 +56,7 @@ public class MarcaSAImp implements MarcaSA {
 			} else { // si está activo rollback
 				t.rollback();
 				em.close();
-				return -143;
+				return -2; // marca existe, pero no activa
 			}
 
 		} else {
@@ -71,6 +71,7 @@ public class MarcaSAImp implements MarcaSA {
 				id = nuevaMarca.getId();
 		} catch (Exception e) {
 			t.rollback();
+			return -3; // error en la transacción
 		}
 
 		em.close();
@@ -93,8 +94,6 @@ public class MarcaSAImp implements MarcaSA {
 
 		Marca marca = em.find(Marca.class, id);
 
-		// TODO: preguntar si debo añadir un contador en la clase Marca.java,
-		// para añadir en el if el marca.getContador() == 0
 		if (marca != null && marca.getActivo()) {
 
 			List<Proveedor> listaProveedores = marca.getProveedores();
@@ -120,7 +119,7 @@ public class MarcaSAImp implements MarcaSA {
 		} else {
 			t.rollback();
 			em.close();
-			return 142;
+			return -2; // marca ya inactiva
 		}
 
 		em.close();
@@ -151,6 +150,7 @@ public class MarcaSAImp implements MarcaSA {
 				mExistente = query.getSingleResult();
 			} catch (Exception e){
 				// No hay una marca con el mismo nombre
+				return -3; // no existe una marca con el mismo nombre
 			}
 			
 			if(mExistente == null) {
@@ -169,13 +169,13 @@ public class MarcaSAImp implements MarcaSA {
 			} else {
 				t.rollback();
 				em.close();
-				return -145;
+				return -5; // si ya existe marca activa con el mismo nombre
 			}
 					
 		} else {
 			t.rollback();
 			em.close();
-			return -144;
+			return -4; // si la marca no existe o está inactiva
 		}
 		
 		em.close();
@@ -253,6 +253,8 @@ public class MarcaSAImp implements MarcaSA {
 
 	}
 
+	
+	// Métodos auxiliares
 	private Boolean validarNombre(String nombre) {
 		return nombre != null && !nombre.isEmpty();
 	}

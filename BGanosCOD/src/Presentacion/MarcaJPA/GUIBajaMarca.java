@@ -21,7 +21,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GUIBajaMarca extends JFrame implements IGUI, ActionListener {
+public class GUIBajaMarca extends JFrame implements IGUI {
 
 	private static final long serialVersionUID = 1L;
 
@@ -134,13 +134,17 @@ public class GUIBajaMarca extends JFrame implements IGUI, ActionListener {
 			ApplicationController.getInstance().manageRequest(new Context(Evento.MARCA_VISTA, null));
 
 		} else if (context.getEvento() == Evento.BAJA_MARCA_KO) {
-			// TODO
+            switch (res) {
+            case -2:
+                JOptionPane.showMessageDialog(this, "La marca ya está dada de baja", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Error desconocido al dar de baja la marca", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
+            }
 		}
 		
-	}
-	
-	// TODO: no lo uso
-	public void actionPerformed(ActionEvent e) {
-
 	}
 }

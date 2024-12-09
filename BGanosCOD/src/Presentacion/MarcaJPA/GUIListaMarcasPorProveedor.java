@@ -29,7 +29,7 @@ import java.awt.event.ActionListener;
 import java.util.Set;
 
 
-public class GUIListaMarcasPorProveedor extends JFrame implements IGUI, ActionListener {
+public class GUIListaMarcasPorProveedor extends JFrame implements IGUI {
 
 
 	
@@ -158,9 +158,5 @@ public class GUIListaMarcasPorProveedor extends JFrame implements IGUI, ActionLi
             JOptionPane.showMessageDialog(this, "Error al listar marcas", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
-	}
-
-	public void actionPerformed(ActionEvent e) {
-
 	}
 }
