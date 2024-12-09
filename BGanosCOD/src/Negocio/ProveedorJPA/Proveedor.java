@@ -107,7 +107,7 @@ public class Proveedor implements Serializable {
 		return this.marca;
 	}
 
-	public void SetMarca(Set<Marca> marcas) {
+	public void SetMarca(Set<Marca> marca) {
 		this.marca = marca;
 	}
 	
