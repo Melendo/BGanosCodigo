@@ -255,7 +255,7 @@ public class ProveedorSAImp implements ProveedorSA {
 	public Integer vincularMarca(Integer idProv, Integer idMarca) {
 		int exito = -1;
 		EntityManager em = null;
-		if (idProv < 1 && idMarca < 1) {
+		if (idProv < 1 || idMarca < 1) {
 			exito = -2; // IDs deben ser mayores que 0
 		} else {
 			try {
@@ -300,7 +300,7 @@ public class ProveedorSAImp implements ProveedorSA {
 	public Integer desvincularMarca(Integer idProv, Integer idMarca) {
 		int exito = -1;
 		EntityManager em = null;
-		if (idProv < 1 && idMarca < 1) {
+		if (idProv < 1 || idMarca < 1) {
 			exito = -2; // IDs deben ser mayores que 0
 		} else {
 			try {
