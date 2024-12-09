@@ -88,7 +88,7 @@ public class ProveedorSAImp implements ProveedorSA {
 				provExiste = em.find(Proveedor.class, id);
 				if (provExiste != null) {
 					if (provExiste.getActivo()) {
-						if(provExiste.getMarcas().isEmpty()) {
+						if(provExiste.getMarca().isEmpty()) {
 							provExiste.setActivo(false);
 							transaction.commit();
 							exito = provExiste.getId();
@@ -267,11 +267,9 @@ public class ProveedorSAImp implements ProveedorSA {
 				Marca marca = em.find(Marca.class, idMarca, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
 				if (prov != null && prov.getActivo()) {
 					if (marca != null && marca.getActivo()) {
-
-						Set<Marca> list = prov.getMarcas();
-						if (!list.contains(marca)) {
-							list.add(marca);
-							marca.getProveedores().add(prov);
+						if (!prov.getMarca().contains(marca)) {
+							prov.addMarca(marca);
+							marca.addProveedor(prov);
 							exito = 1;
 							transaction.commit();
 						} else {
@@ -312,11 +310,9 @@ public class ProveedorSAImp implements ProveedorSA {
 				Marca marca = em.find(Marca.class, idMarca, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
 				if (prov != null && prov.getActivo()) {
 					if (marca != null && marca.getActivo()) {
-
-						Set<Marca> list = prov.getMarcas();
-						if (list.contains(marca)) {
-							list.remove(marca);
-							marca.getProveedores().remove(prov);
+						if (prov.getMarca().contains(marca)) {
+							prov.removeMarca(marca);
+							marca.removeProveedor(prov);
 							exito = 1;
 							transaction.commit();
 						} else {
