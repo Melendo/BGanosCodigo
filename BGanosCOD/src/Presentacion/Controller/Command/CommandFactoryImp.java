@@ -42,6 +42,14 @@ import Presentacion.Controller.Command.CommandPlanta.CommandListarPlantasPorInve
 import Presentacion.Controller.Command.CommandPlanta.CommandListarPlantasPorTipo;
 import Presentacion.Controller.Command.CommandPlanta.CommandModificarPlanta;
 import Presentacion.Controller.Command.CommandPlanta.CommandMostarPlantaPorId;
+import Presentacion.Controller.Command.CommandProductoJPA.CommandAltaProducto;
+import Presentacion.Controller.Command.CommandProductoJPA.CommandBajaProducto;
+import Presentacion.Controller.Command.CommandProductoJPA.CommandListarProducto;
+import Presentacion.Controller.Command.CommandProductoJPA.CommandListarProductoPorMarca;
+import Presentacion.Controller.Command.CommandProductoJPA.CommandListarProductoPorTipo;
+import Presentacion.Controller.Command.CommandProductoJPA.CommandListarProductoPorVenta;
+import Presentacion.Controller.Command.CommandProductoJPA.CommandModificarProducto;
+import Presentacion.Controller.Command.CommandProductoJPA.CommandMostrarProductoPorId;
 import Presentacion.Controller.Command.CommandProveedorJPA.altaProveedorCommand;
 import Presentacion.Controller.Command.CommandProveedorJPA.bajaProveedorCommand;
 import Presentacion.Controller.Command.CommandProveedorJPA.desvincularMarcaCommand;
@@ -232,6 +240,27 @@ public class CommandFactoryImp extends CommandFactory {
 			return new vincularMarcaCommand();
 		case Evento.DESVINCULAR_MARCA_PROVEEDOR:
 			return new desvincularMarcaCommand();
+			
+			//PRODUCTO
+			
+		case Evento.ALTA_PRODUCTO:
+			return new CommandAltaProducto();
+		case Evento.BAJA_PRODUCTO:
+			return new CommandBajaProducto();
+		case Evento.LISTAR_PRODUCTOS:
+			return new CommandListarProducto();
+		case Evento.MOSTRAR_PRODUCTO_POR_ID:
+			return new CommandMostrarProductoPorId();
+		case Evento.LISTAR_PRODUCTOS_POR_MARCA:
+			return new CommandListarProductoPorMarca();
+		case Evento.LISTAR_PRODUCTOS_POR_TIPO:
+			return new CommandListarProductoPorTipo();
+		case Evento.LISTAR_PRODUCTOS_POR_VENTA:
+			return new CommandListarProductoPorVenta();
+		case Evento.MODIFICAR_PRODUCTO:
+			return new CommandModificarProducto();
+			
+		
 		
 
 		}

@@ -94,6 +94,7 @@ public class GUIBajaProducto extends JFrame implements IGUI {
 				try {
 					int id = Integer.parseInt(textID.getText());
 					ApplicationController.getInstance().manageRequest(new Context(Evento.BAJA_PRODUCTO, id));
+					setVisible(false);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIBajaProducto.this, "Error en el formato de los datos", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -122,6 +123,8 @@ public class GUIBajaProducto extends JFrame implements IGUI {
 
 
 	public void actualizar(Context context) {
+		
+		System.out.println((int)context.getDatos());
 
 		switch(context.getEvento()) {
 		case Evento.BAJA_PRODUCTO_OK:
@@ -129,13 +132,15 @@ public class GUIBajaProducto extends JFrame implements IGUI {
 			break;
 		case  Evento.BAJA_PRODUCTO_KO:
 			
-			if((int)context.getDatos() == -2)
-				GUIMSG.showMessage("Marca no registrada", "BAJA PRODUCTO", true);
+			if((int) context.getDatos() == -2)
+				GUIMSG.showMessage("Producto no registrado", "BAJA PRODUCTO", true);
 			else if((int)context.getDatos() == -3)
 				GUIMSG.showMessage("Producto inactivo", "BAJA PRODUCTO", true);
 			else
 				GUIMSG.showMessage("No se pudo dar de baja", "BAJA PRODUCTO", true);
+			
 			break;
+			
 		default:
 			GUIMSG.showMessage("ERROR INESPERADO", "BAJA PRODUCTO", true);
 			break;

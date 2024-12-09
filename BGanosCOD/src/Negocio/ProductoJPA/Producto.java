@@ -32,32 +32,39 @@ import javax.persistence.Inheritance;
 		@NamedQuery(name = "Negocio.ProductoJPA.Producto.findBystock", query = "select obj from Producto obj where :stock = obj.stock "),
 		@NamedQuery(name = "Negocio.ProductoJPA.Producto.findByactivo", query = "select obj from Producto obj where :activo = obj.activo "),
 		@NamedQuery(name = "Negocio.ProductoJPA.Producto.findByprecio", query = "select obj from Producto obj where :precio = obj.precio "),
-		@NamedQuery(name = "Negocio.ProductoJPA.Producto.findBymarca", query = "select obj from Producto obj where :marca = obj.marca ") })
+		@NamedQuery(name = "Negocio.ProductoJPA.Producto.findBymarca", query = "select obj from Producto obj where :marca = obj.marca ") ,
+		@NamedQuery(name = "Negocio.ProductoJPA.Producto.findAll", query = "select obj from Producto obj ")
+		})
+		
+
+
+
+
 
 public class Producto implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
-	@Id  
-	private Integer id;
+	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected Integer id;
 
 	@OneToMany(mappedBy = "producto")
-	private Set<LineaVenta> lineaVenta;
+	protected Set<LineaVenta> lineaVenta;
 
 	@Version
 	private int version;
 
 	@Column(unique = true, nullable = false)
-	private String nombre;
+	protected String nombre;
 
-	private Integer stock;
+	protected Integer stock;
 
-	private Boolean activo;
+	protected Boolean activo;
 	
-	private double precio;
+	protected double precio;
 
 	@ManyToOne
-	private Marca marca;
+	protected Marca marca;
 
 	public Producto() {
 
@@ -135,8 +142,7 @@ public class Producto implements Serializable {
 		this.activo = producto.getActivo();
 		this.precio = producto.getPrecio();
 		this.id = producto.getId();
-		this.stock = producto.getStock();
-		
+		this.stock = producto.getStock();	
 	}
 
 
@@ -148,6 +154,7 @@ public class Producto implements Serializable {
 		ttp.setNombre(nombre);
 		ttp.setPrecio(precio);
 		ttp.setStock(stock);
+		ttp.setIdMarca(marca.getId());
 
 		return ttp;
 	}

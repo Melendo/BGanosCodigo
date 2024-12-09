@@ -12,6 +12,8 @@ import javax.persistence.TypedQuery;
 
 import Negocio.EMFSingleton.EMFSingleton;
 import Negocio.MarcaJPA.Marca;
+import Negocio.VentaJPA.LineaVenta;
+import Negocio.VentaJPA.Venta;
 
 
 public class ProductoSAImp implements ProductoSA {
@@ -28,35 +30,43 @@ public class ProductoSAImp implements ProductoSA {
 				//busco marca
 				Marca marca = em.find(Marca.class, producto.getIdMarca(), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
 				
+				
+				
 				if(marca == null || !marca.getActivo()){
+					
+					if(!marca.getActivo()) 
+						System.out.println("aqui");
 					id = -2;
 					t.rollback();
 				}
 				else{
-					TypedQuery<Producto> query = em.createNamedQuery("negocio.ProductoJPA.Producto.findBynombre", Producto.class);
+					TypedQuery<Producto> query = em.createNamedQuery("Negocio.ProductoJPA.Producto.findBynombre", Producto.class);
 					query.setParameter("nombre", producto.getNombre());
 					List<Producto> data = query.getResultList();
 					Producto p = data.isEmpty() ? null : data.get(0);
 					
-					if(p != null && p instanceof ProductoSouvenirs){
-						id = -3;
-						t.rollback();
-					}
-					else if(p != null){
+					if(p != null){
 						id = -3;
 						t.rollback();
 					}
 					else{
-						p = new Producto(producto);
-						p.setMarca(marca);
-						//marca.getProductos().add(p);
-						em.persist(p);
+						ProductoAlimentacion ok = new ProductoAlimentacion(producto);
+						
+						ok.setPeso((((TProductoAlimentacion)producto).getPeso()));
+						ok.setPrecioKilo((((TProductoAlimentacion)producto).getPrecioKilo()));
+						ok.setTipo(((TProductoAlimentacion)producto).getTipo());
+						ok.setMarca(marca);
+						marca.getProductos().add(ok);
+						
+						em.persist(ok);
 						t.commit();
-						id = p.getId();
-						p.setId(id);
+						id = ok.getId();
+						ok.setId(id);
 					}
 					
 				}
+				
+				em.close();
 				
 				
 		return id;
@@ -80,31 +90,33 @@ public class ProductoSAImp implements ProductoSA {
 					t.rollback();
 				}
 				else{
-					TypedQuery<Producto> query = em.createNamedQuery("negocio.ProductoJPA.Producto.findBynombre", Producto.class);
+					TypedQuery<Producto> query = em.createNamedQuery("Negocio.ProductoJPA.Producto.findBynombre", Producto.class);
 					query.setParameter("nombre", producto.getNombre());
 					
 					List<Producto> data = query.getResultList();
 					Producto p = data.isEmpty() ? null : data.get(0);
 					
-					if(p != null && p instanceof ProductoAlimentacion){
-						id = -3;
-						t.rollback();
-					}
-					else if(p != null){
+					if(p != null){
 						id = -3;
 						t.rollback();
 					}
 					else{
-						p = new Producto(producto);
-						p.setMarca(marca);
-						//marca.getProductos().add(p);
-						em.persist(p);
+						
+						ProductoSouvenirs ok = new ProductoSouvenirs(producto);
+						
+						ok.setDescripcion(((TProductoSouvenirs)producto).getDescripcion());
+						ok.setMarca(marca);
+						marca.getProductos().add(ok);
+						
+						em.persist(ok);
 						t.commit();
-						id = p.getId();
-						p.setId(id);
+						id = ok.getId();
+						ok.setId(id);
 					}
 					
 				}
+				
+				em.close();
 		
 		return id;
 	}
@@ -112,22 +124,28 @@ public class ProductoSAImp implements ProductoSA {
 	public Integer bajaProducto(Integer idProducto) {
 		int res = -1;
 		
+		
 		// Empieza una transacción
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 		EntityTransaction t = em.getTransaction();
 		t.begin();
 		
 		Producto p = em.find(Producto.class, idProducto);
+		
 		if(p == null){
 			res = -2;
 			t.rollback();
+			
 		}
 		else{
+			
 			p.setActivo(false);
 			t.commit();
 			res = p.getId();
 		}
+		em.close();
 		
+	
 		
 		return res;
 		
@@ -136,17 +154,18 @@ public class ProductoSAImp implements ProductoSA {
 
 	public List<TProducto> listarProductos() {
 		
-		
 		// Empieza una transacción
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 		EntityTransaction t = em.getTransaction();
 		t.begin();
-		final TypedQuery<Producto> query = em.createNamedQuery("negocio.ProductoJPA.Producto.findAll", Producto.class);
+		final TypedQuery<Producto> query = em.createNamedQuery("Negocio.ProductoJPA.Producto.findAll", Producto.class);
 		
 		final List<TProducto> lista = query.getResultList().stream().map(Producto::entityToTransfer).collect(Collectors.toList());
 		
 		t.commit();
 		
+		
+		em.close();
 		return lista;
 		
 	}
@@ -168,16 +187,16 @@ public class ProductoSAImp implements ProductoSA {
 		}
 		else
 		{
-			/*
+			
 			for(Producto p: marca.getProductos()){
 				em.lock(p, LockModeType.OPTIMISTIC);
 				lista.add(p.entityToTransfer());
 			}
 			
-			*/
+		
 			t.commit();
 		}
-		
+		em.close();
 		return lista;
 	}
 
@@ -190,7 +209,7 @@ public class ProductoSAImp implements ProductoSA {
 		
 		List<TProducto> listaTipos = new ArrayList<TProducto>();
 		
-		final TypedQuery<Producto> query = em.createNamedQuery("negocio.ProductoJPA.Producto.findAll", Producto.class);
+		final TypedQuery<Producto> query = em.createNamedQuery("Negocio.ProductoJPA.Producto.findAll", Producto.class);
 		
 		final List<TProducto> lista = query.getResultList().stream().map(Producto::entityToTransfer).collect(Collectors.toList());
 		
@@ -201,20 +220,44 @@ public class ProductoSAImp implements ProductoSA {
 		}
 
 		t.commit();
-		
+		em.close();
 		return listaTipos;
 	}
 
 
 	public List<TProducto> listarProductoPorVenta(Integer idVenta) {
-	
+		List<TProducto> lista = new ArrayList<>();
 		// Empieza una transacción
 				EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 				EntityTransaction t = em.getTransaction();
 				t.begin();
 				
-		
-		return null;
+				Venta venta = em.find(Venta.class, idVenta,  LockModeType.OPTIMISTIC);
+				
+				if(venta == null || !venta.getActivo()){
+					t.rollback();
+					
+					lista = null;
+				}
+				else
+				{
+					
+					
+					final TypedQuery<LineaVenta> query = em.createNamedQuery("Negocio.VentaJPA.LineaVenta.findByventa", LineaVenta.class);
+					
+					
+					
+					List<LineaVenta> list = query.getResultList();
+					
+					for(LineaVenta lv: list){
+						lista.add(lv.getProducto().entityToTransfer());
+					}
+			
+					t.commit();
+				}
+				
+		em.close();
+		return lista;
 	
 	}
 
@@ -232,19 +275,23 @@ public class ProductoSAImp implements ProductoSA {
 			
 		}
 		else{
+
 			Producto p = em.find(Producto.class, producto.getId());
-			if(p == null ){
+		
+			
+			if(p == null){
+				
 				id = -3;
 				t.rollback();
 			}
 			else{
+			
 				if(producto.getTipoProducto() == 0){
 					TProductoAlimentacion tali = (TProductoAlimentacion)producto;
 					
 					ProductoAlimentacion ali = (ProductoAlimentacion) p;
 					ali.setActivo(tali.getActivo());
 					ali.setId(tali.getId());
-					ali.setMarca(marca);
 					ali.setNombre(tali.getNombre());
 					ali.setPeso(tali.getPeso());
 					ali.setPrecio(tali.getPrecio());
@@ -258,7 +305,6 @@ public class ProductoSAImp implements ProductoSA {
 					
 					sou.setActivo(tsou.getActivo());
 					sou.setId(tsou.getId());
-					sou.setMarca(marca);
 					sou.setNombre(tsou.getNombre());
 					sou.setDescripcion(tsou.getDescripcion());
 					sou.setPrecio(tsou.getPrecio());
@@ -268,9 +314,10 @@ public class ProductoSAImp implements ProductoSA {
 				t.commit();
 				id = producto.getId();
 			}
+			
 		}
 		
-		
+		em.close();
 		return id;
 	}
 
@@ -294,6 +341,7 @@ public class ProductoSAImp implements ProductoSA {
 			t.commit();
 		}
 		
+		em.close();
 		return res;
 	}
 }

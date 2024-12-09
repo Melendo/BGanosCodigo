@@ -13,10 +13,6 @@
 		<class>Negocio.VentaJPA.LineaVenta</class>
 		<class>Negocio.VentaJPA.idLineaVenta</class>
 		<class>Negocio.VentaJPA.Venta</class>
-		<!-- 
-		<validation-mode>NONE</validation-mode>
-		<shared-cache-mode>NONE</shared-cache-mode>
-		 -->
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ms-db-dao-bganos?useSSL=false&amp;serverTimezone=UTC"/>
@@ -36,6 +32,13 @@
 			<property name="eclipselink.ddl-generation"	value="drop-and-create-tables" />
 			<property name="eclipselink.ddl-generation.output-mode" value="both" />
 			-->
+			
+			<!-- VERSION de la rama de productos 
+			<property name="javax.persistence.jdbc.password" value=""/>
+	      	<property name="javax.persistence.schema-generation.database.action" value="none"/>
+			<property name="eclipselink.ddl-generation.output-mode" value="both"/>
+	 		<property name="eclipselink.cache.shared.default" value="false"/>
+	 		-->
 		</properties>
 	</persistence-unit>
 </persistence>

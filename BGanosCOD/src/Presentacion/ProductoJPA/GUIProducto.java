@@ -166,7 +166,7 @@ public class GUIProducto extends JFrame implements IGUI {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					//GUIPlanta.this.setVisible(false);
+			
 					ApplicationController.getInstance().manageRequest(new Context(Evento.VISTA_PRINCIPAL,null));
 					dispose();
 				}

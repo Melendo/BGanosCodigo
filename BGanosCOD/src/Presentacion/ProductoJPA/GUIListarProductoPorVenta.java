@@ -97,6 +97,7 @@ public class GUIListarProductoPorVenta extends JFrame implements IGUI {
 				try {
 					int id = Integer.parseInt(textID.getText());
 					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_POR_VENTA, id));
+					setVisible(false);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIListarProductoPorVenta.this, "Error en el formato de los datos", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -128,7 +129,7 @@ public class GUIListarProductoPorVenta extends JFrame implements IGUI {
 		
 		switch(context.getEvento()) {
 		case Evento.LISTAR_PRODUCTOS_POR_VENTA_KO:
-			GUIMSG.showMessage("No existe PRODUCTOS del tipo seleccionado", "LISTAR PRODUCTOS POR TIPO", true);
+			GUIMSG.showMessage("No existe la venta", "LISTAR PRODUCTOS POR TIPO", true);
 			break;
 		case  Evento.LISTAR_PRODUCTOS_POR_VENTA_OK:
 			

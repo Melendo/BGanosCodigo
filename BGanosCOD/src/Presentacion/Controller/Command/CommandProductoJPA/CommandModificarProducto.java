@@ -19,20 +19,21 @@ public class CommandModificarProducto implements Command {
 		if(tmp.getIdMarca() == null){
 			TProducto p = FactoriaNegocio.getInstance().getProductoJPA().mostrarProducto(tmp.getId());
 			
-			if(p != null){return new Context(Evento.MODIFICAR_PLANTA_VISTA, p);}
+			
+			if(p != null){return new Context(Evento.MODIFICAR_PRODUCTO_VISTA, p);}
 			else{
-				return new Context(Evento.MODIFICAR_PLANTA_KO, -3);
+				return new Context(Evento.MODIFICAR_PRODUCTO_KO, -3);
 			}
 		}
 		else{
-		
-			int	res = FactoriaNegocio.getInstance().getPlantaSA().modificarPlanta((TPlanta)datos);
-	
+			
+			int	res = FactoriaNegocio.getInstance().getProductoJPA().modificarProducto((TProducto)datos);
+
 			if(res > -1) {
-				return new Context(Evento.MODIFICAR_PLANTA_OK, res);
+				return new Context(Evento.MODIFICAR_PRODUCTO_OK, res);
 			}
 			else {
-				return new Context(Evento.MODIFICAR_PLANTA_KO, res);
+				return new Context(Evento.MODIFICAR_PRODUCTO_KO, res);
 			}
 		
 		}
