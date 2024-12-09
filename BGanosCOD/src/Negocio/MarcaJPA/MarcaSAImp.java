@@ -101,7 +101,7 @@ public class MarcaSAImp implements MarcaSA {
 
 			// Desvincular de la marca sus proveedores
 			for (Proveedor p : listaProveedores) {
-				p.getMarcas().remove(marca);
+				p.getMarca().remove(marca);
 			}
 
 			listaProveedores.clear();
@@ -238,7 +238,7 @@ public class MarcaSAImp implements MarcaSA {
 			return null;
 		}
 
-		Set<Marca> marcasProveedor = proveedor.getMarcas();
+		Set<Marca> marcasProveedor = proveedor.getMarca();
 		// TODO preguntar si está bien el cast
 		Set<TMarca> marcas = new HashSet<TMarca>();
 
