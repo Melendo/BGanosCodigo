@@ -48,7 +48,7 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 	private void initGUI() {
 
 		tEmpleadoDeCaja = new TEmpleadoDeCaja();
-		JLabel label = ComponentsBuilder.createLabel("Fabricante", 250, 30, 500, 50, Color.BLACK);
+		JLabel label = ComponentsBuilder.createLabel("Empleado de Caja", 250, 30, 500, 50, Color.BLACK);
 		this.add(label);
 
 		// Alta
