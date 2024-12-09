@@ -16,7 +16,7 @@ import Negocio.MarcaJPA.Marca;
 
 public class ProveedorSAImp implements ProveedorSA {
 
-	public Integer altaProveedor(TProveedor tProv) {
+	public synchronized Integer altaProveedor(TProveedor tProv) {
 		int exito = -1; // Error general
 		Proveedor provExiste;
 		EntityManager em = null;
