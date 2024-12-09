@@ -96,7 +96,8 @@ public class GUIObtenerNominaDeTurno extends JFrame implements IGUI {
     @Override
     public void actualizar(Context context) {
         if (context.getEvento() == Evento.OBTENER_NOMINA_DE_TURNO_OK) {
-            TTurno turno = (TTurno) context.getDatos();
+            //TTurno turno = (TTurno) context.getDatos();
+        	Float nomina = (Float) context.getDatos();
 
             // Crear una nueva pestaña con los resultados
             tabbedPane = new JTabbedPane();
@@ -107,12 +108,12 @@ public class GUIObtenerNominaDeTurno extends JFrame implements IGUI {
             gbc.insets = new Insets(10, 10, 10, 10);
 
             // Mostrar el horario y la nómina total del turno
-            JLabel labelHorario = new JLabel("Horario: " + turno.getHorario());
+            /*JLabel labelHorario = new JLabel("Horario: " + turno.getHorario());
             gbc.gridx = 0;
             gbc.gridy = 0;
-            resultadoPanel.add(labelHorario, gbc);
+            resultadoPanel.add(labelHorario, gbc);*/
 
-            JLabel labelNomina = new JLabel("Nómina Total: " + 4);
+            JLabel labelNomina = new JLabel("Nómina Total: " + nomina);
             gbc.gridy = 1;
             resultadoPanel.add(labelNomina, gbc);
 

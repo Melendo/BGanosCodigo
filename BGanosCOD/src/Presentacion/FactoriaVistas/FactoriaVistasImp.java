@@ -297,7 +297,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
 			vistaActual = new GUIMostrarTurno();
 			return vistaActual;
 		case Evento.LISTAR_TURNO_VISTA:
-			// vistaActual = new GUIListarTurnos((Set<TTurno>) contexto.getDatos());
+			vistaActual = new GUIListarTurnos((Set<TTurno>) contexto.getDatos());
 			return vistaActual;
 		case Evento.OBTENER_NOMINA_DE_TURNO_VISTA:
 			vistaActual = new GUIObtenerNominaDeTurno();
