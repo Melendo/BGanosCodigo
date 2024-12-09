@@ -52,7 +52,7 @@ public class Proveedor implements Serializable {
 	private Boolean activo;
 
 	@ManyToMany
-	private Set<Marca> marca;
+	private Set<Marca> marcas;
 
 	public Integer getId() {
 		return id;
@@ -102,14 +102,22 @@ public class Proveedor implements Serializable {
 		this.activo = activo;
 	}
 
-	public Set<Marca> getMarca() {
-		return marca;
+
+	public Set<Marca> getMarcas() {
+		return this.marcas;
 	}
 
-	public void setMarca(Set<Marca> marca) {
-		this.marca = marca;
+	public void SetMarcas(Set<Marca> marcas) {
+		this.marcas = marcas;
 	}
-
+	
+	public void addMarca(Marca m) {
+		this.marcas.add(m);
+	}
+	
+	public void removeMarca(Marca m) {
+		this.marcas.remove(m);
+	}
 	public void transferToEntity(TProveedor proveedor) {
 		id = proveedor.getId();
 		nombre = proveedor.getNombre();
@@ -129,11 +137,4 @@ public class Proveedor implements Serializable {
 		return proveedor;
 	}
 
-	public Set<Marca> getMarcas() {
-		return this.marca;
-	}
-
-	public void SetMarcas(Set<Marca> marcas) {
-		this.marca = marcas;
-	}
 }
