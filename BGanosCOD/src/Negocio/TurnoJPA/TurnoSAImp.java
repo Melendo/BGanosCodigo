@@ -118,7 +118,7 @@ public class TurnoSAImp implements TurnoSA {
 		Integer resultado = -1;
 	    EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 
-	        if (!validarHorario(turno.getHorario()) || !validarId(turno.getId())) {
+        if (!validarHorario(turno.getHorario()) || !validarId(turno.getId())) {
 	        System.out.println("Id o nombre de departamento no v�lido");
 	        return -4;
 	    }
