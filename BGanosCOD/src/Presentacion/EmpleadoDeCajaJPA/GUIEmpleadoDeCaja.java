@@ -75,7 +75,8 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 		});
 
 		// Modificar
-		bModificar = ComponentsBuilder.createButton("Modificar Empleado de caja", 500, 100, 185, 100);
+		//bModificar = ComponentsBuilder.createButton("Modificar Empleado de caja", 500, 100, 185, 100);
+		bModificar = ComponentsBuilder.createButton("Modificar Empleado de caja", 100, 250, 250, 100);
 		bModificar.setVisible(true);
 		this.add(bModificar);
 		bModificar.addActionListener(a -> {
@@ -87,7 +88,7 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 		});
 
 		// Mostrar
-		bMostrar = ComponentsBuilder.createButton("Mostrar Empleado de Caja", 700, 100, 185, 100);
+		bMostrar = ComponentsBuilder.createButton("Mostrar Empleado de Caja", 700, 100, 200, 100);
 		bMostrar.setVisible(true);
 		this.add(bMostrar);
 		bMostrar.addActionListener(a -> {
@@ -99,7 +100,8 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 		});
 
 		// Listar
-		bListar = ComponentsBuilder.createButton("Listar", 100, 250, 185, 100);
+		//bListar = ComponentsBuilder.createButton("Listar", 100, 250, 185, 100);
+		bListar = ComponentsBuilder.createButton("Listar", 500, 100, 185, 100);
 		bListar.setVisible(true);
 		this.add(bListar);
 		bListar.addActionListener(a -> {
@@ -110,7 +112,8 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 		});
 
 		// ListarPorNombre
-		bListarPorNombre = ComponentsBuilder.createButton("Listar Por Nombre", 300, 250, 185, 100);
+		//bListarPorNombre = ComponentsBuilder.createButton("Listar Por Nombre", 300, 250, 185, 100);
+		bListarPorNombre = ComponentsBuilder.createButton("Listar Por Nombre", 435, 250, 185, 100);
 		bListarPorNombre.setVisible(true);
 		this.add(bListarPorNombre);
 		bListarPorNombre.addActionListener(a -> {
@@ -122,7 +125,7 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 		});
 		
 		//ListarPorTurno
-		bListarPorTurno = ComponentsBuilder.createButton("Listar Por Turno", 500, 250, 185, 100);
+		bListarPorTurno = ComponentsBuilder.createButton("Listar Por Turno", 720, 250, 185, 100);
 		bListarPorTurno.setVisible(true);
 		this.add(bListarPorTurno);
 		bListarPorTurno.addActionListener(a -> {
