@@ -134,6 +134,10 @@ public class GUIBajaProveedor extends JFrame implements IGUI {
 				JOptionPane.showMessageDialog(this, "Error: El Proveedor no existe.", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
+			case -5:
+				JOptionPane.showMessageDialog(this, "Error: El Proveedor está vinculado a una marca.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
 			default:
 				JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta el Proveedor.", "Error",
 						JOptionPane.ERROR_MESSAGE);
