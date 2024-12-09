@@ -1,6 +1,6 @@
 package Negocio.MarcaJPA;
 
-import java.util.List;
+import java.util.Set;
 
 public interface MarcaSA {
 
@@ -9,7 +9,7 @@ public interface MarcaSA {
 	public Integer modificarMarca(TMarca marca);
 
 	// TODO: cambié el tipo de set a list
-	public List<TMarca> listarMarcas();
+	public Set<TMarca> listarMarcas();
 
 	// TODO: añadir el Integer id de parámetro,
 	// TODO: cambiar tipo de integer a TMarca, antes estaba:
@@ -18,7 +18,7 @@ public interface MarcaSA {
 	public TMarca mostrarMarcaPorId(Integer id);
 
 	// TODO: cambié el tipo de set a list
-	public List<TMarca> listarMarcasPorProveedor(Integer idProv);
+	public Set<TMarca> listarMarcasPorProveedor(Integer idProv);
 
 	public Integer altaMarca(TMarca marca);
 }

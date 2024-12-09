@@ -1,6 +1,6 @@
 package Negocio.MarcaJPA;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,7 +13,7 @@ import Negocio.ProveedorJPA.Proveedor;
 
 public class MarcaSAImp implements MarcaSA {
 
-	public Integer altaMarca(TMarca marca) {
+	public synchronized Integer altaMarca(TMarca marca) {
 		Integer id = -1;
 		boolean exito = false;
 		Marca marcaExistente = null;
@@ -205,7 +205,7 @@ public class MarcaSAImp implements MarcaSA {
 		return tMarca;
 	}
 
-	public List<TMarca> listarMarcas() {
+	public Set<TMarca> listarMarcas() {
 		// no hay transacción porque hay un listar
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 
@@ -214,7 +214,7 @@ public class MarcaSAImp implements MarcaSA {
 		// TODO: preguntar si es mejor añadir el cast a set, o directamente ponerlo a
 		// list el método
 		List<Marca> l = query.getResultList(); // obtenemos una lista de marcas
-		List<TMarca> lista = new ArrayList<TMarca>();
+		Set<TMarca> lista = new HashSet<TMarca>();
 
 		for (Marca m : l) {
 			TMarca t = m.entityToTransfer();
@@ -226,7 +226,7 @@ public class MarcaSAImp implements MarcaSA {
 
 	}
 
-	public List<TMarca> listarMarcasPorProveedor(Integer idProv) {
+	public Set<TMarca> listarMarcasPorProveedor(Integer idProv) {
 		// Empieza una transacción
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 		EntityTransaction t = em.getTransaction();
@@ -240,7 +240,7 @@ public class MarcaSAImp implements MarcaSA {
 
 		Set<Marca> marcasProveedor = proveedor.getMarcas();
 		// TODO preguntar si está bien el cast
-		List<TMarca> marcas = new ArrayList<TMarca>();
+		Set<TMarca> marcas = new HashSet<TMarca>();
 
 		for (Marca marca : marcasProveedor) {
 			marcas.add(new TMarca(marca));

@@ -60,12 +60,12 @@ public class VentaSAImp implements VentaSA {
 		}
 	}
 
-	public List<TVenta> listarVentas() {
+	public Set<TVenta> listarVentas() {
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 		TypedQuery<Venta> query = em.createNamedQuery("Negocio.VentaJPA.Venta.findAll", Venta.class);
 
 		List<Venta> lQuery = query.getResultList();
-		List<TVenta> lVenta = new LinkedList<TVenta>();
+		Set<TVenta> lVenta = new HashSet<TVenta>();
 
 		for (Venta v : lQuery)
 			lVenta.add(v.toTransfer());
@@ -119,7 +119,7 @@ public class VentaSAImp implements VentaSA {
 
 	}
 
-	public List<TVenta> ventasPorEmpleadoDeCaja(Integer id) {
+	public Set<TVenta> ventasPorEmpleadoDeCaja(Integer id) {
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 		EmpleadoDeCaja emCaja = em.find(EmpleadoDeCaja.class, id);
 
@@ -130,7 +130,7 @@ public class VentaSAImp implements VentaSA {
 		query.setParameter("empleadoDeCaja", emCaja);
 
 		List<Venta> lQuery = query.getResultList();
-		List<TVenta> lVenta = new LinkedList<TVenta>();
+		Set<TVenta> lVenta = new HashSet<TVenta>();
 
 		for (Venta v : lQuery)
 			lVenta.add(v.toTransfer());

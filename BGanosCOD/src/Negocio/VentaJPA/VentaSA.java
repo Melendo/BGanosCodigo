@@ -1,16 +1,16 @@
 package Negocio.VentaJPA;
 
-import java.util.List;
+import java.util.Set;
 
 public interface VentaSA {
 
 	public Integer modificarVenta(TVenta tVenta);
 
-	public List<TVenta> listarVentas();
+	public Set<TVenta> listarVentas();
 
 	public TVentaConProductos mostrarPorId(Integer id);
 
-	public List<TVenta> ventasPorEmpleadoDeCaja(Integer id);
+	public Set<TVenta> ventasPorEmpleadoDeCaja(Integer id);
 
 	public Integer devolverVenta(TLineaVenta venta);
 

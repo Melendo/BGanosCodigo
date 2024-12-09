@@ -28,6 +28,7 @@ import javax.persistence.OneToMany;
 		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByproveedor", query = "select obj from Marca obj where :proveedor MEMBER OF obj.proveedor "),
 		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByproducto", query = "select obj from Marca obj where :producto MEMBER OF obj.producto "),
 		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByPaisOrigen", query = "select obj from Marca obj where :paisOrigen = obj.paisOrigen ") })
+		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findAll", query = "select obj from Marca obj order by obj.id ")
 public class Marca implements Serializable {
 
 	private static final long serialVersionUID = 0;

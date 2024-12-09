@@ -1,6 +1,6 @@
 package Presentacion.Controller.Command.CommandVentasJPA;
 
-import java.util.List;
+import java.util.Set;
 
 import Negocio.FactoriaNegocio.FactoriaNegocio;
 import Negocio.VentaJPA.TVenta;
@@ -11,7 +11,7 @@ import Presentacion.FactoriaVistas.Evento;
 public class ListarVentaCommand implements Command {
 
 	public Context execute(Object datos) {
-		List<TVenta> res = FactoriaNegocio.getInstance().getVentaSA().listarVentas();
+		Set<TVenta> res = FactoriaNegocio.getInstance().getVentaSA().listarVentas();
 		return new Context(Evento.LISTAR_VENTAS_VISTA, res);
 	}
 }
