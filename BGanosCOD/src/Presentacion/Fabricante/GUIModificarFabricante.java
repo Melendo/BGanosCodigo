@@ -40,7 +40,7 @@ public class GUIModificarFabricante extends JFrame implements IGUI {
 		super("Modificar Fabricante");
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 600;
-		int alto = 460;
+		int alto = 400;
 		int x = (pantalla.width - ancho) / 2;
 		int y = (pantalla.height - alto) / 2;
 		this.setBounds(x, y, ancho, alto);

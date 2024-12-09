@@ -65,6 +65,7 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);
 
+		// Cabecera
 		JPanel CabeceraID = new JPanel();
 		CabeceraID.setBorder(new EmptyBorder(5, 5, 5, 5));
 		CabeceraID.setAlignmentX(CENTER_ALIGNMENT);
@@ -136,7 +137,8 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 		});
 		panelAniadirButton.add(botonAnadirEntrada);
 
-		// **********************
+		// *************************Eliminar***********************************
+		
 		JLabel msgEliminar = ComponentsBuilder.createLabel(
 				"Introduzca el ID del Producto que desea eliminar de la Venta ", 1, 150, 75, 20, Color.BLACK);
 		msgEliminar.setAlignmentX(CENTER_ALIGNMENT);
@@ -231,7 +233,7 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 		pagoBox = new JComboBox<String>(new DefaultComboBoxModel<>(pago));
 		panelPago.add(pagoBox);
 
-		// id del empleado que realiza la venta
+		// id del empleado
 		JPanel panelEmp = new JPanel();
 		panelEmp.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panelEmp.setAlignmentX(CENTER_ALIGNMENT);
@@ -241,6 +243,7 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 		textEmpleado = new JTextField(15);
 		panelEmp.add(textEmpleado);
 
+		// botones
 		JPanel panelBotones = new JPanel();
 		mainPanel.add(panelBotones);
 

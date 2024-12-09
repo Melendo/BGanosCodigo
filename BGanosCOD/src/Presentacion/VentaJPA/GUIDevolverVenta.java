@@ -63,6 +63,7 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 		this.setContentPane(mainPanel);
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
+		// cabecera
 		JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("Introduzca el ID de la Venta a mostrar ", 1, 10, 80,
 				20, Color.BLACK);
 		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
@@ -70,18 +71,18 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
 
+		// id venta
 		JPanel panelID = new JPanel();
 		mainPanel.add(panelID);
-
 		panelID.add(new JLabel("Id de la Venta: "));
 
 		idText = new JTextField(20);
-
 		idText.setEditable(true);
 		panelID.add(idText);
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
 
+		// tabla
 		JPanel mensaje = new JPanel();
 		mainPanel.add(mensaje);
 
@@ -91,6 +92,7 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 		scroll = new JScrollPane(tabla);
 		mainPanel.add(scroll);
 
+		// devolucion
 		JPanel panelDevolucion = new JPanel();
 
 		panelDevolucion.add(new JLabel("Id producto"));
@@ -138,7 +140,8 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 			}
 
 		});
-
+		panelBotones.add(botonDevolver);
+		
 		JButton botonCancelar = new JButton("Cancelar");
 		botonCancelar.setBounds(200, 50, 100, 100);
 		botonCancelar.addActionListener(new ActionListener() {

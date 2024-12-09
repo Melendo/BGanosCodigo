@@ -61,12 +61,11 @@ public class GUIVentasPorEmpleadoDeCaja extends JFrame implements IGUI {
 		panelCentro.setLayout(new FlowLayout(FlowLayout.CENTER));
 		mainPanel.add(panelCentro);
 
-		// Campo de entrada para el empleado
-		JLabel labelInvernadero = new JLabel("Ingrese el id del Empleado:");
+		// id Empleado
+		JLabel labelInvernadero = new JLabel("Id del Empleado:");
 		panelCentro.add(labelInvernadero);
 
-		idText = new JTextField();
-		idText.setPreferredSize(new Dimension(250, 30));
+		idText = new JTextField(20);
 		panelCentro.add(idText);
 
 		// Boton Buscar

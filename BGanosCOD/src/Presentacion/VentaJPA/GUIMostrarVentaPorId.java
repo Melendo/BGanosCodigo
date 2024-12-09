@@ -62,31 +62,33 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 		this.setContentPane(mainPanel);
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
+		// cabecera
 		JLabel msgIntroIDCabecera = ComponentsBuilder.createLabel("Introduzca el ID de la Venta a mostrar ", 1, 10, 80,
 				20, Color.BLACK);
 		msgIntroIDCabecera.setAlignmentX(CENTER_ALIGNMENT);
 		mainPanel.add(msgIntroIDCabecera);
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
-
+		
+		// id venta
 		JPanel panelID = new JPanel();
 		mainPanel.add(panelID);
-
 		panelID.add(new JLabel("Id de la Venta: "));
-
+		
 		idText = new JTextField(20);
-
 		idText.setEditable(true);
 		panelID.add(idText);
 
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
 
+		// datos venta
 		JPanel mensaje = new JPanel();
 		mainPanel.add(mensaje);
 
 		mensajeVenta = ComponentsBuilder.createLabel("", 10, 100, 80, 20, Color.BLACK);
 		mensaje.add(mensajeVenta);
 
+		// tabla
 		List<String[]> datosColumnas = new ArrayList<String[]>();
 
 		tabla = ComponentsBuilder.createTable(0, 4, nombreColumnas, datosColumnas.toArray(new String[][] {}));
@@ -94,6 +96,7 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 		scroll.setBounds(50, 115, 900, 288);
 		mainPanel.add(scroll);
 
+		// botones
 		JPanel panelBotones = new JPanel();
 		mainPanel.add(panelBotones);
 
@@ -142,7 +145,7 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 
 			mensajeVenta
 					.setText("Perecio Total: " + res.getVenta().getPrecioTotal() + ", Empleado que realizo la venta: "
-							+ res.getVenta().getIdEmplado() + ", Forma de Pago: " + res.getVenta().getPrecioTotal()
+							+ res.getVenta().getIdEmplado() + "\nForma de Pago: " + res.getVenta().getPrecioTotal()
 							+ ", Fecha: " + res.getVenta().getFecha() + ", Activo: " + res.getVenta().getActivo());
 
 			String[][] tablaDatos = new String[datos.size()][nombreColumnas.length];
