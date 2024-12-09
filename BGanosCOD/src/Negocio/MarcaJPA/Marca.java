@@ -1,6 +1,9 @@
 package Negocio.MarcaJPA;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 import java.io.Serializable;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -10,7 +13,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.NamedQueries;
 
 import java.util.List;
-import java.util.Set;
 import Negocio.ProveedorJPA.Proveedor;
 import javax.persistence.ManyToMany;
 import Negocio.ProductoJPA.Producto;
@@ -21,7 +23,7 @@ import javax.persistence.OneToMany;
 @NamedQueries({
 		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByid", query = "select obj from Marca obj where :id = obj.id "),
 		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByActivo", query = "select obj from Marca obj where :activo = obj.activo "),
-		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByNombre", query = "select obj from Marca obj where :nombre = obj.nombre "),
+		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findBynombre", query = "select obj from Marca obj where :nombre = obj.nombre "),
 		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByversion", query = "select obj from Marca obj where :version = obj.version "),
 		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByproveedor", query = "select obj from Marca obj where :proveedor MEMBER OF obj.proveedor "),
 		@NamedQuery(name = "Negocio.MarcaJPA.Marca.findByproducto", query = "select obj from Marca obj where :producto MEMBER OF obj.producto "),
@@ -30,6 +32,8 @@ public class Marca implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
+	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Integer id;
 

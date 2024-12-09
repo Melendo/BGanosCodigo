@@ -17,11 +17,11 @@ public class TMarca {
 		this.activo = activo;
 	}
 
-	public TMarca(String nombre, String paisOrigen, Boolean activo) {
-		this.nombre = nombre;
-		this.paisOrigen = paisOrigen;
-		this.activo = activo;
-	}
+//	public TMarca(String nombre, String paisOrigen, Boolean activo) {
+//		this.nombre = nombre;
+//		this.paisOrigen = paisOrigen;
+//		this.activo = activo;
+//	}
 	
 	// TODO: constructora nueva
 	public TMarca(Marca marca) {

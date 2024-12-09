@@ -110,7 +110,7 @@ public class GUIAltaMarca extends JFrame implements IGUI, ActionListener {
 					String paisOrigen = textPaisOrigen.getText();
 
 					ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_MARCA,
-							new TMarca(nombre != null ? nombre : "", paisOrigen != null ? paisOrigen : "", true)));
+							new TMarca(0, nombre != null ? nombre : "", paisOrigen != null ? paisOrigen : "", true)));
 
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIAltaMarca.this, "Error en el formato de los datos", "Error",
