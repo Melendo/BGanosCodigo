@@ -122,6 +122,15 @@ public class Marca implements Serializable {
 	public void setProveedores(List<Proveedor> proveedores) {
 		this.proveedor = proveedores;
 	}
+	
+	
+	public void addProveedor(Proveedor p) {
+		this.proveedor.add(p);
+	}
+	
+	public void removeProveedor(Proveedor p) {
+		this.proveedor.remove(p);
+	}
 
 	// TODO: faltan get y set de producto
 	public List<Producto> getProductos() {
@@ -132,6 +141,7 @@ public class Marca implements Serializable {
 	public void setProductos(List<Producto> productos) {
 		this.producto = productos;
 	}
+
 	
 	public int getContadorProductos() {
 		return this.contadorProductos;
