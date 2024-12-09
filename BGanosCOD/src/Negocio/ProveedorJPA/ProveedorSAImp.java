@@ -45,8 +45,8 @@ public class ProveedorSAImp implements ProveedorSA {
 					Proveedor nuevoProveedor = new Proveedor();
 					nuevoProveedor.transferToEntity(tProv);
 					em.persist(nuevoProveedor);
-					transaction.commit();
 					exito = nuevoProveedor.getId();
+					transaction.commit();
 				} else {
 					if (provExiste.getActivo()) {
 						exito = -4; // YA HAY UN PROVEEDOR ACTIVO CON ESE CIF
@@ -59,6 +59,9 @@ public class ProveedorSAImp implements ProveedorSA {
 					}
 				}
 			} catch (Exception e) {
+				if(em!=null && em.getTransaction().isActive()) {
+		            em.getTransaction().rollback();
+				}
 				exito = -1;
 			} finally {
 				if (em != null) {
