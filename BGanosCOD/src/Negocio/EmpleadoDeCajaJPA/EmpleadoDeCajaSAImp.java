@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.LockModeType;
 import javax.persistence.TypedQuery;
 
 import Negocio.EMFSingleton.EMFSingleton;
@@ -18,14 +19,13 @@ import Negocio.TurnoJPA.Turno;
 
 public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	
-	public Integer altaEmpleadoDeCaja(TEmpleadoDeCaja empleado) {
+	public synchronized Integer altaEmpleadoDeCaja(TEmpleadoDeCaja empleado) {
 	    
 
 	    Integer id = -1;
 	    boolean exito = false;
 	    EmpleadoDeCaja empleadoExistente = null;
 	    EmpleadoDeCaja empleadoNuevo = null;
-	    Turno turno = null;
 	    String nombre = empleado.getNombre();
 	    
 	    
@@ -38,17 +38,14 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	    entityTrans.begin();
 
 	    // Verificación de turno
-	    TypedQuery<Turno> query2 = entityManager.createNamedQuery("Negocio.TurnoJPA.Turno.findByid", Turno.class);
-	    query2.setParameter("id", empleado.getId_Turno());
-	    try {
-	        turno = query2.getSingleResult();
-	    } catch (Exception e) {
+	    Turno turno = entityManager.find(Turno.class, empleado.getId_Turno(), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+	    
+	    
+	    if (turno == null) {
 	        entityTrans.rollback();
 	        entityManager.close();
 	        return -404; // Turno no existe
-	    }
-
-	    if (turno != null && !turno.isActivo()) {
+	    }else if (!turno.isActivo()) {
 	        entityTrans.rollback();
 	        entityManager.close();
 	        return -403; // Turno no activo
@@ -127,11 +124,11 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 		
 		EmpleadoDeCaja empleado = entityManager.find(EmpleadoDeCaja.class, idEmpleado);
 		
+		    
 		if(empleado != null){ 
 			if(empleado.getActivo()){
+				entityManager.find(Turno.class, empleado.getTurno().getId(), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
 				empleado.setActivo(false);
-
-				
 				try {				
 					entityTrans.commit();
 					res = empleado.getId();
