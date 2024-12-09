@@ -144,6 +144,7 @@ public class GUIModificarMarca extends JFrame implements IGUI, ActionListener {
 					ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_MARCA, marca));
 
 				} catch (Exception ex) {
+					ex.printStackTrace();
 					JOptionPane.showMessageDialog(GUIModificarMarca.this, "Error en el formato de los datos", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}

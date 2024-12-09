@@ -141,9 +141,9 @@ public class MarcaSAImp implements MarcaSA {
 		t.begin();
 		
 		Marca m = em.find(Marca.class, marca.getId());
-		
+		marca.setActivo(m.getActivo());
 		if(m != null && m.getActivo()) {
-			TypedQuery<Marca> query = em.createNamedQuery("Negocio.MarcaJPA.findBynombre", Marca.class);
+			TypedQuery<Marca> query = em.createNamedQuery("Negocio.MarcaJPA.Marca.findBynombre", Marca.class);
 			query.setParameter("nombre", marca.getNombre());
 			Marca mExistente = null;
 			
@@ -155,7 +155,7 @@ public class MarcaSAImp implements MarcaSA {
 			
 			if(mExistente == null) {
 				m.transferToEntity(marca);
-				em.persist(m);
+//				em.persist(m); creo que esto no hace falta
 				
 				try {
 					t.commit();

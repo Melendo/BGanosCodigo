@@ -33,8 +33,8 @@ public class Marca implements Serializable {
 	private static final long serialVersionUID = 0;
 
 	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String nombre;
@@ -60,7 +60,10 @@ public class Marca implements Serializable {
 
 	// TODO: nuevo
 	public Marca(TMarca marca) {
-
+		id = marca.getId();
+		nombre = marca.getNombre();
+		paisOrigen = marca.getPais();		
+		activo = marca.getActivo();
 	}
 
 	public Integer getId() {
