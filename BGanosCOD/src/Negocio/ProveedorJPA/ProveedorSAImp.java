@@ -88,9 +88,14 @@ public class ProveedorSAImp implements ProveedorSA {
 				provExiste = em.find(Proveedor.class, id);
 				if (provExiste != null) {
 					if (provExiste.getActivo()) {
-						provExiste.setActivo(false);
-						transaction.commit();
-						exito = provExiste.getId();
+						if(provExiste.getMarcas().isEmpty()) {
+							provExiste.setActivo(false);
+							transaction.commit();
+							exito = provExiste.getId();
+						}else{
+							transaction.rollback();
+							exito = -5; // El proveedor está vinculado a una marca
+						}
 					} else {
 						transaction.rollback();
 						exito = -3; // El proveedor ya esta dado de baja
