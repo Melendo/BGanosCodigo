@@ -1,27 +1,19 @@
-/**
- * 
- */
 package Presentacion.Controller.Command.CommandProveedorJPA;
 
+import java.util.Set;
+
+import Negocio.FactoriaNegocio.FactoriaNegocio;
+import Negocio.ProveedorJPA.TProveedor;
 import Presentacion.Controller.Command.Command;
 import Presentacion.Controller.Command.Context;
+import Presentacion.FactoriaVistas.Evento;
 
-/** 
-* <!-- begin-UML-doc -->
-* <!-- end-UML-doc -->
-* @author airam
-* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-*/
 public class listarProveedoresCommand implements Command {
-	/** 
-	* (non-Javadoc)
-	* @see Command#execute(Object datos)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	public Context execute(Object datos) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-		return null;
-		// end-user-code
+		Set<TProveedor> resultado = (Set<TProveedor>) FactoriaNegocio.getInstance().getProveedorJPA().listarProveedor();
+
+		return new Context(Evento.LISTAR_PROVEEDORES_VISTA, resultado);
+
 	}
 }

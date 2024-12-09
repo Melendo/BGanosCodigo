@@ -11,14 +11,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Negocio.Invernadero.TInvernadero;
 import Negocio.ProveedorJPA.TProveedor;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.Invernadero.GUIInvernadero;
 
 @SuppressWarnings("serial")
 public class GUIProveedor extends JFrame implements IGUI{
@@ -58,7 +56,7 @@ public class GUIProveedor extends JFrame implements IGUI{
 		JLabel label = ComponentsBuilder.createLabel("PROVEEDORES", 250, 30, 500, 50, Color.BLACK);
         this.add(label);
 
-        // ALTA_INVERNADERO_VISTA
+        // ALTA_PROVEEDOR_VISTA
         buttonAltaProveedor = ComponentsBuilder.createButton("Alta", 100, 100, 185, 100);
         buttonAltaProveedor.addActionListener(new ActionListener() {
             @Override
@@ -70,7 +68,7 @@ public class GUIProveedor extends JFrame implements IGUI{
         buttonAltaProveedor.setVisible(true);
         this.add(buttonAltaProveedor);
 
-        // BAJA_INVERNADERO_VISTA
+        // BAJA_PROVEEDOR_VISTA
         buttonBajaProveedor = ComponentsBuilder.createButton("Baja", 300, 100, 185, 100);
         buttonBajaProveedor.addActionListener(new ActionListener() {
             @Override
@@ -82,7 +80,7 @@ public class GUIProveedor extends JFrame implements IGUI{
         buttonBajaProveedor.setVisible(true);
         this.add(buttonBajaProveedor);
 
-        // MODIFICAR_INVERNADERO_VISTA
+        // MODIFICAR_PROVEEDOR_VISTA
         buttonModificarProveedor = ComponentsBuilder.createButton("Modificar", 500, 100, 185, 100);
         buttonModificarProveedor.addActionListener(new ActionListener() {
             @Override
@@ -94,7 +92,7 @@ public class GUIProveedor extends JFrame implements IGUI{
         buttonModificarProveedor.setVisible(true);
         this.add(buttonModificarProveedor);
 
-        // MOSTRAR_INVERNADERO_POR_ID_VISTA
+        // MOSTRAR_PROVEEDOR_POR_ID_VISTA
         buttonMostrarProveedorPorID = ComponentsBuilder.createButton("Mostrar por ID", 700, 100, 185, 100);
         buttonMostrarProveedorPorID.addActionListener(new ActionListener() {
             @Override
@@ -106,31 +104,31 @@ public class GUIProveedor extends JFrame implements IGUI{
         buttonMostrarProveedorPorID.setVisible(true);
         this.add(buttonMostrarProveedorPorID);
 
-        // LISTAR_INVERNADEROS
+        // LISTAR_PROVEEDORS
         buttonListarProveedor = ComponentsBuilder.createButton("Listar", 100, 250, 185, 100);
         buttonListarProveedor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	GUIProveedor.this.setVisible(false);
-                ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PROVEEDORES_VISTA, proveedor));
+                ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PROVEEDORES, proveedor));
             }
         });
         buttonListarProveedor.setVisible(true);
         this.add(buttonListarProveedor);
 
-        // LISTAR_INVERNADEROS_POR_SISTEMA_RIEGO_VISTA
+        // LISTAR_PROVEEDORS_POR_SISTEMA_RIEGO_VISTA
         buttonListarProveedorPorMarca = ComponentsBuilder.createButton("Listar por Marca", 300, 250, 185, 100);
         buttonListarProveedorPorMarca.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	GUIProveedor.this.setVisible(false);
-                ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PROVEEDORES_DE_MARCA, proveedor));
+                ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PROVEEDORES_DE_MARCA_VISTA, proveedor));
             }
         });
         buttonListarProveedorPorMarca.setVisible(true);
         this.add(buttonListarProveedorPorMarca);
         
-        // VINCULAR_SISTEMA_RIEGO_INVERNADERO_VISTA
+        // VINCULAR_SISTEMA_RIEGO_PROVEEDOR_VISTA
         buttonVincularProveedorMarca = ComponentsBuilder.createButton("Vincular Marca", 500, 250, 185, 100);
         buttonVincularProveedorMarca.addActionListener(new ActionListener() {
             @Override
@@ -142,7 +140,7 @@ public class GUIProveedor extends JFrame implements IGUI{
         buttonVincularProveedorMarca.setVisible(true);
         this.add(buttonVincularProveedorMarca);
         
-     // DESVINCULAR_SISTEMA_RIEGO_INVERNADERO_VISTA
+     // DESVINCULAR_SISTEMA_RIEGO_PROVEEDOR_VISTA
         buttonDesvincularProveedorMarca = ComponentsBuilder.createButton("Desvincular Marca", 700, 250, 185, 100);
         buttonDesvincularProveedorMarca.addActionListener(new ActionListener() {
             @Override

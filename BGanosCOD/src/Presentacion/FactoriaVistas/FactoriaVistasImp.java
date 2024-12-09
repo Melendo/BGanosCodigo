@@ -105,6 +105,7 @@ import Negocio.Invernadero.TInvernadero;
 import Negocio.MarcaJPA.TMarca;
 import Negocio.Planta.TPlanta;
 import Negocio.ProductoJPA.TProducto;
+import Negocio.ProveedorJPA.TProveedor;
 import Negocio.SistemaDeRiego.TSistemaDeRiego;
 import Negocio.TurnoJPA.TTurno;
 import Negocio.VentaJPA.TVenta;
@@ -325,7 +326,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
 		case Evento.DEVOLVER_VENTA_VISTA:
 			vistaActual = new GUIDevolverVenta();
 			return vistaActual;
-			
+
 // 					Vista Producto JPA
 		case Evento.PRODUCTO_VISTA:
 			vistaActual = new GUIProducto();
@@ -372,7 +373,7 @@ public class FactoriaVistasImp extends FactoriaVistas {
 			vistaActual = new GUIMostrarProveedorPorId();
 			return vistaActual;
 		case Evento.LISTAR_PROVEEDORES_VISTA:
-			vistaActual = new GUIListarProveedores();
+			vistaActual = new GUIListarProveedores((Set<TProveedor>) contexto.getDatos());
 			return vistaActual;
 		case Evento.LISTAR_PROVEEDORES_DE_MARCA_VISTA:
 			vistaActual = new GUIListarProveedoresDeMarca();
@@ -384,51 +385,49 @@ public class FactoriaVistasImp extends FactoriaVistas {
 			vistaActual = new GUIDesvincularMarcaProveedor();
 			return vistaActual;
 
-            
-            //empleado de caja
-        case Evento.EMPLEADO_DE_CAJA_VISTA:
-        	vistaActual=new GUIEmpleadoDeCaja();
-        	return vistaActual;
-        case Evento.ALTA_EMPLEADO_DE_CAJA_VISTA:
-        	vistaActual=new GUIAltaEmpleadoDeCaja();
-        	return vistaActual;
-        case Evento.BAJA_EMPLEADO_DE_CAJA_VISTA:
-        	vistaActual=new GUIBajaEmpleadoDeCaja();
-        	return vistaActual;
-        case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE_VISTA:
-        	vistaActual=new GUIListarEmpleadoDeCajaPorNombre();
-        	return vistaActual;
-        case Evento.MODIFICAR_EMPLEADO_DE_CAJA_VISTA:
-        	vistaActual=new GUIModificarEmpleadoDeCaja();
-        	return vistaActual;
-        case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO_VISTA:
-        	vistaActual=new GUIListarEmpleadoDeCajaPorTurno();
-        	return vistaActual;
-        	
-        	
+		// empleado de caja
+		case Evento.EMPLEADO_DE_CAJA_VISTA:
+			vistaActual = new GUIEmpleadoDeCaja();
+			return vistaActual;
+		case Evento.ALTA_EMPLEADO_DE_CAJA_VISTA:
+			vistaActual = new GUIAltaEmpleadoDeCaja();
+			return vistaActual;
+		case Evento.BAJA_EMPLEADO_DE_CAJA_VISTA:
+			vistaActual = new GUIBajaEmpleadoDeCaja();
+			return vistaActual;
+		case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE_VISTA:
+			vistaActual = new GUIListarEmpleadoDeCajaPorNombre();
+			return vistaActual;
+		case Evento.MODIFICAR_EMPLEADO_DE_CAJA_VISTA:
+			vistaActual = new GUIModificarEmpleadoDeCaja();
+			return vistaActual;
+		case Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_TURNO_VISTA:
+			vistaActual = new GUIListarEmpleadoDeCajaPorTurno();
+			return vistaActual;
+
 //					Vistas Marca JPA
-        case Evento.MARCA_VISTA:
-        	vistaActual = new GUIMarca();
-        	return vistaActual;
-        case Evento.ALTA_MARCA_VISTA:
-        	vistaActual = new GUIAltaMarca();
-        	return vistaActual;
-        case Evento.BAJA_MARCA_VISTA:
-        	vistaActual = new GUIBajaMarca();
-        	return vistaActual;
-        case Evento.MODIFICAR_MARCA_VISTA:
-        	vistaActual = new GUIModificarMarca();
-        	return vistaActual;
-        case Evento.MOSTRAR_MARCA_VISTA:
-        	vistaActual = new GUIMostrarMarcaPorId();
-        	return vistaActual;
-        case Evento.LISTAR_MARCAS_VISTA:
-        	vistaActual = new GUIListarMarcas((Set<TMarca>) contexto.getDatos());
-        	return vistaActual;
-        case Evento.LISTAR_MARCAS_POR_PROVEEDOR_VISTA:
-        	vistaActual = new GUIListaMarcasPorProveedor();
-        	return vistaActual;
-                	
+		case Evento.MARCA_VISTA:
+			vistaActual = new GUIMarca();
+			return vistaActual;
+		case Evento.ALTA_MARCA_VISTA:
+			vistaActual = new GUIAltaMarca();
+			return vistaActual;
+		case Evento.BAJA_MARCA_VISTA:
+			vistaActual = new GUIBajaMarca();
+			return vistaActual;
+		case Evento.MODIFICAR_MARCA_VISTA:
+			vistaActual = new GUIModificarMarca();
+			return vistaActual;
+		case Evento.MOSTRAR_MARCA_VISTA:
+			vistaActual = new GUIMostrarMarcaPorId();
+			return vistaActual;
+		case Evento.LISTAR_MARCAS_VISTA:
+			vistaActual = new GUIListarMarcas((Set<TMarca>) contexto.getDatos());
+			return vistaActual;
+		case Evento.LISTAR_MARCAS_POR_PROVEEDOR_VISTA:
+			vistaActual = new GUIListaMarcasPorProveedor();
+			return vistaActual;
+
 		default:
 			return null;
 		}

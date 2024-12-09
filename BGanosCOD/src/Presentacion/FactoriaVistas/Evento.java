@@ -488,37 +488,38 @@ public class Evento {
 
 	// KOs y OKs Proveedor 1140 - 1159
 
+
 	// Alta
-	public static final int ALTA_PORVEEDOR_OK = 1120;
-	public static final int ALTA_PORVEEDOR_KO = 1120;
+	public static final int ALTA_PROVEEDOR_OK = 1140;
+	public static final int ALTA_PROVEEDOR_KO = 1141;
 
 	// Baja
-	public static final int BAJA_PROVEEDOR_OK = 1121;
-	public static final int BAJA_PROVEEDOR_KO = 1121;
+	public static final int BAJA_PROVEEDOR_OK = 1142;
+	public static final int BAJA_PROVEEDOR_KO = 1143;
 
 	// Desvincular
-	public static final int DESVINCULAR_MARCA_PROVEEDOR_OK = 1122;
-	public static final int DESVINCULAR_MARCA_PROVEEDOR_KO = 1122;
+	public static final int DESVINCULAR_MARCA_PROVEEDOR_OK = 1144;
+	public static final int DESVINCULAR_MARCA_PROVEEDOR_KO = 1145;
 
 	// Vincular
-	public static final int LISTAR_PROVEEDORES_OK = 1123;
-	public static final int LISTAR_PROVEEDORES_KO = 1123;
+	public static final int LISTAR_PROVEEDORES_OK = 1146;
+	public static final int LISTAR_PROVEEDORES_KO = 1147;
 
 	// Listar por marca
-	public static final int LISTAR_PROVEEDORES_DE_MARCA_OK = 1124;
-	public static final int LISTAR_PROVEEDORES_DE_MARCA_KO = 1124;
+	public static final int LISTAR_PROVEEDORES_DE_MARCA_OK = 1148;
+	public static final int LISTAR_PROVEEDORES_DE_MARCA_KO = 1149;
 
 	// Modificar
-	public static final int MODIFICAR_PROVEEDORES_OK = 1125;
-	public static final int MODIFICAR_PROVEEDORES_KO = 1125;
+	public static final int MODIFICAR_PROVEEDORES_OK = 1150;
+	public static final int MODIFICAR_PROVEEDORES_KO = 1151;
 
 	// Mostrar
-	public static final int MOSTRAR_PROVEEDORES_POR_ID_OK = 1126;
-	public static final int MOSTRAR_PROVEEDORES_POR_ID_KO = 1126;
+	public static final int MOSTRAR_PROVEEDORES_POR_ID_OK = 1152;
+	public static final int MOSTRAR_PROVEEDORES_POR_ID_KO = 1153;
 
 	// Vincular
-	public static final int VINCULAR_MARCA_PROVEEDOR_OK = 1127;
-	public static final int VINCULAR_MARCA_PROVEEDOR_KO = 1127;
+	public static final int VINCULAR_MARCA_PROVEEDOR_OK = 1154;
+	public static final int VINCULAR_MARCA_PROVEEDOR_KO = 1155;
 
 	// Turno 1200 - 1299
 
