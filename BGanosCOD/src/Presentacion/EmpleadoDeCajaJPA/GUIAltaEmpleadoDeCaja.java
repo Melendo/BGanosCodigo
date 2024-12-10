@@ -45,6 +45,7 @@ public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
 	private JTextField textNombre, textApellido, textDNI, textTelefono, textSueldo, textIdTurno;
     private JTextField textSueldoBase, textComplemento, textPrecioHora, textHoras;
     private Boolean tCompleto = false;
+    private Boolean tParcial = false;
 
     public GUIAltaEmpleadoDeCaja() {
         super("Alta Empleado De Caja");
@@ -84,7 +85,7 @@ public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
         // Tipo de empleado
         JPanel panelTEmpleado = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel labelTEmpleado = new JLabel("Tipo de Empleado: ");
-        JComboBox<String> tipoEmpleado = new JComboBox<>(new String[]{"Completo", "Parcial"});
+        JComboBox<String> tipoEmpleado = new JComboBox<>(new String[]{"Elige Tipo", "Completo", "Parcial"});
         tipoEmpleado.setPreferredSize(new Dimension(200, 25));
         panelTEmpleado.add(labelTEmpleado);
         panelTEmpleado.add(tipoEmpleado);
@@ -105,7 +106,7 @@ public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
         E_Completo.add(textSueldoBase = new JTextField(15));
         E_Completo.add(new JLabel("Complementos: "));
         E_Completo.add(textComplemento = new JTextField(15));
-        E_Completo.setVisible(true);
+        E_Completo.setVisible(false);
         contentPanel.add(E_Completo);
 
         // Panel de empleado parcial
@@ -122,8 +123,9 @@ public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
         tipoEmpleado.addActionListener(e -> {
             String option = (String) tipoEmpleado.getSelectedItem();
             tCompleto = "Completo".equals(option);
+            tParcial = "Parcial".equals(option);
             E_Completo.setVisible(tCompleto);
-            E_Parcial.setVisible(!tCompleto);
+            E_Parcial.setVisible(tParcial);
         });
 
         // Panel de botones
