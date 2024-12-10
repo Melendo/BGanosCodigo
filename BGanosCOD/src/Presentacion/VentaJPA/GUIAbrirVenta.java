@@ -174,7 +174,7 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 		botonQuitarEntrada.setBounds(75, 50, 100, 100);
 		botonQuitarEntrada.addActionListener(a -> {
 			try {
-				if (textId.getText().isEmpty() || cantidadOuttxt.getText().isEmpty()) {
+				if (textQuitar.getText().isEmpty() || cantidadOuttxt.getText().isEmpty()) {
 					ApplicationController.getInstance().manageRequest(new Context(Evento.ABRIR_VENTA_KO, -1));
 				} else {
 					int idProd = Integer.parseInt(textQuitar.getText());
@@ -182,6 +182,7 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 					boolean correct = true;
 					boolean encontrado = false;
 					Set<TLineaVenta> lVentas = tCarrito.getLineaVenta();
+					TLineaVenta quitarLV = new TLineaVenta();
 					for (TLineaVenta lVenta : lVentas) {
 						if (lVenta.getIdProducto() == idProd) {
 							encontrado = true;
@@ -189,22 +190,22 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 								correct = false;
 							else {
 								int cantidadTotal = lVenta.getCantidad() - cantidad;
-								if (cantidadTotal == 0) {
-									
-									lVentas.remove(lVenta);
-									}
+								if (cantidadTotal == 0)
+									quitarLV = lVenta;
 								else
 									lVenta.setCantidad(cantidadTotal);
 							}
 						}
-
 					}
 					if (!correct)
 						JOptionPane.showMessageDialog(this, "No hay entradas suficientes para quitar", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					if (!encontrado)
-						ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_VENTA_KO, -1));
+						JOptionPane.showMessageDialog(this, "Producto con id: " + idProd + " no esta en el carrito" , "Error",
+								JOptionPane.ERROR_MESSAGE);
 					else {
+						if(quitarLV != null)
+							lVentas.remove(quitarLV);
 						tCarrito.setLineaVenta(lVentas);
 						update();
 					}

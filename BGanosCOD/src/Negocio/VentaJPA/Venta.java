@@ -122,7 +122,7 @@ public class Venta implements Serializable {
 		tVenta.setFormaDePago(formaPago);
 		tVenta.setId(id);
 		tVenta.setPrecioTotal(precioTotal);
-		
+		tVenta.setIdEmpleado(empleadoDeCaja.getId());
 		return tVenta;
 	}
 	

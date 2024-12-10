@@ -32,7 +32,7 @@ public class TVenta {
 		return activo;
 	}
 	
-	public Integer getIdEmplado() {
+	public Integer getIdEmpleado() {
 		return idEmpleado;
 	}
 
