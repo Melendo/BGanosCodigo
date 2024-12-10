@@ -147,5 +147,7 @@ public GUIMostrarProductoPorId(){
 			GUIMSG.showMessage("ERROR INESPERADO", "MOSTRAR PRODUCTO", true);
 			break;
 		}
+		
+		ApplicationController.getInstance().manageRequest(new Context(Evento.PRODUCTO_VISTA, null));
 	}
 }
