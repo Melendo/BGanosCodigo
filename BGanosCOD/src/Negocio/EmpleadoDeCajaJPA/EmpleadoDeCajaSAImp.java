@@ -66,6 +66,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	            id = empleadoExistente.getId();
 	            empleadoExistente.transferToEntity(empleado);
 	            empleadoExistente.setTurno(turno);
+	            empleadoExistente.setSueldo(empleadoExistente.calcularSueldo());
 	            // Aquí puedes considerar si hacer algo con el turno
 	            entityTrans.commit();
 	            entityManager.close();
@@ -89,6 +90,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	        }
 
 	        // Persistir nuevo empleado
+	        empleadoNuevo.setSueldo(empleadoNuevo.calcularSueldo());
 	        empleadoNuevo.setTurno(turno);
 	        entityManager.persist(empleadoNuevo);
 	        exito = true;
@@ -198,7 +200,9 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
     				if(empleado.getTipo() == empModificar.getTipo()){
     					empleado.setActivo(empModificar.getActivo());
         				empModificar.transferToEntity(empleado);
+        				empModificar.setSueldo(empModificar.calcularSueldo());
         				empModificar.setTurno(turno);
+        				
         				
     					try {				
     						entityTrans.commit();
