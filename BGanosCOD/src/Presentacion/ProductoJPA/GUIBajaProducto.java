@@ -123,8 +123,6 @@ public class GUIBajaProducto extends JFrame implements IGUI {
 
 
 	public void actualizar(Context context) {
-		
-		System.out.println((int)context.getDatos());
 
 		switch(context.getEvento()) {
 		case Evento.BAJA_PRODUCTO_OK:
@@ -146,6 +144,8 @@ public class GUIBajaProducto extends JFrame implements IGUI {
 			break;
 		
 	}
+		
+		ApplicationController.getInstance().manageRequest(new Context(Evento.PRODUCTO_VISTA, null));
 
 
 	}

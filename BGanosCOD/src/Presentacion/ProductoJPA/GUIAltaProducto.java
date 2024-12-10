@@ -305,6 +305,8 @@ public class GUIAltaProducto extends JFrame implements IGUI {
 			GUIMSG.showMessage("Error inesperado", "ALTA PRODUCTO", true);
 			break;
 		}
+		
+		ApplicationController.getInstance().manageRequest(new Context(Evento.PRODUCTO_VISTA, null));
 	
 	}
 }

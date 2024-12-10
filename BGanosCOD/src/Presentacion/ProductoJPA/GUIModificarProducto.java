@@ -377,5 +377,6 @@ public class GUIModificarProducto extends JFrame implements IGUI {
 			break;
 		
 	}
+		ApplicationController.getInstance().manageRequest(new Context(Evento.PRODUCTO_VISTA, null));
 	}
 }

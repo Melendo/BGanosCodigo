@@ -80,7 +80,15 @@ public class GUIListarProducto extends JFrame implements IGUI {
 			tablaDatos[i][3] = t.getPrecio().toString();
 			tablaDatos[i][4] = t.getIdMarca().toString();
 			tablaDatos[i][5] = t.getActivo() ? "Si" : "No";
-			tablaDatos[i][6] = ""+t.getTipoProducto();
+			
+			
+			String tip = "Alimentacion";
+			
+			if(t.getTipoProducto() == 1) tip = "Sourvenirs";
+			
+			
+			
+			tablaDatos[i][6] = tip;
 			
 			
 			

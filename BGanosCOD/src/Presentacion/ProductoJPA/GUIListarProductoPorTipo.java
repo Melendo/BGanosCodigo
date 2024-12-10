@@ -139,6 +139,7 @@ public class GUIListarProductoPorTipo extends JFrame implements IGUI {
 		switch(context.getEvento()) {
 		case Evento.LISTAR_PRODUCTOS_POR_TIPO_KO:
 			GUIMSG.showMessage("No existe PRDUCTOS del tipo seleccionado", "LISTAR PRODUCTOS POR TIPO", true);
+			ApplicationController.getInstance().manageRequest(new Context(Evento.PRODUCTO_VISTA, null));
 			break;
 		case  Evento.LISTAR_PRODUCTOS_POR_TIPO_OK:
 			

@@ -277,15 +277,32 @@ public class ProductoSAImp implements ProductoSA {
 		}
 		else{
 
+			
+			
 			Producto p = em.find(Producto.class, producto.getId());
-		
+			
+			TypedQuery<Producto> query = em.createNamedQuery("Negocio.ProductoJPA.Producto.findBynombre", Producto.class);
+			query.setParameter("nombre", producto.getNombre());
+			
+			List<Producto> data = query.getResultList();
+			Producto tmp = data.isEmpty() ? null : data.get(0);
+			
+					
 			
 			if(p == null){
 				
 				id = -3;
 				t.rollback();
 			}
+			else if(tmp.getId() != producto.getId()){
+				
+				id = -4;
+				t.rollback();
+			}
 			else{
+				
+
+				
 			
 				if(producto.getTipoProducto() == 0){
 					TProductoAlimentacion tali = (TProductoAlimentacion)producto;
