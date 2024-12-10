@@ -186,16 +186,8 @@ public class PlantaSAImp implements PlantaSA {
 		return p;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see PlantaSA#listarPlantasPorTipo(Integer tipo)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public Set listarPlantasPorTipo(Integer tipo) {
-		// begin-user-code
-		// TODO Auto-generated method stub
+	public Set<TPlanta> listarPlantasPorTipo(Integer tipo) {
 		return null;
-		// end-user-code
 	}
 
 	public Set<TPlanta> listarPlantasPorTipo(String tipo) {

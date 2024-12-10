@@ -189,8 +189,10 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 								correct = false;
 							else {
 								int cantidadTotal = lVenta.getCantidad() - cantidad;
-								if (cantidadTotal == 0)
+								if (cantidadTotal == 0) {
+									
 									lVentas.remove(lVenta);
+									}
 								else
 									lVenta.setCantidad(cantidadTotal);
 							}
@@ -210,6 +212,7 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 				}
 
 			} catch (Exception ex) {
+				System.out.println(ex.getMessage());
 				JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Los datos no son correctos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
@@ -285,11 +288,11 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 	@Override
 	public void actualizar(Context context) {
 		if (context.getEvento() == Evento.CERRAR_VENTA_OK) {
-			JOptionPane.showMessageDialog(this, "Venta cerrada con id " + (Integer)context.getDatos() / 100000000 + " cerrada correctamente", "Éxito",
+			JOptionPane.showMessageDialog(this, "Venta cerrada con id " + (Integer)context.getDatos() % 100000000 + " cerrada correctamente", "Éxito",
 					JOptionPane.INFORMATION_MESSAGE);
 		} else if (context.getEvento() == Evento.CERRAR_VENTA_KO) {
-			int error = (Integer)context.getDatos() / 100000000;
-			int arg = (Integer)context.getDatos() % 100000000;
+			int error = (Integer)context.getDatos() / 10000000;
+			int arg = (Integer)context.getDatos() % 10000000;
 			switch (-error) {
 			case -2:
 				JOptionPane.showMessageDialog(this, "No existe el Empleado con id: " + arg, "Error",

@@ -229,6 +229,7 @@ public class VentaSAImp implements VentaSA {
 		Venta venta = new Venta(carrito.getVenta());
 		venta.setActivo(true);
 		venta.setFecha(new Date(Calendar.getInstance().getTime().getTime()));
+		venta.setEmpleado(emCaja);
 		em.persist(venta);
 
 		for (TLineaVenta linV : carrito.getLineaVenta()) {// Iteramos sobre las lineas de venta
@@ -250,6 +251,7 @@ public class VentaSAImp implements VentaSA {
 			}
 
 			prod.setStock(linV.getCantidad());
+			linV.setIdVenta(venta.getId());
 			LineaVenta lineaVenta = new LineaVenta(linV);
 			double precio = linV.getCantidad() * prod.getPrecio();
 			lineaVenta.setProducto(prod);

@@ -7,8 +7,6 @@ public class TLineaVenta {
 	private Integer cantidad;
 	private Integer idVenta;
 	private Double precio;
-	private TCarrito tCarrito;
-	private TVentaConProductos tVentaConProductos;
 	
 	public Integer getIdProducto() {
 		return idProducto;

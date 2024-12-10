@@ -12,8 +12,6 @@ public class TVenta {
 	private Date fecha;
 	private Boolean activo;
 	private Integer idEmpleado;
-//	private TCarrito tCarrito;
-//	private TVentaConProductos tVentaConProductos;
 	public Integer getId() {
 		return id;
 	}

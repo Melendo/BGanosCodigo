@@ -21,7 +21,7 @@ public interface PlantaSA {
 	* @return
 	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
 	*/
-	public Set listarPlantasPorTipo(Integer tipo);
+	public Set<TPlanta> listarPlantasPorTipo(Integer tipo);
 
 	public Set<TPlanta> listarPlantasPorTipo(String tipo);
 
