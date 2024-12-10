@@ -38,7 +38,7 @@ public class EmpleadoParcial extends EmpleadoDeCaja implements Serializable {
 	}
 
 	public Double calcularSueldo() {
-		return super.getSueldo() + (this.Horas * this.Precio_h);
+		return this.Horas * this.Precio_h;
 	}
 	
 	public Double getHoras() {

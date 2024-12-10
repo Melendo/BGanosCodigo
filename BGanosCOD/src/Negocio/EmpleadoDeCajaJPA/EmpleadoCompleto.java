@@ -38,7 +38,7 @@ public class EmpleadoCompleto extends EmpleadoDeCaja implements Serializable {
 	}
 
 	public Double calcularSueldo() {
-		return super.getSueldo() + Sueldo_Base + Complementos;
+		return  Sueldo_Base + Complementos;
 	}
 
 	public Double getSueldo_Base() {
