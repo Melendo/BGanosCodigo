@@ -113,11 +113,6 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	public Integer bajaEmpleadoDeCaja(Integer idEmpleado) {
 		int res = -1;
 		
-    	
-        if (idEmpleado == null || idEmpleado < 0) {
-            return -4; // id incorrecto
-        }
-
         EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
         EntityTransaction entityTrans = entityManager.getTransaction();
         entityTrans.begin();
