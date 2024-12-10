@@ -238,7 +238,6 @@ public class ProductoSAImp implements ProductoSA {
 				
 				if(venta == null || !venta.getActivo()){
 					t.rollback();
-					System.out.println("Aquinull");
 					
 					lista = null;
 				}
