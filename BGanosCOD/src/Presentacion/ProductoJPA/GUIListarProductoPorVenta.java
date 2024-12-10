@@ -129,14 +129,14 @@ public class GUIListarProductoPorVenta extends JFrame implements IGUI {
 		
 		switch(context.getEvento()) {
 		case Evento.LISTAR_PRODUCTOS_POR_VENTA_KO:
-			GUIMSG.showMessage("No existe la venta", "LISTAR PRODUCTOS POR TIPO", true);
+			GUIMSG.showMessage("No existe la venta", "LISTAR PRODUCTOS POR VENTA", true);
 			break;
 		case  Evento.LISTAR_PRODUCTOS_POR_VENTA_OK:
 			
 			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_VISTA,context.getDatos()));
 			break;
 		default:
-			GUIMSG.showMessage("ERROR INESPERADO", "LISTAR PRODUCTOS POR TIPO", true);
+			GUIMSG.showMessage("ERROR INESPERADO", "LISTAR PRODUCTOS POR VENTA", true);
 			break;
 		
 	}

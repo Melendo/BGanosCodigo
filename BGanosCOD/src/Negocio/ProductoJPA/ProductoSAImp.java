@@ -232,10 +232,13 @@ public class ProductoSAImp implements ProductoSA {
 				EntityTransaction t = em.getTransaction();
 				t.begin();
 				
+				
 				Venta venta = em.find(Venta.class, idVenta,  LockModeType.OPTIMISTIC);
+				
 				
 				if(venta == null || !venta.getActivo()){
 					t.rollback();
+					System.out.println("Aquinull");
 					
 					lista = null;
 				}
@@ -244,11 +247,10 @@ public class ProductoSAImp implements ProductoSA {
 					
 					
 					final TypedQuery<LineaVenta> query = em.createNamedQuery("Negocio.VentaJPA.LineaVenta.findByventa", LineaVenta.class);
-					
-					
+					query.setParameter("venta", venta);
 					
 					List<LineaVenta> list = query.getResultList();
-					
+			
 					for(LineaVenta lv: list){
 						lista.add(lv.getProducto().entityToTransfer());
 					}

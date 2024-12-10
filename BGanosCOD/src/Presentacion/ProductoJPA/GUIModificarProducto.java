@@ -220,6 +220,8 @@ public class GUIModificarProducto extends JFrame implements IGUI {
 							Integer stock = Integer.parseInt(textStock.getText());
 							Integer idMarca = Integer.parseInt(textidMarca.getText());
 							int tip = 0;
+						
+							
 							
 							TProducto p;
 							
@@ -239,6 +241,10 @@ public class GUIModificarProducto extends JFrame implements IGUI {
 								p = new TProductoSouvenirs(nombre,precio, stock, idMarca, tip, descripcion);
 								
 							}
+							
+							if(estado.getSelectedIndex() == 1)
+		 						p.setActivo(false);
+							
 							p.setId(producto.getId());
 							ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_PRODUCTO, p));
 							setVisible(false);

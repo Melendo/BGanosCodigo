@@ -59,7 +59,7 @@ public class GUIProducto extends JFrame implements IGUI {
 						
 				@Override
 				public void actionPerformed(ActionEvent e) {
-				//	GUIPlanta.this.setVisible(false);
+					setVisible(false);
 					ApplicationController.getInstance().manageRequest(new Context(Evento.ALTA_PRODUCTO_VISTA, null));
 				}
 			});
@@ -72,7 +72,7 @@ public class GUIProducto extends JFrame implements IGUI {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-				//	GUIPlanta.this.setVisible(false);
+					setVisible(false);
 					ApplicationController.getInstance().manageRequest(new Context(Evento.BAJA_PRODUCTO_VISTA, null));
 				}
 			});
@@ -85,7 +85,7 @@ public class GUIProducto extends JFrame implements IGUI {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-				//	GUIPlanta.this.setVisible(false);
+					setVisible(false);
 					ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_PRODUCTO_VISTA, null));
 				}
 			});
@@ -98,7 +98,7 @@ public class GUIProducto extends JFrame implements IGUI {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-				//	GUIPlanta.this.setVisible(false);
+					setVisible(false);
 					ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_PRODUCTO_POR_ID_VISTA, null));
 				}
 			});
@@ -111,7 +111,7 @@ public class GUIProducto extends JFrame implements IGUI {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					//GUIPlanta.this.setVisible(false);
+					setVisible(false);
 					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS, null));
 				}
 			});
@@ -124,7 +124,7 @@ public class GUIProducto extends JFrame implements IGUI {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-				//	GUIPlanta.this.setVisible(false);
+					setVisible(false);
 					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_POR_TIPO_VISTA, null));
 				}
 			});
@@ -137,7 +137,7 @@ public class GUIProducto extends JFrame implements IGUI {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					//GUIPlanta.this.setVisible(false);
+					setVisible(false);
 					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_POR_MARCA_VISTA, null));
 				}
 			});
@@ -151,7 +151,7 @@ public class GUIProducto extends JFrame implements IGUI {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					//GUIPlanta.this.setVisible(false);
+					setVisible(false);
 					ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_PRODUCTOS_POR_VENTA_VISTA, null));
 				}
 			});
@@ -160,7 +160,7 @@ public class GUIProducto extends JFrame implements IGUI {
 			
 			
 			
-			//BACK BUTTON
+	
 			backButton = ComponentsBuilder.createBackButton();
 			backButton.addActionListener(new ActionListener() {
 				

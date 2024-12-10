@@ -296,10 +296,10 @@ public class GUIAltaProducto extends JFrame implements IGUI {
 		case Evento.ALTA_PRODUCTO_SOUVENIRS_KO:
 
 			if((int) context.getDatos() == -2){
-				GUIMSG.showMessage("Marca inexistente", "ALTA PRODUCTO", true);
+				GUIMSG.showMessage("Marca inexistente o inactivado", "ALTA PRODUCTO", true);
 			}
 			else
-			GUIMSG.showMessage("No se pudo dar de alta", "ALTA PRODUCTO", true);
+			GUIMSG.showMessage("Nombre duplicado", "ALTA PRODUCTO", true);
 			break;
 		default:
 			GUIMSG.showMessage("Error inesperado", "ALTA PRODUCTO", true);
