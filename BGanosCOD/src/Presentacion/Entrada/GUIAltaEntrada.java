@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Entrada;
 
 import javax.swing.JFrame;

@@ -27,11 +27,8 @@ import javax.swing.JOptionPane;
 @SuppressWarnings("serial")
 public class GUIListarFabricantesExtranjeros extends JFrame implements IGUI {
 
-	Set<TFabricante> listaFabricantes;
-
 	public GUIListarFabricantesExtranjeros(Set<TFabricante> listaFabricante) {
 		super("Mostrar Fabricantes Extranjeros");
-		this.listaFabricantes = listaFabricante;
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 800;
 		int alto = 400;
@@ -41,11 +38,11 @@ public class GUIListarFabricantesExtranjeros extends JFrame implements IGUI {
 		this.setLayout(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		initGUI();
+		initGUI(listaFabricante);
 
 	}
 
-	public void initGUI() {
+	public void initGUI(Set<TFabricante> listaFabricantes) {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);
@@ -53,7 +50,8 @@ public class GUIListarFabricantesExtranjeros extends JFrame implements IGUI {
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
 		// Tabla
-		String[] nombreColumnas = { "ID", "Nombre", "Cod. Fabricante", "Teléfono", "Aranceles", "Pais de Origen", "Activo"};
+		String[] nombreColumnas = { "ID", "Nombre", "Cod. Fabricante", "Teléfono", "Aranceles", "Pais de Origen",
+				"Activo" };
 		String[][] tablaDatos = new String[listaFabricantes.size()][nombreColumnas.length];
 
 		int i = 0;
@@ -62,8 +60,8 @@ public class GUIListarFabricantesExtranjeros extends JFrame implements IGUI {
 			tablaDatos[i][1] = sistema.getNombre();
 			tablaDatos[i][2] = sistema.getCodFabricante();
 			tablaDatos[i][3] = sistema.getTelefono();
-			tablaDatos[i][4] = ((TFabricanteExtranjero)sistema).getAranceles().toString();
-			tablaDatos[i][5] = ((TFabricanteExtranjero)sistema).getPaisDeOrigen();
+			tablaDatos[i][4] = ((TFabricanteExtranjero) sistema).getAranceles().toString();
+			tablaDatos[i][5] = ((TFabricanteExtranjero) sistema).getPaisDeOrigen();
 			tablaDatos[i][6] = sistema.getActivo() ? "Sí" : "No";
 			i++;
 		}

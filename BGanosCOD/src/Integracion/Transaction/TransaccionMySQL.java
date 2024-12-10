@@ -30,11 +30,8 @@ public class TransaccionMySQL implements Transaccion {
 			String user = prop.getProperty(DB_USER_PROP);
 			String password = prop.getProperty(DB_PASSWORD_PROP);
 
-			String connectionString = "jdbc:mysql://" + host + ":" + port + "/" + db + 
-                    "?user=" + user + 
-                    "&password=" + password + 
-                    "&useSSL=false" + 
-                    "&serverTimezone=Europe/Madrid";
+			String connectionString = "jdbc:mysql://" + host + ":" + port + "/" + db + "?user=" + user + "&password="
+					+ password + "&useSSL=false" + "&serverTimezone=Europe/Madrid";
 
 			conexion = DriverManager.getConnection(connectionString);
 
@@ -43,6 +40,18 @@ public class TransaccionMySQL implements Transaccion {
 			System.out.println("Error al establecer la conexion");
 			System.out.println(e.getMessage());
 		}
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see Transaccion#cerrarConnection()
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Void cerrarConnection() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
 	}
 
 	public void start() throws Exception {
@@ -67,7 +76,4 @@ public class TransaccionMySQL implements Transaccion {
 		return conexion;
 	}
 
-	public void cerrarConnection() throws Exception {
-		conexion.close();
-	}
 }

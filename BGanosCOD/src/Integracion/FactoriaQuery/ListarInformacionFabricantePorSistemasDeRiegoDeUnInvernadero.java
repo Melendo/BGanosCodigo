@@ -33,7 +33,7 @@ public class ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero implem
 			s.setInt(1, id);
 
 			ResultSet r = s.executeQuery();
-			
+
 			while (r.next()) {
 				TFabricanteExtranjero tf = new TFabricanteExtranjero();
 				tf.setId(r.getInt("id"));
@@ -44,7 +44,7 @@ public class ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero implem
 				if (tf.getActivo())
 					lFabricantes.add(tf);
 			}
-			
+
 			s = c.prepareStatement("SELECT F.* FROM fabricante F "
 					+ "RIGHT JOIN fabricante_local AS fl ON F.id = fl.id_fabricante "
 					+ "JOIN sistemas_riego S ON F.id = S.id_fabricante "
@@ -53,7 +53,7 @@ public class ListarInformacionFabricantePorSistemasDeRiegoDeUnInvernadero implem
 			s.setInt(1, id);
 
 			r = s.executeQuery();
-			
+
 			while (r.next()) {
 				TFabricanteLocal tf = new TFabricanteLocal();
 				tf.setId(r.getInt("id"));

@@ -56,7 +56,6 @@ public class TieneDAOTest {
 	@AfterClass
 	public static void tearDown() throws Exception {
 		t.rollback();
-		t.cerrarConnection();
 	}
 
 	@Test

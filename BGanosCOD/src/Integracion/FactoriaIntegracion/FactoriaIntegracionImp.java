@@ -18,10 +18,8 @@ import Integracion.Planta.PlantaDAOImp;
 import Integracion.SistemaDeRiego.SistemaDeRiegoDAO;
 import Integracion.SistemaDeRiego.SistemaDeRiegoDAOImp;
 
-
 public class FactoriaIntegracionImp extends FactoriaIntegracion {
 
-	
 	public FacturaDAO getFacturaDAO() {
 		return new FacturaDAOImp();
 	}
@@ -45,7 +43,7 @@ public class FactoriaIntegracionImp extends FactoriaIntegracion {
 	public PlantaDAO getPlantaDAO() {
 		return new PlantaDAOImp();
 	}
-	
+
 	public LineaFacturaDAO getDAOLineaFactura() {
 		return new LineaFacturaDAOImp();
 	}

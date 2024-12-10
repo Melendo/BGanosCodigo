@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Presentacion.Controller.Command.CommandSistemaDeRiego;
 
 import java.util.Set;

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Negocio.Entrada;
 
 import java.sql.Date;
@@ -41,7 +38,7 @@ public class EntradaSAImp implements EntradaSA {
 
 				if (invernadero.isActivo()) {
 					EntradaDAO entradaDao = f.getEntradaDAO();
-					TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha(),
+					TEntrada entradaUnica = entradaDao.leerPorIDInvernaderoYFecha((Date) entrada.getFecha(),
 							entrada.getIdInvernadero());
 
 					if (entradaUnica == null) {
@@ -51,7 +48,6 @@ public class EntradaSAImp implements EntradaSA {
 					} else if (entradaUnica.getActivo()) { // si la entrada unica encontada está activa no puede activarse
 						exito = -48;
 						t.rollback();
-						
 
 					} else if (!entradaUnica.getActivo()) { // si es falso, se reactiva
 						entrada.setId(entradaUnica.getId());
@@ -143,7 +139,7 @@ public class EntradaSAImp implements EntradaSA {
 					if (invernadero != null) {
 
 						if (invernadero.isActivo()) {
-							TEntrada entradaUnica = entradaDao.leerPorFechaUnica((Date) entrada.getFecha(),
+							TEntrada entradaUnica = entradaDao.leerPorIDInvernaderoYFecha((Date) entrada.getFecha(),
 									entrada.getIdInvernadero());
 
 							if (entradaUnica == null) {
@@ -151,15 +147,19 @@ public class EntradaSAImp implements EntradaSA {
 								t.commit();
 
 							} else if (!entradaUnica.getActivo()) { // Comprobamos si esa entrada que ya tiene los
-																	// mismos datos esta dada de baja
-								exito = -53;
+																		// mismos datos esta dada de baja
+								exito = -53; // la entrada ya existe con la misma fecha y está inactiva
 								t.rollback();
 
-							} else {
+							} else if (entradaUnica.getId() == entrada.getId()) {
 								exito = entradaDao.modificarEntrada(entrada);
 								t.commit();
-//								exito = -50; // Error: ya existe la entrada con los mismos datos y está activa
-//								t.rollback();
+
+							} else {
+								//								exito = entradaDao.modificarEntrada(entrada);
+								//								t.commit();
+								exito = -50; // Error: ya existe la entrada con los mismos datos y está activa
+								t.rollback();
 							}
 
 						} else {

@@ -56,25 +56,22 @@ public class InvernaderoDAOTest {
 	@AfterClass
 	public static void tearDown() throws Exception {
 		t.rollback();
-		t.cerrarConnection();
 	}
 
 	@Test
 	public void testAltaInvernadero() throws Exception {
-		// Crea el objeto TInvernadero a insertar
+
 		TInvernadero invernadero = new TInvernadero("InvAltaTest", "Tierra", "LED");
 
-		// Llama a la función altaInvernadero
 		Integer resultado = invernaderoDAO.altaInvernadero(invernadero);
 
-		// Verifica que el ID retornado sea válido
 		assertTrue("El ID debe ser mayor que 0", resultado > 0);
 
 	}
 
 	@Test
 	public void testBajaInvernadero() throws Exception {
-		// Crea el objeto TInvernadero a insertar
+
 		TInvernadero invernadero = new TInvernadero("InvBajaTest", "Tierra", "LED");
 
 		Connection c = (Connection) t.getResource();
@@ -96,17 +93,16 @@ public class InvernaderoDAOTest {
 
 		result.close();
 		statement.close();
-		// Llama a la función altaInvernadero
+
 		Integer resultado = invernaderoDAO.bajaInvernadero(id_baja);
 
-		// Verifica que el ID retornado sea válido
 		assertTrue("El ID debe ser mayor que 0", resultado > 0);
 
 	}
 
 	@Test
 	public void testModificarInvernadero() throws Exception {
-		// Crea el objeto TInvernadero a insertar
+
 		TInvernadero invernadero = new TInvernadero("InvModificarTest", "Tierra", "LED");
 
 		Connection c = (Connection) t.getResource();
@@ -132,17 +128,16 @@ public class InvernaderoDAOTest {
 		TInvernadero invernaderoModificado = new TInvernadero("InvModificarTest", "Tierra", "LED");
 		invernaderoModificado.setId(id_modificar);
 		invernaderoModificado.setActivo(true);
-		// Llama a la función altaInvernadero
+
 		Integer resultado = invernaderoDAO.modificarInvernadero(invernaderoModificado);
 
-		// Verifica que el ID retornado sea válido
 		assertTrue("El ID debe ser mayor que 0", resultado > 0);
 
 	}
 
 	@Test
 	public void testMostrarPorIDInvernadero() throws Exception {
-		// Crea el objeto TInvernadero a insertar
+
 		TInvernadero invernadero = new TInvernadero("InvMostrarIDTest", "Tierra", "LED");
 
 		Connection c = (Connection) t.getResource();
@@ -167,17 +162,16 @@ public class InvernaderoDAOTest {
 
 		invernadero.setId(id_mostrar);
 		invernadero.setActivo(true);
-		// Llama a la función altaInvernadero
+
 		TInvernadero invernaderoLeido = invernaderoDAO.mostrarInvernaderoPorID(id_mostrar);
 
-		// Verifica que el ID retornado sea válido
-		assertTrue("El ID debe ser mayor que 0", equals(invernadero, invernaderoLeido));
+		assertTrue("Invernadero e InvernaderoLeido deben ser Iguales", equals(invernadero, invernaderoLeido));
 
 	}
 
 	@Test
 	public void testMostrarPorNombreInvernadero() throws Exception {
-		// Crea el objeto TInvernadero a insertar
+
 		TInvernadero invernadero = new TInvernadero("InvMostrarNameTest", "Tierra", "LED");
 
 		Connection c = (Connection) t.getResource();
@@ -203,17 +197,15 @@ public class InvernaderoDAOTest {
 		invernadero.setId(id_mostrar);
 		invernadero.setActivo(true);
 		String nombre_mostrar = invernadero.getNombre();
-		// Llama a la función altaInvernadero
+
 		TInvernadero invernaderoLeido = invernaderoDAO.mostrarInvernaderoPorNombre(nombre_mostrar);
 
-		// Verifica que el ID retornado sea válido
-		assertTrue("El ID debe ser mayor que 0", equals(invernadero, invernaderoLeido));
+		assertTrue("Invernadero e InvernaderoLeido deben ser Iguales", equals(invernadero, invernaderoLeido));
 
 	}
 
 	@Test
 	public void testListarInvernadero() throws Exception {
-		// Crea el objeto TInvernadero a insertar
 		TInvernadero invernadero = new TInvernadero("InvListarTest", "Tierra", "LED");
 
 		Connection c = (Connection) t.getResource();
@@ -228,17 +220,15 @@ public class InvernaderoDAOTest {
 
 		statement.close();
 
-		// Llama a la función altaInvernadero
 		Set<TInvernadero> lista = invernaderoDAO.listarInvernadero();
 
-		// Verifica que el ID retornado sea válido
-		assertTrue("El ID debe ser mayor que 0", lista.size() > 0);
+		assertTrue("La Lista debe contener al menos 1 Invernadero", lista.size() > 0);
 
 	}
 
 	@Test
 	public void testListarInvernaderoPorSR() throws Exception {
-		// Crea el objeto TInvernadero a insertar
+
 		TInvernadero invernadero = new TInvernadero("InvListarSRTest", "Tierra", "LED");
 
 		Connection c = (Connection) t.getResource();
@@ -318,7 +308,6 @@ public class InvernaderoDAOTest {
 		result2.close();
 		statement2.close();
 
-		// Llama a la función altaInvernadero
 		TTiene tiene = new TTiene();
 		tiene.setId_Invernadero(id_inv);
 		tiene.setId_SistemasDeRiego(id_sr);
@@ -336,8 +325,7 @@ public class InvernaderoDAOTest {
 
 		Set<TInvernadero> lista = invernaderoDAO.listarInvernaderoPorSR(id_sr);
 
-		// Verifica que el ID retornado sea válido
-		assertTrue("El ID debe ser mayor que 0", lista.size() > 0);
+		assertTrue("La Lista debe contener al menos 1 Invernadero", lista.size() > 0);
 
 	}
 }

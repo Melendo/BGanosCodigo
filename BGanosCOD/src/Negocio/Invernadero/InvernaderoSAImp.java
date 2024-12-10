@@ -1,7 +1,3 @@
-
-/**
- * 
- */
 package Negocio.Invernadero;
 
 import java.sql.Date;
@@ -304,6 +300,18 @@ public class InvernaderoSAImp implements InvernaderoSA {
 		}
 
 		return exito;
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see InvernaderoSA#listarTresFechasEntradasVendidasInvernadero(Integer id)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public String listarTresFechasEntradasVendidasInvernadero(Integer id) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
 	}
 
 	public Integer desvincularSRInvernadero(Integer id_sistema_riego, Integer id_invernadero) {

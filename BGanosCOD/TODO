@@ -1,0 +1,15 @@
+idLineaVenta X
+LineaVenta
+TCarrito
+TLineaVenta
+TVenta
+TVentaConProductos
+Venta
+VEntaSA 
+ - procesar venta X
+ - modificar venta
+ - mostrar por id
+ - listar X
+ - listar por empleado X
+ - devolver 
+VentaSAImp X

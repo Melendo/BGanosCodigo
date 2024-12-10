@@ -73,14 +73,14 @@ public class EntradaDAOImp implements EntradaDAO {
 
 	public Integer modificarEntrada(TEntrada entrada) {
 		int res = -1;
-		
+
 		try {
 			TransaccionManager tm = TransaccionManager.getInstance();
 			Transaccion t = tm.getTransaccion();
 			Connection c = (Connection) t.getResource();
 
-			PreparedStatement ps = c
-					.prepareStatement("UPDATE entrada SET id_invernadero=?, fecha=?, precio=?, stock_entradas=?, activo=? WHERE id=?");
+			PreparedStatement ps = c.prepareStatement(
+					"UPDATE entrada SET id_invernadero=?, fecha=?, precio=?, stock_entradas=?, activo=? WHERE id=?");
 
 			ps.setInt(1, entrada.getIdInvernadero());
 			ps.setDate(2, (Date) entrada.getFecha());
@@ -95,9 +95,9 @@ public class EntradaDAOImp implements EntradaDAO {
 			ps.close();
 
 		} catch (Exception e) {
-            e.printStackTrace();
+			e.printStackTrace();
 		}
-		
+
 		return (res > 0) ? entrada.getId() : -1;
 	}
 
@@ -181,10 +181,10 @@ public class EntradaDAOImp implements EntradaDAO {
 
 			PreparedStatement ps = c.prepareStatement("SELECT * FROM entrada WHERE id_invernadero=? FOR UPDATE");
 			ps.setInt(1, idInvernadero);
-			
+
 			ResultSet rs = ps.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				TEntrada entrada = new TEntrada();
 				entrada.setId(rs.getInt("id"));
 				entrada.setIdInvernadero(rs.getInt("id_invernadero"));
@@ -195,22 +195,34 @@ public class EntradaDAOImp implements EntradaDAO {
 
 				entradas.add(entrada);
 			}
-			
+
 			ps.close();
 			rs.close();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return entradas;
 	}
 
-	@Override
+	/** 
+	* (non-Javadoc)
+	* @see EntradaDAO#leerPorFechaUnica(Date fecha, Integer idInvernadero)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
 	public TEntrada leerPorFechaUnica(Date fecha, Integer idInvernadero) {
-		
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+
+	@Override
+	public TEntrada leerPorIDInvernaderoYFecha(Date fecha, Integer idInvernadero) {
+
 		TEntrada entrada = null;
-		
+
 		try {
 
 			TransaccionManager tm = TransaccionManager.getInstance();
@@ -220,10 +232,10 @@ public class EntradaDAOImp implements EntradaDAO {
 			PreparedStatement ps = c.prepareStatement("SELECT * FROM entrada WHERE fecha = ? AND id_invernadero = ?");
 			ps.setDate(1, fecha);
 			ps.setInt(2, idInvernadero);
-			
+
 			ResultSet rs = ps.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				entrada = new TEntrada();
 				entrada.setId(rs.getInt("id"));
 				entrada.setIdInvernadero(rs.getInt("id_invernadero"));
@@ -232,10 +244,10 @@ public class EntradaDAOImp implements EntradaDAO {
 				entrada.setStock(rs.getInt("stock_entradas"));
 				entrada.setActivo(rs.getBoolean("activo"));
 			}
-			
+
 			ps.close();
 			rs.close();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

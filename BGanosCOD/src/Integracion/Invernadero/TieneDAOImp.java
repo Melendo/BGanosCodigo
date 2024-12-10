@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Integracion.Invernadero;
 
 import Negocio.Invernadero.TTiene;
@@ -104,8 +101,8 @@ public class TieneDAOImp implements TieneDAO {
 			TransaccionManager tManager = TransaccionManager.getInstance();
 			Transaccion t = tManager.getTransaccion();
 			Connection c = (Connection) t.getResource();
-			PreparedStatement statement = c
-					.prepareStatement("SELECT * FROM sistemas_riego_de_invernadero WHERE id_invernadero = ? FOR UPDATE");
+			PreparedStatement statement = c.prepareStatement(
+					"SELECT * FROM sistemas_riego_de_invernadero WHERE id_invernadero = ? FOR UPDATE");
 			statement.setInt(1, idInvernadero);
 
 			ResultSet result = statement.executeQuery();

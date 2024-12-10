@@ -11,6 +11,7 @@ import Presentacion.FactoriaVistas.Evento;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.Box;
@@ -27,11 +28,8 @@ import javax.swing.JTable;
 @SuppressWarnings("serial")
 public class GUIListarFabricantes extends JFrame implements IGUI {
 
-	Set<TFabricante> listaFabricantes;
-
-	public GUIListarFabricantes(Set<TFabricante> listaFabricantes) {
+	public GUIListarFabricantes(List<TFabricante> listaFabricantes) {
 		super("Mostrar todos los Fabricantes");
-		this.listaFabricantes = listaFabricantes;
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		int ancho = 800;
 		int alto = 400;
@@ -41,11 +39,11 @@ public class GUIListarFabricantes extends JFrame implements IGUI {
 		this.setLayout(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		initGUI();
+		initGUI(listaFabricantes);
 
 	}
 
-	public void initGUI() {
+	public void initGUI(List<TFabricante> listaFabricantes) {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);
@@ -53,7 +51,7 @@ public class GUIListarFabricantes extends JFrame implements IGUI {
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
 		// Tabla
-		String[] nombreColumnas = { "ID", "Nombre", "Cod. Fabricante", "Teléfono", "Tipo", "Activo"};
+		String[] nombreColumnas = { "ID", "Nombre", "Cod. Fabricante", "Teléfono", "Tipo", "Activo" };
 		String[][] tablaDatos = new String[listaFabricantes.size()][nombreColumnas.length];
 
 		int i = 0;
@@ -91,9 +89,11 @@ public class GUIListarFabricantes extends JFrame implements IGUI {
 
 	public void actualizar(Context context) {
 		if (context.getEvento() == Evento.LISTAR_FABRICANTES_OK) {
-            JOptionPane.showMessageDialog(this, "Fabricantes listados correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } else if (context.getEvento() == Evento.LISTAR_FABRICANTES_KO) {
-            JOptionPane.showMessageDialog(this, "Error al tratar de listar los Fabricantes", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+			JOptionPane.showMessageDialog(this, "Fabricantes listados correctamente", "Éxito",
+					JOptionPane.INFORMATION_MESSAGE);
+		} else if (context.getEvento() == Evento.LISTAR_FABRICANTES_KO) {
+			JOptionPane.showMessageDialog(this, "Error al tratar de listar los Fabricantes", "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }
