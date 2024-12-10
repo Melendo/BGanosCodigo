@@ -26,6 +26,7 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 	private JButton bMostrar;
 	private JButton bListar;
 	private JButton bListarPorNombre;
+	private JButton bListarPorId;
 	private JButton bListarPorTurno;
 	private JButton bAtras;
 	public GUIEmpleadoDeCaja() {
@@ -47,7 +48,7 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 	private void initGUI() {
 
 		tEmpleadoDeCaja = new TEmpleadoDeCaja();
-		JLabel label = ComponentsBuilder.createLabel("Fabricante", 250, 30, 500, 50, Color.BLACK);
+		JLabel label = ComponentsBuilder.createLabel("Empleado de Caja", 250, 30, 500, 50, Color.BLACK);
 		this.add(label);
 
 		// Alta
@@ -74,7 +75,8 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 		});
 
 		// Modificar
-		bModificar = ComponentsBuilder.createButton("Modificar Empleado de caja", 500, 100, 185, 100);
+		//bModificar = ComponentsBuilder.createButton("Modificar Empleado de caja", 500, 100, 185, 100);
+		bModificar = ComponentsBuilder.createButton("Modificar Empleado de caja", 100, 250, 250, 100);
 		bModificar.setVisible(true);
 		this.add(bModificar);
 		bModificar.addActionListener(a -> {
@@ -86,7 +88,7 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 		});
 
 		// Mostrar
-		bMostrar = ComponentsBuilder.createButton("Mostrar Empleado de Caja", 700, 100, 185, 100);
+		bMostrar = ComponentsBuilder.createButton("Mostrar Empleado de Caja", 700, 100, 200, 100);
 		bMostrar.setVisible(true);
 		this.add(bMostrar);
 		bMostrar.addActionListener(a -> {
@@ -98,33 +100,32 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 		});
 
 		// Listar
-		bListar = ComponentsBuilder.createButton("Listar", 100, 250, 185, 100);
+		//bListar = ComponentsBuilder.createButton("Listar", 100, 250, 185, 100);
+		bListar = ComponentsBuilder.createButton("Listar", 500, 100, 185, 100);
 		bListar.setVisible(true);
 		this.add(bListar);
 		bListar.addActionListener(a -> {
 
 			GUIEmpleadoDeCaja.this.setVisible(false);
-			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_EMPLEADOS_DE_CAJA));// vista
-																											// o
-																											// directamente
-																											// evento?
+			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_EMPLEADOS_DE_CAJA));
+																											
 		});
 
 		// ListarPorNombre
-		bListarPorNombre = ComponentsBuilder.createButton("Listar Por Nombre", 300, 250, 185, 100);
+		//bListarPorNombre = ComponentsBuilder.createButton("Listar Por Nombre", 300, 250, 185, 100);
+		bListarPorNombre = ComponentsBuilder.createButton("Listar Por Nombre", 435, 250, 185, 100);
 		bListarPorNombre.setVisible(true);
 		this.add(bListarPorNombre);
 		bListarPorNombre.addActionListener(a -> {
-
 			GUIEmpleadoDeCaja.this.setVisible(false);
-			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE));// vista
+			ApplicationController.getInstance().manageRequest(new Context(Evento.LISTAR_EMPLEADOS_DE_CAJA_POR_NOMBRE_VISTA));// vista
 																														// o
 																														// directamente
 																														// evento?
 		});
 		
 		//ListarPorTurno
-		bListarPorTurno = ComponentsBuilder.createButton("Listar Por Turno", 500, 250, 185, 100);
+		bListarPorTurno = ComponentsBuilder.createButton("Listar Por Turno", 720, 250, 185, 100);
 		bListarPorTurno.setVisible(true);
 		this.add(bListarPorTurno);
 		bListarPorTurno.addActionListener(a -> {
@@ -135,6 +136,17 @@ public class GUIEmpleadoDeCaja extends JFrame implements IGUI {
 																														// directamente
 																														// evento?
 		});
+		
+		//ListarPorId
+		 /*
+				bListarPorId = ComponentsBuilder.createButton("Listar Por Id", 700, 250, 185, 100);
+				bListarPorId.setVisible(true);
+				this.add(bListarPorId);
+				bListarPorId.addActionListener(a -> {
+					GUIEmpleadoDeCaja.this.setVisible(false);
+					ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTAR_EMPLEADO_DE_CAJA_POR_ID_VISTA));
+																																
+				});*/
 
 		// Atras
 				bAtras = ComponentsBuilder.createBackButton();

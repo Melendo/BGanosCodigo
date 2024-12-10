@@ -4,12 +4,13 @@
 package Negocio.EmpleadoDeCajaJPA;
 
 import java.util.List;
-import java.util.ArrayList;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.LockModeType;
 import javax.persistence.TypedQuery;
 
 import Negocio.EMFSingleton.EMFSingleton;
@@ -18,131 +19,111 @@ import Negocio.TurnoJPA.Turno;
 
 public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	
-	public Integer altaEmpleadoDeCaja(TEmpleadoDeCaja empleado) {
+	public synchronized Integer altaEmpleadoDeCaja(TEmpleadoDeCaja empleado) {
+	    
 
-		Integer id = -1;
-		boolean exito = false;
-		EmpleadoDeCaja empleadoExistente = null;
-		EmpleadoDeCaja empleadoNuevo = null;
-		Turno turno = null;
-		String nombre = empleado.getNombre();
-		
-		if (nombre != null && !nombre.isEmpty()){
+	    Integer id = -1;
+	    boolean exito = false;
+	    EmpleadoDeCaja empleadoExistente = null;
+	    EmpleadoDeCaja empleadoNuevo = null;
+	    String nombre = empleado.getNombre();
+	    
+	    
+	    if (nombre == null || nombre.isEmpty()){
 			return -4;
 		}
 
-		EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
-		EntityTransaction entityTrans = entityManager.getTransaction();
-		entityTrans.begin();
+	    EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
+	    EntityTransaction entityTrans = entityManager.getTransaction();
+	    entityTrans.begin();
 
-		
-		TypedQuery<Turno> query2 = entityManager.createNamedQuery("Negocio.TurnoJPA.Turno.findByid", Turno.class);
-		query2.setParameter("id", empleado.getId_Turno());
-	
-		try {
-			turno = query2.getSingleResult();
-		} catch (Exception e) {
-			entityTrans.rollback();
-            entityManager.close();
-			return -404; // Turno no existe
-		}
-		
-		if(!turno.isActivo()){
-			
-			entityTrans.rollback();
-            entityManager.close();
-			return -403; // Turno no activo
-		}
+	    // Verificación de turno
+	    Turno turno = entityManager.find(Turno.class, empleado.getId_Turno(), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+	    
+	    
+	    if (turno == null) {
+	        entityTrans.rollback();
+	        entityManager.close();
+	        return -404; // Turno no existe
+	    }else if (!turno.isActivo()) {
+	        entityTrans.rollback();
+	        entityManager.close();
+	        return -403; // Turno no activo
+	    }
 
-		TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.Trabajador.findByid", EmpleadoDeCaja.class);
-		query.setParameter("dni", empleado.getDNI());
-		
-		try {
-			empleadoExistente = query.getSingleResult();
-		} catch (Exception e) {
-			
-		}
-		
-		if(empleadoExistente != null){ //Empleado existe
-       
-        	if(!empleadoExistente.getActivo()){	 // Empleado no activo
-                
-        		id = empleadoExistente.getId();
-        		empleadoExistente.transferToEntity(empleado);
-				//mirar si ahcer algo con turno
-        		
-                entityTrans.commit();
-                entityManager.close();
-                return id;
-        	}
-        	else{
-        		entityTrans.rollback();   
-                entityManager.close();
-        		return -501; // Empleado existe y activo
-        	}
-        }
-		 else{
-				if(empleado instanceof TEmpleadoCompleto){
-					empleadoNuevo = new EmpleadoCompleto(empleado);
-				}
-				else if(empleado instanceof TEmpleadoParcial){
-					empleadoNuevo = new EmpleadoParcial(empleado);
-				}
-				
-				//turno
-				
-	            entityManager.persist(empleadoNuevo);
-	            exito = true;
+	    // Verificación de empleado existente
+	    TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByDNI", EmpleadoDeCaja.class);
+	    query.setParameter("DNI", empleado.getDNI());
+
+	    try {
+	        empleadoExistente = query.getSingleResult();
+	    } catch (Exception e) {
+	        // No hay empleado existente con ese DNI
+	    }
+
+	    if (empleadoExistente != null) { // Empleado existe
+	        if (!empleadoExistente.getActivo()) { // Empleado no activo
+	            id = empleadoExistente.getId();
+	            empleadoExistente.transferToEntity(empleado);
+	            empleadoExistente.setTurno(turno);
+	            // Aquí puedes considerar si hacer algo con el turno
+	            entityTrans.commit();
+	            entityManager.close();
+	            return id;
+	        } else {
+	            entityTrans.rollback();
+	            entityManager.close();
+	            return -501; // Empleado existe y activo
 	        }
-		try{
-        	entityTrans.commit();
-        	if(exito){
-        		id = empleadoNuevo.getId();
-        	}
-        		
-        }
-        catch(Exception e){
-        	entityTrans.rollback();
-        }
-        entityManager.close();
-        
-        return id;
+	    } else {
+	        // Crear nuevo empleado
+	        if (empleado instanceof TEmpleadoCompleto) {
+	            empleadoNuevo = new EmpleadoCompleto(empleado);
+	        } else if (empleado instanceof TEmpleadoParcial) {
+	            empleadoNuevo = new EmpleadoParcial(empleado);
+	        } else {
+	        	
+	            entityTrans.rollback();
+	            entityManager.close();
+	            return -1; // Error en el tipo de empleado
+	        }
+
+	        // Persistir nuevo empleado
+	        empleadoNuevo.setTurno(turno);
+	        entityManager.persist(empleadoNuevo);
+	        exito = true;
+	    }
+
+	    try {
+	        entityTrans.commit();
+	        if (exito) {
+	            id = empleadoNuevo.getId();
+	        }
+	    } catch (Exception e) {
+	        entityTrans.rollback();
+	    } finally {
+	        entityManager.close();
+	    }
+
+	    return id;
 	}
+
 
 	
 	public Integer bajaEmpleadoDeCaja(Integer idEmpleado) {
 		int res = -1;
 		
-    	
-        if (idEmpleado != null && idEmpleado > 0) {
-            return -4; // id incorrecto
-        }
-
         EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
         EntityTransaction entityTrans = entityManager.getTransaction();
         entityTrans.begin();
 		
 		EmpleadoDeCaja empleado = entityManager.find(EmpleadoDeCaja.class, idEmpleado);
 		
+		    
 		if(empleado != null){ 
 			if(empleado.getActivo()){
+				entityManager.find(Turno.class, empleado.getTurno().getId(), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
 				empleado.setActivo(false);
-//				// Obtenemos el turno por id
-//				TypedQuery<Turno> query2 = entityManager.createNamedQuery("Negocio.TurnoJPA.Turno.findByid", Turno.class);
-//				query2.setParameter("id", empleado.getTurno().getId());
-//				
-//				Turno turno = null;
-//				try {
-//					turno = query2.getSingleResult();
-//				} catch (Exception e) {
-//					
-//					entityTrans.rollback();
-//			        entityManager.close();
-//					return -115;
-//				}
-//				//turno?
-				
-				
 				try {				
 					entityTrans.commit();
 					res = empleado.getId();
@@ -175,7 +156,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 		Integer res = -1;
 		String nombre = empleado.getNombre();
 		
-		if (nombre != null && !nombre.isEmpty()){
+		if (nombre == null || nombre.isEmpty()){
 			return -4;
 		}
 		
@@ -187,7 +168,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 
 	    if (empModificar != null ) { //Existe
 	    	TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByDNI", EmpleadoDeCaja.class);
-	    	query.setParameter("DNI", empleado.getNombre());
+	    	query.setParameter("DNI", empleado.getDNI());
 	    	EmpleadoDeCaja empExistente = null;
     		Turno turno = null;
 
@@ -198,7 +179,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
     		 
         	}
         		
-    		if(empExistente == null || empExistente.getId() == empModificar.getId()){ // No existe o es el mismo
+    		if(empExistente == null || empExistente.getId() == empleado.getID()){ // No existe o es el mismo
     			
     			TypedQuery<Turno> query2 = entityManager.createNamedQuery("Negocio.TurnoJPA.Turno.findByid", Turno.class);
     			query2.setParameter("id", empleado.getId_Turno());
@@ -214,17 +195,31 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
     		}        		
         			
     			if(turno.isActivo()){
-    				empModificar.transferToEntity(empleado);
-    				empModificar.setTurno(turno);
+    				if(empleado.getTipo() == empModificar.getTipo()){
+    					empleado.setActivo(empModificar.getActivo());
+        				empModificar.transferToEntity(empleado);
+        				empModificar.setTurno(turno);
+        				
+    					try {				
+    						entityTrans.commit();
+    						res = empModificar.getId();
+    					} catch (Exception e) {
+    						entityTrans.rollback();
+    				        entityManager.close();
+    						return res;
+    					}
+    				}
+    				else{
+    					entityTrans.rollback();
+        	            entityManager.close();
+        				return -506;
+    				}
     				
-					try {				
-						entityTrans.commit();
-						res = empModificar.getId();
-					} catch (Exception e) {
-						entityTrans.rollback();
-				        entityManager.close();
-						return res;
-					}
+    			}
+    			else{
+    				entityTrans.rollback();
+    	            entityManager.close();
+    				return -114;
     			}
         	}
     		else{
@@ -266,7 +261,7 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	
 	public TEmpleadoDeCaja MostrarEmpleadoDeCajaPorId(Integer id) {
 
-		if (id != null && id > 0) {
+		if (id == null || id < 0) {
 			return null; // id incorrecto
 	    }
 
@@ -278,19 +273,19 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 	        return null;
 		}
 
-		TEmpleadoDeCaja TTrabajador = empleado.entityToTransfer();
+		TEmpleadoDeCaja tEmpleado = empleado.entityToTransfer();
 		
 		entityManager.close();
 		
-		return TTrabajador;
+		return tEmpleado;
 	}
 
 	public Set<TEmpleadoDeCaja> ListarEmpleadosPorTurno(Integer idTurno) {
 
 		EntityManager entityManager = EMFSingleton.getInstance().getEMF().createEntityManager();
 
-		TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByturno", EmpleadoDeCaja.class);
-		query.setParameter("id_Turno", idTurno);
+		TypedQuery<EmpleadoDeCaja> query = entityManager.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByid_turno", EmpleadoDeCaja.class);
+		query.setParameter("id_turno", idTurno);
 		
 		List<EmpleadoDeCaja> lista = query.getResultList(); 
 		Set<TEmpleadoDeCaja> res = new LinkedHashSet<TEmpleadoDeCaja>(lista.size());

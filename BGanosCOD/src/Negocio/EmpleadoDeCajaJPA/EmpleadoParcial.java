@@ -15,7 +15,6 @@ public class EmpleadoParcial extends EmpleadoDeCaja implements Serializable {
 	
 	private static final long serialVersionUID = 0;
 
-	private Integer id;
 	private Double Precio_h;
 	private Double Horas;
 	
@@ -42,14 +41,6 @@ public class EmpleadoParcial extends EmpleadoDeCaja implements Serializable {
 		return super.getSueldo() + (this.Horas * this.Precio_h);
 	}
 	
-	public Integer getId() {
-		return id;
-	}
-	
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public Double getHoras() {
 		return Horas;
 	}

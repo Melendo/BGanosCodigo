@@ -15,8 +15,6 @@ public class EmpleadoCompleto extends EmpleadoDeCaja implements Serializable {
 	
 	private static final long serialVersionUID = 0;
 
-	
-	private Integer id;
 	private Double Sueldo_Base;
 	private Double Complementos;
 	
@@ -41,15 +39,6 @@ public class EmpleadoCompleto extends EmpleadoDeCaja implements Serializable {
 
 	public Double calcularSueldo() {
 		return super.getSueldo() + Sueldo_Base + Complementos;
-	}
-
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public Double getSueldo_Base() {
