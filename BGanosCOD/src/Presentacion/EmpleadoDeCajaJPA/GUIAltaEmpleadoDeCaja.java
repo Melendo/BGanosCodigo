@@ -96,7 +96,7 @@ public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
         contentPanel.add(createInputPanel("Apellido: ", textApellido = new JTextField(15)));
         contentPanel.add(createInputPanel("DNI: ", textDNI = new JTextField(15)));
         contentPanel.add(createInputPanel("Teléfono: ", textTelefono = new JTextField(15)));
-        contentPanel.add(createInputPanel("Sueldo: ", textSueldo = new JTextField(15)));
+        //contentPanel.add(createInputPanel("Sueldo: ", textSueldo = new JTextField(15)));
         contentPanel.add(createInputPanel("ID del turno: ", textIdTurno = new JTextField(15)));
 
         // Panel de empleado completo
