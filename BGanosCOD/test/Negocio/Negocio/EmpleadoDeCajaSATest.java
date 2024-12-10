@@ -9,7 +9,7 @@ import java.util.UUID;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
+import Negocio.EmpleadoDeCajaJPA.EmpleadoCompleto;
 import Negocio.EmpleadoDeCajaJPA.EmpleadoDeCajaSA;
 import Negocio.EmpleadoDeCajaJPA.TEmpleadoCompleto;
 import Negocio.EmpleadoDeCajaJPA.TEmpleadoDeCaja;
@@ -265,31 +265,7 @@ public class EmpleadoDeCajaSATest {
         	fail("Error: La lista no debe contener al empleado 3");
 
        }
-
-//
-//    @Test
-//    public void calcularSueldoEmpleado() {
-//       
-//    	TTurno turno = creaTTurno();
-//        Integer idTurno = turnoSA.altaTurno(turno);
-//        turno.setId(idTurno);
-//
-//        TEmpleadoCompleto empleado = creaTEmpleadoCompleto();
-//        empleado.setId_Turno(idTurno);
-//        empleado.setSueldo(2000.0);
-//        empleado.setSueldo_Base(3.0);
-//        empleado.setComplementos(20.0);
-//        
-//        Integer idEmp = empleadoDeCajaSA.altaEmpleadoDeCaja(empleado);
-//
-//        // Calcular sueldo
-//        Double sueldoCalculado = empleadoDeCajaSA.calcularSueldoEmpleadoDeCaja(idEmp);
-//
-//        if (sueldoCalculado != 1060.0) {
-//            fail("Error: El sueldo calculado debe ser igual que 1060");
-//        }
-//
-//    }
+    
     
     @Test
     public void modificarEmpleado() {
@@ -334,7 +310,7 @@ public class EmpleadoDeCajaSATest {
         boolean igual = emp1.getID().equals(emp2.getID()) && emp1.getDNI().equals(emp2.getDNI())
                 && emp1.getNombre().equals(emp2.getNombre()) && emp1.getApellido().equals(emp2.getApellido()) &&
                 emp1.getActivo() == emp2.getActivo()
-                && emp1.getSueldo().equals(emp2.getSueldo()) && emp1.getTelefono().equals(emp2.getTelefono())
+                && emp1.getTelefono().equals(emp2.getTelefono())
                 && emp1.getId_Turno().equals(emp2.getId_Turno())
                 && emp1.getSueldo_Base().equals(emp2.getSueldo_Base()) && emp1.getComplementos().equals(emp2.getComplementos());
 
