@@ -42,7 +42,7 @@ import Negocio.EmpleadoDeCajaJPA.TEmpleadoParcial;
 
 public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
 
-	private JTextField textNombre, textApellido, textDNI, textTelefono, textSueldo, textIdTurno;
+	private JTextField textNombre, textApellido, textDNI, textTelefono, textIdTurno;
     private JTextField textSueldoBase, textComplemento, textPrecioHora, textHoras;
     private Boolean tCompleto = false;
     private Boolean tParcial = false;
@@ -168,7 +168,7 @@ public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
             empleado.setApellido(textApellido.getText());
             empleado.setDNI(textDNI.getText());
             empleado.setTelefono(Integer.parseInt(textTelefono.getText()));
-            empleado.setSueldo(Double.parseDouble(textSueldo.getText()));
+            empleado.setSueldo(0.0);
             empleado.setId_Turno(Integer.parseInt(textIdTurno.getText()));
             empleado.setActivo(true);
            
