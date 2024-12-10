@@ -56,6 +56,7 @@ public class EmpleadoDeCajaSATest {
 	    }
 	     
 	    //Alta correcta
+	    turno = creaTTurno();
 	    idTurno = turnoSA.altaTurno(turno);
 	    
 	    empleado.setId_Turno(idTurno);
