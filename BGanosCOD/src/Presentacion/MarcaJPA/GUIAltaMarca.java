@@ -152,7 +152,7 @@ public class GUIAltaMarca extends JFrame implements IGUI {
 		} else if (context.getEvento() == Evento.ALTA_MARCA_KO) {
 			switch (res) {
             case -2:
-                JOptionPane.showMessageDialog(this, "Marca inactiva", "Error",
+                JOptionPane.showMessageDialog(this, "Marca ya existente", "Error",
                         JOptionPane.ERROR_MESSAGE);
                 break;
             case -3:

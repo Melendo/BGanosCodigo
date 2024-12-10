@@ -139,6 +139,12 @@ public class GUIBajaMarca extends JFrame implements IGUI {
                 JOptionPane.showMessageDialog(this, "La marca ya está dada de baja", "Error",
                         JOptionPane.ERROR_MESSAGE);
                 break;
+                
+            case -3:
+                JOptionPane.showMessageDialog(this, "La marca con dicho id no existe", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
+                
             default:
                 JOptionPane.showMessageDialog(this, "Error desconocido al dar de baja la marca", "Error",
                         JOptionPane.ERROR_MESSAGE);

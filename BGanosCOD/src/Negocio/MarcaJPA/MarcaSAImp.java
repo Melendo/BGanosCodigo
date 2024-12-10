@@ -35,7 +35,7 @@ public class MarcaSAImp implements MarcaSA {
 		try {
 			marcaExistente = query.getSingleResult();
 		} catch (Exception e) {
-			System.out.println("No existe marca con el mismo nombre");
+			//System.out.println("No existe marca con el mismo nombre");
 		}
 
 		if (marcaExistente != null) {
@@ -53,10 +53,11 @@ public class MarcaSAImp implements MarcaSA {
 					return id;
 				}
 
-			} else { // si está activo rollback
+			} else {
+				// si la marca ya existe y está activa, error: ya existe
 				t.rollback();
 				em.close();
-				return -2; // marca existe, pero no activa
+				return -2;
 			}
 
 		} else {
@@ -117,9 +118,16 @@ public class MarcaSAImp implements MarcaSA {
 			}
 
 		} else {
-			t.rollback();
-			em.close();
-			return -2; // marca ya inactiva
+			if(!marca.getActivo()) {
+				t.rollback();
+				em.close();
+				return -2; // marca ya inactiva
+			} else {
+				t.rollback();
+				em.close();
+				return -3;
+			}
+			
 		}
 
 		em.close();
@@ -252,7 +260,6 @@ public class MarcaSAImp implements MarcaSA {
 		return marcas;
 
 	}
-
 	
 	// Métodos auxiliares
 	private Boolean validarNombre(String nombre) {
