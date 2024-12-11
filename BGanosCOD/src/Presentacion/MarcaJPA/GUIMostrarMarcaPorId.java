@@ -38,7 +38,6 @@ public class GUIMostrarMarcaPorId extends JFrame implements IGUI {
 
 	private JPanel mainPanel;
 
-	// TODO: no lo uso
 	private JDialog jDialog;
 
 	public GUIMostrarMarcaPorId() {

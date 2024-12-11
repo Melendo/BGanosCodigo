@@ -40,7 +40,6 @@ public class GUIModificarMarca extends JFrame implements IGUI {
 
 	private JLabel msgDatosLeft;
 
-	// TODO: no los uso
 	private JDialog jDialog;
 
 	private JTextField jTextField;

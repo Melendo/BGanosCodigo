@@ -108,7 +108,6 @@ public class PlantaDAOTest {
 			statement.execute("SET FOREIGN_KEY_CHECKS = 1");
 			statement.close(); // Cerrar el Statement
 
-			// TODO construir nueva constructora
 			// id, sustrato, nombre, tipo iluminación, activo
 			TInvernadero inv = new TInvernadero(1, "inv1", "abono", "artificial", true);
 			inv.setId(daoInvernadero.altaInvernadero(inv));

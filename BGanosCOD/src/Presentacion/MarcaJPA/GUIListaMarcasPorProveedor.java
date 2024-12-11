@@ -45,7 +45,6 @@ public class GUIListaMarcasPorProveedor extends JFrame implements IGUI {
 	
 	private JTable tabla;
 	
-	// TODO: no lo uso
 	private JDialog jDialog;
 
 	public GUIListaMarcasPorProveedor() {

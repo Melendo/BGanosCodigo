@@ -13,18 +13,8 @@ public class TFacturaConEntradas {
 		return tLineaFactura;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param tLineaFatura
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Void incluirLineaFactura(TLineaFactura tLineaFatura) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
 	}
 
 	public void incluirLineaEntrada(TLineaFactura TLineaFactura) {

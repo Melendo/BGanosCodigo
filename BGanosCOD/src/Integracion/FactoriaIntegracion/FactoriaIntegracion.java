@@ -32,43 +32,18 @@ public abstract class FactoriaIntegracion {
 
 	public abstract PlantaDAO getPlantaDAO();
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public SistemaDeRiegoDAO getSistemaDeRiesoDAO() {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
+
 	public TieneDAO getTieneDAO() {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
+
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @return
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public LineaFacturaDAO getLineaFacturaDAO() {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
 	}
 
 	public abstract LineaFacturaDAO getDAOLineaFactura();

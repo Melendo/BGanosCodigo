@@ -123,18 +123,13 @@ public class Producto implements Serializable {
 
 
 	public Integer getStock() {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return this.stock;
-		// end-user-code
+
 	}
 
 
 	public Boolean getActivo() {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return this.activo;
-		// end-user-code
 	}
 
 	public void transferToEntity(TProducto producto) {

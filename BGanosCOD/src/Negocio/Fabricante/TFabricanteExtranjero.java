@@ -16,19 +16,6 @@ public class TFabricanteExtranjero extends TFabricante {
 		return pais_de_origen;
 	}
 
-	/** 
-	* <!-- begin-UML-doc -->
-	* <!-- end-UML-doc -->
-	* @param paisOrigen
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
-	public void setPaisDeOrigen(Integer paisOrigen) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
-	}
-
 	public void setPaisDeOrigen(String paisOrigen) {
 		this.pais_de_origen = paisOrigen;
 	}

@@ -174,16 +174,9 @@ public class FabricanteDAOImp implements FabricanteDAO {
 		}
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see FabricanteDAO#listarFabricantesExtrangeros()
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public Set<TFabricante> listarFabricantesExtrangeros() {
-		// begin-user-code
-		// TODO Auto-generated method stub
+
 		return null;
-		// end-user-code
 	}
 
 	public Set<TFabricante> listarFabricantesExtranjeros() {

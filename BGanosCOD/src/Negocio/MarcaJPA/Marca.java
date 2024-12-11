@@ -59,7 +59,6 @@ public class Marca implements Serializable {
  
 	}
 
-	// TODO: nuevo
 	public Marca(TMarca marca) {
 		id = marca.getId();
 		nombre = marca.getNombre();
@@ -83,7 +82,6 @@ public class Marca implements Serializable {
 		return this.activo;
 	}
 
-	// TODO: le añadí un TMarca como parámetro
 	public void transferToEntity(TMarca marca) {
 		this.id = marca.getId();
 		this.nombre = marca.getNombre();
@@ -91,14 +89,11 @@ public class Marca implements Serializable {
 		this.activo = marca.getActivo();
 	}
 
-	// TODO: nuevo método
 	public TMarca entityToTransfer() {
 		return new TMarca(this);
 	}
 
-	// TODO: todos los set no tienen parámetros, hay que ponerselos
-	// TODO: el tipo de todos los set era Void, no void, cambiar
-	// TODO: estaba: public Void setId()
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -115,7 +110,6 @@ public class Marca implements Serializable {
 		this.activo = activo;
 	}
 
-	// TODO: falta get y set de proveedor
 	public List<Proveedor> getProveedores() {
 		return this.proveedor;
 	}
@@ -133,13 +127,11 @@ public class Marca implements Serializable {
 		this.proveedor.remove(p);
 	}
 
-	// TODO: faltan get y set de producto
 	public List<Producto> getProductos() {
 		return this.producto;
 	}
 	
-	// TODO: añadido el set
-	public void setProductos(List<Producto> productos) {
+		public void setProductos(List<Producto> productos) {
 		this.producto = productos;
 	}
 

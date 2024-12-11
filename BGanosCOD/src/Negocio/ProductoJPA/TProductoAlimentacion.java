@@ -17,7 +17,6 @@ public class TProductoAlimentacion extends TProducto {
 	}
 
 	public TProductoAlimentacion() {
-		// TODO Auto-generated constructor stub
 	}
 
 	private String tipo;

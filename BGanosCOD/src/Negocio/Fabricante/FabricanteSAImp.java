@@ -196,16 +196,9 @@ public class FabricanteSAImp implements FabricanteSA {
 		return tf;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see FabricanteSA#ListarInformaciondeFabricantesdeSistemasdeRiegodeUnInvernadero(Integer idInvernadero)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public String ListarInformaciondeFabricantesdeSistemasdeRiegodeUnInvernadero(Integer idInvernadero) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
+
 	}
 
 	public Set<TFabricante> listarFabricantes() {

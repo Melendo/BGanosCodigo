@@ -12,7 +12,6 @@ public class TProductoSouvenirs extends TProducto {
 	}
 
 	public TProductoSouvenirs() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getDescripcion() {

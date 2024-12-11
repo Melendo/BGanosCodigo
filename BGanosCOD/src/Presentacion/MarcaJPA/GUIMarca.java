@@ -18,7 +18,6 @@ import Presentacion.Controller.IGUI;
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
 
-// TODO: he creado esta clase
 public class GUIMarca extends JFrame implements IGUI {
 
 	private static final long serialVersionUID = 1L;

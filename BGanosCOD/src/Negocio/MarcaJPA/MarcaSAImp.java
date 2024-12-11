@@ -245,7 +245,6 @@ public class MarcaSAImp implements MarcaSA {
 		return res;
 	}
 
-	// TODO: cambiado, era de tipo integer y no le pasaba nada por parámetro)
 	public TMarca mostrarMarcaPorId(Integer id) {
 
 		if (!validarId(id)) {
@@ -274,8 +273,6 @@ public class MarcaSAImp implements MarcaSA {
 
 		TypedQuery<Marca> query = em.createNamedQuery("Negocio.MarcaJPA.Marca.findAll", Marca.class);
 
-		// TODO: preguntar si es mejor añadir el cast a set, o directamente ponerlo a
-		// list el método
 		List<Marca> l = query.getResultList(); // obtenemos una lista de marcas
 		Set<TMarca> lista = new HashSet<TMarca>();
 

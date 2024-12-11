@@ -33,7 +33,6 @@ public class GUIListarMarcas extends JFrame implements IGUI {
 
 	private JButton botonCancelar;
 
-	// TODO: solo uso el JPanel y el JButton
 	private JTextField jTextField;
 
 	private JLabel jLabel;

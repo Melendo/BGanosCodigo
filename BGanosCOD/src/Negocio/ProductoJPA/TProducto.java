@@ -36,7 +36,6 @@ public class TProducto {
 	}
 
 	public TProducto() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getTipoProducto() {

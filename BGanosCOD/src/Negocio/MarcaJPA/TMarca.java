@@ -23,7 +23,6 @@ public class TMarca {
 //		this.activo = activo;
 //	}
 	
-	// TODO: constructora nueva
 	public TMarca(Marca marca) {
 		this.id = marca.getId();
 		this.nombre = marca.getNombre();
@@ -38,8 +37,6 @@ public class TMarca {
 		return this.id;
 	}
 
-	// TODO: cambiar en todos los set el parámetro que se le pasa, pasarle el
-	// atributo a cambiar
 	public void setId(Integer id) {
 		this.id = id;
 	}

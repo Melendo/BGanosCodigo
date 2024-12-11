@@ -206,16 +206,8 @@ public class EntradaDAOImp implements EntradaDAO {
 		return entradas;
 	}
 
-	/** 
-	* (non-Javadoc)
-	* @see EntradaDAO#leerPorFechaUnica(Date fecha, Integer idInvernadero)
-	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
-	*/
 	public TEntrada leerPorFechaUnica(Date fecha, Integer idInvernadero) {
-		// begin-user-code
-		// TODO Auto-generated method stub
 		return null;
-		// end-user-code
 	}
 
 	@Override

@@ -31,10 +31,8 @@ public class GUIBajaMarca extends JFrame implements IGUI {
 	
 	private JButton botonCancelar;
 
-	// TODO: quitar, no lo uso
 	private JDialog jDialog;
 
-	// TODO: quitar en modelo
 	private JPanel jPanel2;
 	
 	private JLabel labelID;
