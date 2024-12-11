@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
-import Presentacion.ProductoJPA.GUIAltaProducto;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
@@ -131,24 +130,25 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 		JButton botonDevolver = new JButton("Devolver");
 		botonDevolver.setBounds(75, 50, 100, 100);
 		botonDevolver.addActionListener(a -> {
-			int idProd = Integer.parseInt(prodText.getText());
-			int cant = Integer.parseInt(cantText.getText());
+			try {
+				int idProd = Integer.parseInt(prodText.getText());
+				int cant = Integer.parseInt(cantText.getText());
 
-			if (!checkNum(idProd) || !checkNum(cant))
-				JOptionPane.showMessageDialog(GUIDevolverVenta.this, "Error en el formato de los datos", "Error",
-						JOptionPane.ERROR_MESSAGE);
-			else {
-				lv.setIdPoducto(idProd);
-				lv.setCantidad(cant);
-				lv.setIdVenta(Integer.parseInt(idText.getText()));
-
-				try {
-					ApplicationController.getInstance().manageRequest(new Context(Evento.DEVOLVER_VENTA, lv));
-				} catch (Exception e) {
+				if (!checkNum(idProd) || !checkNum(cant))
 					JOptionPane.showMessageDialog(GUIDevolverVenta.this, "Error en el formato de los datos", "Error",
 							JOptionPane.ERROR_MESSAGE);
+				else {
+					lv.setIdPoducto(idProd);
+					lv.setCantidad(cant);
+					lv.setIdVenta(Integer.parseInt(idText.getText()));
+
+					ApplicationController.getInstance().manageRequest(new Context(Evento.DEVOLVER_VENTA, lv));
 				}
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(GUIDevolverVenta.this, "Error en el formato de los datos", "Error",
+						JOptionPane.ERROR_MESSAGE);
 			}
+
 		});
 		panelBotones.add(botonDevolver);
 

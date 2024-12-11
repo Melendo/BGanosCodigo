@@ -31,7 +31,7 @@ public class GUIVentasPorEmpleadoDeCaja extends JFrame implements IGUI {
 
 	private static final long serialVersionUID = 1L;
 	private Set<TVenta> datos;
-	private String[] nombreColumnas = { "ID", "Precio Total", "Forma de Pago", "Fecha" ,"Activo"};
+	private String[] nombreColumnas = { "ID", "Precio Total", "Forma de Pago", "Fecha", "Activo" };
 	private JTextField idText;
 	private JPanel mainPanel;
 	private JTable tabla;
@@ -73,13 +73,17 @@ public class GUIVentasPorEmpleadoDeCaja extends JFrame implements IGUI {
 		botonBuscar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				if (idText.getText().isEmpty())
-					JOptionPane.showMessageDialog(GUIVentasPorEmpleadoDeCaja.this, "Por favor, ingrese un id.",
-							"Advertencia", JOptionPane.WARNING_MESSAGE);
-				else 
-					ApplicationController.getInstance().manageRequest(
-							new Context(Evento.VENTAS_POR_EMPLEADO_DE_CAJA, Integer.parseInt(idText.getText())));
+				try {
+					if (idText.getText().isEmpty())
+						JOptionPane.showMessageDialog(GUIVentasPorEmpleadoDeCaja.this, "Por favor, ingrese un id.",
+								"Advertencia", JOptionPane.WARNING_MESSAGE);
+					else
+						ApplicationController.getInstance().manageRequest(
+								new Context(Evento.VENTAS_POR_EMPLEADO_DE_CAJA, Integer.parseInt(idText.getText())));
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(GUIVentasPorEmpleadoDeCaja.this, "Error en el formato de datos",
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		panelCentro.add(botonBuscar);
@@ -126,7 +130,8 @@ public class GUIVentasPorEmpleadoDeCaja extends JFrame implements IGUI {
 			tabla.setModel(new DefaultTableModel(tablaDatos, nombreColumnas));
 		} else if (context.getEvento() == Evento.VENTAS_POR_EMPLEADO_DE_CAJA_KO) {
 			if (context.getDatos() == null) {
-				JOptionPane.showMessageDialog(this, "No existe el Empleado con id: " + idText.getText(), "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "No existe el Empleado con id: " + idText.getText(), "Error",
+						JOptionPane.ERROR_MESSAGE);
 			} else
 				JOptionPane.showMessageDialog(this, "Error al tratar de listar los Fabricantes", "Error",
 						JOptionPane.ERROR_MESSAGE);
