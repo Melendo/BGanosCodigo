@@ -73,13 +73,19 @@ public class GUIVentasPorEmpleadoDeCaja extends JFrame implements IGUI {
 		botonBuscar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 				try {
-					if (idText.getText().isEmpty())
-						JOptionPane.showMessageDialog(GUIVentasPorEmpleadoDeCaja.this, "Por favor, ingrese un id.",
-								"Advertencia", JOptionPane.WARNING_MESSAGE);
-					else
-						ApplicationController.getInstance().manageRequest(
-								new Context(Evento.VENTAS_POR_EMPLEADO_DE_CAJA, Integer.parseInt(idText.getText())));
+					int idEmpleado = Integer.parseInt(idText.getText());
+					if (checkNum(idEmpleado)) {
+						if (idText.getText().isEmpty())
+							JOptionPane.showMessageDialog(GUIVentasPorEmpleadoDeCaja.this, "Por favor, ingrese un id.",
+									"Advertencia", JOptionPane.WARNING_MESSAGE);
+						else
+							ApplicationController.getInstance().manageRequest(new Context(
+									Evento.VENTAS_POR_EMPLEADO_DE_CAJA, Integer.parseInt(idText.getText())));
+					} else
+						JOptionPane.showMessageDialog(GUIVentasPorEmpleadoDeCaja.this, "Error en el formato de datos",
+								"Advertencia", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIVentasPorEmpleadoDeCaja.this, "Error en el formato de datos",
 							"Error", JOptionPane.ERROR_MESSAGE);
@@ -133,8 +139,12 @@ public class GUIVentasPorEmpleadoDeCaja extends JFrame implements IGUI {
 				JOptionPane.showMessageDialog(this, "No existe el Empleado con id: " + idText.getText(), "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else
-				JOptionPane.showMessageDialog(this, "Error al tratar de listar los Fabricantes", "Error",
+				JOptionPane.showMessageDialog(this, "Error al tratar de listar las Ventas", "Error",
 						JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	private Boolean checkNum(int num) {
+		return num > 0;
 	}
 }

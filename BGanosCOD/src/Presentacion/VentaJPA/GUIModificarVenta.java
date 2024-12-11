@@ -98,13 +98,20 @@ public class GUIModificarVenta extends JFrame implements IGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				try {
-					TVenta venta = new TVenta();
-					venta.setId(Integer.parseInt(textID.getText()));
-					venta.setFormaDePago((String) pagoBox.getSelectedItem());
-					venta.setIdEmpleado(Integer.parseInt(textEmp.getText()));
-					ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_VENTAS, venta));
+					int idVenta = Integer.parseInt(textID.getText());
+					int idProd = Integer.parseInt(textEmp.getText());
+					if (checkNum(idVenta) && checkNum(idProd)) {
+						TVenta venta = new TVenta();
+						venta.setId(idVenta);
+						venta.setFormaDePago((String) pagoBox.getSelectedItem());
+						venta.setIdEmpleado(idProd);
+						ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_VENTAS, venta));
+
+					} else {
+						JOptionPane.showMessageDialog(GUIModificarVenta.this, "Los datos no son correctos", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIModificarVenta.this, "Los datos no son correctos", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -157,5 +164,9 @@ public class GUIModificarVenta extends JFrame implements IGUI {
 				break;
 			}
 		}
+	}
+
+	private Boolean checkNum(int num) {
+		return num > 0;
 	}
 }
