@@ -3,6 +3,7 @@ package Negocio.VentaJPA;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -66,7 +67,7 @@ public class VentaSAImp implements VentaSA {
 		
 		List<Venta> lQuery = new LinkedList<Venta>();
 		lQuery = query.getResultList();
-		Set<TVenta> lVenta = new HashSet<TVenta>();
+		Set<TVenta> lVenta = new LinkedHashSet<TVenta>();
 
 		for (Venta v : lQuery)
 			lVenta.add(v.toTransfer());
@@ -94,7 +95,7 @@ public class VentaSAImp implements VentaSA {
 		}
 
 		Set<TProducto> productos = new HashSet<TProducto>();
-		Set<TLineaVenta> lVentas = new HashSet<TLineaVenta>();
+		Set<TLineaVenta> lVentas = new LinkedHashSet<TLineaVenta>();
 
 		vCProd.setVenta(venta.toTransfer());
 		for (LineaVenta lv : venta.getLineaVenta()) {
@@ -131,7 +132,7 @@ public class VentaSAImp implements VentaSA {
 		query.setParameter("empleadoDeCaja", emCaja);
 
 		List<Venta> lQuery = query.getResultList();
-		Set<TVenta> lVenta = new HashSet<TVenta>();
+		Set<TVenta> lVenta = new LinkedHashSet<TVenta>();
 
 		for (Venta v : lQuery)
 			lVenta.add(v.toTransfer());

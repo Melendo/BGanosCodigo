@@ -60,7 +60,7 @@ public class GUIListarVentas extends JFrame implements IGUI {
 			tablaDatos[i][2] = venta.getFormaPago().toString();
 			tablaDatos[i][3] = venta.getIdEmpleado().toString();
 			tablaDatos[i][4] = venta.getFecha().toString();
-			tablaDatos[i][5] = venta.getActivo().toString();
+			tablaDatos[i][5] = venta.getActivo() ? "Si" : "No";
 			i++;
 		}
 

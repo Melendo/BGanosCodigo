@@ -119,7 +119,7 @@ public class GUIVentasPorEmpleadoDeCaja extends JFrame implements IGUI {
 				tablaDatos[i][1] = venta.getPrecioTotal().toString();
 				tablaDatos[i][2] = venta.getFormaPago().toString();
 				tablaDatos[i][3] = venta.getFecha().toString();
-				tablaDatos[i][4] = venta.getActivo().toString();
+				tablaDatos[i][4] = venta.getActivo() ? "Si" : "No";
 				i++;
 			}
 

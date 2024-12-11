@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import Presentacion.Controller.Command.Context;
 import Presentacion.FactoriaVistas.Evento;
+import Presentacion.ProductoJPA.GUIAltaProducto;
 import Presentacion.ComponentsBuilder.ComponentsBuilder;
 import Presentacion.Controller.ApplicationController;
 import Presentacion.Controller.IGUI;
@@ -130,16 +131,24 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 		JButton botonDevolver = new JButton("Devolver");
 		botonDevolver.setBounds(75, 50, 100, 100);
 		botonDevolver.addActionListener(a -> {
-			lv.setIdPoducto(Integer.parseInt(prodText.getText()));
-			lv.setCantidad(Integer.parseInt(cantText.getText()));
-			lv.setIdVenta(Integer.parseInt(idText.getText()));
+			int idProd = Integer.parseInt(prodText.getText());
+			int cant = Integer.parseInt(cantText.getText());
 
-			try {
-				ApplicationController.getInstance().manageRequest(new Context(Evento.DEVOLVER_VENTA, lv));
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (!checkNum(idProd) || !checkNum(cant))
+				JOptionPane.showMessageDialog(GUIDevolverVenta.this, "Error en el formato de los datos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			else {
+				lv.setIdPoducto(idProd);
+				lv.setCantidad(cant);
+				lv.setIdVenta(Integer.parseInt(idText.getText()));
+
+				try {
+					ApplicationController.getInstance().manageRequest(new Context(Evento.DEVOLVER_VENTA, lv));
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(GUIDevolverVenta.this, "Error en el formato de los datos", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
-
 		});
 		panelBotones.add(botonDevolver);
 
@@ -176,14 +185,14 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 
 		} else if (context.getEvento() == Evento.DEVOLVER_VENTA_OK) {
 			JOptionPane.showMessageDialog(this, "Devolución realizada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-			for (TLineaVenta lVenta : datos) 
+			for (TLineaVenta lVenta : datos)
 				if (lVenta.getIdProducto() == lv.getIdProducto()) {
 					lVenta.setCantidad(lVenta.getCantidad() - lv.getCantidad());
 					lv = lVenta;
-			}
-			if(lv.getCantidad() == 0)
+				}
+			if (lv.getCantidad() == 0)
 				datos.remove(lv);
-			
+
 			update();
 		} else if (context.getEvento() == Evento.DEVOLVER_VENTA_KO) {
 			switch ((Integer) context.getDatos()) {
@@ -196,7 +205,7 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 						JOptionPane.ERROR_MESSAGE);
 				break;
 			case -4:
-				JOptionPane.showMessageDialog(this, "No existe la LineaVenta", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Carrito vacio", "Error", JOptionPane.ERROR_MESSAGE);
 				break;
 			case -5:
 				JOptionPane.showMessageDialog(this, "No se puede devolver más de lo que tenia la Venta", "Error",
@@ -222,5 +231,9 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 		}
 
 		tabla.setModel(new DefaultTableModel(tablaDatos, nombreColumnas));
+	}
+
+	private Boolean checkNum(int num) {
+		return num > 0;
 	}
 }

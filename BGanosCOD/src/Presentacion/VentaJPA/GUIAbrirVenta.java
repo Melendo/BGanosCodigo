@@ -105,9 +105,12 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 		botonAnadirEntrada.setBounds(75, 50, 100, 100);
 		botonAnadirEntrada.addActionListener(a -> {
 			try {
-
-				if (textId.getText().isEmpty() || textCantidad.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(GUIAbrirVenta.this, "No se han rellenado todos los campos", "Error",
+				
+				
+				if (textId.getText().isEmpty() || textCantidad.getText().isEmpty()
+						|| !checkNum(Integer.parseInt(textId.getText()))
+						|| !checkNum(Integer.parseInt(textCantidad.getText()))) {
+					JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Error en el formato de datos", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 					int idProd = Integer.parseInt(textId.getText());
@@ -138,7 +141,7 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 		panelAniadirButton.add(botonAnadirEntrada);
 
 		// *************************Eliminar***********************************
-		
+
 		JLabel msgEliminar = ComponentsBuilder.createLabel(
 				"Introduzca el ID del Producto que desea eliminar de la Venta ", 1, 150, 75, 20, Color.BLACK);
 		msgEliminar.setAlignmentX(CENTER_ALIGNMENT);
@@ -174,8 +177,12 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 		botonQuitarEntrada.setBounds(75, 50, 100, 100);
 		botonQuitarEntrada.addActionListener(a -> {
 			try {
-				if (textQuitar.getText().isEmpty() || cantidadOuttxt.getText().isEmpty()) {
-					ApplicationController.getInstance().manageRequest(new Context(Evento.ABRIR_VENTA_KO, -1));
+
+				if (textQuitar.getText().isEmpty() || cantidadOuttxt.getText().isEmpty()
+						|| !checkNum(Integer.parseInt(cantidadOuttxt.getText()))
+						|| !checkNum(Integer.parseInt(textQuitar.getText()))) {
+					JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Error en el formato de datos", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				} else {
 					int idProd = Integer.parseInt(textQuitar.getText());
 					int cantidad = Integer.parseInt(cantidadOuttxt.getText());
@@ -201,10 +208,10 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 						JOptionPane.showMessageDialog(this, "No hay entradas suficientes para quitar", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					if (!encontrado)
-						JOptionPane.showMessageDialog(this, "Producto con id: " + idProd + " no esta en el carrito" , "Error",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(this, "Producto con id: " + idProd + " no esta en el carrito",
+								"Error", JOptionPane.ERROR_MESSAGE);
 					else {
-						if(quitarLV != null)
+						if (quitarLV != null)
 							lVentas.remove(quitarLV);
 						tCarrito.setLineaVenta(lVentas);
 						update();
@@ -270,7 +277,7 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (textEmpleado.getText().isEmpty() || textCantidad.getText().isEmpty())
+				if (textEmpleado.getText().isEmpty())
 					JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Falta la id del Empleado", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				else {
@@ -289,11 +296,12 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 	@Override
 	public void actualizar(Context context) {
 		if (context.getEvento() == Evento.CERRAR_VENTA_OK) {
-			JOptionPane.showMessageDialog(this, "Venta cerrada con id " + (Integer)context.getDatos() % 100000000 + " cerrada correctamente", "Éxito",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this,
+					"Venta cerrada con id " + (Integer) context.getDatos() % 100000000 + " cerrada correctamente",
+					"Éxito", JOptionPane.INFORMATION_MESSAGE);
 		} else if (context.getEvento() == Evento.CERRAR_VENTA_KO) {
-			int error = (Integer)context.getDatos() / 10000000;
-			int arg = (Integer)context.getDatos() % 10000000;
+			int error = (Integer) context.getDatos() / 10000000;
+			int arg = (Integer) context.getDatos() % 10000000;
 			switch (-error) {
 			case -2:
 				JOptionPane.showMessageDialog(this, "No existe el Empleado con id: " + arg, "Error",
@@ -303,21 +311,20 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 				JOptionPane.showMessageDialog(this, "El Emplado con id: " + arg + " esta dado de baja", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
-			case -4: 
-				JOptionPane.showMessageDialog(this, "El carrito esta vacio", "Error",
+			case -4:
+				JOptionPane.showMessageDialog(this, "El carrito esta vacio", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			case -5:
+				JOptionPane.showMessageDialog(this, "No existe el Producto con id: " + arg, "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
-			case -5: 
-				JOptionPane.showMessageDialog(this, "No existe el Producto con id: " + arg , "Error",
-						JOptionPane.ERROR_MESSAGE);
-				break;
-			case -6: 
+			case -6:
 				JOptionPane.showMessageDialog(this, "El Producto con id: " + arg + " esta dado de baja", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
-			case -7: 
-				JOptionPane.showMessageDialog(this, "El Producto con id: " + arg + " no tiene suficiente stock", "Error",
-						JOptionPane.ERROR_MESSAGE);
+			case -7:
+				JOptionPane.showMessageDialog(this, "El Producto con id: " + arg + " no tiene suficiente stock",
+						"Error", JOptionPane.ERROR_MESSAGE);
 				break;
 			default:
 				JOptionPane.showMessageDialog(this, "Error desconocido al cerrar la venta.", "Error",
@@ -336,5 +343,9 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 			i++;
 		}
 		tabla.setModel(new DefaultTableModel(datos, nombreColumnas));
+	}
+
+	private Boolean checkNum(int num) {
+		return num > 0;
 	}
 }

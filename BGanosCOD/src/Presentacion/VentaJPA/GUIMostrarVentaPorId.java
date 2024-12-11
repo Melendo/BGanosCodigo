@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Negocio.VentaJPA.TLineaVenta;
+import Negocio.VentaJPA.TVenta;
 import Negocio.VentaJPA.TVentaConProductos;
 
 public class GUIMostrarVentaPorId extends JFrame implements IGUI {
@@ -146,8 +147,8 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 
 			mensajeVenta
 					.setText("Perecio Total: " + res.getVenta().getPrecioTotal() + " | Empleado que realizo la venta: "
-							+ res.getVenta().getIdEmpleado() + " | Forma de Pago: " + res.getVenta().getPrecioTotal()
-							+ " | Fecha: " + res.getVenta().getFecha() + " | Activo: " + res.getVenta().getActivo());
+							+ res.getVenta().getIdEmpleado() + " | Forma de Pago: " + res.getVenta().getFormaPago()
+							+ " | Fecha: " + res.getVenta().getFecha() + " | Activo: " + (res.getVenta().getActivo() ? "Si" : "NO"));
 
 			String[][] tablaDatos = new String[datos.size()][nombreColumnas.length];
 
@@ -161,11 +162,11 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 
 			tabla.setModel(new DefaultTableModel(tablaDatos, nombreColumnas));
 		} else if (context.getEvento() == Evento.MOSTRAR_VENTA_POR_ID_KO) {
-			if (context.getDatos() == null) {
+			if (((TVenta)context.getDatos()).getId() < 0) {
 				JOptionPane.showMessageDialog(this, "No existe la Venta con id: " + idText.getText(), "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else
-				JOptionPane.showMessageDialog(this, "Error al tratar de listar los Fabricantes", "Error",
+				JOptionPane.showMessageDialog(this, "Error al mostrar la Venta", "Error",
 						JOptionPane.ERROR_MESSAGE);
 		}
 	}
