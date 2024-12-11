@@ -294,7 +294,7 @@ public class ProductoSAImp implements ProductoSA {
 				id = -3;
 				t.rollback();
 			}
-			else if(tmp.getId() != producto.getId()){
+			else if(tmp != null && tmp.getId() != producto.getId()){
 				
 				id = -4;
 				t.rollback();
