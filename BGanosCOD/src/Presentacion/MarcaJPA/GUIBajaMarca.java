@@ -94,8 +94,12 @@ public class GUIBajaMarca extends JFrame implements IGUI {
 				try {
 					int id = Integer.parseInt(textID.getText());
 					ApplicationController.getInstance()
-							.manageRequest(new Context(Evento.BAJA_MARCA, !textID.getText().isEmpty() ? id : 0));
+							.manageRequest(new Context(Evento.BAJA_MARCA, id));
+//					ApplicationController.getInstance()
+//					.manageRequest(new Context(Evento.BAJA_MARCA, !textID.getText().isEmpty() ? id : 0));
 
+
+					
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIBajaMarca.this, "Error en el formato de los datos", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -139,6 +143,12 @@ public class GUIBajaMarca extends JFrame implements IGUI {
                 JOptionPane.showMessageDialog(this, "La marca ya está dada de baja", "Error",
                         JOptionPane.ERROR_MESSAGE);
                 break;
+                
+            case -3:
+                JOptionPane.showMessageDialog(this, "La marca con dicho id no existe", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
+                
             default:
                 JOptionPane.showMessageDialog(this, "Error desconocido al dar de baja la marca", "Error",
                         JOptionPane.ERROR_MESSAGE);

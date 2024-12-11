@@ -12,18 +12,15 @@ import Presentacion.FactoriaVistas.Evento;
 public class CommandListarMarcasPorProveedor implements Command {
 
 	public Context execute(Object datos) {
-		Set<TMarca> res = FactoriaNegocio.getInstance().getMarcaJPA().listarMarcasPorProveedor((Integer)datos);
+		Set<TMarca> res = FactoriaNegocio.getInstance().getMarcaJPA().listarMarcasPorProveedor((int)datos);
 		
-		if(res.size() == 1) {// TODO: no le veo mucho sentido
-			TMarca unaMarca = res.iterator().next();
-			if(unaMarca.getId() <= 0)
-				return new Context(Evento.LISTAR_MARCAS_POR_PROVEEDOR_KO, unaMarca);
-			else
-				return new Context(Evento.LISTAR_MARCAS_POR_PROVEEDOR_OK, unaMarca);
+		if(res.size() >= 1) {
+			if(res.iterator().next().getId() > 0) {
+				return new Context(Evento.LISTAR_MARCAS_POR_PROVEEDOR_OK, res);
 
-		} else {
-			return new Context(Evento.LISTAR_MARCAS_POR_PROVEEDOR_OK, res);
-
-		}		
+			}
+		}
+		return new Context(Evento.LISTAR_MARCAS_POR_PROVEEDOR_KO, res);
+	
 	}
 }

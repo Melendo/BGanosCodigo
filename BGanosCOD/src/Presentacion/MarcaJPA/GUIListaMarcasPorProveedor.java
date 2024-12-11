@@ -155,7 +155,7 @@ public class GUIListaMarcasPorProveedor extends JFrame implements IGUI {
 			ComponentsBuilder.adjustColumnWidths(tabla);
 			
 		} else if(context.getEvento() == Evento.LISTAR_MARCAS_POR_PROVEEDOR_KO) {
-            JOptionPane.showMessageDialog(this, "Error al listar marcas", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No hay ninguna marca vinculada al proveedor indicado", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}

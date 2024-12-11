@@ -85,6 +85,7 @@ public class Marca implements Serializable {
 
 	// TODO: le añadí un TMarca como parámetro
 	public void transferToEntity(TMarca marca) {
+		this.id = marca.getId();
 		this.nombre = marca.getNombre();
 		this.paisOrigen = marca.getPais();
 		this.activo = marca.getActivo();

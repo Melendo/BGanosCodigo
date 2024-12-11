@@ -88,11 +88,11 @@ public class ProveedorSAImp implements ProveedorSA {
 				provExiste = em.find(Proveedor.class, id);
 				if (provExiste != null) {
 					if (provExiste.getActivo()) {
-						if(provExiste.getMarca().isEmpty()) {
+						if (provExiste.getMarca().isEmpty()) {
 							provExiste.setActivo(false);
 							transaction.commit();
 							exito = provExiste.getId();
-						}else{
+						} else {
 							transaction.rollback();
 							exito = -5; // El proveedor está vinculado a una marca
 						}
@@ -134,7 +134,7 @@ public class ProveedorSAImp implements ProveedorSA {
 				EntityTransaction transaction = em.getTransaction();
 				transaction.begin();
 
-				if (provExiste == null) {
+				if (provExiste == null || !provExiste.getActivo()) {
 					exito = -4; // NO HAY UN PROVEEDOR ACTIVO CON ESE ID
 					transaction.rollback();
 				} else {
