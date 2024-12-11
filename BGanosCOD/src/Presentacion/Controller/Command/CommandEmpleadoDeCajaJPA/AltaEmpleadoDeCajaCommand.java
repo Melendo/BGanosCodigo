@@ -13,9 +13,7 @@ public class AltaEmpleadoDeCajaCommand implements Command {
 	
 	public Context execute(Object datos) {
 		
-
 		int res = FactoriaNegocio.getInstance().getEmpleadoDeCajaJPA().altaEmpleadoDeCaja((TEmpleadoDeCaja) datos);
-		System.out.println("HECHOOO");
 		if (res > -1) {
 			return new Context(Evento.ALTA_EMPLEADO_DE_CAJA_OK, res);
 		} else {

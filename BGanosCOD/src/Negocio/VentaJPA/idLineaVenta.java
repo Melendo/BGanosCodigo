@@ -2,7 +2,6 @@ package Negocio.VentaJPA;
 
 import java.io.Serializable;
 import javax.persistence.Embeddable;
-import java.util.UUID;
 
 @Embeddable
 public class idLineaVenta implements Serializable {
