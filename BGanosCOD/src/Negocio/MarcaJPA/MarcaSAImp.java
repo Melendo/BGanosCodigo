@@ -1,11 +1,13 @@
 package Negocio.MarcaJPA;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import Negocio.EMFSingleton.EMFSingleton;
@@ -35,7 +37,7 @@ public class MarcaSAImp implements MarcaSA {
 		try {
 			marcaExistente = query.getSingleResult();
 		} catch (Exception e) {
-			//System.out.println("No existe marca con el mismo nombre");
+			// System.out.println("No existe marca con el mismo nombre");
 		}
 
 		if (marcaExistente != null) {
@@ -95,6 +97,12 @@ public class MarcaSAImp implements MarcaSA {
 
 		Marca marca = em.find(Marca.class, id);
 
+		if (marca == null) {
+			t.rollback();
+			em.close();
+			return -3;
+		}
+
 		if (marca != null && marca.getActivo()) {
 
 			List<Proveedor> listaProveedores = marca.getProveedores();
@@ -118,16 +126,17 @@ public class MarcaSAImp implements MarcaSA {
 			}
 
 		} else {
-			if(!marca.getActivo()) {
+			if (!marca.getActivo()) {
 				t.rollback();
 				em.close();
 				return -2; // marca ya inactiva
-			} else {
-				t.rollback();
-				em.close();
-				return -3;
 			}
-			
+//				else if (marca == null) {
+//				t.rollback();
+//				em.close();
+//				return -3;
+//			}
+
 		}
 
 		em.close();
@@ -137,56 +146,54 @@ public class MarcaSAImp implements MarcaSA {
 	public Integer modificarMarca(TMarca marca) {
 
 		int res = -1;
-		
-		if(!validarNombre(marca.getNombre())){
-			System.out.println("Nombre de Marca inválido");
+		EntityManager em = null;
+
+		if (!validarNombre(marca.getNombre())) {
 			return -4;
 		}
-		
-		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
-		EntityTransaction t = em.getTransaction();
-		t.begin();
-		
-		Marca m = em.find(Marca.class, marca.getId());
-		marca.setActivo(m.getActivo());
-		if(m != null && m.getActivo()) {
-			TypedQuery<Marca> query = em.createNamedQuery("Negocio.MarcaJPA.Marca.findBynombre", Marca.class);
-			query.setParameter("nombre", marca.getNombre());
-			Marca mExistente = null;
-			
-			try {
-				mExistente = query.getSingleResult();
-			} catch (Exception e){
-				// No hay una marca con el mismo nombre
-				return -3; // no existe una marca con el mismo nombre
-			}
-			
-			if(mExistente == null) {
-				m.transferToEntity(marca);
-//				em.persist(m); creo que esto no hace falta
-				
-				try {
-					t.commit();
-					res = m.getId();
-				} catch(Exception e) {
-					t.rollback();
-					em.close();
-					return res;
-				}
-				
-			} else {
+		try {
+			em = EMFSingleton.getInstance().getEMF().createEntityManager();
+			EntityTransaction t = em.getTransaction();
+			t.begin();
+
+			Marca marcaExiste = em.find(Marca.class, marca.getId());
+			if (marcaExiste == null) {
 				t.rollback();
 				em.close();
-				return -5; // si ya existe marca activa con el mismo nombre
+				return -7; // marca no existe con ese id, o no está activa con ese id
+			} else {
+				TypedQuery<Marca> query = em.createNamedQuery("Negocio.MarcaJPA.Marca.findBynombre", Marca.class);
+				query.setParameter("nombre", marca.getNombre());
+				Marca marcaNombre = null;
+				try {
+					marcaNombre = query.getSingleResult();
+				} catch (NoResultException e) {
+					marcaNombre = null;
+				}
+
+				if (marcaNombre == null || (marcaNombre != null && marcaNombre.getId() == marca.getId())) {
+					if (marcaExiste.getActivo()) {
+						marca.setActivo(marcaExiste.getActivo());
+						marcaExiste.transferToEntity(marca);
+						t.commit();
+						res = marcaExiste.getId();
+					} else {
+						t.rollback();
+						em.close();
+						return -8; // la marca que quiero modificar está inactiva
+					}
+				} else {
+					t.rollback();
+					em.close();
+					return -5; // ya existe una marca con ese nombre
+				}
 			}
-					
-		} else {
-			t.rollback();
+
+		} catch (Exception e) {
 			em.close();
-			return -4; // si la marca no existe o está inactiva
+			res = -1;
 		}
-		
-		em.close();
+
 		return res;
 	}
 
@@ -235,32 +242,75 @@ public class MarcaSAImp implements MarcaSA {
 	}
 
 	public Set<TMarca> listarMarcasPorProveedor(Integer idProv) {
-		// Empieza una transacción
-		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
-		EntityTransaction t = em.getTransaction();
-		t.begin();
+		Set<TMarca> marcasDeProveedor = new LinkedHashSet<TMarca>();
 
-		Proveedor proveedor = em.find(Proveedor.class, idProv);
+		EntityManager em = null;
 
-		if (proveedor == null) {
-			return null;
+		if (idProv < 1) {
+			TMarca m = new TMarca();
+			m.setId(-2);
+			marcasDeProveedor.clear();
+			marcasDeProveedor.add(m);
+		} else {
+			try {
+				em = EMFSingleton.getInstance().getEMF().createEntityManager();
+				Proveedor proveedor = em.find(Proveedor.class, idProv);
+				
+				if(proveedor == null) {
+					TMarca m = new TMarca();
+					m.setId(-3);
+					marcasDeProveedor.clear();
+					marcasDeProveedor.add(m);
+				} else {
+					Set<Marca> marcaProv = proveedor.getMarca();
+					
+					for(Marca m : marcaProv) {
+						marcasDeProveedor.add(new TMarca(m));
+					}
+
+				}
+			
+			} catch (Exception e) {
+				TMarca m = new TMarca();
+				m.setId(-4);
+				marcasDeProveedor.clear();
+				marcasDeProveedor.add(m);
+
+			} finally {
+				if (em != null) {
+					em.close();
+				}
+			}
 		}
-
-		Set<Marca> marcasProveedor = proveedor.getMarca();
-		// TODO preguntar si está bien el cast
-		Set<TMarca> marcas = new HashSet<TMarca>();
-
-		for (Marca marca : marcasProveedor) {
-			marcas.add(new TMarca(marca));
-		}
-
-		t.commit();
-		em.close();
-
-		return marcas;
-
+		return marcasDeProveedor;
 	}
-	
+
+//	public Set<TMarca> listarMarcasPorProveedor(Integer idProv) {
+//		// Empieza una transacción
+//		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+//		EntityTransaction t = em.getTransaction();
+//		t.begin();
+//
+//		Proveedor proveedor = em.find(Proveedor.class, idProv);
+//
+//		if (proveedor == null) {
+//			return null;
+//		}
+//
+//		Set<Marca> marcasProveedor = proveedor.getMarca();
+//		Set<TMarca> marcas = new HashSet<TMarca>();
+//
+//		for (Marca marca : marcasProveedor) {
+//			TMarca m = marca.entityToTransfer();
+//			marcas.add(new TMarca(marca));
+//		}
+//
+//		t.commit();
+//		em.close();
+//
+//		return marcas;
+//	}
+
 	// Métodos auxiliares
 	private Boolean validarNombre(String nombre) {
 		return nombre != null && !nombre.isEmpty();

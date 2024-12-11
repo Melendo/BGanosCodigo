@@ -129,7 +129,7 @@ public class GUIModificarMarca extends JFrame implements IGUI {
 
 				try {
 
-					Integer id_marca = Integer.parseInt(textID.getText());
+					// Integer id_marca = Integer.parseInt(textID.getText());
 
 					// nombre, pais de origen
 					Integer id = Integer.parseInt(textID.getText());
@@ -144,31 +144,30 @@ public class GUIModificarMarca extends JFrame implements IGUI {
 					ApplicationController.getInstance().manageRequest(new Context(Evento.MODIFICAR_MARCA, marca));
 
 				} catch (Exception ex) {
-					ex.printStackTrace();
 					JOptionPane.showMessageDialog(GUIModificarMarca.this, "Error en el formato de los datos", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 
 		});
-		
+
 		panelBotones.add(botonAceptar);
 
 		// Botón cancelar
-	    botonCancelar = new JButton("Cancelar");
-	    botonCancelar.addActionListener(new ActionListener() {
+		botonCancelar = new JButton("Cancelar");
+		botonCancelar.addActionListener(new ActionListener() {
 
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            GUIModificarMarca.this.setVisible(false);
-	            ApplicationController.getInstance().manageRequest(new Context(Evento.MARCA_VISTA, null));
-	        }
-	    });
-	    panelBotones.add(botonCancelar);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIModificarMarca.this.setVisible(false);
+				ApplicationController.getInstance().manageRequest(new Context(Evento.MARCA_VISTA, null));
+			}
+		});
+		panelBotones.add(botonCancelar);
 
-	    this.setVisible(true);
-	    this.setResizable(true);
-		
+		this.setVisible(true);
+		this.setResizable(true);
+
 	}
 
 	public void actualizar(Context context) {
@@ -182,19 +181,25 @@ public class GUIModificarMarca extends JFrame implements IGUI {
 
 		} else if (context.getEvento() == Evento.MODIFICAR_MARCA_KO) {
 			switch (res) {
-            case -4:
-                JOptionPane.showMessageDialog(this, "Marca no existe o está inactiva", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                break;
-            case -5:
-                JOptionPane.showMessageDialog(this, "Ya existe marca activa con el mismo nombre", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                break;
-            default:
-                JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta la marca", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                break;
-            }
+			case -4:
+				JOptionPane.showMessageDialog(this, "Nombre no válido", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			case -7:
+				JOptionPane.showMessageDialog(this, "La marca no existe", "Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			case -5:
+				JOptionPane.showMessageDialog(this, "Ya existe marca activa con el mismo nombre", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -8:
+				JOptionPane.showMessageDialog(this, "La marca no se puede dar de baja porque está inactiva", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			default:
+				JOptionPane.showMessageDialog(this, "Error desconocido al modificar la marca", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			}
 		}
 
 	}

@@ -94,8 +94,12 @@ public class GUIBajaMarca extends JFrame implements IGUI {
 				try {
 					int id = Integer.parseInt(textID.getText());
 					ApplicationController.getInstance()
-							.manageRequest(new Context(Evento.BAJA_MARCA, !textID.getText().isEmpty() ? id : 0));
+							.manageRequest(new Context(Evento.BAJA_MARCA, id));
+//					ApplicationController.getInstance()
+//					.manageRequest(new Context(Evento.BAJA_MARCA, !textID.getText().isEmpty() ? id : 0));
 
+
+					
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIBajaMarca.this, "Error en el formato de los datos", "Error",
 							JOptionPane.ERROR_MESSAGE);
