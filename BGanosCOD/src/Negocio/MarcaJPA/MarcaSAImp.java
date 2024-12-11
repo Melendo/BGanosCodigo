@@ -65,7 +65,9 @@ public class MarcaSAImp implements MarcaSA {
 				
 			} else {
 				// si la marca ya existe y está activa, error: ya existe
-				
+				t.rollback();
+				em.close();
+				return -2;
 			}
 
 		} else {
