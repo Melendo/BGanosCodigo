@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.NamedQueries;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
@@ -32,16 +33,6 @@ public class Venta implements Serializable {
 
 	private static final long serialVersionUID = 0;
 
-	public Venta() {
-	}
-
-	public Venta(TVenta tVenta) {
-		id = tVenta.getId();
-		activo = tVenta.getActivo();
-		precioTotal = tVenta.getPrecioTotal();
-		formaPago = tVenta.getFormaPago();
-		fecha = tVenta.getFecha();
-	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -59,6 +50,18 @@ public class Venta implements Serializable {
 	@ManyToOne
 	private EmpleadoDeCaja empleadoDeCaja;
 
+	public Venta() {
+	}
+
+	public Venta(TVenta tVenta) {
+		lieanVenta = new HashSet<LineaVenta>();
+		id = tVenta.getId();
+		activo = tVenta.getActivo();
+		precioTotal = tVenta.getPrecioTotal();
+		formaPago = tVenta.getFormaPago();
+		fecha = tVenta.getFecha();
+	}
+
 	public Integer getId() {
 		return  id;
 	}
@@ -69,13 +72,6 @@ public class Venta implements Serializable {
 
 	public EmpleadoDeCaja getEmpleadoDeCaja() {
 		return empleadoDeCaja;
-	}
-
-	public void tranferToEntity(TVenta venta) {
-		// begin-user-code
-		// TODO Auto-generated method stub
-
-		// end-user-code
 	}
 
 	public void setFecha(Date fecha) {
@@ -126,7 +122,7 @@ public class Venta implements Serializable {
 		tVenta.setFormaDePago(formaPago);
 		tVenta.setId(id);
 		tVenta.setPrecioTotal(precioTotal);
-		
+		tVenta.setIdEmpleado(empleadoDeCaja.getId());
 		return tVenta;
 	}
 	

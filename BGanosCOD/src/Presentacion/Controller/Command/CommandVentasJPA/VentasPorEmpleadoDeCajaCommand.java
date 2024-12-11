@@ -15,6 +15,6 @@ public class VentasPorEmpleadoDeCajaCommand implements Command {
 		if (res == null) {
 			return new Context(Evento.VENTAS_POR_EMPLEADO_DE_CAJA_KO, res);
 		} else
-			return new Context(Evento.VENTAS_POR_EMPLEADO_DE_CAJA_KO, res);
+			return new Context(Evento.VENTAS_POR_EMPLEADO_DE_CAJA_OK, res);
 	}
 }

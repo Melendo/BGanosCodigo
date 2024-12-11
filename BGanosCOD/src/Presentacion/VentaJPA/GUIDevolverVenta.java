@@ -37,6 +37,7 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 
 	private Set<TLineaVenta> datos;
 	String[] nombreColumnas = { "Id Producto", "Cantidad", "Precio" };
+	private TLineaVenta lv;
 	private JTable tabla;
 	private JTextField idText;
 	private JTextField cantText;
@@ -58,6 +59,7 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 	}
 
 	public void initGUI() {
+		lv = new TLineaVenta();
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		this.setContentPane(mainPanel);
@@ -128,7 +130,6 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 		JButton botonDevolver = new JButton("Devolver");
 		botonDevolver.setBounds(75, 50, 100, 100);
 		botonDevolver.addActionListener(a -> {
-			TLineaVenta lv = new TLineaVenta();
 			lv.setIdPoducto(Integer.parseInt(prodText.getText()));
 			lv.setCantidad(Integer.parseInt(cantText.getText()));
 			lv.setIdVenta(Integer.parseInt(idText.getText()));
@@ -141,7 +142,7 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 
 		});
 		panelBotones.add(botonDevolver);
-		
+
 		JButton botonCancelar = new JButton("Cancelar");
 		botonCancelar.setBounds(200, 50, 100, 100);
 		botonCancelar.addActionListener(new ActionListener() {
@@ -170,11 +171,19 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 				JOptionPane.showMessageDialog(this, "No existe la Venta con id: " + idText.getText(), "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else
-				JOptionPane.showMessageDialog(this, "Error al tratar de listar los Fabricantes", "Error",
+				JOptionPane.showMessageDialog(this, "Error al tratar de listar las Ventas", "Error",
 						JOptionPane.ERROR_MESSAGE);
 
 		} else if (context.getEvento() == Evento.DEVOLVER_VENTA_OK) {
 			JOptionPane.showMessageDialog(this, "Devolución realizada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+			for (TLineaVenta lVenta : datos) 
+				if (lVenta.getIdProducto() == lv.getIdProducto()) {
+					lVenta.setCantidad(lVenta.getCantidad() - lv.getCantidad());
+					lv = lVenta;
+			}
+			if(lv.getCantidad() == 0)
+				datos.remove(lv);
+			
 			update();
 		} else if (context.getEvento() == Evento.DEVOLVER_VENTA_KO) {
 			switch ((Integer) context.getDatos()) {

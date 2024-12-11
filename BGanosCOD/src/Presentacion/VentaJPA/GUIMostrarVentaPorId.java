@@ -85,13 +85,14 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 		JPanel mensaje = new JPanel();
 		mainPanel.add(mensaje);
 
-		mensajeVenta = ComponentsBuilder.createLabel("", 10, 100, 80, 20, Color.BLACK);
+		mensajeVenta = new JLabel();
 		mensaje.add(mensajeVenta);
 
 		// tabla
 		List<String[]> datosColumnas = new ArrayList<String[]>();
 
 		tabla = ComponentsBuilder.createTable(0, 4, nombreColumnas, datosColumnas.toArray(new String[][] {}));
+		tabla.setAlignmentX(CENTER_ALIGNMENT);
 		scroll = new JScrollPane(tabla);
 		scroll.setBounds(50, 115, 900, 288);
 		mainPanel.add(scroll);
@@ -144,9 +145,9 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 			datos = res.getLineasVenta();
 
 			mensajeVenta
-					.setText("Perecio Total: " + res.getVenta().getPrecioTotal() + ", Empleado que realizo la venta: "
-							+ res.getVenta().getIdEmplado() + "\nForma de Pago: " + res.getVenta().getPrecioTotal()
-							+ ", Fecha: " + res.getVenta().getFecha() + ", Activo: " + res.getVenta().getActivo());
+					.setText("Perecio Total: " + res.getVenta().getPrecioTotal() + " | Empleado que realizo la venta: "
+							+ res.getVenta().getIdEmpleado() + " | Forma de Pago: " + res.getVenta().getPrecioTotal()
+							+ " | Fecha: " + res.getVenta().getFecha() + " | Activo: " + res.getVenta().getActivo());
 
 			String[][] tablaDatos = new String[datos.size()][nombreColumnas.length];
 

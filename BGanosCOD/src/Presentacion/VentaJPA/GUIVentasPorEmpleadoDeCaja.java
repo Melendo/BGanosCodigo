@@ -31,7 +31,7 @@ public class GUIVentasPorEmpleadoDeCaja extends JFrame implements IGUI {
 
 	private static final long serialVersionUID = 1L;
 	private Set<TVenta> datos;
-	private String[] nombreColumnas = { "ID", "Precio Total", "Forma de Pago", "Fecha" };
+	private String[] nombreColumnas = { "ID", "Precio Total", "Forma de Pago", "Fecha" ,"Activo"};
 	private JTextField idText;
 	private JPanel mainPanel;
 	private JTable tabla;
@@ -77,11 +77,9 @@ public class GUIVentasPorEmpleadoDeCaja extends JFrame implements IGUI {
 				if (idText.getText().isEmpty())
 					JOptionPane.showMessageDialog(GUIVentasPorEmpleadoDeCaja.this, "Por favor, ingrese un id.",
 							"Advertencia", JOptionPane.WARNING_MESSAGE);
-				else {
+				else 
 					ApplicationController.getInstance().manageRequest(
 							new Context(Evento.VENTAS_POR_EMPLEADO_DE_CAJA, Integer.parseInt(idText.getText())));
-					idText.setText("");
-				}
 			}
 		});
 		panelCentro.add(botonBuscar);
@@ -118,9 +116,10 @@ public class GUIVentasPorEmpleadoDeCaja extends JFrame implements IGUI {
 			int i = 0;
 			for (TVenta venta : datos) {
 				tablaDatos[i][0] = venta.getId().toString();
-				tablaDatos[i][0] = venta.getPrecioTotal().toString();
-				tablaDatos[i][0] = venta.getFormaPago().toString();
-				tablaDatos[i][0] = venta.getFecha().toString();
+				tablaDatos[i][1] = venta.getPrecioTotal().toString();
+				tablaDatos[i][2] = venta.getFormaPago().toString();
+				tablaDatos[i][3] = venta.getFecha().toString();
+				tablaDatos[i][4] = venta.getActivo().toString();
 				i++;
 			}
 

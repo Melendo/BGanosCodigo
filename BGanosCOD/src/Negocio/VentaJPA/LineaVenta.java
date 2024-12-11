@@ -7,6 +7,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Version;
 import javax.persistence.NamedQueries;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 
 import Negocio.ProductoJPA.Producto;
 
@@ -26,15 +27,9 @@ public class LineaVenta implements Serializable {
 	}
 
 	public LineaVenta(TLineaVenta tLineaVenta) {
-		id.setIdProducto(tLineaVenta.getIdProducto());
-		id.setIdVenta(tLineaVenta.getIdVenta());
+//		id = new idLineaVenta(tLineaVenta.getIdProducto(),tLineaVenta.getIdVenta());
 		cantidad = tLineaVenta.getCantidad();
 		precio = tLineaVenta.getPrecio();
-		// TODO
-		/*
-		 * venta =... producto =...
-		 */
-
 	}
 
 	@EmbeddedId
@@ -43,17 +38,13 @@ public class LineaVenta implements Serializable {
 	private Double precio;
 
 	@ManyToOne
-	private Venta venta;
+	@MapsId("idVenta") private Venta venta;
 
 	@ManyToOne
-	private Producto producto;
+	@MapsId("idProducto") private Producto producto;
 
 	@Version
 	private Integer version;
-
-	public void transferToEntity(TLineaVenta lineaVenta) {// TODO
-
-	}
 
 	public TLineaVenta ToTransfer() {
 		TLineaVenta lineaVenta = new TLineaVenta();

@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import Integracion.Entrada.EntradaDAO;
 import Integracion.FactoriaIntegracion.FactoriaIntegracion;
 import Integracion.Factura.FacturaDAO;
 import Integracion.Transaction.Transaccion;

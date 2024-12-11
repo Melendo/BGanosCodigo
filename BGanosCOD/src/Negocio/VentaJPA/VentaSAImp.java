@@ -37,7 +37,7 @@ public class VentaSAImp implements VentaSA {
 			return -3;
 		}
 
-		EmpleadoDeCaja empleado = em.find(EmpleadoDeCaja.class, tVenta.getIdEmplado());
+		EmpleadoDeCaja empleado = em.find(EmpleadoDeCaja.class, tVenta.getIdEmpleado());
 
 		if (empleado == null) { // empleado no existe
 			et.rollback();
@@ -63,8 +63,9 @@ public class VentaSAImp implements VentaSA {
 	public Set<TVenta> listarVentas() {
 		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 		TypedQuery<Venta> query = em.createNamedQuery("Negocio.VentaJPA.Venta.findAll", Venta.class);
-
-		List<Venta> lQuery = query.getResultList();
+		
+		List<Venta> lQuery = new LinkedList<Venta>();
+		lQuery = query.getResultList();
 		Set<TVenta> lVenta = new HashSet<TVenta>();
 
 		for (Venta v : lQuery)
@@ -204,31 +205,32 @@ public class VentaSAImp implements VentaSA {
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 
-		EmpleadoDeCaja emCaja = em.find(EmpleadoDeCaja.class, carrito.getVenta().getIdEmplado(),
+		EmpleadoDeCaja emCaja = em.find(EmpleadoDeCaja.class, carrito.getVenta().getIdEmpleado(),
 				LockModeType.OPTIMISTIC);
 
 		if (emCaja == null) {// Empleado no existe
 			et.rollback();
 			em.close();
-			return 200000000 + carrito.getVenta().getIdEmplado();
+			return 20000000 + carrito.getVenta().getIdEmpleado();
 		}
 
 		if (!emCaja.getActivo()) {// Empledo dado de baja
 			et.rollback();
 			em.close();
-			return 300000000 + carrito.getVenta().getIdEmplado();
+			return 30000000 + carrito.getVenta().getIdEmpleado();
 		}
 
 		if (carrito.getLineaVenta().isEmpty()) {// Carrito vacio
 			et.rollback();
 			em.close();
-			return 400000000;
+			return 40000000;
 		}
 
 		double total = 0; // Creamos la venta
 		Venta venta = new Venta(carrito.getVenta());
 		venta.setActivo(true);
 		venta.setFecha(new Date(Calendar.getInstance().getTime().getTime()));
+		venta.setEmpleado(emCaja);
 		em.persist(venta);
 
 		for (TLineaVenta linV : carrito.getLineaVenta()) {// Iteramos sobre las lineas de venta
@@ -249,7 +251,8 @@ public class VentaSAImp implements VentaSA {
 				return 70000000 + linV.getIdProducto();
 			}
 
-			prod.setStock(linV.getCantidad());
+			prod.setStock(prod.getStock() - linV.getCantidad());
+			linV.setIdVenta(venta.getId());
 			LineaVenta lineaVenta = new LineaVenta(linV);
 			double precio = linV.getCantidad() * prod.getPrecio();
 			lineaVenta.setProducto(prod);
