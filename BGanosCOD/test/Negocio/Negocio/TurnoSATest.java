@@ -41,34 +41,13 @@ public class TurnoSATest {
 
 		return e1.getId().equals(e2.getId()) && e1.getHorario().equals(e2.getHorario());
 	}
-
-	@Before
-	public void setUp() {
-		em = EMFSingleton.getInstance().getEMF().createEntityManager();
-		em.getTransaction().begin();
-		em.createQuery("DROP TABLE EmpleadoDeCaja").executeUpdate();
-		em.createQuery("DROP TABLE Turno").executeUpdate();
-		em.getTransaction().commit();
-	}
-
-	@After
-	public void tearDown() {
-		em.getTransaction().begin();
-		em.createQuery("DROP TABLE EmpleadoDeCaja").executeUpdate();
-		em.createQuery("DROP TABLE Turno").executeUpdate();
-		em.getTransaction().commit();
-
-		if (em.isOpen()) {
-			em.close();
-		}
-	}
-	
 	
 
 	@Test
 	public void testAltaTurno() {
 		TTurno tTurnoCorrecto = new TTurno();
-		tTurnoCorrecto.setHorario("pruebaAlta");		
+		Random random = new Random();
+		tTurnoCorrecto.setHorario("pruebaAlta"+(random.nextInt()%100));		
 		int result = FactoriaNegocio.getInstance().getTurnoJPA().altaTurno(tTurnoCorrecto);
 		
 		assertTrue(result >= 1);
@@ -82,7 +61,8 @@ public class TurnoSATest {
 	@Test
 	public void testBajaTurno() {
 		TTurno tTurnoCorrecto = new TTurno();
-		tTurnoCorrecto.setHorario("pruebaBaja");
+		Random random = new Random();
+		tTurnoCorrecto.setHorario("pruebaBaja"+(random.nextInt()%100));
 		
 		int result = FactoriaNegocio.getInstance().getTurnoJPA().altaTurno(tTurnoCorrecto);
 		
@@ -97,14 +77,15 @@ public class TurnoSATest {
 	@Test
 	public void testModificarTurno() {
 		TTurno tTurnoCorrecto = new TTurno();
-		tTurnoCorrecto.setHorario("pruebaModificar");
+		Random random = new Random();
+		tTurnoCorrecto.setHorario("pruebaModificar"+(random.nextInt()%100));
 		
 		int result = FactoriaNegocio.getInstance().getTurnoJPA().altaTurno(tTurnoCorrecto);
 		
 		assertTrue(result >= 1);
 		
 		tTurnoCorrecto.setActivo(true);
-		tTurnoCorrecto.setHorario("pruebaModificada");
+		tTurnoCorrecto.setHorario("pruebaModificada"+(random.nextInt()%100));
 		tTurnoCorrecto.setId(result);
 		
 		result = FactoriaNegocio.getInstance().getTurnoJPA().modificarTurno(tTurnoCorrecto);
@@ -116,9 +97,12 @@ public class TurnoSATest {
 	@Test
 	public void testMostrarTurno() {
 		TTurno tTurnoCorrecto = new TTurno();
-		tTurnoCorrecto.setHorario("pruebaMostrar");
+		Random random = new Random();
+		tTurnoCorrecto.setHorario("pruebaMostrar"+(random.nextInt()%100));
 		
 		int result = FactoriaNegocio.getInstance().getTurnoJPA().altaTurno(tTurnoCorrecto);
+		tTurnoCorrecto.setId(result);
+		tTurnoCorrecto.setActivo(true);
 		
 		assertTrue(result >= 1);
 		
@@ -130,7 +114,8 @@ public class TurnoSATest {
 	@Test
 	public void testListarTurno() {
 		TTurno tTurnoCorrecto = new TTurno();
-		tTurnoCorrecto.setHorario("pruebaListar");
+		Random random = new Random();
+		tTurnoCorrecto.setHorario("pruebaListar"+(random.nextInt()%100));
 		
 		int result = FactoriaNegocio.getInstance().getTurnoJPA().altaTurno(tTurnoCorrecto);
 		
@@ -144,7 +129,8 @@ public class TurnoSATest {
 	@Test
 	public void testMostrarNominaDeTurno() {
 		TTurno tTurnoCorrecto = new TTurno();
-		tTurnoCorrecto.setHorario("pruebaNomina");
+		Random random = new Random();
+		tTurnoCorrecto.setHorario("pruebaNomina"+(random.nextInt()%100));
 		
 		int result = FactoriaNegocio.getInstance().getTurnoJPA().altaTurno(tTurnoCorrecto);
 		
