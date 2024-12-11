@@ -42,24 +42,30 @@ public class MarcaSAImp implements MarcaSA {
 
 		if (marcaExistente != null) {
 			if (!marcaExistente.getActivo()) {
-				// Reactivamos
-				marcaExistente.transferToEntity(marca);
-				id = marcaExistente.getId();
-				try {
-					t.commit();
-					em.close();
-					return id;
-				} catch (Exception e) {
+				if(marcaExistente.getPaisOrigen().equals(marca.getPais())) {
+					// Reactivamos
+					marca.setId(marcaExistente.getId());
+					marcaExistente.transferToEntity(marca);
+					id = marcaExistente.getId();
+					try {
+						t.commit();
+						em.close();
+						return id;
+					} catch (Exception e) {
+						t.rollback();
+						em.close();
+						return id;
+					}
+				} else {
 					t.rollback();
 					em.close();
-					return id;
+					return -24;
 				}
-
+				
+				
 			} else {
 				// si la marca ya existe y está activa, error: ya existe
-				t.rollback();
-				em.close();
-				return -2;
+				
 			}
 
 		} else {
@@ -91,57 +97,97 @@ public class MarcaSAImp implements MarcaSA {
 			return -4;
 		}
 
-		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
-		EntityTransaction t = em.getTransaction();
-		t.begin();
+		try {
+			EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+			EntityTransaction t = em.getTransaction();
+			t.begin();
 
-		Marca marca = em.find(Marca.class, id);
+			Marca marcaExiste = em.find(Marca.class, id);
 
-		if (marca == null) {
-			t.rollback();
-			em.close();
-			return -3;
-		}
+			if (marcaExiste != null) {
+				if (marcaExiste.getActivo()) {
+					if (marcaExiste.getProveedores().isEmpty()) {
+						marcaExiste.setActivo(false);
+						t.commit();
+						res = marcaExiste.getId();
 
-		if (marca != null && marca.getActivo()) {
+					} else {
+						t.rollback();
+						em.close();
+						return -12; // La marca está vinculada a un proveedor
+					}
 
-			List<Proveedor> listaProveedores = marca.getProveedores();
+				} else {
+					t.rollback();
+					em.close();
+					return -2; // marca ya inactiva
+				}
 
-			// Desvincular de la marca sus proveedores
-			for (Proveedor p : listaProveedores) {
-				p.getMarca().remove(marca);
-			}
-
-			listaProveedores.clear();
-			marca.setActivo(false);
-
-			try {
-				t.commit();
-				res = marca.getId();
-
-			} catch (Exception e) {
+			} else {
 				t.rollback();
 				em.close();
-				return res;
+				return -3; // la marca no existe
 			}
-
-		} else {
-			if (!marca.getActivo()) {
-				t.rollback();
-				em.close();
-				return -2; // marca ya inactiva
-			}
-//				else if (marca == null) {
-//				t.rollback();
-//				em.close();
-//				return -3;
-//			}
-
+		} catch (Exception e) {
+			res = -1;
 		}
-
-		em.close();
 		return res;
 	}
+
+//	public Integer bajaMarca(Integer id) {
+//
+//		int res = -1;
+//
+//		if (!validarId(id)) {
+//			System.out.println("Formato incorrecto para el ID de marca");
+//			return -4;
+//		}
+//
+//		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
+//		EntityTransaction t = em.getTransaction();
+//		t.begin();
+//
+//		Marca marca = em.find(Marca.class, id);
+//
+//		if (marca == null) {
+//			t.rollback();
+//			em.close();
+//			return -3;
+//		}
+//
+//		if (marca != null && marca.getActivo()) {
+//
+//			List<Proveedor> listaProveedores = marca.getProveedores();
+//
+//			// Desvincular de la marca sus proveedores
+//			for (Proveedor p : listaProveedores) {
+//				p.getMarca().remove(marca);
+//			}
+//
+//			listaProveedores.clear();
+//			marca.setActivo(false);
+//
+//			try {
+//				t.commit();
+//				res = marca.getId();
+//
+//			} catch (Exception e) {
+//				t.rollback();
+//				em.close();
+//				return res;
+//			}
+//
+//		} else {
+//			if (!marca.getActivo()) {
+//				t.rollback();
+//				em.close();
+//				return -2; // marca ya inactiva
+//			}
+//		}
+//
+//		em.close();
+//		return res;
+//	}
 
 	public Integer modificarMarca(TMarca marca) {
 
@@ -255,21 +301,21 @@ public class MarcaSAImp implements MarcaSA {
 			try {
 				em = EMFSingleton.getInstance().getEMF().createEntityManager();
 				Proveedor proveedor = em.find(Proveedor.class, idProv);
-				
-				if(proveedor == null) {
+
+				if (proveedor == null) {
 					TMarca m = new TMarca();
 					m.setId(-3);
 					marcasDeProveedor.clear();
 					marcasDeProveedor.add(m);
 				} else {
 					Set<Marca> marcaProv = proveedor.getMarca();
-					
-					for(Marca m : marcaProv) {
+
+					for (Marca m : marcaProv) {
 						marcasDeProveedor.add(new TMarca(m));
 					}
 
 				}
-			
+
 			} catch (Exception e) {
 				TMarca m = new TMarca();
 				m.setId(-4);
@@ -284,32 +330,6 @@ public class MarcaSAImp implements MarcaSA {
 		}
 		return marcasDeProveedor;
 	}
-
-//	public Set<TMarca> listarMarcasPorProveedor(Integer idProv) {
-//		// Empieza una transacción
-//		EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
-//		EntityTransaction t = em.getTransaction();
-//		t.begin();
-//
-//		Proveedor proveedor = em.find(Proveedor.class, idProv);
-//
-//		if (proveedor == null) {
-//			return null;
-//		}
-//
-//		Set<Marca> marcasProveedor = proveedor.getMarca();
-//		Set<TMarca> marcas = new HashSet<TMarca>();
-//
-//		for (Marca marca : marcasProveedor) {
-//			TMarca m = marca.entityToTransfer();
-//			marcas.add(new TMarca(marca));
-//		}
-//
-//		t.commit();
-//		em.close();
-//
-//		return marcas;
-//	}
 
 	// Métodos auxiliares
 	private Boolean validarNombre(String nombre) {

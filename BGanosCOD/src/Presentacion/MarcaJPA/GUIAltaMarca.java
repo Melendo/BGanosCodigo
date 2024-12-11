@@ -159,6 +159,10 @@ public class GUIAltaMarca extends JFrame implements IGUI {
                 JOptionPane.showMessageDialog(this, "Error en la transacción", "Error",
                         JOptionPane.ERROR_MESSAGE);
                 break;
+            case -24:
+                JOptionPane.showMessageDialog(this, "Marca ya existente con ese nombre inactiva,\nponer los mismos datos que la inactiva (nombre y país de origen)", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
             default:
                 JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta la marca", "Error",
                         JOptionPane.ERROR_MESSAGE);
