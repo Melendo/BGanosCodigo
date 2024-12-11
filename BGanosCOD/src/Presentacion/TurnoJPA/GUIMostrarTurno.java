@@ -108,7 +108,7 @@ public class GUIMostrarTurno extends JFrame implements IGUI {
 
             JOptionPane.showMessageDialog(this, texto, "Turno", JOptionPane.INFORMATION_MESSAGE);
         } else if (context.getEvento() == Evento.MOSTRAR_TURNO_KO) {
-            JOptionPane.showMessageDialog(this, "No existe turno con ID: " + ((TTurno) context.getDatos()).getId(),
+            JOptionPane.showMessageDialog(this, "No existe turno con el ID introducido",
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
 

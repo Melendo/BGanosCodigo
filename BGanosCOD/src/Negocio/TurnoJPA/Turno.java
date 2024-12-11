@@ -25,7 +25,7 @@ import javax.persistence.ManyToOne;
 		@NamedQuery(name = "Negocio.TurnoJPA.Turno.findByactivo", query = "select obj from Turno obj where :activo = obj.activo "),
 		@NamedQuery(name = "Negocio.TurnoJPA.Turno.findByhorario", query = "select obj from Turno obj where :horario = obj.horario "),
 		@NamedQuery(name = "Negocio.TurnoJPA.Turno.findByempleadoDeCaja", query = "select obj from Turno obj where :empleadoDeCaja = obj.empleadoDeCaja "),
-		@NamedQuery(name = "Negocio.TurnoJPA.Turno.findAll", query = "select obj from Turno obj order by obj.id ")})
+		@NamedQuery(name = "Negocio.TurnoJPA.Turno.findAll", query = "select obj from Turno obj order by obj.id asc")})
 public class Turno implements Serializable {
 	
 	private static final long serialVersionUID = 0;

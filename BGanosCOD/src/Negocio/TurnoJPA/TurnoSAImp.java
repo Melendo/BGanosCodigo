@@ -15,12 +15,7 @@ import Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja;
 
 public class TurnoSAImp implements TurnoSA {
 
-	/*  Lista de retorno
-	 *  -4 datos incorrectos
-	 *  -3 error en la transacción
-	 *  -2 Turno existe y está activo
-	 *  -1 Error de Base de datos
-	 */
+
 	public Integer altaTurno(TTurno turno) {
 		
 		Integer id = -1;
@@ -57,7 +52,7 @@ public class TurnoSAImp implements TurnoSA {
         	} else {
         		transaction.rollback();   
                 em.close();
-        		return -2;
+        		return -3;
         	}
         } else {
         	nuevoTurno = new Turno();
@@ -67,15 +62,10 @@ public class TurnoSAImp implements TurnoSA {
             success = true;
         }
         
-        try {
-        	transaction.commit();
-        	if(success)
-        		id = nuevoTurno.getId();
-        }
-        catch(Exception e){
-        	transaction.rollback();
-        	return -3;
-        }
+    	transaction.commit();
+    	if(success)
+    		id = nuevoTurno.getId();
+        
         
         em.close();
         return id;
@@ -109,7 +99,10 @@ public class TurnoSAImp implements TurnoSA {
 		else{
 			transaction.rollback();
             em.close();
-			return -2;
+            if (turno != null) {
+            	return -2;
+            } else
+            	return -3;
 		}
 		
 		em.close();
@@ -121,7 +114,7 @@ public class TurnoSAImp implements TurnoSA {
 	    EntityManager em = EMFSingleton.getInstance().getEMF().createEntityManager();
 
         if (!validarHorario(turno.getHorario()) || !validarId(turno.getId())) {
-	        System.out.println("Id o nombre de departamento no v�lido");
+	        System.out.println("Id o nombre de turno no válido");
 	        return -4;
 	    }
 	    EntityTransaction transaction = em.getTransaction();
@@ -138,8 +131,12 @@ public class TurnoSAImp implements TurnoSA {
     		
     		
 			numTurnos = query.getResultList().size();
-			if(numTurnos > 0) {
-				return -2;
+			Turno turnoExistente = query.getSingleResult();
+			if(numTurnos > 0 ) {
+				if(numTurnos == 1 && turnoExistente.getId() == turnoBD.getId()) {
+					
+				} else 
+					return -2;
 			}
     		
 			turnoBD.transferToEntity(turno);
@@ -157,7 +154,7 @@ public class TurnoSAImp implements TurnoSA {
         {
         	transaction.rollback();
             em.close();
-        	return -2;
+        	return -3;
         }
         em.close();
 
@@ -168,7 +165,7 @@ public class TurnoSAImp implements TurnoSA {
         TTurno error = new TTurno();
     	
     	if (!validarId(idTurno)) {
-            System.out.println("Formato incorrecto para el ID del departamento.");
+            System.out.println("Formato incorrecto para el ID del turno.");
             error.setId(-4);
             return error;
         }
@@ -214,7 +211,7 @@ public class TurnoSAImp implements TurnoSA {
 	        Turno turno = em.find(Turno.class, idTurno, LockModeType.OPTIMISTIC);
 
 	        if (turno == null || !turno.isActivo()) {
-	            System.out.println("El departamento con ID " + idTurno + " no existe o no est� activo.");
+	            System.out.println("El turno con ID " + idTurno + " no existe o no está activo.");
 	            transaction.rollback();
 	            em.close();
 	            return (float) -4;
