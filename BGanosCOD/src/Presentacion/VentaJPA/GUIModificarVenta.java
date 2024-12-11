@@ -74,7 +74,7 @@ public class GUIModificarVenta extends JFrame implements IGUI {
 		JPanel panelEmpleado = new JPanel();
 		mainPanel.add(panelEmpleado);
 		panelEmpleado.add(new JLabel("ID Empleado: "));
-		
+
 		textEmp = new JTextField(20);
 		panelEmpleado.add(textEmp);
 
@@ -139,12 +139,17 @@ public class GUIModificarVenta extends JFrame implements IGUI {
 		} else if (context.getEvento() == Evento.MODIFICAR_VENTAS_KO) {
 
 			switch (resultado) {
-			case -1:
-				JOptionPane.showMessageDialog(this, "Se ha producido un error interno", "Error",
+			case -2:
+				JOptionPane.showMessageDialog(this, "No existe la Venta con id: " + textID.getText(), "Error",
 						JOptionPane.ERROR_MESSAGE);
 				break;
-			case -2:
-				JOptionPane.showMessageDialog(this, "Datos incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+			case -3:
+				JOptionPane.showMessageDialog(this, "La Venta con id: " + textID.getText() + "esta dada de baja",
+						"Error", JOptionPane.ERROR_MESSAGE);
+				break;
+			case -4:
+				JOptionPane.showMessageDialog(this, "No existe Empleado con id: " + textEmp.getText(), "Error",
+						JOptionPane.ERROR_MESSAGE);
 				break;
 			default:
 				JOptionPane.showMessageDialog(this, "Error desconocido al modificar la venta.", "Error",
