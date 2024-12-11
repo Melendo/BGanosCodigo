@@ -31,7 +31,7 @@ public class GUITurno extends JFrame implements IGUI {
         super("Turno");
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int ancho = 800;
-        int alto = 500;
+        int alto = 650;
         int x = (pantalla.width - ancho) / 2;
         int y = (pantalla.height - alto) / 2;
         this.setBounds(x, y, ancho, alto);
@@ -94,7 +94,7 @@ public class GUITurno extends JFrame implements IGUI {
         });
 
         // Obtener Nómina del Turno
-        bObtenerNomina = ComponentsBuilder.createButton("Obtener Nómina de Turno", 500, 250, 185, 100);
+        bObtenerNomina = ComponentsBuilder.createButton("Obtener Nómina \nde Turno", 100, 400, 300, 100);
         bObtenerNomina.setVisible(true);
         this.add(bObtenerNomina);
         bObtenerNomina.addActionListener(a -> {

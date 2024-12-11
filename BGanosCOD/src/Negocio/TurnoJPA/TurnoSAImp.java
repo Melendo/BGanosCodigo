@@ -132,9 +132,14 @@ public class TurnoSAImp implements TurnoSA {
     		
     		
 			numTurnos = query.getResultList().size();
-			Turno turnoExistente = query.getSingleResult();
+			Turno turnoExistente = null;
+			try {
+				turnoExistente = query.getSingleResult();
+			} catch (Exception e) {
+				turnoExistente = null;
+			}
 			if(numTurnos > 0 ) {
-				if(numTurnos == 1 && turnoExistente.getId() == turnoBD.getId()) {
+				if(numTurnos == 1 && turnoExistente != null && turnoExistente.getId() == turnoBD.getId()) {
 					
 				} else 
 					return -2;

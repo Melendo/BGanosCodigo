@@ -46,16 +46,16 @@ public class TurnoSATest {
 	public void setUp() {
 		em = EMFSingleton.getInstance().getEMF().createEntityManager();
 		em.getTransaction().begin();
-		em.createQuery("DELETE FROM EmpleadoDeCaja m WHERE m.nombre LIKE '%prueba%'").executeUpdate();
-		em.createQuery("DELETE FROM Turno p WHERE p.horario LIKE '%prueba%'").executeUpdate();
+		em.createQuery("DROP TABLE EmpleadoDeCaja").executeUpdate();
+		em.createQuery("DROP TABLE Turno").executeUpdate();
 		em.getTransaction().commit();
 	}
 
 	@After
 	public void tearDown() {
 		em.getTransaction().begin();
-		em.createQuery("DELETE FROM EmpleadoDeCaja m WHERE m.nombre LIKE '%prueba%'").executeUpdate();
-		em.createQuery("DELETE FROM Turno p WHERE p.horario LIKE '%prueba%'").executeUpdate();
+		em.createQuery("DROP TABLE EmpleadoDeCaja").executeUpdate();
+		em.createQuery("DROP TABLE Turno").executeUpdate();
 		em.getTransaction().commit();
 
 		if (em.isOpen()) {

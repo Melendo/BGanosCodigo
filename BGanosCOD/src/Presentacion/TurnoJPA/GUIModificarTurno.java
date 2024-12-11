@@ -120,11 +120,15 @@ public class GUIModificarTurno extends JFrame implements IGUI {
         else if (context.getEvento() == Evento.MODIFICAR_TURNO_KO)
             switch (resultado) {
             case -2:
-                JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos requeridos.", "Error",
+                JOptionPane.showMessageDialog(this, "El turno seleccionado ya existe.", "Error",
                         JOptionPane.ERROR_MESSAGE);
                 break;
             case -3:
                 JOptionPane.showMessageDialog(this, "El turno especificado no existe.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
+            case -4:
+                JOptionPane.showMessageDialog(this, "Los datos introducidos no son válidos.", "Error",
                         JOptionPane.ERROR_MESSAGE);
                 break;
             default:
