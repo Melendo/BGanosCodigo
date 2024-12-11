@@ -138,10 +138,18 @@ public class ProductoSAImp implements ProductoSA {
 			
 		}
 		else{
+			if(!p.getActivo()){
+				res = -3;
+				t.rollback();
+				
+			}
+			else{
+				p.setActivo(false);
+				t.commit();
+				res = p.getId();
+				
+			}
 			
-			p.setActivo(false);
-			t.commit();
-			res = p.getId();
 		}
 		em.close();
 		
