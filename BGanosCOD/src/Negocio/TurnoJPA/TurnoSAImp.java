@@ -2,6 +2,7 @@ package Negocio.TurnoJPA;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -191,7 +192,7 @@ public class TurnoSAImp implements TurnoSA {
 		TypedQuery<Turno> query = em.createNamedQuery("Negocio.TurnoJPA.Turno.findAll", Turno.class);
 
 		List<Turno> l = query.getResultList();
-		Set<TTurno> lista = new HashSet<TTurno>();
+		Set<TTurno> lista = new LinkedHashSet<TTurno>();
 
 		for (Turno turno : l) {
 			TTurno t = turno.entityToTransfer();
