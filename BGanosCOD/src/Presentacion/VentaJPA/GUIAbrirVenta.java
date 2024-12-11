@@ -105,8 +105,7 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 		botonAnadirEntrada.setBounds(75, 50, 100, 100);
 		botonAnadirEntrada.addActionListener(a -> {
 			try {
-				
-				
+
 				if (textId.getText().isEmpty() || textCantidad.getText().isEmpty()
 						|| !checkNum(Integer.parseInt(textId.getText()))
 						|| !checkNum(Integer.parseInt(textCantidad.getText()))) {
@@ -277,14 +276,24 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (textEmpleado.getText().isEmpty())
-					JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Falta la id del Empleado", "Error",
+				try {
+					int idEmp = Integer.parseInt(textEmpleado.getText());
+					if (!checkNum(idEmp))
+						JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Los datos no son correctos", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					else if (textEmpleado.getText().isEmpty())
+						JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Falta la id del Empleado", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					else {
+
+						tVenta.setIdEmpleado(Integer.parseInt(textEmpleado.getText()));
+						tVenta.setFormaDePago((String) pagoBox.getSelectedItem());
+						tCarrito.setVenta(tVenta);
+						ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_VENTA, tCarrito));
+					}
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Los datos no son correctos", "Error",
 							JOptionPane.ERROR_MESSAGE);
-				else {
-					tVenta.setIdEmpleado(Integer.parseInt(textEmpleado.getText()));
-					tVenta.setFormaDePago((String) pagoBox.getSelectedItem());
-					tCarrito.setVenta(tVenta);
-					ApplicationController.getInstance().manageRequest(new Context(Evento.CERRAR_VENTA, tCarrito));
 				}
 			}
 		});

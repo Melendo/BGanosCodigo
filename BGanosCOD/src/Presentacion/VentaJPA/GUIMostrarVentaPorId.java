@@ -109,10 +109,14 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Integer id_Factura = Integer.parseInt(idText.getText());
+					Integer idVenta = Integer.parseInt(idText.getText());
+					
+					if(checkNum(idVenta))
 					ApplicationController.getInstance().manageRequest(
-							new Context(Evento.MOSTRAR_VENTA_POR_ID, !idText.getText().isEmpty() ? id_Factura : 0));
-
+							new Context(Evento.MOSTRAR_VENTA_POR_ID, !idText.getText().isEmpty() ? idVenta : 0));
+					else
+						JOptionPane.showMessageDialog(GUIMostrarVentaPorId.this, "Los datos no son correctos", "Error",
+								JOptionPane.ERROR_MESSAGE);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(GUIMostrarVentaPorId.this, "Los datos no son correctos", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -169,5 +173,9 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 				JOptionPane.showMessageDialog(this, "Error al mostrar la Venta", "Error",
 						JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	
+	private Boolean checkNum(int num) {
+		return num > 0;
 	}
 }
