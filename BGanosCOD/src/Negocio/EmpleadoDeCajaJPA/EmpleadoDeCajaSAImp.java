@@ -63,14 +63,21 @@ public class EmpleadoDeCajaSAImp implements EmpleadoDeCajaSA {
 
 	    if (empleadoExistente != null) { // Empleado existe
 	        if (!empleadoExistente.getActivo()) { // Empleado no activo
-	            id = empleadoExistente.getId();
-	            empleadoExistente.transferToEntity(empleado);
-	            empleadoExistente.setTurno(turno);
-	            empleadoExistente.setSueldo(empleadoExistente.calcularSueldo());
-	            // Aquí puedes considerar si hacer algo con el turno
-	            entityTrans.commit();
-	            entityManager.close();
-	            return id;
+	        	if(empleadoExistente.getTipo() == empleado.getTipo()){ // son de mismo tipo
+	        		 id = empleadoExistente.getId();
+	 	            empleadoExistente.transferToEntity(empleado);
+	 	            empleadoExistente.setTurno(turno);
+	 	            empleadoExistente.setSueldo(empleadoExistente.calcularSueldo());
+	 	          
+	 	            entityTrans.commit();
+	 	            entityManager.close();
+	 	            return id;
+	        	}else{
+	        		 entityTrans.rollback();
+	 	            entityManager.close();
+	 	            return -503; // Empleado existe inactivo pero no mismo tipo
+	        	}
+	           
 	        } else {
 	            entityTrans.rollback();
 	            entityManager.close();
