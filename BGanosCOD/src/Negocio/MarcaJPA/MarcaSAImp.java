@@ -297,7 +297,7 @@ public class MarcaSAImp implements MarcaSA {
 		TypedQuery<Marca> query = em.createNamedQuery("Negocio.MarcaJPA.Marca.findAll", Marca.class);
 
 		List<Marca> l = query.getResultList(); // obtenemos una lista de marcas
-		Set<TMarca> lista = new HashSet<TMarca>();
+		Set<TMarca> lista = new LinkedHashSet<TMarca>();
 
 		for (Marca m : l) {
 			TMarca t = m.entityToTransfer();
