@@ -187,10 +187,10 @@ public class VentaSAImp implements VentaSA {
 		lVenta.setCantidad(lVenta.getCantidad() - tLinea.getCantidad());
 		lVenta.setPrecio(lVenta.getPrecio() - tLinea.getCantidad() * prod.getPrecio());
 
+		if (lVenta.getCantidad() == 0)
+			em.remove(lVenta);
 
 		try {
-			if (lVenta.getCantidad() == 0)
-				em.remove(lVenta);
 			et.commit();
 			em.close();
 			return ventaD.getId();
