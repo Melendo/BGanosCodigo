@@ -141,14 +141,15 @@ public class MarcaSATest {
 		em.getTransaction().commit();
 		
 		Set<TMarca> result = FactoriaNegocio.getInstance().getMarcaJPA().listarMarcas();
-
+		
+		boolean encontrado = false;
 		for(TMarca m : result) {
-			if(!m.getNombre().equals(marca.getNombre())) {
-				result.remove(m);
+			if(m.getNombre().equals(marca.getNombre())) {
+				encontrado = true;
 			}
 		}
 		
-		assertEquals(1, result.size());
+		assertTrue(encontrado);
 	}
 
 	// Test listar marcas
