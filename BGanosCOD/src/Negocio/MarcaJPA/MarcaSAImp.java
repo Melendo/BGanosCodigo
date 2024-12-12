@@ -109,9 +109,16 @@ public class MarcaSAImp implements MarcaSA {
 			if (marcaExiste != null) {
 				if (marcaExiste.getActivo()) {
 					if (marcaExiste.getProveedores().isEmpty()) {
-						marcaExiste.setActivo(false);
-						t.commit();
-						res = marcaExiste.getId();
+						if(marcaExiste.getProductos().isEmpty()) {
+							marcaExiste.setActivo(false);
+							t.commit();
+							res = marcaExiste.getId();
+						} else {
+							t.rollback();
+							em.close();
+							return -13; // La marca tiene productos
+						}
+						
 
 					} else {
 						t.rollback();
