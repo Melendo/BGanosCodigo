@@ -42,27 +42,27 @@ public class MarcaSAImp implements MarcaSA {
 
 		if (marcaExistente != null) {
 			if (!marcaExistente.getActivo()) {
-				if(marcaExistente.getPaisOrigen().equals(marca.getPais())) {
-					// Reactivamos
-					marca.setId(marcaExistente.getId());
-					marcaExistente.transferToEntity(marca);
-					id = marcaExistente.getId();
-					try {
-						t.commit();
-						em.close();
-						return id;
-					} catch (Exception e) {
-						t.rollback();
-						em.close();
-						return id;
-					}
-				} else {
+//				if(marcaExistente.getPaisOrigen().equals(marca.getPais())) {
+//					
+//				} else {
+//					t.rollback();
+//					em.close();
+//					return -24;
+//				}
+				// Reactivamos
+				marca.setId(marcaExistente.getId());
+				marcaExistente.transferToEntity(marca);
+				id = marcaExistente.getId();
+				try {
+					t.commit();
+					em.close();
+					return id;
+				} catch (Exception e) {
 					t.rollback();
 					em.close();
-					return -24;
+					return id;
 				}
-				
-				
+
 			} else {
 				// si la marca ya existe y está activa, error: ya existe
 				t.rollback();
