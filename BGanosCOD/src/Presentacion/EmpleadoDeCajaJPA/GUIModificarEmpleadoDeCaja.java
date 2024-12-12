@@ -79,7 +79,7 @@ public class GUIModificarEmpleadoDeCaja extends JFrame implements IGUI {
         E_Completo.add(textSueldoBase = new JTextField(15));
         E_Completo.add(new JLabel("Complementos: "));
         E_Completo.add(textComplemento = new JTextField(15));
-        E_Completo.setVisible(true);
+        E_Completo.setVisible(false);
         contentPanel.add(E_Completo);
 
         // Panel de empleado parcial
@@ -180,7 +180,7 @@ public class GUIModificarEmpleadoDeCaja extends JFrame implements IGUI {
                     JOptionPane.showMessageDialog(this, "Error: El turno especificado está inactivo.", "Error", JOptionPane.ERROR_MESSAGE);
                     break;
                 case -404:
-                    JOptionPane.showMessageDialog(this, "Error: El empleado especificado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Error: El empleado especificado no existe o está inactivo.", "Error", JOptionPane.ERROR_MESSAGE);
                     break;
                 default:
                     JOptionPane.showMessageDialog(this, "Error desconocido al modificar el empleado de caja.", "Error", JOptionPane.ERROR_MESSAGE);
