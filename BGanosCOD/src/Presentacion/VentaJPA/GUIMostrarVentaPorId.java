@@ -160,7 +160,7 @@ public class GUIMostrarVentaPorId extends JFrame implements IGUI {
 			for (TLineaVenta lv : datos) {
 				tablaDatos[i][0] = lv.getIdProducto().toString();
 				tablaDatos[i][1] = lv.getCantidad().toString();
-				tablaDatos[i][2] = lv.getPrecio() * lv.getCantidad() + "";
+				tablaDatos[i][2] = lv.getPrecio().toString();
 				i++;
 			}
 

@@ -105,31 +105,34 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 		botonAnadirEntrada.setBounds(75, 50, 100, 100);
 		botonAnadirEntrada.addActionListener(a -> {
 			try {
+				int numCant = Integer.parseInt(textCantidad.getText());
+				int numId = Integer.parseInt(textId.getText());
 
-				if (textId.getText().isEmpty() || textCantidad.getText().isEmpty()
-						|| !checkNum(Integer.parseInt(textId.getText()))
-						|| !checkNum(Integer.parseInt(textCantidad.getText()))) {
+				if (checkNum(numCant) || checkNum(numId)) {
+					if (textId.getText().isEmpty() || textCantidad.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Error en el formato de datos", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						int idProd = Integer.parseInt(textId.getText());
+						int cantidad = Integer.parseInt(textCantidad.getText());
+						TLineaVenta lVenta = new TLineaVenta();
+						lVenta.setIdPoducto(idProd);
+						lVenta.setCantidad(cantidad);
+						boolean modificacionLineaFactura = false;
+
+						for (TLineaVenta linea : tCarrito.getLineaVenta()) {
+							if (linea.getIdProducto() == idProd) {
+								linea.setCantidad(linea.getCantidad() + cantidad);
+								modificacionLineaFactura = true;
+							}
+						}
+						if (!modificacionLineaFactura)
+							tCarrito.getLineaVenta().add(lVenta);
+						update();
+					}
+				} else
 					JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Error en el formato de datos", "Error",
 							JOptionPane.ERROR_MESSAGE);
-				} else {
-					int idProd = Integer.parseInt(textId.getText());
-					int cantidad = Integer.parseInt(textCantidad.getText());
-					TLineaVenta lVenta = new TLineaVenta();
-					lVenta.setIdPoducto(idProd);
-					lVenta.setCantidad(cantidad);
-					boolean modificacionLineaFactura = false;
-
-					for (TLineaVenta linea : tCarrito.getLineaVenta()) {
-						if (linea.getIdProducto() == idProd) {
-							linea.setCantidad(linea.getCantidad() + cantidad);
-							modificacionLineaFactura = true;
-						}
-					}
-					if (!modificacionLineaFactura)
-						tCarrito.getLineaVenta().add(lVenta);
-					update();
-				}
-
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Los datos no son correctos", "Error",
@@ -176,47 +179,52 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 		botonQuitarEntrada.setBounds(75, 50, 100, 100);
 		botonQuitarEntrada.addActionListener(a -> {
 			try {
+				int numCant = Integer.parseInt(cantidadOuttxt.getText());
+				int numId = Integer.parseInt(textQuitar.getText());
 
-				if (textQuitar.getText().isEmpty() || cantidadOuttxt.getText().isEmpty()
-						|| !checkNum(Integer.parseInt(cantidadOuttxt.getText()))
-						|| !checkNum(Integer.parseInt(textQuitar.getText()))) {
-					JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Error en el formato de datos", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				} else {
-					int idProd = Integer.parseInt(textQuitar.getText());
-					int cantidad = Integer.parseInt(cantidadOuttxt.getText());
-					boolean correct = true;
-					boolean encontrado = false;
-					Set<TLineaVenta> lVentas = tCarrito.getLineaVenta();
-					TLineaVenta quitarLV = new TLineaVenta();
-					for (TLineaVenta lVenta : lVentas) {
-						if (lVenta.getIdProducto() == idProd) {
-							encontrado = true;
-							if (cantidad > lVenta.getCantidad())
-								correct = false;
-							else {
-								int cantidadTotal = lVenta.getCantidad() - cantidad;
-								if (cantidadTotal == 0)
-									quitarLV = lVenta;
-								else
-									lVenta.setCantidad(cantidadTotal);
+				if (checkNum(numCant) || checkNum(numId)) {
+
+					if (textQuitar.getText().isEmpty() || cantidadOuttxt.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Error en el formato de datos", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						int idProd = Integer.parseInt(textQuitar.getText());
+						int cantidad = Integer.parseInt(cantidadOuttxt.getText());
+						boolean correct = true;
+						boolean encontrado = false;
+						Set<TLineaVenta> lVentas = tCarrito.getLineaVenta();
+						TLineaVenta quitarLV = new TLineaVenta();
+						for (TLineaVenta lVenta : lVentas) {
+							if (lVenta.getIdProducto() == idProd) {
+								encontrado = true;
+								if (cantidad > lVenta.getCantidad())
+									correct = false;
+								else {
+									int cantidadTotal = lVenta.getCantidad() - cantidad;
+									if (cantidadTotal == 0)
+										quitarLV = lVenta;
+									else
+										lVenta.setCantidad(cantidadTotal);
+								}
 							}
 						}
-					}
-					if (!correct)
-						JOptionPane.showMessageDialog(this, "No hay entradas suficientes para quitar", "Error",
-								JOptionPane.ERROR_MESSAGE);
-					if (!encontrado)
-						JOptionPane.showMessageDialog(this, "Producto con id: " + idProd + " no esta en el carrito",
-								"Error", JOptionPane.ERROR_MESSAGE);
-					else {
-						if (quitarLV != null)
-							lVentas.remove(quitarLV);
-						tCarrito.setLineaVenta(lVentas);
-						update();
-					}
+						if (!correct)
+							JOptionPane.showMessageDialog(this, "No hay entradas suficientes para quitar", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						if (!encontrado)
+							JOptionPane.showMessageDialog(this, "Producto con id: " + idProd + " no esta en el carrito",
+									"Error", JOptionPane.ERROR_MESSAGE);
+						else {
+							if (quitarLV != null)
+								lVentas.remove(quitarLV);
+							tCarrito.setLineaVenta(lVentas);
+							update();
+						}
 
-				}
+					}
+				} else
+					JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Error en el formato de datos", "Error",
+							JOptionPane.ERROR_MESSAGE);
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -306,8 +314,8 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 	public void actualizar(Context context) {
 		if (context.getEvento() == Evento.CERRAR_VENTA_OK) {
 			JOptionPane.showMessageDialog(this,
-					"Venta cerrada con id " + (Integer) context.getDatos() % 100000000 + " cerrada correctamente",
-					"Éxito", JOptionPane.INFORMATION_MESSAGE);
+					"Venta con id " + (Integer) context.getDatos() % 100000000 + " cerrada correctamente", "Éxito",
+					JOptionPane.INFORMATION_MESSAGE);
 		} else if (context.getEvento() == Evento.CERRAR_VENTA_KO) {
 			int error = (Integer) context.getDatos() / 10000000;
 			int arg = (Integer) context.getDatos() % 10000000;
