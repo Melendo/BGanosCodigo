@@ -96,7 +96,6 @@ public class MarcaSAImp implements MarcaSA {
 		int res = -1;
 
 		if (!validarId(id)) {
-			System.out.println("Formato incorrecto para el ID de marca");
 			return -4;
 		}
 
