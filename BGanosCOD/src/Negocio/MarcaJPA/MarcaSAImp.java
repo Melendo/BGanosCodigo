@@ -11,6 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import Negocio.EMFSingleton.EMFSingleton;
+import Negocio.ProductoJPA.Producto;
 import Negocio.ProveedorJPA.Proveedor;
 
 public class MarcaSAImp implements MarcaSA {
@@ -109,14 +110,27 @@ public class MarcaSAImp implements MarcaSA {
 			if (marcaExiste != null) {
 				if (marcaExiste.getActivo()) {
 					if (marcaExiste.getProveedores().isEmpty()) {
-						if(marcaExiste.getProductos().isEmpty()) {
+						List<Producto> productos = marcaExiste.getProductos();
+						if(productos.isEmpty()) {
 							marcaExiste.setActivo(false);
 							t.commit();
 							res = marcaExiste.getId();
 						} else {
-							t.rollback();
-							em.close();
-							return -13; // La marca tiene productos
+							boolean algunProducto = false;
+							for(Producto p: productos) {
+								if (p.getActivo())
+									algunProducto = true;
+							}
+							if(!algunProducto) {
+								marcaExiste.setActivo(false);
+								t.commit();
+								res = marcaExiste.getId();
+							} else {
+								t.rollback();
+								em.close();
+								return -13; // La marca tiene productos
+							}
+							
 						}
 						
 
@@ -254,9 +268,11 @@ public class MarcaSAImp implements MarcaSA {
 
 	public TMarca mostrarMarcaPorId(Integer id) {
 
+		TMarca marcaError = new TMarca();
+		
 		if (!validarId(id)) {
-			System.out.println("Formato incorrecto para el ID de marca");
-			return null;
+			marcaError.setId(id); // id debe ser número positivo >1
+			return marcaError;
 		}
 
 		EMFSingleton entityManagerFactory = EMFSingleton.getInstance();
