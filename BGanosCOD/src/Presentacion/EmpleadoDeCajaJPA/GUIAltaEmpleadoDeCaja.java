@@ -204,6 +204,9 @@ public class GUIAltaEmpleadoDeCaja extends JFrame implements IGUI {
 	            case -501:
 	                JOptionPane.showMessageDialog(this, "Error: Ya existe un empleado con el mismo DNI y está activo.", "Error", JOptionPane.ERROR_MESSAGE);
 	                break;
+	            case -503:
+	                JOptionPane.showMessageDialog(this, "Error: Existe un empleado con mismo DNI inactivo pero distinto tipo.", "Error", JOptionPane.ERROR_MESSAGE);
+	                break;
 	            default:
 	                JOptionPane.showMessageDialog(this, "Error desconocido al dar de alta el empleado de caja.", "Error", JOptionPane.ERROR_MESSAGE);
 	                break;
