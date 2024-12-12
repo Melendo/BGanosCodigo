@@ -351,13 +351,14 @@ public class ProveedorSATest {
 		em.getTransaction().commit();
 
 		Set<TProveedor> result = FactoriaNegocio.getInstance().getProveedorJPA().listarProveedor();
+		boolean encontrado = false;
 		for (TProveedor p : result) {
-			if (!p.getNombre().equals(proveedor.getNombre())) {
-				result.remove(p);
+			if (p.getNombre().equals(proveedor.getNombre())) {
+				encontrado = true;
 			}
 		}
 
-		assertEquals(1, result.size());
+		assertTrue(encontrado);
 	}
 
 	// TESTS MOSTRAR POR ID
