@@ -298,9 +298,14 @@ public class GUIAltaProducto extends JFrame implements IGUI {
 			if((int) context.getDatos() == -2){
 				GUIMSG.showMessage("Marca inexistente o inactivado", "ALTA PRODUCTO", true);
 			}
+			else if((int) context.getDatos() == -8) 
+			{
+				GUIMSG.showMessage("Producto reactivado", "ALTA PRODUCTO", false);
+			}
 			else
 			GUIMSG.showMessage("Nombre duplicado", "ALTA PRODUCTO", true);
 			break;
+			
 		default:
 			GUIMSG.showMessage("Error inesperado", "ALTA PRODUCTO", true);
 			break;

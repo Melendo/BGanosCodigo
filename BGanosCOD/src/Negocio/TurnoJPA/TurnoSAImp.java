@@ -86,14 +86,25 @@ public class TurnoSAImp implements TurnoSA {
 		Turno turno = em.find(Turno.class, idTurno);
 		
 		if(turno != null && turno.isActivo()){
-			turno.setActivo(false);
-			try {				
-				transaction.commit();
-				resultado = turno.getId();
-			} catch (Exception e) {
-				transaction.rollback();
-                em.close();
-				return resultado;
+			TypedQuery<EmpleadoDeCaja> query = em.createNamedQuery("Negocio.EmpleadoDeCajaJPA.EmpleadoDeCaja.findByid_turno", EmpleadoDeCaja.class);
+			query.setParameter("id_turno", idTurno);
+			List<EmpleadoDeCaja> lista = query.getResultList();
+			boolean todosDeBaja = false;
+			for(EmpleadoDeCaja edc:lista) {
+				todosDeBaja = todosDeBaja || edc.getActivo();
+			}
+			if(lista.size()== 0 || !todosDeBaja) {
+				turno.setActivo(false);
+				try {				
+					transaction.commit();
+					resultado = turno.getId();
+				} catch (Exception e) {
+					transaction.rollback();
+	                em.close();
+					return resultado;
+				}
+			} else {
+				return -5;
 			}
 			
 		}

@@ -34,8 +34,7 @@ public class ProductoSAImp implements ProductoSA {
 				
 				if(marca == null || !marca.getActivo()){
 					
-					if(!marca.getActivo()) 
-						System.out.println("aqui");
+				
 					id = -2;
 					t.rollback();
 				}
@@ -46,8 +45,16 @@ public class ProductoSAImp implements ProductoSA {
 					Producto p = data.isEmpty() ? null : data.get(0);
 					
 					if(p != null){
+						if(!p.getActivo()) {
+							p.setActivo(true);
+							id = -8;
+							t.commit();
+						}
+						else {
+					
 						id = -3;
 						t.rollback();
+						}
 					}
 					else{
 						ProductoAlimentacion ok = new ProductoAlimentacion(producto);
@@ -97,8 +104,17 @@ public class ProductoSAImp implements ProductoSA {
 					Producto p = data.isEmpty() ? null : data.get(0);
 					
 					if(p != null){
+						
+						if(!p.getActivo()) {
+							p.setActivo(true);
+							id = -8;
+							t.commit();
+						}
+						else {
+					
 						id = -3;
 						t.rollback();
+						}
 					}
 					else{
 						

@@ -124,6 +124,10 @@ public class GUIBajaTurno extends JFrame implements IGUI {
                 JOptionPane.showMessageDialog(this, "El ID introducido no es correcto.", "Error",
                         JOptionPane.ERROR_MESSAGE);
                 break;
+            case -5:
+                JOptionPane.showMessageDialog(this, "el turno tiene empleados asignados.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
             default:
                 JOptionPane.showMessageDialog(this, "Error desconocido al dar de baja el turno.", "Error",
                         JOptionPane.ERROR_MESSAGE);
