@@ -267,23 +267,28 @@ public class MarcaSAImp implements MarcaSA {
 
 	public TMarca mostrarMarcaPorId(Integer id) {
 
-		TMarca marcaError = new TMarca();
+		TMarca marca = new TMarca();
 		
 		if (!validarId(id)) {
-			marcaError.setId(id); // id debe ser número positivo >1
-			return marcaError;
+			marca.setId(-2); // id debe ser número positivo >1
+			return marca;
 		}
 
 		EMFSingleton entityManagerFactory = EMFSingleton.getInstance();
 		EntityManager entityManager = entityManagerFactory.getEMF().createEntityManager();
 
-		Marca marca = entityManager.find(Marca.class, id);
+		Marca marcaExiste = entityManager.find(Marca.class, id);
 
-		if (marca == null) {
-			return null;
+//		if(marcaExiste != null) {
+//			marcaExiste
+//		}
+		
+		if (marcaExiste == null) {
+			marca.setId(-3);
+			return marca;
 		}
 
-		TMarca tMarca = new TMarca(id, marca.getNombre(), marca.getPaisOrigen(), marca.getActivo());
+		TMarca tMarca = new TMarca(id, marcaExiste.getNombre(), marcaExiste.getPaisOrigen(), marcaExiste.getActivo());
 
 		entityManager.close();
 		return tMarca;

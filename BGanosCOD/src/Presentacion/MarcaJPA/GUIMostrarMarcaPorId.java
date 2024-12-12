@@ -134,9 +134,9 @@ public class GUIMostrarMarcaPorId extends JFrame implements IGUI {
 	}
 
 	public void actualizar(Context context) {
-
+		TMarca marca = (TMarca) context.getDatos();
 		if (context.getEvento() == Evento.MOSTRAR_MARCA_OK) {
-			TMarca marca = (TMarca) context.getDatos();
+			
 			String texto = "ID: " + marca.getId() + "\nNombre: " + marca.getNombre() + "\nPais de origen: "
 					+ marca.getPais() + "\nActivo: " + (marca.getActivo() ? "Si" : "No");
 
@@ -145,9 +145,22 @@ public class GUIMostrarMarcaPorId extends JFrame implements IGUI {
 			ApplicationController.getInstance().manageRequest(new Context(Evento.MARCA_VISTA, null));
 
 		} else if (context.getEvento() == Evento.MOSTRAR_MARCA_KO) {
-			JOptionPane.showMessageDialog(this, "No existe marca con ID: " + ((TMarca) context.getDatos()).getId(),
-					"Error", JOptionPane.ERROR_MESSAGE);
-
+			switch (marca.getId()) {
+			case -1:
+				JOptionPane.showMessageDialog(this, "Error al mostrar la marca", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -2:
+				JOptionPane.showMessageDialog(this, "Error: El id debe ser mayor que 0", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			case -3:
+				JOptionPane.showMessageDialog(this, "Error: La marca no existe", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				break;
+			default:
+				break;
+			}
 			this.setVisible(false);
 			ApplicationController.getInstance().manageRequest(new Context(Evento.MOSTRAR_MARCA_VISTA, null));
 
