@@ -224,10 +224,12 @@ public class GUIDevolverVenta extends JFrame implements IGUI {
 
 		int i = 0;
 		for (TLineaVenta lv : datos) {
-			tablaDatos[i][0] = lv.getIdProducto().toString();
-			tablaDatos[i][1] = lv.getCantidad().toString();
-			tablaDatos[i][2] = lv.getPrecio() * lv.getCantidad() + "";
-			i++;
+			if (lv.getCantidad() != 0) {
+				tablaDatos[i][0] = lv.getIdProducto().toString();
+				tablaDatos[i][1] = lv.getCantidad().toString();
+				tablaDatos[i][2] = lv.getPrecio().toString();
+				i++;
+			}
 		}
 
 		tabla.setModel(new DefaultTableModel(tablaDatos, nombreColumnas));

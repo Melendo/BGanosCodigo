@@ -134,7 +134,6 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 					JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Error en el formato de datos", "Error",
 							JOptionPane.ERROR_MESSAGE);
 			} catch (Exception ex) {
-				ex.printStackTrace();
 				JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Los datos no son correctos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
@@ -227,7 +226,6 @@ public class GUIAbrirVenta extends JFrame implements IGUI {
 							JOptionPane.ERROR_MESSAGE);
 
 			} catch (Exception ex) {
-				ex.printStackTrace();
 				JOptionPane.showMessageDialog(GUIAbrirVenta.this, "Los datos no son correctos", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}

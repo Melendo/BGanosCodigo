@@ -129,4 +129,8 @@ public class Venta implements Serializable {
 	public void setLineaVenta(LineaVenta lineaVenta) {
 		this.lieanVenta.add(lineaVenta);
 	}
+	
+	public void removeLineaVenta(LineaVenta lineaVenta) {
+		this.lieanVenta.remove(lineaVenta);
+	}
 }
